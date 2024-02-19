@@ -1,6 +1,6 @@
 name: 機能追加
 description: 機能を追加してほしいときはここ
-labels: 機能追加
+labels: 機能追加/変更
 projects: GOK-Proc/3
 body:
   - type: checkboxes
