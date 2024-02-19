@@ -50,6 +50,5 @@ body:
       label: 再現方法
       description: |
         できるだけ詳しく記述してください
-        スクショなどあればGyazoにアップロードし、そのリンクを貼り付けてください
     validations:
       required: true
