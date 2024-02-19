@@ -28,6 +28,5 @@ body:
         ・オフセットを調節できる機能
         ・1ms単位で調節できる
         ・設定画面とゲーム本体の両方に機能追加が必要
-      render: markdown
     validations:
       required: true
