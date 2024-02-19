@@ -1,0 +1,57 @@
+name: 不具合修正
+description: バグを修正してほしいときはここ
+labels: 不具合
+projects: GOK-Proc/3
+body:
+  - type: checkboxes
+    id: check-update
+    attributes:
+      label: 最新の状況を確認しましたか？
+      options:
+        - label: 私は最新の状況を確認しました
+          required: true
+  - type: checkboxes
+    id: domain
+    attributes:
+      label: どこの分野の修正が必要？
+      options:
+        - label: ロジック
+        - label: UI
+        - label: その他
+  - type: textarea
+    id: description
+    attributes:
+      label: 概要
+      description: 不具合の概要を記入してください
+      value: |
+        e.g.)
+        ・曲のファイル名に日本語が含まれていると正しくロードできない
+      render: markdown
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ### 発生条件
+        
+        不具合が発生する条件を教えてください
+  - type: dropdown
+    id: environment
+    attributes:
+      label: 実行環境
+      options:
+        - Mac
+        - Windows
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 再現方法
+      description: |
+        できるだけ詳しく記述してください
+        スクショなどあればGyazoにアップロードし、そのリンクを貼り付けてください
+      render: markdown
+    validations:
+      required: true

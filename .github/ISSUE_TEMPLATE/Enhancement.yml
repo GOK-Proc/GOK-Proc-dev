@@ -1,0 +1,33 @@
+name: 機能追加
+description: 機能を追加してほしいときはここ
+labels: 機能追加
+projects: GOK-Proc/3
+body:
+  - type: checkboxes
+    id: check-update
+    attributes:
+      label: 最新の状況を確認しましたか？
+      options:
+        - label: 私は最新の状況を確認しました
+          required: true
+  - type: checkboxes
+    id: domain
+    attributes:
+      label: どこの分野の開発が必要？
+      options:
+        - label: ロジック
+        - label: UI
+        - label: その他
+  - type: textarea
+    id: description
+    attributes:
+      label: 概要
+      description: 機能の概要を記入してください
+      value: |
+        e.g.)
+        ・オフセットを調節できる機能
+        ・1ms単位で調節できる
+        ・設定画面とゲーム本体の両方に機能追加が必要
+      render: markdown
+    validations:
+      required: true
