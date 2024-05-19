@@ -2,6 +2,6 @@ namespace Rhythm
 {
     public interface IJudgeable
     {
-        Judgement Judge(double time);
+        Judgement Judge(double time, int currentLane);
     }
 }
