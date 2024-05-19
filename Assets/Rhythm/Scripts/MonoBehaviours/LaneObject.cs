@@ -6,17 +6,21 @@ namespace Rhythm
 {
     public class LaneObject : RhythmGameObject
     {
-        public int Lane { get; private set; }
-        public NoteColor Color { get; private set; }
-        public bool IsLarge { get; private set; }
+        protected int _lane;
 
+        protected NoteColor _color;
+        protected bool _isLarge;
 
-        public void Create(Vector3 position, Vector3 velocity, int lane, NoteColor color, bool isLarge)
+        public void Initialize(NoteColor color, bool isLarge)
         {
+            _color = color;
+            _isLarge = isLarge;
+        }
+
+        public void Create(Vector3 position, Vector3 velocity, int lane)
+        {
+            _lane = lane;
             Create(position, velocity);
-            Lane = lane;
-            Color = color;
-            IsLarge = isLarge;
         }
     }
 }
