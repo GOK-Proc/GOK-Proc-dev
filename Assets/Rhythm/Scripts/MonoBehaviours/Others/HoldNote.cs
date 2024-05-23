@@ -11,16 +11,15 @@ namespace Rhythm
 
         public override void Create(Vector3 position, Vector3 velocity, int lane, double justTime)
         {
-            _justTime = justTime;
             _judgement = default;
-            Create(position, velocity, lane);
+            base.Create(position, velocity, lane, justTime);
         }
 
-        public override Judgement Judge(double time, int currentLane)
+        public override Judgement Judge()
         {
-            if (_colorInput.IsColorPressed(_color))
+            if (_colorInputProvider.IsColorPressed(_color))
             {
-                var d = Math.Abs(time - _justTime);
+                var d = Math.Abs(_timeProvider.Time - _justTime);
 
                 if (d <= _judgeRange.Perfect)
                 {
@@ -31,14 +30,14 @@ namespace Rhythm
                     _judgement = Judgement.Good;
                 }
 
-                if (time - _justTime >= 0 && _judgement != default) return _judgement;
+                if (_timeProvider.Time - _justTime >= 0 && _judgement != default) return _judgement;
             }
             else
             {
                 if (_judgement != default) return _judgement;
             }
 
-            if (time - _justTime > _judgeRange.Good)
+            if (_timeProvider.Time - _justTime > _judgeRange.Good)
             {
                 if (_judgement != default) return _judgement;
                 return Judgement.False;

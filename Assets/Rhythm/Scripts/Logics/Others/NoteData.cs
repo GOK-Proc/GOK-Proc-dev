@@ -1,14 +1,14 @@
 namespace Rhythm
 {
-    public struct NoteData
+    public readonly struct NoteData
     {
-        public float Speed;
-        public int Lane;
-        public NoteColor Color;
-        public bool IsLarge;
-        public double JustTime;
-        public double Length;
-        public double Bpm;
+        public readonly float Speed;
+        public readonly int Lane;
+        public readonly NoteColor Color;
+        public readonly bool IsLarge;
+        public readonly double JustTime;
+        public readonly double Length;
+        public readonly double Bpm;
 
         public NoteData(float speed, int lane, NoteColor color, bool isLarge, double justTime, double length, double bpm)
         {
