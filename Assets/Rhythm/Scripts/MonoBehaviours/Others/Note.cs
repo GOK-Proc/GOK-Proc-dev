@@ -9,17 +9,15 @@ namespace Rhythm
         protected double _justTime;
 
         protected JudgeRange _judgeRange;
-        protected ITimeProvider _timeProvider;
         protected IColorInputProvider _colorInputProvider;
         protected IActiveLaneProvider _activeLaneProvider;
 
-        public void Initialize(NoteColor color, bool isLarge, JudgeRange judgeRange, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
+        public void Initialize(JudgeRange judgeRange, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
         {
             _judgeRange = judgeRange;
-            _timeProvider = timeProvider;
             _colorInputProvider = colorInputProvider;
             _activeLaneProvider = activeLaneProvider;
-            Initialize(color, isLarge);
+            Initialize(timeProvider);
         }
 
         public virtual void Create(Vector3 position, Vector3 velocity, int lane, double justTime)

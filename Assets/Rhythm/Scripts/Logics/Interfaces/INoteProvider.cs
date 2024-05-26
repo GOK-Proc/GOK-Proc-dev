@@ -4,7 +4,6 @@ namespace Rhythm
 {
     public interface INoteProvider
     {
-        bool ExistNotes { get; }
         IEnumerable<Note> Notes { get; }
     }
 }

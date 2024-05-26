@@ -8,14 +8,8 @@ namespace Rhythm
     {
         protected int _lane;
 
-        protected NoteColor _color;
-        protected bool _isLarge;
-
-        public void Initialize(NoteColor color, bool isLarge)
-        {
-            _color = color;
-            _isLarge = isLarge;
-        }
+        [SerializeField] protected NoteColor _color;
+        [SerializeField] protected bool _isLarge;
 
         public void Create(Vector3 position, Vector3 velocity, int lane)
         {
