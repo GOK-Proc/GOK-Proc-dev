@@ -9,10 +9,10 @@ namespace Rhythm
     {
         private Judgement _judgement;
 
-        public override void Create(Vector3 position, Vector3 velocity, int lane, double justTime)
+        public override void Create(Vector3 position, Vector3 velocity, Vector3 border, int lane, double justTime, IDisposable disposable)
         {
             _judgement = default;
-            base.Create(position, velocity, lane, justTime);
+            base.Create(position, velocity, border, lane, justTime, disposable);
         }
 
         public override Judgement Judge()

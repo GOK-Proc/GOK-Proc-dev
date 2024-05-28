@@ -23,8 +23,7 @@ namespace Rhythm
         [SerializeField] private NotePrefab<HoldNote>[] _holdPrefabs;
         [SerializeField] private NotePrefab<HoldBand>[] _bandPrefabs;
 
-        private RhythmGameObjectManager _rhythmGameObjectManager;
-        private RhythmGameObjectMover _rhythmGameObjectMover;
+        private RhythmGameObjectCreator _rhythmGameObjectCreator;
         private TimeManager _timeManager;
         private InputManager _inputManager;
         private CursorController _cursorController;
@@ -39,8 +38,7 @@ namespace Rhythm
 
             _timeManager = new TimeManager();
 
-            _rhythmGameObjectManager = new RhythmGameObjectManager(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, _timeManager, _inputManager, _cursorController);
-            _rhythmGameObjectMover = new RhythmGameObjectMover(_rhythmGameObjectManager);
+            _rhythmGameObjectCreator = new RhythmGameObjectCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, _timeManager, _inputManager, _cursorController);
         }
 
         // Start is called before the first frame update
@@ -52,9 +50,7 @@ namespace Rhythm
         // Update is called once per frame
         private void Update()
         {
-            _rhythmGameObjectMover.Move();
-            _rhythmGameObjectManager.Create();
-            _rhythmGameObjectManager.Destroy();
+            _rhythmGameObjectCreator.Create();
         }
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace Rhythm
@@ -11,10 +13,10 @@ namespace Rhythm
         [SerializeField] protected NoteColor _color;
         [SerializeField] protected bool _isLarge;
 
-        public void Create(Vector3 position, Vector3 velocity, int lane)
+        public void Create(Vector3 position, Vector3 velocity, Vector3 border, int lane, IDisposable disposable)
         {
             _lane = lane;
-            Create(position, velocity);
+            Create(position, velocity, border, disposable);
         }
     }
 }

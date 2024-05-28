@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public class ObjectPool<T> where T : RhythmGameObject
+    public class ObjectPool<T> : IObjectPoolProvider<T> where T : RhythmGameObject
     {
         private readonly Stack<T> _pool;
         private readonly T _obj;
@@ -37,6 +37,22 @@ namespace Rhythm
                 _onInstantiate?.Invoke(obj);
                 return obj;
             }
+        }
+
+        public PooledObject<T> Create(out T obj, out bool isNew)
+        {
+            if (_pool.Count > 0)
+            {
+                obj = _pool.Pop();
+                isNew = false;
+            }
+            else
+            {
+                obj = UnityEngine.Object.Instantiate(_obj, _parent);
+                _onInstantiate?.Invoke(obj);
+                isNew = true;
+            }
+            return new PooledObject<T>(obj, this);
         }
 
         public void Destroy(T obj)
