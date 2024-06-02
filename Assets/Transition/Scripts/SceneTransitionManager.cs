@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
@@ -18,7 +17,11 @@ public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionMana
 		Scene prevScene = default;
 		for (int i = 0; i < SceneManager.sceneCount; i++)
 		{
-			if (SceneManager.GetSceneAt(i).name != "Transition") prevScene = SceneManager.GetSceneAt(i);
+			if (SceneManager.GetSceneAt(i).name != "Transition")
+			{
+				prevScene = SceneManager.GetSceneAt(i);
+				break;
+			}
 		}
 
 
