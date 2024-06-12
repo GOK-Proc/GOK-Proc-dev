@@ -7,12 +7,12 @@ using DG.Tweening;
 public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
 {
 
-	public static Coroutine TransitionToScene(string sceneName)
+	public static Coroutine TransitionToScene(SceneNames sceneName)
 	{
 		return Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
 	}
 
-	private static IEnumerator TransitionToSceneCoroutine(string sceneName)
+	private static IEnumerator TransitionToSceneCoroutine(SceneNames sceneName)
 	{
 		Scene prevScene = default;
 		for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -32,7 +32,7 @@ public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionMana
 		AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(prevScene);
 		yield return new WaitUntil(() => unloadOp.isDone);
 
-		AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+		AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
 		yield return new WaitUntil(() => loadOp.isDone);
 
 		yield return canvasGroup.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
