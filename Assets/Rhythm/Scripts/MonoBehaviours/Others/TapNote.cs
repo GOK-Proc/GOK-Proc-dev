@@ -10,6 +10,8 @@ namespace Rhythm
     {
         public override Judgement Judge()
         {
+            var judge = Judgement.Undefined;
+
             foreach (var activeLane in _activeLaneProvider.ActiveLanes)
             {
                 if (_lane == activeLane)
@@ -21,20 +23,35 @@ namespace Rhythm
                         if (d <= _judgeRange.Perfect)
                         {
                             _colorInputProvider.CompleteColorJudge(_color);
-                            return Judgement.Perfect;
+                            judge = Judgement.Perfect;
+                            break;
                         }
                         else if (d <= _judgeRange.Good)
                         {
                             _colorInputProvider.CompleteColorJudge(_color);
-                            return Judgement.Good;
+                            judge = Judgement.Good;
+                            break;
                         }
                     }
                 }
             }
 
-            if (_timeProvider.Time - _justTime > _judgeRange.Good) return Judgement.False;
+            if (judge == Judgement.Undefined && _timeProvider.Time - _justTime > _judgeRange.Good)
+            {
+                judge = Judgement.False;
+            }
 
-            return default;
+            if (judge != Judgement.Undefined)
+            {
+                IsJudged = true;
+
+                if (judge != Judgement.False)
+                {
+                    Destroy();
+                }
+            }
+
+            return judge;
         }
     }
 }

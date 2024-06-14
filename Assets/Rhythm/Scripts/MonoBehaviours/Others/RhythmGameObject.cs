@@ -13,7 +13,7 @@ namespace Rhythm
         private Vector3 _border;
         private IDisposable _disposable;
 
-        public bool IsAlive { get; private set; } 
+        public bool IsAlive { get; protected set; } 
 
         private void Awake()
         {

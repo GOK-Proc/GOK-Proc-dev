@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public class RhythmGameObjectCreator : INoteProvider
+    public class NoteCreator : INoteProvider
     {
         public IEnumerable<Note> Notes
         {
@@ -21,7 +21,7 @@ namespace Rhythm
 
         private readonly IList<(NoteData, bool)> _data;
         private readonly NoteLayout _layout;
-        private readonly IDictionary<(NoteColor, bool), ObjectPool<Note>> _notePools;
+        private readonly IDictionary<(NoteColor, bool), ObjectPool<TapNote>> _notePools;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<HoldNote>> _holdPools;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<HoldBand>> _bandPools;
         private readonly ITimeProvider _timeProvider;
@@ -29,11 +29,11 @@ namespace Rhythm
         private readonly List<Note> _notes;
 
 
-        public RhythmGameObjectCreator(IList<NoteData> data, NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), Note> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
+        public NoteCreator(IList<NoteData> data, NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
         {
             _data = data.Select(x => (x, false)).ToList();
             _layout = layout;
-            _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<Note>(x.Value, parent, x => (x as Note).Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
+            _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => (x as Note).Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
             _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => (x as Note).Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
             _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent));
             _timeProvider = timeProvider;

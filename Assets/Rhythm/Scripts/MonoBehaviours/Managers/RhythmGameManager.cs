@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Rhythm
 {
@@ -19,12 +20,15 @@ namespace Rhythm
             public T Prefab;
         }
 
-        [SerializeField] private NotePrefab<Note>[] _notePrefabs;
+        [SerializeField] private NotePrefab<TapNote>[] _notePrefabs;
         [SerializeField] private NotePrefab<HoldNote>[] _holdPrefabs;
         [SerializeField] private NotePrefab<HoldBand>[] _bandPrefabs;
+        [SerializeField] private PlayerInput _playerInput;
 
-        private RhythmGameObjectCreator _rhythmGameObjectCreator;
+        private NoteCreator _noteCreator;
+        private NoteJudge _noteJudge;
         private TimeManager _timeManager;
+        private ScoreManger _scoreManger;
         private InputManager _inputManager;
         private CursorController _cursorController;
 
@@ -38,7 +42,15 @@ namespace Rhythm
 
             _timeManager = new TimeManager();
 
-            _rhythmGameObjectCreator = new RhythmGameObjectCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, _timeManager, _inputManager, _cursorController);
+            var attackActions = new InputAction[] { _playerInput.actions["Attack1"], _playerInput.actions["Attack2"], _playerInput.actions["Attack3"] };
+            var defenseActions = new InputAction[] { _playerInput.actions["Defense1"], _playerInput.actions["Defense2"], _playerInput.actions["Defense3"] };
+
+            _inputManager = new InputManager(attackActions, defenseActions, null);
+            _cursorController = new CursorController(3, 0.05f, _inputManager);
+            _scoreManger = new ScoreManger();
+
+            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, _timeManager, _inputManager, _cursorController);
+            _noteJudge = new NoteJudge(_noteCreator, _scoreManger);
         }
 
         // Start is called before the first frame update
@@ -50,7 +62,11 @@ namespace Rhythm
         // Update is called once per frame
         private void Update()
         {
-            _rhythmGameObjectCreator.Create();
+            _noteCreator.Create();
+            _inputManager.Update();
+            _cursorController.Move();
+            _cursorController.Update();
+            _noteJudge.Judge();
         }
     }
 }

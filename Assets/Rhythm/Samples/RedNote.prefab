@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7205188520204491025}
   - component: {fileID: 5996147398949191607}
-  - component: {fileID: 6595581165402994193}
+  - component: {fileID: -6836260944517477302}
   m_Layer: 0
   m_Name: RedNote
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6595581165402994193
+--- !u!114 &-6836260944517477302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2893177906883262651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad50513e93bb9ee4ba8de34993e9f983, type: 3}
+  m_Script: {fileID: 11500000, guid: c7976b45f21b0ca47b1e1153a391aeb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _color: 1

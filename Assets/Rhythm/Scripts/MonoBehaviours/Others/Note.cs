@@ -7,6 +7,8 @@ namespace Rhythm
 {
     public class Note : LaneObject, IJudgeable, IComparable<Note>
     {
+        public bool IsJudged { get; protected set; }
+
         protected double _justTime;
 
         protected JudgeRange _judgeRange;
@@ -26,6 +28,8 @@ namespace Rhythm
         {
             _justTime = justTime;
             Create(position, velocity, border, lane, disposable);
+
+            IsJudged = false;
         }
 
         public virtual Judgement Judge()
@@ -47,11 +51,6 @@ namespace Rhythm
             {
                 return 0;
             }
-        }
-
-        public override string ToString()
-        {
-            return _justTime.ToString();
         }
     }
 }
