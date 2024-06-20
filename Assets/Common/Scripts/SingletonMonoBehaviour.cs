@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
@@ -15,7 +15,7 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
 				instance = (T)FindObjectOfType(t);
 				if (instance == null)
 				{
-					Debug.LogError(t + " ‚ğƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚éGameObject‚Í‚ ‚è‚Ü‚¹‚ñ");
+					Debug.LogError(t + " ã‚’ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹GameObjectã¯ã‚ã‚Šã¾ã›ã‚“");
 				}
 			}
 
@@ -25,21 +25,21 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
 
 	virtual protected void Awake()
 	{
-		// ‘¼‚ÌGameObject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚é‚©’²‚×‚é.
-		// ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éê‡‚Í”jŠü‚·‚é.
+		// ä»–ã®GameObjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹.
+		// ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ç ´æ£„ã™ã‚‹.
 		if (this != Instance)
 		{
 			Destroy(this);
 			//Destroy(this.gameObject);
 			Debug.LogError(
 					typeof(T) +
-					" ‚ÍŠù‚É‘¼‚ÌGameObject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚é‚½‚ßAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ”jŠü‚µ‚Ü‚µ‚½." +
-					" ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éGameObject‚Í " + Instance.gameObject.name + " ‚Å‚·.");
+					" ã¯æ—¢ã«ä»–ã®GameObjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ãŸã‚ã€ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç ´æ£„ã—ã¾ã—ãŸ." +
+					" ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹GameObjectã¯ " + Instance.gameObject.name + " ã§ã™.");
 			return;
 		}
 
-		// ‚È‚ñ‚Æ‚©Manager“I‚ÈScene‚ğŒ×‚¢‚Å‚±‚ÌGameObject‚ğ—LŒø‚É‚µ‚½‚¢ê‡‚Í
-		// «ƒRƒƒ“ƒgƒAƒEƒgŠO‚µ‚Ä‚­‚¾‚³‚¢.
+		// ãªã‚“ã¨ã‹Managerçš„ãªSceneã‚’è·¨ã„ã§ã“ã®GameObjectã‚’æœ‰åŠ¹ã«ã—ãŸã„å ´åˆã¯
+		// â†“ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆå¤–ã—ã¦ãã ã•ã„.
 		//DontDestroyOnLoad(this.gameObject);
 	}
 
