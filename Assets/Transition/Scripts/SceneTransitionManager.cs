@@ -1,18 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
 {
+	public static NovelId CurrentNovelId { get; private set; }
+	public static RhythmId CurrentRhythmId { get; private set; }
+	public static bool IsVs { get; private set; }
 
-	public static Coroutine TransitionToScene(SceneNames sceneName)
+	public static void TransitionToNovel(NovelId novelId)
 	{
-		return Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
+		if(novelId == NovelId.None) return;
+
+		CurrentNovelId = novelId;
+
+		TransitionToScene(SceneName.Novel);
 	}
 
-	private static IEnumerator TransitionToSceneCoroutine(SceneNames sceneName)
+	public static void TransitionToRhythm(RhythmId rhythmId, bool isVs = false)
+	{
+		if(rhythmId == RhythmId.None) return;
+	
+		CurrentRhythmId = rhythmId;
+		IsVs = isVs;
+		
+		TransitionToScene(SceneName.Rhythm);
+	}
+
+	public static void TransitionToScene(SceneName sceneName)
+	{
+		Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
+	}
+
+	private static IEnumerator TransitionToSceneCoroutine(SceneName sceneName)
 	{
 		Scene prevScene = default;
 		for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -23,7 +44,6 @@ public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionMana
 				break;
 			}
 		}
-
 
 		CanvasGroup canvasGroup = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
 
