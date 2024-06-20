@@ -10,58 +10,53 @@ namespace Rhythm
         protected Vector3 _position;
         protected Vector3 _velocity;
 
-        private Vector3 _border;
+        private (Vector2 UpperLeft, Vector2 LowerRight) _survivalRect;
         private IDisposable _disposable;
+
+        protected Action _onDestroy;
 
         public bool IsAlive { get; protected set; } 
 
-        private void Awake()
+        protected virtual void Awake()
         {
             gameObject.SetActive(false);
         }
 
-        public void Create(Vector3 position, Vector3 velocity, Vector3 border, IDisposable disposable)
+        public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, IDisposable disposable)
         {
             _position = position;
             _velocity = velocity;
-            _border = border;
+            _survivalRect = survivalRect;
             _disposable = disposable;
 
             transform.position = _position;
             IsAlive = true;
+
+            _onDestroy = () =>
+            {
+                IsAlive = false;
+                gameObject.SetActive(false);
+                _disposable.Dispose();
+            };
+
             gameObject.SetActive(true);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            bool IsEndPoint()
+            bool IsOutsideSurvivalRect()
             {
-                if (_velocity.x >= 0)
-                {
-                    if (_position.x < _border.x) return false;
-                }
-                else
-                {
-                    if (_position.x > _border.x) return false;
-                }
-                if (_velocity.y >= 0)
-                {
-                    if (_position.y < _border.y) return false;
-                }
-                else
-                {
-                    if (_position.y > _border.y) return false;
-                }
-                if (_velocity.z >= 0)
-                {
-                    if (_position.z < _border.z) return false;
-                }
-                else
-                {
-                    if (_position.z > _border.z) return false;
-                }
+                (var ul, var lr) = _survivalRect;
 
-                return true;
+                if (_position.x < ul.x) return true;
+
+                if (_position.y > ul.y) return true;
+
+                if (_position.x > lr.x) return true;
+
+                if (_position.y < lr.y) return true;
+
+                return false;
             }
 
             if (IsAlive)
@@ -69,7 +64,7 @@ namespace Rhythm
                 _position += _velocity * Time.deltaTime;
                 transform.position = _position;
 
-                if (IsEndPoint())
+                if (IsOutsideSurvivalRect())
                 {
                     Destroy();
                 }
@@ -78,9 +73,7 @@ namespace Rhythm
 
         protected void Destroy()
         {
-            IsAlive = false;
-            gameObject.SetActive(false);
-            _disposable.Dispose();
+            _onDestroy?.Invoke();
         }
     }
 }

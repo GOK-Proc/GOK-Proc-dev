@@ -33,8 +33,8 @@ namespace Rhythm
         {
             _data = data.Select(x => (x, false)).ToList();
             _layout = layout;
-            _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => (x as Note).Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
-            _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => (x as Note).Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
+            _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
+            _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
             _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent));
             _timeProvider = timeProvider;
 
@@ -76,7 +76,7 @@ namespace Rhythm
 
                 if (!isCreated)
                 {
-                    if (pos.y <= _layout.CreateNoteY)
+                    if (pos.y <= _layout.NoteRectUpperLeft.y)
                     {
                         if (note.Length > 0)
                         {
@@ -87,7 +87,7 @@ namespace Rhythm
                             if (_notePools.ContainsKey((note.Color, note.IsLarge)))
                             {
                                 IDisposable disposable = _notePools[(note.Color, note.IsLarge)].Create(out var obj, out var isNew);
-                                obj.Create(pos, new Vector3(0f, -note.Speed), new Vector3(pos.x, _layout.DestroyNoteY), note.Lane, note.JustTime, disposable);
+                                obj.Create(pos, new Vector3(0f, -note.Speed), (_layout.NoteRectUpperLeft, _layout.NoteRectLowerRight), note.Lane, note.JustTime, disposable);
                                 _data[i] = (note, true);
                                 Add(obj, isNew);
                             }

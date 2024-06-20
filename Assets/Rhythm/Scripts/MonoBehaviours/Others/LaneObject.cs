@@ -13,10 +13,10 @@ namespace Rhythm
         [SerializeField] protected NoteColor _color;
         [SerializeField] protected bool _isLarge;
 
-        public void Create(Vector3 position, Vector3 velocity, Vector3 border, int lane, IDisposable disposable)
+        public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, IDisposable disposable)
         {
             _lane = lane;
-            Create(position, velocity, border, disposable);
+            Create(position, velocity, survivalRect, disposable);
         }
     }
 }

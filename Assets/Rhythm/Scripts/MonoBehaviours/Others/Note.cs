@@ -24,10 +24,10 @@ namespace Rhythm
             _activeLaneProvider = activeLaneProvider;
         }
 
-        public virtual void Create(Vector3 position, Vector3 velocity, Vector3 border, int lane, double justTime, IDisposable disposable)
+        public virtual void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, double justTime, IDisposable disposable)
         {
             _justTime = justTime;
-            Create(position, velocity, border, lane, disposable);
+            Create(position, velocity, survivalRect, lane, disposable);
 
             IsJudged = false;
         }

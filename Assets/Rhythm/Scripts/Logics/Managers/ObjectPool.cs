@@ -10,9 +10,9 @@ namespace Rhythm
         private readonly Stack<T> _pool;
         private readonly T _obj;
         private readonly Transform _parent;
-        private readonly Action<RhythmGameObject> _onInstantiate;
+        private readonly Action<T> _onInstantiate;
 
-        public ObjectPool(T obj, Transform parent, Action<RhythmGameObject> onInstantiate = null, int initNum = 0)
+        public ObjectPool(T obj, Transform parent, Action<T> onInstantiate = null, int initNum = 0)
         {
             _pool = new Stack<T>();
             _obj = obj;

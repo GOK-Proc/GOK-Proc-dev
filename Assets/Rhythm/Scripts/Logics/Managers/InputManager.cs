@@ -6,13 +6,28 @@ using UnityEngine.InputSystem;
 
 namespace Rhythm
 {
-    public class InputManager : IColorInputProvider, IVectorInputProvider
+    public class InputManager : IColorInputProvider, IMoveInputProvider
     {
-        public Vector2 Vector { get; }
+        public float Move
+        {
+            get
+            {
+                var value = 0f;
+                var isPressedThisFrame = false;
 
-        private readonly InputAction[] _attack;
-        private readonly InputAction[] _defense;
-        private readonly InputAction[] _move;
+                foreach (var move in _moves)
+                {
+                    value += move.ReadValue<Vector2>().x;
+                    isPressedThisFrame |= move.WasPressedThisFrame();
+                }
+
+                return isPressedThisFrame ? value : 0f;
+            }
+        }
+
+        private readonly InputAction[] _attacks;
+        private readonly InputAction[] _defenses;
+        private readonly InputAction[] _moves;
 
         private int _attackCount;
         private int _attackMaxCount;
@@ -22,9 +37,9 @@ namespace Rhythm
 
         public InputManager(InputAction[] attack, InputAction[] defense, InputAction[] move)
         {
-            _attack = attack ?? Array.Empty<InputAction>();
-            _defense = defense ?? Array.Empty<InputAction>();
-            _move = move ?? Array.Empty<InputAction>();
+            _attacks = attack ?? Array.Empty<InputAction>();
+            _defenses = defense ?? Array.Empty<InputAction>();
+            _moves = move ?? Array.Empty<InputAction>();
 
             _attackCount = 0;
             _attackMaxCount = 0;
@@ -37,7 +52,7 @@ namespace Rhythm
             switch (color)
             {
                 case NoteColor.Red:
-                    foreach (var attack in _attack)
+                    foreach (var attack in _attacks)
                     {
                         if (attack.IsPressed())
                         {
@@ -47,7 +62,7 @@ namespace Rhythm
                     return false;
 
                 case NoteColor.Blue:
-                    foreach (var defense in _defense)
+                    foreach (var defense in _defenses)
                     {
                         if (defense.IsPressed())
                         {
@@ -65,7 +80,7 @@ namespace Rhythm
             switch (color)
             {
                 case NoteColor.Red:
-                    foreach (var attack in _attack)
+                    foreach (var attack in _attacks)
                     {
                         if (attack.WasPressedThisFrame())
                         {
@@ -75,7 +90,7 @@ namespace Rhythm
                     return false;
 
                 case NoteColor.Blue:
-                    foreach (var defense in _defense)
+                    foreach (var defense in _defenses)
                     {
                         if (defense.WasPressedThisFrame())
                         {
@@ -123,7 +138,7 @@ namespace Rhythm
             _attackMaxCount = 0;
             _defenseMaxCount = 0;
 
-            foreach (var attack in _attack)
+            foreach (var attack in _attacks)
             {
                 if (attack.WasPressedThisFrame())
                 {
@@ -131,7 +146,7 @@ namespace Rhythm
                 }
             }
 
-            foreach (var defense in _defense)
+            foreach (var defense in _defenses)
             {
                 if (defense.WasPressedThisFrame())
                 {
