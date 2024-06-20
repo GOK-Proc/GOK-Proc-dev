@@ -28,6 +28,7 @@ public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionMana
 		TransitionToScene(SceneName.Rhythm);
 	}
 
+	// TODO: 各シーンへの遷移関数を定義したらprivateに
 	public static void TransitionToScene(SceneName sceneName)
 	{
 		Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
