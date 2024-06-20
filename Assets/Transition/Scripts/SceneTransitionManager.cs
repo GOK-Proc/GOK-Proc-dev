@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
@@ -28,7 +28,7 @@ public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionMana
 		TransitionToScene(SceneName.Rhythm);
 	}
 
-	// TODO: ŠeƒV[ƒ“‚Ö‚Ì‘JˆÚŠÖ”‚ð’è‹`‚µ‚½‚çprivate‚É
+	// TODO: å„ã‚·ãƒ¼ãƒ³ã¸ã®é·ç§»é–¢æ•°ã‚’å®šç¾©ã—ãŸã‚‰privateã«
 	public static void TransitionToScene(SceneName sceneName)
 	{
 		Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
