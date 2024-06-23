@@ -1,8 +1,10 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace Rhythm
 {
@@ -43,11 +45,18 @@ namespace Rhythm
 
         public void Create()
         {
-            void Add(Note obj, bool isNew)
+            (T obj, bool isNew) Create<T>(NoteData note, ObjectPool<T> pool, Vector3 pos, double time) where T : Note
             {
-                if (isNew)
+                IDisposable disposable = pool.Create(out var obj, out var isNew);
+                obj.Create(pos, new Vector3(0f, -note.Speed), (new Vector2(_layout.NoteRectUpperLeft.x, float.PositiveInfinity), _layout.NoteRectLowerRight), note.Lane, time, disposable);
+                return (obj, isNew);
+            }
+
+            void Add((Note obj, bool isNew) note)
+            {
+                if (note.isNew)
                 {
-                    _notes.Add(obj);
+                    _notes.Add(note.obj);
 
                     for (int i = _notes.Count - 1; i >= 1; i--)
                     {
@@ -78,20 +87,32 @@ namespace Rhythm
                 {
                     if (pos.y <= _layout.NoteRectUpperLeft.y)
                     {
+                        if (_notePools.ContainsKey((note.Color, note.IsLarge)))
+                        {
+                            Add(Create(note, _notePools[(note.Color, note.IsLarge)], pos, note.JustTime));
+                            _data[i] = (note, true);
+                        }
+
                         if (note.Length > 0)
                         {
-
-                        }
-                        else
-                        {
-                            if (_notePools.ContainsKey((note.Color, note.IsLarge)))
+                            if (_holdPools.ContainsKey((note.Color, note.IsLarge)) && note.Bpm > 0)
                             {
-                                IDisposable disposable = _notePools[(note.Color, note.IsLarge)].Create(out var obj, out var isNew);
-                                obj.Create(pos, new Vector3(0f, -note.Speed), (_layout.NoteRectUpperLeft, _layout.NoteRectLowerRight), note.Lane, note.JustTime, disposable);
-                                _data[i] = (note, true);
-                                Add(obj, isNew);
+                                var deltaTime = 30 / note.Bpm;
+                                var time = note.JustTime + deltaTime;
+                                var endTime = time + note.Length;
+
+                                while (time < endTime)
+                                {
+                                    pos = new Vector3(pos.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - time));
+                                    Add(Create(note, _holdPools[(note.Color, note.IsLarge)], pos, time));
+                                    time += deltaTime;
+                                }
+
+                                pos = new Vector3(pos.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - endTime));
+                                Add(Create(note, _holdPools[(note.Color, note.IsLarge)], pos, time));
                             }
                         }
+                        
                     }
                 }
             }

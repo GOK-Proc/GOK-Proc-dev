@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -43,7 +43,7 @@ namespace Rhythm
 
             var notes = new List<NoteData>() { 
                 new NoteData(4f, 0, NoteColor.Red, false, 6, 0, 100), 
-                new NoteData(4f, 1, NoteColor.Red, false, 8, 0, 100), 
+                new NoteData(4f, 1, NoteColor.Red, false, 8, 3, 100), 
                 new NoteData(4f, 2, NoteColor.Blue, false, 12, 0, 100),
                 new NoteData(4f, 1, NoteColor.Red, true, 16, 0, 100),
                 new NoteData(4f, 0, NoteColor.Blue, true, 18, 0, 100),
