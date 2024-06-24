@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -30,16 +30,34 @@ namespace Rhythm
                     _judgement = Judgement.Good;
                 }
 
-                if (_timeProvider.Time - _justTime >= 0 && _judgement != default) return _judgement;
+                if (_timeProvider.Time - _justTime >= 0 && _judgement != default)
+                {
+                    IsJudged = true;
+                    Destroy();
+                    return _judgement;
+                }
+                    
             }
             else
             {
-                if (_judgement != default) return _judgement;
+                if (_judgement != default)
+                {
+                    IsJudged = true;
+                    Destroy();
+                    return _judgement;
+                }
             }
 
             if (_timeProvider.Time - _justTime > _judgeRange.Good)
             {
-                if (_judgement != default) return _judgement;
+                IsJudged = true;
+
+                if (_judgement != default)
+                {
+                    Destroy();
+                    return _judgement;
+                }
+
                 return Judgement.False;
             }
 

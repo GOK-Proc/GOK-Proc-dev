@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,6 @@ namespace Rhythm
         protected Vector3 _velocity;
 
         private (Vector2 UpperLeft, Vector2 LowerRight) _survivalRect;
-        private IDisposable _disposable;
 
         protected Action _onDestroy;
 
@@ -27,7 +26,6 @@ namespace Rhythm
             _position = position;
             _velocity = velocity;
             _survivalRect = survivalRect;
-            _disposable = disposable;
 
             transform.position = _position;
             IsAlive = true;
@@ -36,7 +34,7 @@ namespace Rhythm
             {
                 IsAlive = false;
                 gameObject.SetActive(false);
-                _disposable.Dispose();
+                disposable.Dispose();
             };
 
             gameObject.SetActive(true);
