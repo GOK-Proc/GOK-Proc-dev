@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &82430259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82430260}
+  m_Layer: 0
+  m_Name: Masks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &82430260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82430259}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &507627625
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,18 +452,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a09b3fa314a99841a6eeef24dff0235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _laneCount: 3
   _noteLayout:
     FirstLaneX: -1.06
     LaneDistanceX: 1.72
     JudgeLineY: -4.21
-    NoteRectUpperLeft: {x: -2.5, y: 6.5}
-    NoteRectLowerRight: {x: 3.82, y: -6.5}
+    BeginLineY: 6.5
+    DestroyLineY: -6.5
   _judgeRange:
     Perfect: 0.033
     Good: 0.08
+  _cursorExtension: 0.1
   _cursorSpeed: 18
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
+  _holdMaskParent: {fileID: 82430260}
   _notePrefabs:
   - Color: 1
     IsLarge: 0
@@ -449,12 +483,31 @@ MonoBehaviour:
   _holdPrefabs:
   - Color: 1
     IsLarge: 0
-    Prefab: {fileID: 1311310128529545383, guid: fff61faaafa78d84ca910663c132cd9f, type: 3}
+    Prefab: {fileID: 8373804956321116076, guid: fff61faaafa78d84ca910663c132cd9f, type: 3}
+  - Color: 2
+    IsLarge: 0
+    Prefab: {fileID: 5391446107667378511, guid: 54112171119b9914f8ae89a5842ab1d6, type: 3}
+  - Color: 1
+    IsLarge: 1
+    Prefab: {fileID: 6172756881275406918, guid: 464a7dcf1a8177541bdc3a333d29a916, type: 3}
+  - Color: 2
+    IsLarge: 1
+    Prefab: {fileID: 8730693162853799436, guid: 219974f4870ebfa4c934c44eabdd225c, type: 3}
   _bandPrefabs:
   - Color: 1
     IsLarge: 0
     Prefab: {fileID: 5730165341899772091, guid: 6021396456ef3ca4e8fa6ba897ba63cb, type: 3}
+  - Color: 2
+    IsLarge: 0
+    Prefab: {fileID: 3245085013825922313, guid: 1a4373c24dfa8ff4cb72f7ebe707ddf7, type: 3}
+  - Color: 1
+    IsLarge: 1
+    Prefab: {fileID: 1784906955481449665, guid: dadaac0280e9b9a418cc591ae36e0a65, type: 3}
+  - Color: 2
+    IsLarge: 1
+    Prefab: {fileID: 4239273506915315414, guid: 489dce8a04286454daab0a0b69c16d3b, type: 3}
   _cursorPrefab: {fileID: 5633605616117670678, guid: 266cabebdc3a26b4894458b552f4242f, type: 3}
+  _holdMaskPrefab: {fileID: 3401838677374369432, guid: 873ebd032ec88584c90f572accb43e18, type: 3}
   _playerInput: {fileID: 732199901}
 --- !u!4 &1770842084
 Transform:
@@ -479,4 +532,5 @@ SceneRoots:
   - {fileID: 585174666}
   - {fileID: 1770842084}
   - {fileID: 507627626}
+  - {fileID: 82430260}
   - {fileID: 1065029708}

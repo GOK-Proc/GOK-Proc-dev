@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -15,7 +15,7 @@ namespace Rhythm
             {
                 for (int i = 0; i < _laneCount; i++)
                 {
-                    if (_timeSinceLaneDeactivated[i] < _extension)
+                    if (_timeSinceLaneDeactivated[i] <= _extension)
                     {
                         yield return i;
                     }

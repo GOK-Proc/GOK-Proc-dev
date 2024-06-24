@@ -8,11 +8,14 @@ namespace Rhythm
 {
     public class RhythmGameManager : MonoBehaviour
     {
+        [SerializeField] private int _laneCount;
         [SerializeField] private NoteLayout _noteLayout;
         [SerializeField] private JudgeRange _judgeRange;
+        [SerializeField] private float _cursorExtension;
         [SerializeField] private float _cursorSpeed;
         [SerializeField] private Transform _noteParent;
         [SerializeField] private Transform _cursorParent;
+        [SerializeField] private Transform _holdMaskParent;
      
         [System.Serializable]
         private struct NotePrefab<T> where T : RhythmGameObject
@@ -26,6 +29,7 @@ namespace Rhythm
         [SerializeField] private NotePrefab<HoldNote>[] _holdPrefabs;
         [SerializeField] private NotePrefab<HoldBand>[] _bandPrefabs;
         [SerializeField] private Cursor _cursorPrefab;
+        [SerializeField] private Transform _holdMaskPrefab;
         [SerializeField] private PlayerInput _playerInput;
 
         private NoteCreator _noteCreator;
@@ -47,7 +51,17 @@ namespace Rhythm
                 new NoteData(4f, 2, NoteColor.Blue, false, 12, 0, 100),
                 new NoteData(4f, 1, NoteColor.Red, true, 16, 0, 100),
                 new NoteData(4f, 0, NoteColor.Blue, true, 18, 0, 100),
+                new NoteData(4f, 1, NoteColor.Red, true, 20, 2, 100)
             };
+
+            var holdMasks = new List<Transform>();
+
+            for (int i = 0; i < _laneCount; i++)
+            {
+                var pos = _holdMaskPrefab.position;
+                pos.x = _noteLayout.FirstLaneX + _noteLayout.LaneDistanceX * i;
+                holdMasks.Add(Instantiate(_holdMaskPrefab, pos, _holdMaskPrefab.rotation, _holdMaskParent));
+            }
 
             _timeManager = new TimeManager();
 
@@ -56,10 +70,10 @@ namespace Rhythm
             var moveActions = new InputAction[] { _playerInput.actions["Move1"], _playerInput.actions["Move2"], _playerInput.actions["Move3"] };
 
             _inputManager = new InputManager(attackActions, defenseActions, moveActions);
-            _cursorController = new CursorController(3, 0.1f, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
+            _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
             _scoreManger = new ScoreManger();
 
-            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, _timeManager, _inputManager, _cursorController);
+            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
             _noteJudge = new NoteJudge(_noteCreator, _scoreManger);
         }
 

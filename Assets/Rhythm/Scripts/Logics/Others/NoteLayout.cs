@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,16 +10,16 @@ namespace Rhythm
         public float FirstLaneX;
         public float LaneDistanceX;
         public float JudgeLineY;
-        public Vector2 NoteRectUpperLeft;
-        public Vector2 NoteRectLowerRight;
+        public float BeginLineY;
+        public float DestroyLineY;
 
-        public NoteLayout(float firstLaneX, float laneDistanceX, float judgeLineY, Vector2 noteRectUpperLeft, Vector2 noteRectLowerRight)
+        public NoteLayout(float firstLaneX, float laneDistanceX, float judgeLineY, float beginLineY, float destroyLineY)
         {
             FirstLaneX = firstLaneX;
             LaneDistanceX = laneDistanceX;
             JudgeLineY = judgeLineY;
-            NoteRectUpperLeft = noteRectUpperLeft;
-            NoteRectLowerRight = noteRectLowerRight;
+            BeginLineY = beginLineY;
+            DestroyLineY = destroyLineY;
         }
     }
 }
