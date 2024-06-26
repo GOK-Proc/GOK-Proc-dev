@@ -8,11 +8,15 @@ namespace Rhythm
 {
     public class RhythmGameManager : MonoBehaviour
     {
+        [Header("Settings")]
         [SerializeField] private int _laneCount;
         [SerializeField] private NoteLayout _noteLayout;
         [SerializeField] private JudgeRange _judgeRange;
         [SerializeField] private float _cursorExtension;
         [SerializeField] private float _cursorSpeed;
+
+        [Space(20)]
+        [Header("Objects")]
         [SerializeField] private Transform _noteParent;
         [SerializeField] private Transform _cursorParent;
         [SerializeField] private Transform _holdMaskParent;
@@ -32,6 +36,16 @@ namespace Rhythm
         [SerializeField] private Transform _holdMaskPrefab;
         [SerializeField] private PlayerInput _playerInput;
 
+        [Space(20)]
+        [Header("Beatmap")]
+        [SerializeField] private TextAsset _beatmapFile;
+        [SerializeField] private double _offset;
+
+        [Space(20)]
+        [Header("Options")]
+        [SerializeField] private float _baseScroll;
+
+
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
         private TimeManager _timeManager;
@@ -45,14 +59,7 @@ namespace Rhythm
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var bandPrefabs = _bandPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
 
-            var notes = new List<NoteData>() { 
-                new NoteData(4f, 0, NoteColor.Red, false, 6, 0, 100), 
-                new NoteData(4f, 1, NoteColor.Red, false, 8, 3, 100), 
-                new NoteData(4f, 2, NoteColor.Blue, false, 12, 0, 100),
-                new NoteData(4f, 1, NoteColor.Red, true, 16, 0, 100),
-                new NoteData(4f, 0, NoteColor.Blue, true, 18, 0, 100),
-                new NoteData(4f, 1, NoteColor.Red, true, 20, 2, 100)
-            };
+            var notes = BeatmapLoader.Parse(_beatmapFile, _offset, _baseScroll);
 
             var holdMasks = new List<Transform>();
 

@@ -107,7 +107,7 @@ namespace Rhythm
                             {
                                 var deltaTime = 30 / note.Bpm;
                                 var time = note.JustTime + deltaTime;
-                                var endTime = time + note.Length;
+                                var endTime = note.JustTime + note.Length;
 
                                 while (time < endTime)
                                 {
