@@ -56,9 +56,11 @@ namespace Rhythm
 
             var just = offset;
             var bpm = 0d;
+            var holdBpm = 0d;
             var measure1 = 4d;
             var measure2 = 4d;
             var scroll = 1f;
+            var length = 0d;
             var m = 0d;
 
             try
@@ -88,7 +90,6 @@ namespace Rhythm
 
                                 data.Add(new Note(lane, NoteColor.Undefined, false, 0, bpm, scroll));
                                 if (lane != 0) mode = ParseMode.Type;
-
                             }
 
                             break;
@@ -124,7 +125,22 @@ namespace Rhythm
 
                         case '[':
 
-                            if (mode == ParseMode.Lane && data.Count > 0) isHold = true;
+                            if (mode == ParseMode.Lane && data.Count > 0)
+                            {
+                                length = 0;
+                                holdBpm = data.Last().Bpm;
+                                isHold = true;
+                            }
+
+                            break;
+
+                        case '#':
+
+                            if (mode == ParseMode.Lane && isHold)
+                            {
+                                holdBpm = double.Parse(numstr);
+                                numstr = string.Empty;
+                            }
 
                             break;
 
@@ -138,15 +154,19 @@ namespace Rhythm
 
                             break;
 
-                        case ']':
+                        case '+' or ']':
 
                             if (mode == ParseMode.Lane && isHold)
                             {
                                 var n = double.Parse(numstr);
                                 numstr = string.Empty;
+                                length += 240 * n / m / holdBpm;
 
-                                data.Last().Length = 240 * n / m / data.Last().Bpm;
-                                isHold = false;
+                                if (c == ']')
+                                {
+                                    data.Last().Length = length;
+                                    isHold = false;
+                                }
                             }
 
                             break;
