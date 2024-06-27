@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,9 +25,9 @@ namespace Rhythm
             }
         }
 
-        private readonly InputAction[] _attacks;
-        private readonly InputAction[] _defenses;
-        private readonly InputAction[] _moves;
+        private readonly IList<InputAction> _attacks;
+        private readonly IList<InputAction> _defenses;
+        private readonly IList<InputAction> _moves;
 
         private int _attackCount;
         private int _attackMaxCount;
@@ -35,7 +35,7 @@ namespace Rhythm
         private int _defenseMaxCount;
 
 
-        public InputManager(InputAction[] attack, InputAction[] defense, InputAction[] move)
+        public InputManager(IList<InputAction> attack, IList<InputAction> defense, IList<InputAction> move)
         {
             _attacks = attack ?? Array.Empty<InputAction>();
             _defenses = defense ?? Array.Empty<InputAction>();

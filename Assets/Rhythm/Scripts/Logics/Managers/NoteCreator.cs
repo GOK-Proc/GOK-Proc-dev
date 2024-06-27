@@ -21,7 +21,8 @@ namespace Rhythm
             }
         }
 
-        private readonly IList<(NoteData, bool)> _data;
+        private readonly IList<NoteData> _data;
+        private readonly IList<bool> _isCreated;
         private readonly NoteLayout _layout;
         private readonly (Vector2 UpperLeft, Vector2 LowerRight) _survivalRect;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<TapNote>> _notePools;
@@ -36,7 +37,8 @@ namespace Rhythm
 
         public NoteCreator(IList<NoteData> data, NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
         {
-            _data = data.Select(x => (x, false)).ToList();
+            _data = data;
+            _isCreated = data.Select(x => false).ToList();
             _layout = layout;
             _survivalRect = (new Vector2(float.NegativeInfinity, float.PositiveInfinity), new Vector2(float.PositiveInfinity, _layout.DestroyLineY));
 
@@ -86,17 +88,17 @@ namespace Rhythm
 
             for (int i = 0; i < _data.Count; i++)
             {
-                var (note, isCreated) = _data[i];
+                var note = _data[i];
                 var firstPosition = new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - note.JustTime));
 
-                if (!isCreated)
+                if (!_isCreated[i])
                 {
                     if (firstPosition.y <= _layout.BeginLineY)
                     {
                         if (_notePools.ContainsKey((note.Color, note.IsLarge)))
                         {
                             Add(Create(note, _notePools[(note.Color, note.IsLarge)], firstPosition, note.JustTime));
-                            _data[i] = (note, true);
+                            _isCreated[i] = true;
                         }
 
                         if (note.Length > 0)
@@ -105,7 +107,7 @@ namespace Rhythm
                             {
                                 var deltaTime = 30 / note.Bpm;
                                 var time = note.JustTime + deltaTime;
-                                var endTime = time + note.Length;
+                                var endTime = note.JustTime + note.Length;
 
                                 while (time < endTime)
                                 {
