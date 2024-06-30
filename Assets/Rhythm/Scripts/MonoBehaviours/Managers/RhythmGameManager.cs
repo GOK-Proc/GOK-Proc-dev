@@ -55,8 +55,8 @@ namespace Rhythm
 
         [Space(20)]
         [Header("Beatmap")]
-        [SerializeField] private TextAsset _beatmapFile;
-        [SerializeField] private double _offset;
+        [SerializeField] private BeatmapData _beatmapData;
+        [SerializeField] private string _id;
 
         [Space(20)]
         [Header("Options")]
@@ -79,7 +79,9 @@ namespace Rhythm
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var bandPrefabs = _bandPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
 
-            (var notes, var endTime) = BeatmapLoader.Parse(_beatmapFile, _offset, _baseScroll);
+            var data = _beatmapData.BeatmapDictionary[_id];
+
+            (var notes, var endTime) = BeatmapLoader.Parse(data.File, data.Offset, _baseScroll);
             _endTime = endTime;
 
             var holdMasks = new List<Transform>();

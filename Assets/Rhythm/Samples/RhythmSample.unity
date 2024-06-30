@@ -641,8 +641,8 @@ MonoBehaviour:
   _audioSource: {fileID: 1078892033}
   _audioClip: {fileID: 8300000, guid: 43109afe7fb8cab47abf915700d8eebd, type: 3}
   _sounds: []
-  _beatmapFile: {fileID: 4900000, guid: 71960d23631c4be4e95f331b61e0d9cf, type: 3}
-  _offset: 1.2
+  _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
+  _id: sample
   _baseScroll: 6
 --- !u!4 &1770842084
 Transform:
