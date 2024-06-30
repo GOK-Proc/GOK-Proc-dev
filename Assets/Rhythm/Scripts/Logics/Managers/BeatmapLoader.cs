@@ -36,7 +36,7 @@ namespace Rhythm
             Scroll,
         }
 
-        public static NoteData[] Parse(TextAsset file, double offset, float baseScroll)
+        public static (NoteData[], double) Parse(TextAsset file, double offset, float baseScroll)
         {
             var text = file.text;
             var types = new Dictionary<char, (NoteColor, bool)>()
@@ -53,6 +53,7 @@ namespace Rhythm
             var numstr = string.Empty;
             var isHold = false;
             var isComment = false;
+            var endTime = double.PositiveInfinity;
 
             var just = offset;
             var bpm = 0d;
@@ -111,6 +112,12 @@ namespace Rhythm
                             if (mode == ParseMode.Lane && !isHold)
                             {
                                 var beat = data.Count;
+
+                                if (beat == 0)
+                                {
+                                    data.Add(new Note(0, NoteColor.Undefined, false, 0, bpm, scroll));
+                                    beat++;
+                                }
 
                                 foreach (var d in data)
                                 {
@@ -237,6 +244,12 @@ namespace Rhythm
                             isComment = true;
 
                             break;
+
+                        case 'E':
+
+                            endTime = just;
+
+                            break;
                     }
                 }
             }
@@ -248,7 +261,7 @@ namespace Rhythm
                 return default;
             }
 
-            return notes.ToArray();
+            return (notes.ToArray(), endTime);
         }
     }
 }
