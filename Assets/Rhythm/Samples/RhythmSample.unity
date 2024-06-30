@@ -590,7 +590,7 @@ MonoBehaviour:
   _judgeRange:
     Perfect: 0.033
     Good: 0.08
-  _cursorExtension: 0.1
+  _cursorExtension: 0.12
   _cursorSpeed: 18
   _startDelay: 3
   _noteParent: {fileID: 507627626}
