@@ -14,6 +14,7 @@ namespace Rhythm
         [SerializeField] private JudgeRange _judgeRange;
         [SerializeField] private float _cursorExtension;
         [SerializeField] private float _cursorSpeed;
+        [SerializeField] private double _startDelay;
 
         [Space(20)]
         [Header("Objects")]
@@ -34,7 +35,23 @@ namespace Rhythm
         [SerializeField] private NotePrefab<HoldBand>[] _bandPrefabs;
         [SerializeField] private Cursor _cursorPrefab;
         [SerializeField] private Transform _holdMaskPrefab;
+
+        [Space(20)]
+        [Header("Inputs")]
         [SerializeField] private PlayerInput _playerInput;
+
+        [System.Serializable]
+        private struct Sound
+        {
+            public string Id;
+            public AudioClip Clip;
+        }
+
+        [Space(20)]
+        [Header("Sounds")]
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _audioClip;
+        [SerializeField] private Sound[] _sounds;
 
         [Space(20)]
         [Header("Beatmap")]
@@ -52,6 +69,9 @@ namespace Rhythm
         private ScoreManger _scoreManger;
         private InputManager _inputManager;
         private CursorController _cursorController;
+        private SoundPlayer _soundPlayer;
+
+        private double _endTime;
 
         private void Awake()
         {
@@ -59,7 +79,8 @@ namespace Rhythm
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var bandPrefabs = _bandPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
 
-            var notes = BeatmapLoader.Parse(_beatmapFile, _offset, _baseScroll);
+            (var notes, var endTime) = BeatmapLoader.Parse(_beatmapFile, _offset, _baseScroll);
+            _endTime = endTime;
 
             var holdMasks = new List<Transform>();
 
@@ -77,6 +98,11 @@ namespace Rhythm
             var moveActions = new InputAction[] { _playerInput.actions["Move1"], _playerInput.actions["Move2"], _playerInput.actions["Move3"] };
 
             _inputManager = new InputManager(attackActions, defenseActions, moveActions);
+
+            var sounds = _sounds.ToDictionary(x => x.Id, x => x.Clip);
+
+            _soundPlayer = new SoundPlayer(_audioSource, _audioClip, sounds);
+
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
             _scoreManger = new ScoreManger();
 
@@ -87,17 +113,39 @@ namespace Rhythm
         // Start is called before the first frame update
         private void Start()
         {
-
+            StartCoroutine(RhythmGameUpdate());
         }
 
-        // Update is called once per frame
-        private void Update()
+        private IEnumerator RhythmGameUpdate()
         {
-            _noteCreator.Create();
-            _inputManager.Update();
-            _cursorController.Move();
-            _cursorController.Update();
-            _noteJudge.Judge();
+            _timeManager.StartTimer(-_startDelay);
+
+            while (_timeManager.Time < Time.deltaTime / 2)
+            {
+                _noteCreator.Create();
+                _inputManager.Update();
+                _cursorController.Move();
+                _cursorController.Update();
+                _noteJudge.Judge();
+
+                yield return null;
+            }
+
+            _soundPlayer.PlayMusic();
+
+            while (_timeManager.Time < _endTime)
+            {
+                _noteCreator.Create();
+                _inputManager.Update();
+                _cursorController.Move();
+                _cursorController.Update();
+                _noteJudge.Judge();
+
+                yield return null;
+            }
+
+            Debug.Log("Game End");
         }
+
     }
 }

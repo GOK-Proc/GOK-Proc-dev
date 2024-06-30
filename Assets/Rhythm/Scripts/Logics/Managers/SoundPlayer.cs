@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,21 +6,37 @@ namespace Rhythm
 {
     public class SoundPlayer : ITimeProvider, ISoundPlayable
     {
-        public double Time { get; }
+        private readonly AudioSource _audioSource;
+        private readonly AudioClip _audioClip;
+        private readonly IDictionary<string, AudioClip> _soundData;
+
+        public SoundPlayer(AudioSource source, AudioClip clip, IDictionary<string, AudioClip> soundData)
+        {
+            _audioSource = source;
+            _audioClip = clip;
+            _soundData = soundData;
+            
+            _audioSource.clip = _audioClip;
+        }
+
+        public double Time { get => _audioSource.timeSamples / _audioClip.frequency; }
 
         public void PlayMusic()
         {
-
+            _audioSource.Play();
         }
 
         public void StopMusic()
         {
-
+            _audioSource.Stop();
         }
 
         public void PlaySE(string id)
         {
-
+            if (_soundData.TryGetValue(id, out var clip))
+            {
+                _audioSource.PlayOneShot(clip);
+            }
         }
     }
 }
