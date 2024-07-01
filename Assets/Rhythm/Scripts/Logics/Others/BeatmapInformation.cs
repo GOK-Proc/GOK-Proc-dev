@@ -13,6 +13,9 @@ namespace Rhythm
         [SerializeField] private string _title;
         public string Title { get => _title; }
 
+        [SerializeField] private AudioClip _sound;
+        public AudioClip Sound { get => _sound; }
+
         [SerializeField] private double _offset;
         public double Offset { get => _offset; }
 

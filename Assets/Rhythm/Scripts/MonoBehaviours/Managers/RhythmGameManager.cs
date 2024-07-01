@@ -50,7 +50,6 @@ namespace Rhythm
         [Space(20)]
         [Header("Sounds")]
         [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private AudioClip _audioClip;
         [SerializeField] private Sound[] _sounds;
 
         [Space(20)]
@@ -103,7 +102,7 @@ namespace Rhythm
 
             var sounds = _sounds.ToDictionary(x => x.Id, x => x.Clip);
 
-            _soundPlayer = new SoundPlayer(_audioSource, _audioClip, sounds);
+            _soundPlayer = new SoundPlayer(_audioSource, data.Sound, sounds);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
             _scoreManger = new ScoreManger();
