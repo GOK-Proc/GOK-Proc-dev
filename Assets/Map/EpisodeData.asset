@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5255daa65a2f36248ba56fbd6ee41ab1, type: 3}
   m_Name: EpisodeData
   m_EditorClassIdentifier: 
-  _episodeDataList: []
+  _episodeFlags: {fileID: 11400000, guid: 93a1adb29502b3644b9591af525c4846, type: 2}
+  _dataList: []
