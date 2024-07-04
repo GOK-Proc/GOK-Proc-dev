@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class EpisodeData : ScriptableObject
 {
+	[SerializeField] private EpisodeFlags _episodeFlags;
+
 	[SerializeField] private List<EpisodeInfomation> _dataList;
 	public List<EpisodeInfomation> DataList {  get { return _dataList; } }
 
@@ -24,6 +26,8 @@ public class EpisodeData : ScriptableObject
 				_episodeNumbers.Add((item.Chapter, item.Section));
 			}
 		}
+
+		_episodeFlags.ResetFlags(this);
 	}
 #endif
 }
