@@ -4,25 +4,30 @@ using UnityEngine;
 [CreateAssetMenu]
 public class EpisodeData : ScriptableObject
 {
-	public Dictionary<(int, int), EpisodeInfomation> EpisodeDataDict { get; private set; } = new Dictionary<(int, int), EpisodeInfomation>();
+	[SerializeField] private EpisodeFlags _episodeFlags;
 
-	[SerializeField] private List<EpisodeInfomation> _episodeDataList;
+	[SerializeField] private List<EpisodeInfomation> _dataList;
+	public List<EpisodeInfomation> DataList {  get { return _dataList; } }
 
 #if UNITY_EDITOR
+	private HashSet<(int, int)> _episodeNumbers = new HashSet<(int, int)> ();
+
 	private void OnValidate()
 	{
-		EpisodeDataDict.Clear();
-		foreach (var item in _episodeDataList)
+		_episodeNumbers.Clear();
+		foreach (var item in DataList)
 		{
-			if (EpisodeDataDict.ContainsKey((item.Chapter, item.Section)))
+			if (_episodeNumbers.Contains((item.Chapter, item.Section)))
 			{
-				Debug.LogWarning("章, 節番号に重複があります");
+				Debug.LogWarning("エピソード番号に重複があります");
 			}
 			else
 			{
-				EpisodeDataDict.Add((item.Chapter, item.Section), item);
+				_episodeNumbers.Add((item.Chapter, item.Section));
 			}
 		}
+
+		_episodeFlags.ResetFlags(this);
 	}
 #endif
 }
