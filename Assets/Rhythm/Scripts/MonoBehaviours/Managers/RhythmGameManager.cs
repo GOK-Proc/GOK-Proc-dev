@@ -8,13 +8,18 @@ namespace Rhythm
 {
     public class RhythmGameManager : MonoBehaviour
     {
-        [Header("Settings")]
+        [Header("Rhythm Settings")]
         [SerializeField] private int _laneCount;
         [SerializeField] private NoteLayout _noteLayout;
         [SerializeField] private JudgeRange _judgeRange;
         [SerializeField] private float _cursorExtension;
         [SerializeField] private float _cursorSpeed;
         [SerializeField] private double _startDelay;
+
+        [Space(20)]
+        [Header("Battle Settings")]
+        [SerializeField] private float _playerHitPoint;
+        [SerializeField] private LostRate[] _lostRates;
 
         [Space(20)]
         [Header("Objects")]
@@ -56,6 +61,7 @@ namespace Rhythm
         [Header("Beatmap")]
         [SerializeField] private BeatmapData _beatmapData;
         [SerializeField] private string _id;
+        [SerializeField] private Difficulty _difficulty;
 
         [Space(20)]
         [Header("Options")]
@@ -105,7 +111,7 @@ namespace Rhythm
             _soundPlayer = new SoundPlayer(_audioSource, data.Sound, sounds);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
-            _scoreManger = new ScoreManger();
+            _scoreManger = new ScoreManger(_difficulty, _lostRates, (1, 1), _playerHitPoint);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
             _noteJudge = new NoteJudge(_noteCreator, _scoreManger);

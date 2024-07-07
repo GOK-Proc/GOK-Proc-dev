@@ -763,6 +763,17 @@ MonoBehaviour:
   _cursorExtension: 0.12
   _cursorSpeed: 18
   _startDelay: 3
+  _playerHitPoint: 1000
+  _lostRates:
+  - _victory: 0.5
+    _overkill: 0.25
+    _knockout: 0.7
+  - _victory: 0.2
+    _overkill: 0.05
+    _knockout: 0.4
+  - _victory: 0.1
+    _overkill: 0.015
+    _knockout: 0.2
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
   _holdMaskParent: {fileID: 82430260}
@@ -812,6 +823,7 @@ MonoBehaviour:
   _sounds: []
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _id: sample
+  _difficulty: 1
   _baseScroll: 6
 --- !u!4 &1770842084
 Transform:
