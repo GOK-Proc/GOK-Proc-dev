@@ -1,4 +1,6 @@
-public enum NovelId
+﻿public enum NovelId
 {
-	None
+	None,
+	Ep1_1,
+	Ep1_3
 }

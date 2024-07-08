@@ -9,14 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5255daa65a2f36248ba56fbd6ee41ab1, type: 3}
-  m_Name: EpisodeData
+  m_Script: {fileID: 11500000, guid: bea60da3d91327742b330454bfe4d26d, type: 3}
+  m_Name: Ep1_1
   m_EditorClassIdentifier: 
-  _episodeFlags: {fileID: 11400000, guid: 93a1adb29502b3644b9591af525c4846, type: 2}
-  _dataList:
-  - _chapter: 0
-    _section: 0
-    _title: 
-    _episodeType: 0
-    _novelId: 0
-    _rhythmId: 0
