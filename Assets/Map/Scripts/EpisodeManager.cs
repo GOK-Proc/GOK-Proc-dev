@@ -1,53 +1,56 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EpisodeManager : MonoBehaviour
+namespace Map
 {
-	[SerializeField] private EpisodeData _episodeData;
-	[SerializeField] private EpisodeFlags _episodeFlags;
-
-	private Dictionary<(int, int), EpisodeInfomation> _dataDict;
-	private Dictionary<(int, int), bool> _flagsDict;
-
-	public EpisodeInfomation GetInfo((int, int) episodeId)
+	public class EpisodeManager : MonoBehaviour
 	{
-		if (_dataDict == null)
+		[SerializeField] private EpisodeData _episodeData;
+		[SerializeField] private EpisodeFlags _episodeFlags;
+
+		private Dictionary<(int, int), EpisodeInfomation> _dataDict;
+		private Dictionary<(int, int), bool> _flagsDict;
+
+		public EpisodeInfomation GetInfo((int, int) episodeId)
 		{
-			_dataDict = new Dictionary<(int, int), EpisodeInfomation>();
-			foreach (var episode in _episodeData.DataList)
+			if (_dataDict == null)
 			{
-				_dataDict.Add((episode.Chapter, episode.Section), episode);
+				_dataDict = new Dictionary<(int, int), EpisodeInfomation>();
+				foreach (var episode in _episodeData.DataList)
+				{
+					_dataDict.Add((episode.Chapter, episode.Section), episode);
+				}
+			}
+
+			if (_dataDict.ContainsKey(episodeId))
+			{
+				return _dataDict[episodeId];
+			}
+			else
+			{
+				return new EpisodeInfomation();
 			}
 		}
 
-		if (_dataDict.ContainsKey(episodeId))
+		public bool GetFlag((int, int) episodeId)
 		{
-			return _dataDict[episodeId];
-		}
-		else
-		{
-			return new EpisodeInfomation();
-		}
-	}
-
-	public bool GetFlag((int, int) episodeId)
-	{
-		if (_flagsDict == null)
-		{
-			_flagsDict = new Dictionary<(int, int), bool>();
-			foreach (var fp in _episodeFlags.FlagsList)
+			if (_flagsDict == null)
 			{
-				_flagsDict.Add(fp.Key, fp.Value);
+				_flagsDict = new Dictionary<(int, int), bool>();
+				foreach (var fp in _episodeFlags.FlagsList)
+				{
+					_flagsDict.Add(fp.Key, fp.Value);
+				}
 			}
-		}
 
-		if (_flagsDict.ContainsKey(episodeId))
-		{
-			return _flagsDict[episodeId];
-		}
-		else
-		{
-			return false;
+			if (_flagsDict.ContainsKey(episodeId))
+			{
+				return _flagsDict[episodeId];
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }
