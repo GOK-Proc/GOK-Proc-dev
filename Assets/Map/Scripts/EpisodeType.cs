@@ -1,5 +1,8 @@
-﻿public enum EpisodeType
+﻿namespace Map
 {
-	Novel,
-	Rhythm
+	public enum EpisodeType
+	{
+		Novel,
+		Rhythm
+	}
 }

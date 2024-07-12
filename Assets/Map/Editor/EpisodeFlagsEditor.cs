@@ -2,50 +2,53 @@
 using UnityEditor;
 using System.Reflection;
 
-[CustomEditor(typeof(EpisodeFlags))]
-public class EpisodeFlagsEditor : Editor
+namespace Map
 {
-	private EpisodeFlags _episodeFlags;
-	private MethodInfo _saveJsonInfo;
-	private MethodInfo _loadJsonInfo;
-
-	private void OnEnable()
+	[CustomEditor(typeof(EpisodeFlags))]
+	public class EpisodeFlagsEditor : Editor
 	{
-		_episodeFlags = (EpisodeFlags)target;
-		_saveJsonInfo = typeof(EpisodeFlags).GetMethod("SaveJson", BindingFlags.NonPublic | BindingFlags.Instance);
-		_loadJsonInfo = typeof(EpisodeFlags).GetMethod("LoadJson", BindingFlags.NonPublic | BindingFlags.Instance);
-	}
+		private EpisodeFlags _episodeFlags;
+		private MethodInfo _saveJsonInfo;
+		private MethodInfo _loadJsonInfo;
 
-	public override void OnInspectorGUI()
-	{
-		if (_episodeFlags != null)
+		private void OnEnable()
 		{
-			EditorGUILayout.LabelField("Flags", EditorStyles.boldLabel);
+			_episodeFlags = (EpisodeFlags)target;
+			_saveJsonInfo = typeof(EpisodeFlags).GetMethod("SaveJson", BindingFlags.NonPublic | BindingFlags.Instance);
+			_loadJsonInfo = typeof(EpisodeFlags).GetMethod("LoadJson", BindingFlags.NonPublic | BindingFlags.Instance);
+		}
 
-			if (_episodeFlags.FlagsList != null)
+		public override void OnInspectorGUI()
+		{
+			if (_episodeFlags != null)
 			{
-				foreach(var kvp  in _episodeFlags.FlagsList) 
+				EditorGUILayout.LabelField("Flags", EditorStyles.boldLabel);
+
+				if (_episodeFlags.FlagsList != null)
 				{
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField($"{kvp.Key.Item1}-{kvp.Key.Item2}", GUILayout.Width(100));
-					kvp.Value = EditorGUILayout.Toggle(kvp.Value);
-					EditorGUILayout.EndHorizontal();
+					foreach (var kvp in _episodeFlags.FlagsList)
+					{
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.LabelField($"{kvp.Key.Item1}-{kvp.Key.Item2}", GUILayout.Width(100));
+						kvp.Value = EditorGUILayout.Toggle(kvp.Value);
+						EditorGUILayout.EndHorizontal();
+					}
 				}
-			}
 
-			if (GUILayout.Button("SaveJson"))
-			{
-				_saveJsonInfo.Invoke(_episodeFlags, null);
-			}
+				if (GUILayout.Button("SaveJson"))
+				{
+					_saveJsonInfo.Invoke(_episodeFlags, null);
+				}
 
-			if(GUILayout.Button("LoadJson"))
-			{
-				_loadJsonInfo.Invoke(_episodeFlags, null);
-			}
+				if (GUILayout.Button("LoadJson"))
+				{
+					_loadJsonInfo.Invoke(_episodeFlags, null);
+				}
 
-			if (GUI.changed)
-			{
-				EditorUtility.SetDirty(target);
+				if (GUI.changed)
+				{
+					EditorUtility.SetDirty(target);
+				}
 			}
 		}
 	}

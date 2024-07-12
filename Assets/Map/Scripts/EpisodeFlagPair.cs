@@ -1,28 +1,31 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class EpisodeFlagPair
+namespace Map
 {
-	[SerializeField] private int _chapter;
-	[SerializeField] private int _section;
-
-	public (int, int) Key
+	[Serializable]
+	public class EpisodeFlagPair
 	{
-		get { return (_chapter, _section); }
-		private set
+		[SerializeField] private int _chapter;
+		[SerializeField] private int _section;
+
+		public (int, int) Key
 		{
-			_chapter = value.Item1;
-			_section = value.Item2;
+			get { return (_chapter, _section); }
+			private set
+			{
+				_chapter = value.Item1;
+				_section = value.Item2;
+			}
 		}
-	}
 
-	[SerializeField] private bool _value;
-	public bool Value { get { return _value; } set { _value = value; } }
+		[SerializeField] private bool _value;
+		public bool Value { get { return _value; } set { _value = value; } }
 
-	public EpisodeFlagPair((int, int) key, bool value)
-	{
-		Key = key;
-		Value = value;
+		public EpisodeFlagPair((int, int) key, bool value)
+		{
+			Key = key;
+			Value = value;
+		}
 	}
 }
