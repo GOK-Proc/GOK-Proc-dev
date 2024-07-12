@@ -5,27 +5,30 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class NovelOperation : MonoBehaviour
+namespace Novel
 {
-    [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private TextMeshProUGUI _dialogueText;
-    [SerializeField] private Image _backgroundImage;
-
-    [SerializeField] private GameObject _characterParent;
-
-    public void UpdateText(params object[] args)
+    public class NovelOperation : MonoBehaviour
     {
-        Debug.Log(args.Length);
+        [SerializeField] private TextMeshProUGUI _nameText;
+        [SerializeField] private TextMeshProUGUI _dialogueText;
+        [SerializeField] private Image _backgroundImage;
 
-        if (args.Length != 2)
+        [SerializeField] private GameObject _characterParent;
+
+        public void UpdateDialogue(params object[] args)
         {
-            throw new Exception("The number of paramaters is incorrect.");
+            Debug.Log(args.Length);
+
+            if (args.Length != 2)
+            {
+                throw new Exception("The number of paramaters is incorrect.");
+            }
+
+            string name = args[0].ToString();
+            string dialogue = args[1].ToString();
+
+            _nameText.text = name;
+            _dialogueText.text = dialogue;
         }
-
-        string name = args[0].ToString();
-        string dialogue = args[1].ToString();
-
-        _nameText.text = name;
-        _dialogueText.text = dialogue;
     }
 }
