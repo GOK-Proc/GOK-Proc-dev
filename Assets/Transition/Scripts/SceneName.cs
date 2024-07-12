@@ -1,7 +1,10 @@
-public enum SceneName
+﻿namespace Transition
 {
-    Map,
-    MusicSelection,
-    Novel,
-    Rhythm
+    public enum SceneName
+    {
+        Map,
+        MusicSelection,
+        Novel,
+        Rhythm
+    }
 }
