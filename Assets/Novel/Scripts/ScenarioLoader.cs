@@ -16,9 +16,7 @@ namespace Novel
 
                 if (items[0] != "")
                 {
-                    OperationData operationData = new OperationData();
-
-                    operationData.OperationType = OperationType.Dialogue;
+                    OperationData operationData = new DialogueData(items[0], items[1]);
                 }
             }
         }

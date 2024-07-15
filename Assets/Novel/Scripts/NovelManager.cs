@@ -26,12 +26,23 @@ namespace Novel
             }
         }
 
+        public void OnDestroy()
+        {
+            StartCoroutine(UnloadAsset());
+        }
+
         private IEnumerator LoadAsset()
         {
             var handle = Addressables.LoadAssetAsync<TextAsset>(_novelId.ToString());
             yield return handle;
 
             ScenarioLoader.MakeScenarioData(handle.Result);
+        }
+
+        private IEnumerator UnloadAsset()
+        {
+            // 後で書く
+            yield return null;
         }
     }
 }
