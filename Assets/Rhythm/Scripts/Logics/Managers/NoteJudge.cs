@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +8,13 @@ namespace Rhythm
     {
         private readonly INoteProvider _noteProvider;
         private readonly IJudgeCountable _judgeCountable;
+        private readonly IBattle _battle;
 
-        public NoteJudge(INoteProvider noteProvider, IJudgeCountable judgeCountable)
+        public NoteJudge(INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattle battle)
         {
             _noteProvider = noteProvider;
             _judgeCountable = judgeCountable;
+            _battle = battle;
         }
 
         public void Judge()
@@ -26,7 +28,7 @@ namespace Rhythm
                     if (judge != Judgement.Undefined)
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
-                        Debug.Log(judge);
+                        _battle.Hit(note.Color, note.IsLarge, judge);
                     }
                 }
             }

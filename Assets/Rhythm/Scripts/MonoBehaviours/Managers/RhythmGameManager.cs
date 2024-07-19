@@ -19,7 +19,9 @@ namespace Rhythm
         [Space(20)]
         [Header("Battle Settings")]
         [SerializeField] private float _playerHitPoint;
+        [SerializeField] private JudgeRate[] _judgeRates;
         [SerializeField] private LostRate[] _lostRates;
+        [SerializeField] private int _largeRate;
 
         [Space(20)]
         [Header("Objects")]
@@ -111,10 +113,14 @@ namespace Rhythm
             _soundPlayer = new SoundPlayer(_audioSource, data.Sound, sounds);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
-            _scoreManger = new ScoreManger(_difficulty, _lostRates, (1, 1), _playerHitPoint);
+
+            var noteCount = BeatmapLoader.GetNoteCount(notes, _largeRate);
+            Debug.Log(noteCount);
+
+            _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, noteCount, _playerHitPoint);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
-            _noteJudge = new NoteJudge(_noteCreator, _scoreManger);
+            _noteJudge = new NoteJudge(_noteCreator, _scoreManger, _scoreManger);
         }
 
         // Start is called before the first frame update
@@ -151,7 +157,13 @@ namespace Rhythm
                 yield return null;
             }
 
-            Debug.Log("Game End");
+            var judges = _scoreManger.JudgeCount;
+
+            Debug.Log("Perfect: " + judges.Perfect);
+            Debug.Log("Good: " + judges.Good);
+            Debug.Log("False: " + judges.False);
+            Debug.Log($"PlayerHP: {_scoreManger.PlayerHitPoint}/{_scoreManger.PlayerHitPointMax}");
+            Debug.Log($"EnemyHP: {_scoreManger.EnemyHitPoint}/{_scoreManger.EnemyHitPointMax}");
         }
 
     }

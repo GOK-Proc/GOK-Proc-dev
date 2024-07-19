@@ -764,6 +764,16 @@ MonoBehaviour:
   _cursorSpeed: 18
   _startDelay: 3
   _playerHitPoint: 1000
+  _judgeRates:
+  - _attack: 1
+    _defense: 0
+    _score: 1
+  - _attack: 0.5
+    _defense: 0.5
+    _score: 0.5
+  - _attack: 0
+    _defense: 1
+    _score: 0
   _lostRates:
   - _victory: 0.5
     _overkill: 0.25
@@ -774,6 +784,7 @@ MonoBehaviour:
   - _victory: 0.1
     _overkill: 0.015
     _knockout: 0.2
+  _largeRate: 5
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
   _holdMaskParent: {fileID: 82430260}
