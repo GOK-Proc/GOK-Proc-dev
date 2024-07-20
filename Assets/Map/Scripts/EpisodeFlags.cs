@@ -14,7 +14,7 @@ namespace Map
 #if UNITY_EDITOR
 		private readonly string PATH = Path.Combine(Application.dataPath, "Map/EpisodeFlags.json");
 #else
-	private readonly string PATH = Path.Combine(Application.persistentDataPath, "EpisodeFlags.json");
+		private readonly string PATH = Path.Combine(Application.persistentDataPath, "EpisodeFlags.json");
 #endif
 
 		private void OnEnable()
@@ -36,6 +36,15 @@ namespace Map
 			SaveJson();
 		}
 #endif
+
+		public void SetFlag((int, int) episodeId, bool value)
+		{
+			if (!value) return;
+
+			_flagsList.Select(flag => flag.Key == episodeId ? new EpisodeFlagPair(episodeId, true) : flag).ToList();
+
+			SaveJson();
+		}
 
 		private void SaveJson()
 		{

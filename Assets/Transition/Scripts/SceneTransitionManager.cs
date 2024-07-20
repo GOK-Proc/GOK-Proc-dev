@@ -2,19 +2,44 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using Map;
 
 namespace Transition
 {
 	public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
 	{
+		public static EpisodeType CurrentEpisodedType { get; private set; }
 		public static NovelId CurrentNovelId { get; private set; }
 		public static RhythmId CurrentRhythmId { get; private set; }
 		public static bool IsVs { get; private set; }
 
+		public static void TransitionToMap()
+		{
+			TransitionToScene(SceneName.Map);
+		}
+
+		public static void TransitionToMap(bool result)
+		{
+			EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
+		
+			switch(CurrentEpisodedType)
+			{
+				case EpisodeType.Novel:
+					episodeFlagManager.SetFlag(CurrentNovelId, result);
+					break;
+				case EpisodeType.Rhythm:
+					episodeFlagManager.SetFlag(CurrentRhythmId, result);
+					break;
+			}
+
+			TransitionToScene(SceneName.Map);
+		}
+		
 		public static void TransitionToNovel(NovelId novelId)
 		{
 			if (novelId == NovelId.None) return;
 
+			CurrentEpisodedType = EpisodeType.Novel;
 			CurrentNovelId = novelId;
 
 			TransitionToScene(SceneName.Novel);
@@ -24,14 +49,14 @@ namespace Transition
 		{
 			if (rhythmId == RhythmId.None) return;
 
+			CurrentEpisodedType = EpisodeType.Rhythm;
 			CurrentRhythmId = rhythmId;
 			IsVs = isVs;
 
 			TransitionToScene(SceneName.Rhythm);
 		}
 
-		// TODO: 各シーンへの遷移関数を定義したらprivateに
-		public static void TransitionToScene(SceneName sceneName)
+		private static void TransitionToScene(SceneName sceneName)
 		{
 			Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
 		}
