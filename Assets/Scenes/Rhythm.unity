@@ -752,17 +752,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _laneCount: 3
   _noteLayout:
-    FirstLaneX: -1.49
-    LaneDistanceX: 1.72
-    JudgeLineY: -4.21
-    BeginLineY: 6.5
-    DestroyLineY: -6.5
+    _firstLaneX: -1.49
+    _laneDistanceX: 1.72
+    _judgeLineY: -4.21
+    _beginLineY: 6.5
+    _destroyLineY: -6.5
   _judgeRange:
-    Perfect: 0.033
-    Good: 0.08
+    _perfect: 0.041666
+    _good: 0.083333
   _cursorExtension: 0.12
   _cursorSpeed: 18
   _startDelay: 3
+  _playerHitPoint: 1000
+  _judgeRates:
+  - _attack: 1
+    _defense: 0
+    _score: 1
+  - _attack: 0.5
+    _defense: 0.5
+    _score: 0.5
+  - _attack: 0
+    _defense: 1
+    _score: 0
+  _lostRates:
+  - _victory: 0.5
+    _overkill: 0.25
+    _knockout: 0.7
+  - _victory: 0.2
+    _overkill: 0.05
+    _knockout: 0.4
+  - _victory: 0.1
+    _overkill: 0.015
+    _knockout: 0.2
+  _largeRate: 5
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
   _holdMaskParent: {fileID: 82430260}
@@ -812,6 +834,7 @@ MonoBehaviour:
   _sounds: []
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _id: sample
+  _difficulty: 1
   _baseScroll: 6
 --- !u!4 &1770842084
 Transform:

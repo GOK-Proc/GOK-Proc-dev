@@ -36,7 +36,7 @@ namespace Rhythm
             Scroll,
         }
 
-        public static (NoteData[], double) Parse(TextAsset file, double offset, float baseScroll)
+        public static (NoteData[] notes, double endTime) Parse(TextAsset file, double offset, float baseScroll)
         {
             var text = file.text;
             var types = new Dictionary<char, (NoteColor, bool)>()
@@ -263,5 +263,49 @@ namespace Rhythm
 
             return (notes.ToArray(), endTime);
         }
+
+        public static (int attack, int defense) GetNoteCount(IEnumerable<NoteData> notes, int largeRate)
+        {
+            var attackCount = 0;
+            var defenseCount = 0;
+
+            void Add(NoteColor color, int increment)
+            {
+                switch (color)
+                {
+                    case NoteColor.Red:
+                        attackCount += increment;
+                        break;
+                    case NoteColor.Blue:
+                        defenseCount += increment;
+                        break;
+                }
+            }
+
+            foreach (var note in notes)
+            {
+                Add(note.Color, note.IsLarge ? largeRate : 1);
+
+                if (note.Length > 0 && note.Bpm > 0)
+                {
+                    if (note.Bpm > 0)
+                    {
+                        var deltaTime = 30 / note.Bpm;
+                        var time = note.JustTime + deltaTime;
+                        var endTime = note.JustTime + note.Length;
+
+                        while (time < endTime)
+                        {
+                            Add(note.Color, note.IsLarge ? largeRate : 1);
+                            time += deltaTime;
+                        }
+
+                        Add(note.Color, note.IsLarge ? largeRate : 1);
+                    }
+                }
+            }
+
+            return (attackCount, defenseCount);
+        } 
     }
 }
