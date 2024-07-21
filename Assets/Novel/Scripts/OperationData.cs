@@ -26,14 +26,22 @@ namespace Novel
     public class CharacterLayoutData : OperationData
     {
         public OperationType OperationType { get; } = OperationType.CharacterLayout;
-        public List<GameObject> CharacterLayoutList { get; }
+        public List<string> CharacterLayoutList { get; }
 
         public CharacterLayoutData(string characterLayout)
         {
-            foreach (string character in characterLayout.Split(" "))
-            {
+            CharacterLayoutList = new List<string>(characterLayout.Split(" "));
+        }
+    }
 
-            }
+    public class BackgroundData : OperationData
+    {
+        public OperationType OperationType { get; } = OperationType.Background;
+        public string Background { get; }
+
+        public BackgroundData(string background)
+        {
+            Background = background;
         }
     }
 }

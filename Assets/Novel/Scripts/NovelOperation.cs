@@ -15,17 +15,10 @@ namespace Novel
 
         [SerializeField] private GameObject _characterParent;
 
-        public void UpdateDialogue(params object[] args)
+        public void UpdateDialogue(DialogueData dialogueData)
         {
-            Debug.Log(args.Length);
-
-            if (args.Length != 2)
-            {
-                throw new Exception("The number of paramaters is incorrect.");
-            }
-
-            string name = args[0].ToString();
-            string dialogue = args[1].ToString();
+            string name = dialogueData.Name;
+            string dialogue = dialogueData.Dialogue;
 
             _nameText.text = name;
             _dialogueText.text = dialogue;

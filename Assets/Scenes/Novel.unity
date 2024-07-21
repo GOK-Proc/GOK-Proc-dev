@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c6520da14e18c4aa9bb43a867ab48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _novelId: 0
+  _novelId: 1
   _scenario: {fileID: 11400000, guid: bb923484de5c3e3449f6929cdf178005, type: 2}
   _novelOperation: {fileID: 1649501991}
   _currentLine: 0

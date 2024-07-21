@@ -1,6 +1,9 @@
-﻿public enum OperationType
+﻿namespace Novel
 {
-    Dialogue,
-    CharacterLayout,
-    Background
+    public enum OperationType
+    {
+        Dialogue,
+        CharacterLayout,
+        Background
+    }
 }
