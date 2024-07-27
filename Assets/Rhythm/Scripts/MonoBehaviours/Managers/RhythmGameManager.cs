@@ -8,6 +8,10 @@ namespace Rhythm
 {
     public class RhythmGameManager : MonoBehaviour
     {
+        [Header("Managers")]
+        [SerializeField] private UIManager _uiManager;
+
+        [Space(20)]
         [Header("Rhythm Settings")]
         [SerializeField] private int _laneCount;
         [SerializeField] private NoteLayout _noteLayout;
@@ -114,10 +118,7 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
 
-            var noteCount = BeatmapLoader.GetNoteCount(notes, _largeRate);
-            Debug.Log(noteCount);
-
-            _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, noteCount, _playerHitPoint);
+            _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
             _noteJudge = new NoteJudge(_noteCreator, _scoreManger, _scoreManger);
@@ -162,8 +163,6 @@ namespace Rhythm
             Debug.Log("Perfect: " + judges.Perfect);
             Debug.Log("Good: " + judges.Good);
             Debug.Log("False: " + judges.False);
-            Debug.Log($"PlayerHP: {_scoreManger.PlayerHitPoint}/{_scoreManger.PlayerHitPointMax}");
-            Debug.Log($"EnemyHP: {_scoreManger.EnemyHitPoint}/{_scoreManger.EnemyHitPointMax}");
         }
 
     }
