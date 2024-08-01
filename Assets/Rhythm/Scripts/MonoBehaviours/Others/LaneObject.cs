@@ -13,6 +13,7 @@ namespace Rhythm
         [SerializeField] protected NoteColor _color;
         [SerializeField] protected bool _isLarge;
 
+        public int Lane => _lane;
         public NoteColor Color => _color;
         public bool IsLarge => _isLarge;
 

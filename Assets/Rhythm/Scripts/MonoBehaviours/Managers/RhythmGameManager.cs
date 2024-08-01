@@ -121,49 +121,48 @@ namespace Rhythm
             _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
-            _noteJudge = new NoteJudge(_noteCreator, _scoreManger, _scoreManger);
+            _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
         }
 
         // Start is called before the first frame update
         private void Start()
         {
+            IEnumerator RhythmGameUpdate()
+            {
+                _timeManager.StartTimer(-_startDelay);
+
+                while (_timeManager.Time < Time.deltaTime / 2)
+                {
+                    _noteCreator.Create();
+                    _inputManager.Update();
+                    _cursorController.Move();
+                    _cursorController.Update();
+                    _noteJudge.Judge();
+
+                    yield return null;
+                }
+
+                _soundPlayer.PlayMusic();
+
+                while (_timeManager.Time < _endTime)
+                {
+                    _noteCreator.Create();
+                    _inputManager.Update();
+                    _cursorController.Move();
+                    _cursorController.Update();
+                    _noteJudge.Judge();
+
+                    yield return null;
+                }
+
+                var judges = _scoreManger.JudgeCount;
+
+                Debug.Log("Perfect: " + judges.Perfect);
+                Debug.Log("Good: " + judges.Good);
+                Debug.Log("False: " + judges.False);
+            }
+
             StartCoroutine(RhythmGameUpdate());
         }
-
-        private IEnumerator RhythmGameUpdate()
-        {
-            _timeManager.StartTimer(-_startDelay);
-
-            while (_timeManager.Time < Time.deltaTime / 2)
-            {
-                _noteCreator.Create();
-                _inputManager.Update();
-                _cursorController.Move();
-                _cursorController.Update();
-                _noteJudge.Judge();
-
-                yield return null;
-            }
-
-            _soundPlayer.PlayMusic();
-
-            while (_timeManager.Time < _endTime)
-            {
-                _noteCreator.Create();
-                _inputManager.Update();
-                _cursorController.Move();
-                _cursorController.Update();
-                _noteJudge.Judge();
-
-                yield return null;
-            }
-
-            var judges = _scoreManger.JudgeCount;
-
-            Debug.Log("Perfect: " + judges.Perfect);
-            Debug.Log("Good: " + judges.Good);
-            Debug.Log("False: " + judges.False);
-        }
-
     }
 }

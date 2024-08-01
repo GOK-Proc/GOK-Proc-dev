@@ -1,16 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IUI
+    public class UIManager : MonoBehaviour, IGaugeDrawer, IEffectDrawer
     {
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
+        [SerializeField] private FrameEffect[] _judgeEffectPrefabs;
+        [SerializeField] private Transform _effectParent;
 
         private Transform _playerGauge;
         private Transform _enemyGauge;
+
+        private ObjectPool<FrameEffect>[] _judgeEffectPools;
 
         [System.Serializable]
         private struct GaugeColor
@@ -36,6 +42,8 @@ namespace Rhythm
             _enemyGaugePosition = _enemyGauge.position;
             _playerGaugeScale = _playerGauge.localScale;
             _enemyGaugeScale = _enemyGauge.localScale;
+
+            _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<FrameEffect>(x, _effectParent, x => x.Initialize())).ToArray();
         }
 
         public void UpdateHitPointGauge(float playerHitPoint, float playerHitPointMax, float enemyHitPoint, float enemyHitPointMax)
@@ -67,6 +75,18 @@ namespace Rhythm
                     <= 0.5f => _gaugeColor.Damaged,
                     _ => _gaugeColor.Normal,
                 };
+            }
+        }
+
+        public void DrawJudgeEffect(Vector3 position, Judgement judgement)
+        {
+            switch (judgement)
+            {
+                case Judgement.Perfect:
+                case Judgement.Good:
+                    IDisposable disposable = _judgeEffectPools[(int)judgement - 1].Create(out var obj, out var _);
+                    obj.PlayEffect(position, disposable);
+                    break;
             }
         }
     }

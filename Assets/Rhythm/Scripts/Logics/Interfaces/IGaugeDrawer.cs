@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public interface IUI
+    public interface IGaugeDrawer
     {
         void UpdateHitPointGauge(float playerHitPoint, float playerHitPointMax, float enemyHitPoint, float enemyHitPointMax);
     }
