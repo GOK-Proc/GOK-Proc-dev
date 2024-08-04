@@ -6,17 +6,32 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IGaugeDrawer, IEffectDrawer
+    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable
     {
+        [SerializeField] private Vector2 _screenUpperLeft;
+        [SerializeField] private Vector2 _screenLowerRight;
+
+        [Space(20)]
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
+
+        [System.Serializable]
+        private struct EffectPrefab<T> where T : FrameEffect
+        {
+            public NoteColor Color;
+            public bool IsLarge;
+            public T Prefab;
+        }
+
         [SerializeField] private FrameEffect[] _judgeEffectPrefabs;
+        [SerializeField] private EffectPrefab<FrameEffect>[] _battleEffectPrefabs;
         [SerializeField] private Transform _effectParent;
 
         private Transform _playerGauge;
         private Transform _enemyGauge;
 
         private ObjectPool<FrameEffect>[] _judgeEffectPools;
+        private Dictionary<(NoteColor, bool), ObjectPool<FrameEffect>> _battleEffectPools;
 
         [System.Serializable]
         private struct GaugeColor
@@ -44,6 +59,7 @@ namespace Rhythm
             _enemyGaugeScale = _enemyGauge.localScale;
 
             _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<FrameEffect>(x, _effectParent, x => x.Initialize())).ToArray();
+            _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<FrameEffect>(x.Prefab, _effectParent, x => x.Initialize()));
         }
 
         public void UpdateHitPointGauge(float playerHitPoint, float playerHitPointMax, float enemyHitPoint, float enemyHitPointMax)
@@ -85,7 +101,19 @@ namespace Rhythm
                 case Judgement.Perfect:
                 case Judgement.Good:
                     IDisposable disposable = _judgeEffectPools[(int)judgement - 1].Create(out var obj, out var _);
-                    obj.PlayEffect(position, disposable);
+                    obj.Play(position, Vector3.zero, Vector3.zero, (_screenUpperLeft, _screenLowerRight), false, disposable);
+                    break;
+            }
+        }
+
+        public void DrawBattleEffect(Vector3 position, NoteColor color, bool isLarge, Judgement judgement)
+        {
+            switch (judgement)
+            {
+                case Judgement.Perfect:
+                case Judgement.Good:
+                    IDisposable disposable = _battleEffectPools[(color, isLarge)].Create(out var obj, out var _);
+                    obj.Play(position, new Vector3(15f, 5f, 0f), new Vector3(0f, 0f, 0f), (_screenUpperLeft, _screenLowerRight), true, disposable);
                     break;
             }
         }

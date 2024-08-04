@@ -267,11 +267,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fe88be9e613314a865b3882a6a484a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _screenUpperLeft: {x: -9.6, y: 5.4}
+  _screenLowerRight: {x: 9.6, y: -5.4}
   _playerGaugeRenderer: {fileID: 1304861305}
   _enemyGaugeRenderer: {fileID: 1866404227}
   _judgeEffectPrefabs:
   - {fileID: 9044112697064286659, guid: 9bf9a13f8aeb283419c38fdf10e7272d, type: 3}
   - {fileID: 35284485665548052, guid: f3b65c7a48d903e43bc2cd4b4457ca1a, type: 3}
+  _battleEffectPrefabs:
+  - Color: 1
+    IsLarge: 0
+    Prefab: {fileID: -4942078431909976218, guid: bea6159a675a58542b8bea9107762f1f, type: 3}
+  - Color: 2
+    IsLarge: 0
+    Prefab: {fileID: -4942078431909976218, guid: eed01fccde76d364298590bcf5e5c958, type: 3}
+  - Color: 1
+    IsLarge: 1
+    Prefab: {fileID: -4942078431909976218, guid: bcccd821edd5b164799472de16676b4d, type: 3}
+  - Color: 2
+    IsLarge: 1
+    Prefab: {fileID: -4942078431909976218, guid: 6933431dfbb014548a21141583bd7f77, type: 3}
   _effectParent: {fileID: 1644396144}
   _gaugeColor:
     Normal: {r: 0, g: 0.8627451, b: 0, a: 1}
@@ -1496,7 +1511,7 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _id: sample
   _difficulty: 1
-  _baseScroll: 6
+  _baseScroll: 10
 --- !u!4 &1770842084
 Transform:
   m_ObjectHideFlags: 0

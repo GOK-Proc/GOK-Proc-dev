@@ -10,15 +10,15 @@ namespace Rhythm
         private readonly INoteProvider _noteProvider;
         private readonly IJudgeCountable _judgeCountable;
         private readonly IBattle _battle;
-        private readonly IEffectDrawer _effectDrawer;
+        private readonly IEffectDrawable _effectDrawable;
 
-        public NoteJudge(NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattle battle, IEffectDrawer effectDrawer)
+        public NoteJudge(NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattle battle, IEffectDrawable effectDrawable)
         {
             _layout = layout;
             _noteProvider = noteProvider;
             _judgeCountable = judgeCountable;
             _battle = battle;
-            _effectDrawer = effectDrawer;
+            _effectDrawable = effectDrawable;
         }
 
         public void Judge()
@@ -33,7 +33,8 @@ namespace Rhythm
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
                         _battle.Hit(note.Color, note.IsLarge, judge);
-                        _effectDrawer.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
+                        _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
+                        _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge);
                     }
                 }
             }

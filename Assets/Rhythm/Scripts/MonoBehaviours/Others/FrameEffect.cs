@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public class FrameEffect : RhythmGameObject
+    public class FrameEffect : AccelerateObject
     {
         [SerializeField] private Sprite[] _sprites;
         [SerializeField] private float _frameTime;
@@ -18,21 +18,24 @@ namespace Rhythm
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        public void PlayEffect(Vector3 position, IDisposable disposable)
+        public void Play(Vector3 position, Vector3 velocity, Vector3 acceleration, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, bool isLoop, IDisposable disposable)
         {
 
             IEnumerator Effect(Action callBack)
             {
-                foreach (var sprite in _sprites)
+                do
                 {
-                    _spriteRenderer.sprite = sprite;
-                    yield return new WaitForSeconds(_frameTime);
-                }
+                    foreach (var sprite in _sprites)
+                    {
+                        _spriteRenderer.sprite = sprite;
+                        yield return new WaitForSeconds(_frameTime);
+                    }
+                } while (isLoop);
                 callBack?.Invoke();
             }
 
             _spriteRenderer.sprite = _sprites.FirstOrDefault();
-            Create(position, Vector3.zero, (new Vector2(-9.6f, 5.4f), new Vector2(9.6f, -5.4f)), disposable);
+            Create(position, velocity, acceleration, survivalRect, disposable);
             StartCoroutine(Effect(_onDestroy));
         }
     }

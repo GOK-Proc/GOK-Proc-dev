@@ -15,7 +15,7 @@ namespace Rhythm
 
         private readonly IList<JudgeRate> _judgeRates;
 
-        private readonly IGaugeDrawer _gaugeDrawer;
+        private readonly IGaugeDrawable _gaugeDrawable;
 
         private float _playerHitPoint;
         private float _enemyHitPoint;
@@ -25,7 +25,7 @@ namespace Rhythm
         public float PlayerHitPoint => _playerHitPoint;
         public float EnemyHitPoint => _enemyHitPoint;
 
-        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawer gaugeDrawer)
+        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable)
         {
             _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length];
             _judgeRates = judgeRates;
@@ -43,7 +43,7 @@ namespace Rhythm
             _playerBasicDamage = _playerHitPointMax / (noteCount.defense * knockout);
             _enemyBasicDamage = _playerHitPointMax * (knockout - victory) / (noteCount.attack * knockout * (victory - overkill));
 
-            _gaugeDrawer = gaugeDrawer;
+            _gaugeDrawable = gaugeDrawable;
         }
 
         public JudgeCount JudgeCount { get => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]); }
@@ -70,7 +70,7 @@ namespace Rhythm
                     break;
             }
 
-            _gaugeDrawer.UpdateHitPointGauge(_playerHitPoint, _playerHitPointMax, _enemyHitPoint, _enemyHitPointMax);
+            _gaugeDrawable.UpdateHitPointGauge(_playerHitPoint, _playerHitPointMax, _enemyHitPoint, _enemyHitPointMax);
         }
     }
 }
