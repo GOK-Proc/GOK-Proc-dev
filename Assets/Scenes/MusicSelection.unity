@@ -589,9 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3abfe87e22b194ea0e6da09ca53f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
-  uiElementParent: {fileID: 1608349275}
-  musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
+  _uiElementParent: {fileID: 1608349275}
+  _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
 --- !u!4 &1114070505
 Transform:
   m_ObjectHideFlags: 0

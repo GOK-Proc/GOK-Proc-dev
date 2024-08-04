@@ -8,9 +8,9 @@ namespace MusicSelection
     {
         private EventSystem _eventSystem;
 
-        [SerializeField] private BeatmapData beatmapData;
-        [SerializeField] private GameObject uiElementParent;
-        [SerializeField] private GameObject musicUIElementPrefab;
+        [SerializeField] private BeatmapData _beatmapData;
+        [SerializeField] private GameObject _uiElementParent;
+        [SerializeField] private GameObject _musicUIElementPrefab;
 
         protected override void Awake()
         {
@@ -24,9 +24,9 @@ namespace MusicSelection
         {
             var isFirst = true;
             var posY = 0f;
-            foreach (var beatmapInfo in beatmapData.BeatmapDictionary.Values)
+            foreach (var beatmapInfo in _beatmapData.BeatmapDictionary.Values)
             {
-                var element = Instantiate(musicUIElementPrefab, uiElementParent.transform)
+                var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
                 element.Init(beatmapInfo);
 
