@@ -8,9 +8,10 @@ namespace MusicSelection
     {
         private EventSystem _eventSystem;
 
-        [SerializeField] private BeatmapData beatmapData;
-        [SerializeField] private GameObject uiElementParent;
-        [SerializeField] private GameObject musicUIElementPrefab;
+        [SerializeField] private BeatmapData _beatmapData;
+        [SerializeField] private GameObject _uiElementParent;
+        [SerializeField] private GameObject _musicUIElementPrefab;
+        [SerializeField] private Thumbnail _thumbnail;
 
         protected override void Awake()
         {
@@ -23,15 +24,18 @@ namespace MusicSelection
         private void GenerateUIElements()
         {
             var isFirst = true;
-            foreach (var beatmapInfo in beatmapData.BeatmapDictionary.Values)
+            var posY = 0f;
+            foreach (var beatmapInfo in _beatmapData.BeatmapDictionary.Values)
             {
-                var element = Instantiate(musicUIElementPrefab, uiElementParent.transform)
+                var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
-                element.Init(beatmapInfo);
+                element.Init(beatmapInfo, _thumbnail);
 
-                // TODO: UI要素の配置
-                // 配置が決定していない + 曲一覧データがまだないため，後回し
-                // Grid Layout Groupが使えるか？
+                var rectTransform = element.gameObject.GetComponent<RectTransform>();
+                var pos = rectTransform.localPosition;
+                pos.y = posY;
+                rectTransform.localPosition = pos;
+                posY += 100f;
 
                 if (!isFirst) continue;
                 _eventSystem.firstSelectedGameObject = element.gameObject;

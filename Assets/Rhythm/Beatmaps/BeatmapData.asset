@@ -17,6 +17,6 @@ MonoBehaviour:
     _title: Main Theme
     _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
     _offset: 1.2
-    _composer: 
-    _notesDesigner: 
+    _composer: sample composer
+    _notesDesigner: sample notes designer
     _file: {fileID: 4900000, guid: 71960d23631c4be4e95f331b61e0d9cf, type: 3}
