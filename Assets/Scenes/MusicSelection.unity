@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 275685220}
   - component: {fileID: 275685219}
   m_Layer: 5
-  m_Name: ConposerNameText
+  m_Name: ConposerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 675124264}
   - component: {fileID: 675124263}
   m_Layer: 5
-  m_Name: MusicTitleText
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,6 +592,7 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _uiElementParent: {fileID: 1608349275}
   _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _thumbnail: {fileID: 1671466897}
 --- !u!4 &1114070505
 Transform:
   m_ObjectHideFlags: 0
@@ -803,7 +804,7 @@ GameObject:
   - component: {fileID: 1608349278}
   - component: {fileID: 1608349277}
   m_Layer: 5
-  m_Name: MusicSelectionPanel
+  m_Name: MusicSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -878,8 +879,9 @@ GameObject:
   - component: {fileID: 1671466894}
   - component: {fileID: 1671466896}
   - component: {fileID: 1671466895}
+  - component: {fileID: 1671466897}
   m_Layer: 5
-  m_Name: ThumbnailPanel
+  m_Name: Thumbnail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -945,6 +947,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671466893}
   m_CullTransparentMesh: 1
+--- !u!114 &1671466897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671466893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d34caf9b86dd9549a2962f74255d56d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1799237809}
+  _titleText: {fileID: 675124263}
+  _composerText: {fileID: 275685219}
 --- !u!1 &1782718320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,7 +1100,7 @@ GameObject:
   - component: {fileID: 1799237810}
   - component: {fileID: 1799237809}
   m_Layer: 5
-  m_Name: Thumbnail
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

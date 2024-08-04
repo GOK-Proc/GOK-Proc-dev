@@ -10,12 +10,24 @@ namespace MusicSelection
     {
         private RhythmId _rhythmId;
         private BeatmapInformation _beatmapInfo;
+        private Thumbnail _thumbnail;
 
-        public void Init(BeatmapInformation info)
+        public void Init(BeatmapInformation info, Thumbnail thumbnail)
         {
             _beatmapInfo = info;
-            _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
-            GetComponent<TextMeshPro>().text = info.Title;
+            try
+            {
+                // TODO:
+                // issue#59 RhythmIdの自動生成ができていないとArgumentException
+                _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
+            }
+            catch
+            {
+                // Do nothing
+            }
+
+            _thumbnail = thumbnail;
+            GetComponent<TextMeshProUGUI>().text = info.Title;
         }
 
         public void OnSubmit()
@@ -28,6 +40,11 @@ namespace MusicSelection
             // モードセレクトSceneへ
             // SceneTransitionManager.TransitionTo();
             Debug.Log("OnCancel()が実行されました");
+        }
+
+        public void OnSelect()
+        {
+            _thumbnail.Set(null, _beatmapInfo);
         }
     }
 }

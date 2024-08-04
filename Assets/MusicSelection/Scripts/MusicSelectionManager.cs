@@ -11,6 +11,7 @@ namespace MusicSelection
         [SerializeField] private BeatmapData _beatmapData;
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
+        [SerializeField] private Thumbnail _thumbnail;
 
         protected override void Awake()
         {
@@ -28,7 +29,7 @@ namespace MusicSelection
             {
                 var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
-                element.Init(beatmapInfo);
+                element.Init(beatmapInfo, _thumbnail);
 
                 var rectTransform = element.gameObject.GetComponent<RectTransform>();
                 var pos = rectTransform.localPosition;
