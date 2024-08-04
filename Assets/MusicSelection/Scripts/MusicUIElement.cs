@@ -11,9 +11,6 @@ namespace MusicSelection
         private RhythmId _rhythmId;
         private BeatmapInformation _beatmapInfo;
 
-        private static GameObject _prefab;
-        private static GameObject _parent;
-
         public void Init(BeatmapInformation info)
         {
             _beatmapInfo = info;
