@@ -1,5 +1,6 @@
 using System;
 using Rhythm;
+using TMPro;
 using UnityEngine;
 using Transition;
 
@@ -17,6 +18,7 @@ namespace MusicSelection
         {
             _beatmapInfo = info;
             _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
+            GetComponent<TextMeshPro>().text = info.Title;
         }
 
         public void OnSubmit()

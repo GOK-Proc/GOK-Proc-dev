@@ -23,15 +23,18 @@ namespace MusicSelection
         private void GenerateUIElements()
         {
             var isFirst = true;
+            var posY = 0f;
             foreach (var beatmapInfo in beatmapData.BeatmapDictionary.Values)
             {
                 var element = Instantiate(musicUIElementPrefab, uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
                 element.Init(beatmapInfo);
 
-                // TODO: UI要素の配置
-                // 配置が決定していない + 曲一覧データがまだないため，後回し
-                // Grid Layout Groupが使えるか？
+                var rectTransform = element.gameObject.GetComponent<RectTransform>();
+                var pos = rectTransform.localPosition;
+                pos.y = posY;
+                rectTransform.localPosition = pos;
+                posY += 100f;
 
                 if (!isFirst) continue;
                 _eventSystem.firstSelectedGameObject = element.gameObject;
