@@ -14,22 +14,22 @@ namespace Map
 		private readonly string PATH = Path.Combine(Application.persistentDataPath, "EpisodeFlags.json");
 #endif
 
-		[SerializeField] private List<EpisodeFlagPair> _flagsList;
-		public List<EpisodeFlagPair> FlagsList { get { return _flagsList; } private set { _flagsList = value; } }
+		[SerializeField] private List<EpisodeFlagPair> _flagList;
+		public List<EpisodeFlagPair> FlagList { get { return _flagList; } private set { _flagList = value; } }
 
-		private Dictionary<(int, int), bool> _flagsDict;
-		public Dictionary<(int, int), bool> FlagsDict
+		private Dictionary<(int, int), bool> _flagDict;
+		public Dictionary<(int, int), bool> FlagDict
 		{
 			get
 			{
-				if(FlagsDict == null) InitializeDictionary();
+				if(FlagDict == null) InitializeDictionary();
 				
-				return _flagsDict;
+				return _flagDict;
 			}
 
 			private set
 			{
-				_flagsDict = value;
+				_flagDict = value;
 			}
 		}
 
@@ -40,13 +40,13 @@ namespace Map
 
 		private void InitializeDictionary()
 		{
-			FlagsDict = new Dictionary<(int, int), bool>();
+			FlagDict = new Dictionary<(int, int), bool>();
 
-			foreach(var fp in FlagsList)
+			foreach(var fp in FlagList)
 			{
-				if(!FlagsDict.ContainsKey(fp.Key))
+				if(!FlagDict.ContainsKey(fp.Key))
 				{
-					FlagsDict.Add(fp.Key, fp.Value);
+					FlagDict.Add(fp.Key, fp.Value);
 				}
 			}
 		}
@@ -55,7 +55,7 @@ namespace Map
 		{
 			if (!value) return;
 
-			_flagsList.Select(flag => flag.Key == episodeId ? new EpisodeFlagPair(episodeId, true) : flag).ToList();
+			_flagList.Select(flag => flag.Key == episodeId ? new EpisodeFlagPair(episodeId, true) : flag).ToList();
 
 			SaveJson();
 		}
@@ -87,13 +87,13 @@ namespace Map
 #if UNITY_EDITOR
 		public void ResetFlags(EpisodeData episodeData)
 		{
-			FlagsList.Clear();
+			FlagList.Clear();
 			foreach (var episode in episodeData.DataList)
 			{
-				FlagsList.Add(new EpisodeFlagPair((episode.Chapter, episode.Section), false));
+				FlagList.Add(new EpisodeFlagPair((episode.Chapter, episode.Section), false));
 			}
 
-			FlagsList = FlagsList.OrderBy(kvp => kvp.Key.Item1).ThenBy(kvp => kvp.Key.Item2).ToList();
+			FlagList = FlagList.OrderBy(kvp => kvp.Key.Item1).ThenBy(kvp => kvp.Key.Item2).ToList();
 
 			SaveJson();
 		}
