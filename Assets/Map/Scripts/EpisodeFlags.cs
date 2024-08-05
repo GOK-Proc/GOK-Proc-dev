@@ -8,34 +8,48 @@ namespace Map
 	[CreateAssetMenu]
 	public class EpisodeFlags : ScriptableObject
 	{
-		[SerializeField] private List<EpisodeFlagPair> _flagsList;
-		public List<EpisodeFlagPair> FlagsList { get { return _flagsList; } private set { _flagsList = value; } }
-
 #if UNITY_EDITOR
 		private readonly string PATH = Path.Combine(Application.dataPath, "Map/EpisodeFlags.json");
 #else
 		private readonly string PATH = Path.Combine(Application.persistentDataPath, "EpisodeFlags.json");
 #endif
 
+		[SerializeField] private List<EpisodeFlagPair> _flagsList;
+		public List<EpisodeFlagPair> FlagsList { get { return _flagsList; } private set { _flagsList = value; } }
+
+		private Dictionary<(int, int), bool> _flagsDict;
+		public Dictionary<(int, int), bool> FlagsDict
+		{
+			get
+			{
+				if(FlagsDict == null) InitializeDictionary();
+				
+				return _flagsDict;
+			}
+
+			private set
+			{
+				_flagsDict = value;
+			}
+		}
+
 		private void OnEnable()
 		{
 			LoadJson();
 		}
 
-#if UNITY_EDITOR
-		public void ResetFlags(EpisodeData episodeData)
+		private void InitializeDictionary()
 		{
-			FlagsList.Clear();
-			foreach (var episode in episodeData.DataList)
+			FlagsDict = new Dictionary<(int, int), bool>();
+
+			foreach(var fp in FlagsList)
 			{
-				FlagsList.Add(new EpisodeFlagPair((episode.Chapter, episode.Section), false));
+				if(!FlagsDict.ContainsKey(fp.Key))
+				{
+					FlagsDict.Add(fp.Key, fp.Value);
+				}
 			}
-
-			FlagsList = FlagsList.OrderBy(kvp => kvp.Key.Item1).ThenBy(kvp => kvp.Key.Item2).ToList();
-
-			SaveJson();
 		}
-#endif
 
 		public void SetFlag((int, int) episodeId, bool value)
 		{
@@ -69,5 +83,20 @@ namespace Map
 				JsonUtility.FromJsonOverwrite(json, this);
 			}
 		}
+
+#if UNITY_EDITOR
+		public void ResetFlags(EpisodeData episodeData)
+		{
+			FlagsList.Clear();
+			foreach (var episode in episodeData.DataList)
+			{
+				FlagsList.Add(new EpisodeFlagPair((episode.Chapter, episode.Section), false));
+			}
+
+			FlagsList = FlagsList.OrderBy(kvp => kvp.Key.Item1).ThenBy(kvp => kvp.Key.Item2).ToList();
+
+			SaveJson();
+		}
+#endif
 	}
 }
