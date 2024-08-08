@@ -40,14 +40,22 @@ namespace Rhythm
             };
         }
 
-        public void Play(Vector3 position)
+        public void Play(Vector3 position, Action<Transform, SpriteRenderer, Action> onPlay = null)
         {
             transform.position = position;
             gameObject.SetActive(true);
-            _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
+
+            if (onPlay is not null)
+            {
+                onPlay.Invoke(transform, _spriteRenderer, () => Stop());
+            }
+            else
+            {
+                _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
+            }
         }
 
-        public void PlayAnimation(Vector3 position, bool isLoop = false)
+        public void PlayAnimation(Vector3 position, bool isLoop = false, Action<Transform, SpriteRenderer, Action> onPlay = null)
         {
             IEnumerator Effect()
             {
@@ -65,19 +73,35 @@ namespace Rhythm
             transform.position = position;
             _spriteRenderer.sprite = _sprites.FirstOrDefault();
             gameObject.SetActive(true);
-            _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
-            StartCoroutine(Effect());
-        }
 
-        public void Stop()
-        {
-            if (_onStop is not null)
+            if (onPlay is not null)
             {
-                _onStop.Invoke(transform, _spriteRenderer, _destroyer);
+                onPlay.Invoke(transform, _spriteRenderer, () => Stop());
             }
             else
             {
-                _destroyer?.Invoke();
+                _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
+            }
+
+            StartCoroutine(Effect());
+        }
+
+        public void Stop(Action<Transform, SpriteRenderer, Action> onStop = null)
+        {
+            if (onStop is not null)
+            {
+                onStop.Invoke(transform, _spriteRenderer, _destroyer);
+            }
+            else
+            {
+                if (_onStop is not null)
+                {
+                    _onStop.Invoke(transform, _spriteRenderer, _destroyer);
+                }
+                else
+                {
+                    _destroyer?.Invoke();
+                }
             }
         }
     }
