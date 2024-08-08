@@ -12,7 +12,8 @@ namespace Rhythm
 
         private (Vector2 UpperLeft, Vector2 LowerRight) _survivalRect;
 
-        protected Action _onDestroy;
+        private Action _destroyer;
+        private Action<Action> _onCompleted;
 
         public bool IsAlive { get; protected set; } 
 
@@ -23,6 +24,11 @@ namespace Rhythm
 
         public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, IDisposable disposable)
         {
+            Create(position, velocity, survivalRect, null, disposable);
+        }
+
+        public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, Action<Action> onCompleted, IDisposable disposable)
+        {
             _position = position;
             _velocity = velocity;
             _survivalRect = survivalRect;
@@ -30,13 +36,13 @@ namespace Rhythm
             transform.position = _position;
             IsAlive = true;
 
-            _onDestroy = () =>
+            _destroyer = () =>
             {
-                IsAlive = false;
                 gameObject.SetActive(false);
                 disposable.Dispose();
             };
 
+            _onCompleted = onCompleted;
             gameObject.SetActive(true);
         }
 
@@ -71,7 +77,16 @@ namespace Rhythm
 
         protected void Destroy()
         {
-            _onDestroy?.Invoke();
+            IsAlive = false;
+
+            if (_onCompleted is not null)
+            {
+                _onCompleted.Invoke(_destroyer);
+            }
+            else
+            {
+                _destroyer?.Invoke();
+            }
         }
     }
 }

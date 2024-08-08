@@ -11,8 +11,13 @@ namespace Rhythm
 
         public void Create(Vector3 position, Vector3 velocity, Vector3 acceleration, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, IDisposable disposable)
         {
+            Create(position, velocity, acceleration, survivalRect, null, disposable);
+        }
+
+        public void Create(Vector3 position, Vector3 velocity, Vector3 acceleration, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, Action<Action> onCompleted, IDisposable disposable)
+        {
             _acceleration = acceleration;
-            Create(position, velocity, survivalRect, disposable);
+            Create(position, velocity, survivalRect, onCompleted, disposable);
         }
 
         protected override void Update()

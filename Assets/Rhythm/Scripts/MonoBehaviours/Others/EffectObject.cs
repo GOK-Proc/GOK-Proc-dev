@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
+namespace Rhythm
+{
+    public class EffectObject : MonoBehaviour
+    {
+        [SerializeField] private Sprite[] _sprites;
+        [SerializeField] private float _frameTime;
+
+        private SpriteRenderer _spriteRenderer;
+        private Action _destroyer;
+        private Action<Transform, SpriteRenderer, Action> _onPlay;
+        private Action<Transform, SpriteRenderer, Action> _onStop;
+
+
+        private void Awake()
+        {
+            gameObject.SetActive(false);
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        public void Create(IDisposable disposable)
+        {
+            Create(null, null, disposable);
+        }
+
+        public void Create(Action<Transform, SpriteRenderer, Action> onPlay, Action<Transform, SpriteRenderer, Action> onStop, IDisposable disposable)
+        {
+            _onPlay = onPlay;
+            _onStop = onStop;
+
+            _destroyer = () =>
+            {
+                gameObject.SetActive(false);
+                disposable.Dispose();
+            };
+        }
+
+        public void Play(Vector3 position)
+        {
+            transform.position = position;
+            gameObject.SetActive(true);
+            _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
+        }
+
+        public void PlayAnimation(Vector3 position, bool isLoop = false)
+        {
+            IEnumerator Effect()
+            {
+                do
+                {
+                    foreach (var sprite in _sprites)
+                    {
+                        _spriteRenderer.sprite = sprite;
+                        yield return new WaitForSeconds(_frameTime);
+                    }
+                } while (isLoop);
+                Stop();
+            }
+
+            transform.position = position;
+            _spriteRenderer.sprite = _sprites.FirstOrDefault();
+            gameObject.SetActive(true);
+            _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
+            StartCoroutine(Effect());
+        }
+
+        public void Stop()
+        {
+            if (_onStop is not null)
+            {
+                _onStop.Invoke(transform, _spriteRenderer, _destroyer);
+            }
+            else
+            {
+                _destroyer?.Invoke();
+            }
+        }
+    }
+}

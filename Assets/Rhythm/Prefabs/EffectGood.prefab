@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1101661426606489192}
   - component: {fileID: 8261919524696958976}
-  - component: {fileID: 35284485665548052}
+  - component: {fileID: -4556753196250216711}
   m_Layer: 0
   m_Name: EffectGood
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &35284485665548052
+--- !u!114 &-4556753196250216711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2534202122239405360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 912d577eedb181e48b66c29cbb04707f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c917b62d645a4848926772439e0328f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _sprites:

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5429113995877955873}
   - component: {fileID: 4836915499291429405}
-  - component: {fileID: -4942078431909976218}
+  - component: {fileID: 5696479486536050988}
   m_Layer: 0
   m_Name: EffectDefense
   m_TagString: Untagged
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ad74e144153804a4cb0e18f28a4e8462, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4942078431909976218
+--- !u!114 &5696479486536050988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2017378105510726470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 912d577eedb181e48b66c29cbb04707f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c917b62d645a4848926772439e0328f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprites:
-  - {fileID: 21300000, guid: ad74e144153804a4cb0e18f28a4e8462, type: 3}
-  _frameTime: 1
+  _sprites: []
+  _frameTime: 0

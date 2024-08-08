@@ -19,8 +19,13 @@ namespace Rhythm
 
         public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, IDisposable disposable)
         {
+            Create(position, velocity, survivalRect, lane, null, disposable);
+        }
+
+        public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, Action<Action> onCompleted, IDisposable disposable)
+        {
             _lane = lane;
-            Create(position, velocity, survivalRect, disposable);
+            Create(position, velocity, survivalRect, onCompleted, disposable);
         }
     }
 }
