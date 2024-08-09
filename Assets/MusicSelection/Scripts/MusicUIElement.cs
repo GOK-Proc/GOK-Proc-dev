@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Rhythm;
 using TMPro;
 using UnityEngine;
@@ -32,7 +32,9 @@ namespace MusicSelection
 
         public void OnSubmit()
         {
-            SceneTransitionManager.TransitionToRhythm(_rhythmId, false);
+            // TODO:
+            // issue#65 正しい難易度を渡す
+            SceneTransitionManager.TransitionToRhythm(_rhythmId, Difficulty.Undefined, false);
         }
 
         public void OnCancel()
