@@ -13,7 +13,7 @@ namespace Transition
 		public static NovelId CurrentNovelId { get; private set; }
 		public static RhythmId CurrentRhythmId { get; private set; }
 		public static Difficulty CurrentDifficulty { get; private set; }
-		public static bool IsVs { get; private set; }
+		public static bool CurrentIsVs { get; private set; }
 
 		public static void TransitionToMap()
 		{
@@ -54,7 +54,7 @@ namespace Transition
 			CurrentEpisodedType = EpisodeType.Rhythm;
 			CurrentRhythmId = rhythmId;
 			CurrentDifficulty = difficulty;
-			IsVs = isVs;
+			CurrentIsVs = isVs;
 
 			TransitionToScene(SceneName.Rhythm);
 		}
