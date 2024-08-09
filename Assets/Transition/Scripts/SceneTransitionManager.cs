@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using Map;
+using Rhythm;
 
 namespace Transition
 {
@@ -11,6 +12,7 @@ namespace Transition
 		public static EpisodeType CurrentEpisodedType { get; private set; }
 		public static NovelId CurrentNovelId { get; private set; }
 		public static RhythmId CurrentRhythmId { get; private set; }
+		public static Difficulty CurrentDifficulty { get; private set; }
 		public static bool IsVs { get; private set; }
 
 		public static void TransitionToMap()
@@ -45,12 +47,13 @@ namespace Transition
 			TransitionToScene(SceneName.Novel);
 		}
 
-		public static void TransitionToRhythm(RhythmId rhythmId, bool isVs = false)
+		public static void TransitionToRhythm(RhythmId rhythmId, Difficulty difficulty, bool isVs = false)
 		{
 			if (rhythmId == RhythmId.None) return;
 
 			CurrentEpisodedType = EpisodeType.Rhythm;
 			CurrentRhythmId = rhythmId;
+			CurrentDifficulty = difficulty;
 			IsVs = isVs;
 
 			TransitionToScene(SceneName.Rhythm);
