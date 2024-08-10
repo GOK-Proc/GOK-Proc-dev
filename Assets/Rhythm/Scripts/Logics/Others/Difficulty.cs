@@ -2,9 +2,8 @@
 {
     public enum Difficulty
     {
-        Undefined,
         Easy,
         Hard,
-        Expert,
+        Expert
     }
 }
