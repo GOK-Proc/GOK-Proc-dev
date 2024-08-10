@@ -34,7 +34,7 @@ namespace Rhythm
                         _judgeCountable.CountUpJudgeCounter(judge);
                         _battle.Hit(note.Color, note.IsLarge, judge);
                         _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
-                        _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge);
+                        _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge, note.Id);
                     }
                 }
             }

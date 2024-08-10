@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace Rhythm
 {
@@ -31,11 +29,13 @@ namespace Rhythm
         private readonly IList<Transform> _holdMasks;
 
         private readonly ITimeProvider _timeProvider;
+        private readonly IEffectDrawable _effectDrawable;
 
         private readonly List<Note> _notes;
+        private int _noteCount;
 
 
-        public NoteCreator(IList<NoteData> data, NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
+        public NoteCreator(IList<NoteData> data, NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
         {
             _data = data;
             _isCreated = data.Select(x => false).ToList();
@@ -47,8 +47,10 @@ namespace Rhythm
             _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(timeProvider, colorInputProvider)));
             _holdMasks = holdMasks;
             _timeProvider = timeProvider;
+            _effectDrawable = effectDrawable;
 
             _notes = new List<Note>();
+            _noteCount = 0;
         }
 
         public void Create()
@@ -56,7 +58,9 @@ namespace Rhythm
             (T obj, bool isNew) Create<T>(NoteData note, ObjectPool<T> pool, Vector3 pos, double time) where T : Note
             {
                 IDisposable disposable = pool.Create(out var obj, out var isNew);
-                obj.Create(pos, new Vector3(0f, -note.Speed), _survivalRect, note.Lane, time, disposable);
+                var id = _noteCount++;
+                obj.Create(pos, new Vector3(0f, -note.Speed), _survivalRect, note.Lane, time, id, disposable);
+                if (note.Color == NoteColor.Blue) _effectDrawable.DrawEnemyAttackEffect((float)(_effectDrawable.GetTimeToCreateEnemyAttackEffect(time) - _timeProvider.Time), id);
                 return (obj, isNew);
             }
 

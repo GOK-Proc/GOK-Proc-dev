@@ -120,7 +120,7 @@ namespace Rhythm
 
             _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
 
-            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
+            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
         }
 

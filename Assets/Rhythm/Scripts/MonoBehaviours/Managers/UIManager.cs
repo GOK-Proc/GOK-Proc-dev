@@ -12,9 +12,13 @@ namespace Rhythm
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
 
-        [SerializeField] private Vector3 _playerPosition;
-        [SerializeField] private Vector3 _enemyPosition;
-        [SerializeField] private float _battleEffectDuration;
+        [SerializeField] private Transform _player;
+        [SerializeField] private Transform _enemy;
+
+        [SerializeField] private float _attackEffectDuration;
+        [SerializeField] private float _defenseEffectDuration;
+        [SerializeField] private float _enemyAttackEffectDuration;
+        [SerializeField] private float _hitTimeRatio;
 
         [Space(20)]
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
@@ -30,13 +34,21 @@ namespace Rhythm
 
         [SerializeField] private EffectObject[] _judgeEffectPrefabs;
         [SerializeField] private EffectPrefab[] _battleEffectPrefabs;
+        [SerializeField] private EffectObject _enemyAttackEffectPrefabs;
         [SerializeField] private Transform _effectParent;
 
         private Transform _playerGauge;
         private Transform _enemyGauge;
 
+        private Vector3 _playerPosition;
+        private Vector3 _enemyPosition;
+        private Vector3 _playerGuardPosition;
+
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
+        private ObjectPool<EffectObject> _enemyAttackEffectPool;
+
+        private Dictionary<int, EffectObject> _enemyAttackEffects;
 
         [System.Serializable]
         private struct GaugeColor
@@ -55,6 +67,10 @@ namespace Rhythm
 
         private void Awake()
         {
+            _playerPosition = _player.position;
+            _enemyPosition = _enemy.position;
+            _playerGuardPosition = new Vector3(Mathf.Lerp(_enemyPosition.x, _playerPosition.x, _hitTimeRatio), _playerPosition.y, _playerPosition.z);
+
             _playerGauge = _playerGaugeRenderer.transform;
             _enemyGauge = _enemyGaugeRenderer.transform;
 
@@ -65,6 +81,8 @@ namespace Rhythm
 
             _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
+            _enemyAttackEffectPool = new ObjectPool<EffectObject>(_enemyAttackEffectPrefabs, _effectParent);
+            _enemyAttackEffects = new Dictionary<int, EffectObject>();
         }
 
         public void UpdateHitPointGauge(float playerHitPoint, float playerHitPointMax, float enemyHitPoint, float enemyHitPointMax)
@@ -112,7 +130,7 @@ namespace Rhythm
             }
         }
 
-        public void DrawBattleEffect(Vector3 position, NoteColor color, bool isLarge, Judgement judgement)
+        public void DrawBattleEffect(Vector3 position, NoteColor color, bool isLarge, Judgement judgement, int id)
         {
             switch (judgement)
             {
@@ -127,7 +145,7 @@ namespace Rhythm
                             obj.Create(
                                 (t, s, d) =>
                                 {
-                                    t.DOLocalMove(_enemyPosition, _battleEffectDuration).OnComplete(() =>
+                                    t.DOLocalMove(_enemyPosition, _attackEffectDuration).OnComplete(() =>
                                     {
                                         d?.Invoke();
                                     });
@@ -155,8 +173,17 @@ namespace Rhythm
                             obj.Create(
                                 (t, s, d) =>
                                 {
-                                    t.DOLocalMove(_playerPosition, _battleEffectDuration).OnComplete(() =>
+                                    t.DOLocalMove(_playerGuardPosition, _defenseEffectDuration).OnComplete(() =>
                                     {
+                                        if (_enemyAttackEffects.TryGetValue(id, out var attack))
+                                        {
+                                            attack.Stop((t, s, d) =>
+                                            {
+                                                t.DOKill();
+                                                s.DOKill();
+                                                d?.Invoke();
+                                            });
+                                        }
                                         d?.Invoke();
                                     });
                                 },
@@ -183,5 +210,58 @@ namespace Rhythm
                     break;
             }
         }
+
+        public void DrawEnemyAttackEffect(float delay, int id)
+        {
+
+            IDisposable disposable = _enemyAttackEffectPool.Create(out var obj, out var _);
+            obj.Create((t, s, d) =>
+            {
+                t.DOLocalMove(_playerPosition, 1f).OnComplete(() =>
+                {
+                    d?.Invoke();
+                }).SetEase(Ease.Linear);
+            },
+            (t, s, d) =>
+            {
+                var color = s.color;
+                var sequence = DOTween.Sequence();
+                sequence.Append(t.DOScale(1.5f, 0.3f));
+                sequence.Join(s.DOFade(0f, 0.3f));
+                sequence.Play().OnComplete(() =>
+                {
+                    t.localScale = Vector3.one;
+                    s.color = color;
+                    d?.Invoke();
+                });
+            },
+            disposable);
+
+            _enemyAttackEffects.Add(id, obj);
+
+            void Draw()
+            {
+                obj.Play(_enemyPosition);
+            }
+
+            if (delay > 0)
+            {
+                IEnumerator DelayedDraw()
+                {
+                    yield return new WaitForSeconds(delay);
+
+                    Draw();
+                }
+
+                StartCoroutine(DelayedDraw());
+            }
+            else
+            {
+                Draw();
+            }
+        }
+
+        public double GetTimeToCreateEnemyAttackEffect(double justTime) => justTime + _defenseEffectDuration - _hitTimeRatio * _enemyAttackEffectDuration;
+        
     }
 }
