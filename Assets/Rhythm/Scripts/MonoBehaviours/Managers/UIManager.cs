@@ -19,6 +19,7 @@ namespace Rhythm
         [SerializeField] private float _defenseEffectDuration;
         [SerializeField] private float _enemyAttackEffectDuration;
         [SerializeField] private float _hitTimeRatio;
+        [SerializeField] private float _shakeDuration;
 
         [Space(20)]
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
@@ -43,6 +44,9 @@ namespace Rhythm
         private Vector3 _playerPosition;
         private Vector3 _enemyPosition;
         private Vector3 _playerGuardPosition;
+
+        private Tweener _playerShakeTween;
+        private Tweener _enemyShakeTween;
 
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
@@ -74,8 +78,8 @@ namespace Rhythm
             _playerGauge = _playerGaugeRenderer.transform;
             _enemyGauge = _enemyGaugeRenderer.transform;
 
-            _playerGaugePosition = _playerGauge.position;
-            _enemyGaugePosition = _enemyGauge.position;
+            _playerGaugePosition = _playerGauge.localPosition;
+            _enemyGaugePosition = _enemyGauge.localPosition;
             _playerGaugeScale = _playerGauge.localScale;
             _enemyGaugeScale = _enemyGauge.localScale;
 
@@ -83,23 +87,20 @@ namespace Rhythm
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
             _enemyAttackEffectPool = new ObjectPool<EffectObject>(_enemyAttackEffectPrefabs, _effectParent);
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
+
+            _playerShakeTween = null;
+            _enemyShakeTween = null;
         }
 
-        public void UpdateHitPointGauge(float playerHitPoint, float playerHitPointMax, float enemyHitPoint, float enemyHitPointMax)
+        public void DamagePlayer(float playerHitPoint, float playerHitPointMax)
         {
-            if (playerHitPointMax > 0 && enemyHitPointMax > 0)
+            void Draw()
             {
                 var width = playerHitPoint * _playerGaugeScale.x / playerHitPointMax;
                 var x = _playerGaugePosition.x - (_playerGaugeScale.x - width) / 2;
 
-                _playerGauge.position = new Vector3(x, _playerGaugePosition.y, _playerGaugePosition.z);
+                _playerGauge.localPosition = new Vector3(x, _playerGaugePosition.y, _playerGaugePosition.z);
                 _playerGauge.localScale = new Vector3(width, _playerGaugeScale.y, _playerGaugeScale.z);
-
-                width = enemyHitPoint * _enemyGaugeScale.x / enemyHitPointMax;
-                x = _enemyGaugePosition.x - (_enemyGaugeScale.x - width) / 2;
-
-                _enemyGauge.position = new Vector3(x, _enemyGaugePosition.y, _enemyGaugePosition.z);
-                _enemyGauge.localScale = new Vector3(width, _enemyGaugeScale.y, _enemyGaugeScale.z);
 
                 _playerGaugeRenderer.color = (playerHitPoint / playerHitPointMax) switch
                 {
@@ -108,13 +109,59 @@ namespace Rhythm
                     _ => _gaugeColor.Normal,
                 };
 
+                if (_playerShakeTween != null)
+                {
+                    _playerShakeTween.Kill();
+                    _player.position = _playerPosition;
+                }
+
+                _playerShakeTween = _player.DOShakePosition(_shakeDuration);
+            }
+
+            IEnumerator DelayedDraw()
+            {
+                yield return new WaitForSeconds(_attackEffectDuration);
+
+                Draw();
+            }
+
+            StartCoroutine(DelayedDraw());
+        }
+
+        public void DamageEnemy(float enemyHitPoint, float enemyHitPointMax)
+        {
+            void Draw()
+            {
+                var width = enemyHitPoint * _enemyGaugeScale.x / enemyHitPointMax;
+                var x = _enemyGaugePosition.x - (_enemyGaugeScale.x - width) / 2;
+
+                _enemyGauge.localPosition = new Vector3(x, _enemyGaugePosition.y, _enemyGaugePosition.z);
+                _enemyGauge.localScale = new Vector3(width, _enemyGaugeScale.y, _enemyGaugeScale.z);
+
                 _enemyGaugeRenderer.color = (enemyHitPoint / enemyHitPointMax) switch
                 {
                     <= 0.1f => _gaugeColor.Pinch,
                     <= 0.5f => _gaugeColor.Damaged,
                     _ => _gaugeColor.Normal,
                 };
+
+                if (_enemyShakeTween != null)
+                {
+                    _enemyShakeTween.Kill();
+                    _enemy.position = _enemyPosition;
+                }
+
+                _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
             }
+
+            IEnumerator DelayedDraw()
+            {
+                yield return new WaitForSeconds(_defenseEffectDuration);
+
+                Draw();
+            }
+
+            StartCoroutine(DelayedDraw());
         }
 
         public void DrawJudgeEffect(Vector3 position, Judgement judgement)

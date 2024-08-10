@@ -6,6 +6,7 @@ namespace Rhythm
 {
     public interface IGaugeDrawable
     {
-        void UpdateHitPointGauge(float playerHitPoint, float playerHitPointMax, float enemyHitPoint, float enemyHitPointMax);
+        void DamagePlayer(float playerHitPoint, float playerHitPointMax);
+        void DamageEnemy(float enemyHitPoint, float enemyHitPointMax);
     }
 }

@@ -57,20 +57,23 @@ namespace Rhythm
         public void Hit(NoteColor color, bool isLarge, Judgement judgement)
         {
             if (judgement == Judgement.Undefined) return;
+            float damage;
 
             switch (color)
             {
                 case NoteColor.Red:
-                    _enemyHitPoint -= _enemyBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Attack;
+                    damage = _enemyBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Attack;
+                    _enemyHitPoint -= damage;
                     if (_enemyHitPoint < 0) _enemyHitPoint = 0;
+                    if (damage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyHitPointMax);
                     break;
                 case NoteColor.Blue:
-                    _playerHitPoint -= _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
+                    damage = _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
+                    _playerHitPoint -= damage;
                     if (_playerHitPoint < 0) _playerHitPoint = 0;
+                    if (damage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerHitPointMax);
                     break;
             }
-
-            _gaugeDrawable.UpdateHitPointGauge(_playerHitPoint, _playerHitPointMax, _enemyHitPoint, _enemyHitPointMax);
         }
     }
 }
