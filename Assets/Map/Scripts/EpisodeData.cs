@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Map
@@ -16,27 +17,9 @@ namespace Map
 		{
 			get
 			{
-				if(_dataDict == null) InitilaizeDictionary();
+				if(_dataDict == null) _dataDict = DataList.ToDictionary(x => (x.Chapter, x.Section));
 				
 				return _dataDict;
-			}
-
-			private set
-			{
-				_dataDict = value;
-			}
-		}
-
-		private void InitilaizeDictionary()
-		{
-			DataDict = new Dictionary<(int, int), EpisodeInfomation>();
-
-			foreach (var episode in DataList)
-			{
-				if (!DataDict.ContainsKey((episode.Chapter, episode.Section)))
-				{
-					DataDict.Add((episode.Chapter, episode.Section), episode);
-				}
 			}
 		}
 
