@@ -97,7 +97,7 @@ namespace Rhythm
 
                 if (!_isCreated[i])
                 {
-                    if (firstPosition.y <= _layout.BeginLineY)
+                    if (firstPosition.y <= _layout.BeginLineY || _effectDrawable.GetTimeToCreateEnemyAttackEffect(note.JustTime) >= _timeProvider.Time)
                     {
                         if (_notePools.ContainsKey((note.Color, note.IsLarge)))
                         {
