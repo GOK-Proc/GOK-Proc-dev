@@ -32,9 +32,8 @@ namespace MusicSelection
 
         public void OnSubmit()
         {
-            // TODO:
-            // issue#65 正しい難易度を渡す
-            SceneTransitionManager.TransitionToRhythm(_rhythmId, Difficulty.Undefined, false);
+            SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current,
+                false);
         }
 
         public void OnCancel()

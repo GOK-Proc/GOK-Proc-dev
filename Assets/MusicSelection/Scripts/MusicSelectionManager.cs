@@ -1,24 +1,37 @@
 using UnityEngine;
-using Rhythm;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using Rhythm;
 
 namespace MusicSelection
 {
     public class MusicSelectionManager : SingletonMonoBehaviour<MusicSelectionManager>
     {
         private EventSystem _eventSystem;
+        private DifficultySelection _difficultySelection;
 
-        [SerializeField] private BeatmapData _beatmapData;
+        [SerializeField] private Difficulty _firstSelectedDifficulty;
+
+        [Header("参照")] [SerializeField] private BeatmapData _beatmapData;
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
         [SerializeField] private Thumbnail _thumbnail;
+        [SerializeField] private GameObject _difficultyCursor;
 
         protected override void Awake()
         {
             base.Awake();
 
             _eventSystem = GetComponent<EventSystem>();
+            _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
             GenerateUIElements();
+            UpdateDifficultyCursor();
+        }
+
+        public void OnNavigateHorizontal(InputValue inputValue)
+        {
+            var inputHorizontal = inputValue.Get<Vector2>().x;
+            UpdateDifficultySelection(inputHorizontal);
         }
 
         private void GenerateUIElements()
@@ -41,6 +54,27 @@ namespace MusicSelection
                 _eventSystem.firstSelectedGameObject = element.gameObject;
                 isFirst = false;
             }
+        }
+
+        private void UpdateDifficultySelection(float input)
+        {
+            switch (input)
+            {
+                case > 0f:
+                    _difficultySelection.SelectNextHarder();
+                    break;
+                case < 0f:
+                    _difficultySelection.SelectNextEasier();
+                    break;
+            }
+
+            UpdateDifficultyCursor();
+        }
+
+        private void UpdateDifficultyCursor()
+        {
+            var x = 300f * ((float)DifficultySelection.Current - 1f);
+            _difficultyCursor.transform.localPosition = new Vector2(x, 0f);
         }
     }
 }
