@@ -14,30 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beatmaps:
   - _id: MainTheme
-    _title: Main Theme (tentative)
+    _title: Main Theme - tentative
     _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
     _offset: 1.2
-    _composer: Okuno (
+    _composer: See Scrapbox.
     _notesDesigner: sample notes designer
     _file: {fileID: 4900000, guid: 71960d23631c4be4e95f331b61e0d9cf, type: 3}
   - _id: Chapter1_2
-    _title: Main Theme
-    _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
-    _offset: 1.2
-    _composer: sample composer
+    _title: Monster (Goblin) - tentative
+    _sound: {fileID: 0}
+    _offset: 0
+    _composer: See Scrapbox.
     _notesDesigner: sample notes designer
-    _file: {fileID: 4900000, guid: 71960d23631c4be4e95f331b61e0d9cf, type: 3}
+    _file: {fileID: 0}
   - _id: Chapter2_2
-    _title: Main Theme
-    _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
-    _offset: 1.2
-    _composer: sample composer
+    _title: Monster (Swarm of Goblins) - tentative
+    _sound: {fileID: 0}
+    _offset: 0
+    _composer: See Scrapbox.
     _notesDesigner: sample notes designer
-    _file: {fileID: 4900000, guid: 71960d23631c4be4e95f331b61e0d9cf, type: 3}
-  - _id: chapter1_3
-    _title: Main Theme
-    _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
-    _offset: 1.2
-    _composer: sample composer
+    _file: {fileID: 0}
+  - _id: Chapter2_4
+    _title: Monster (Boss of the Swarm) - tentative
+    _sound: {fileID: 0}
+    _offset: 0
+    _composer: See Scrapbox.
     _notesDesigner: sample notes designer
-    _file: {fileID: 4900000, guid: 71960d23631c4be4e95f331b61e0d9cf, type: 3}
+    _file: {fileID: 0}
+  - _id: Chapter1
+    _title: Chapter1 village - tentative
+    _sound: {fileID: 0}
+    _offset: 0
+    _composer: See Scrapbox.
+    _notesDesigner: sample notes designer
+    _file: {fileID: 0}
+  - _id: Chapter2
+    _title: Chapter2 forest - tentative
+    _sound: {fileID: 0}
+    _offset: 0
+    _composer: See Scrapbox.
+    _notesDesigner: sample notes designer
+    _file: {fileID: 0}
