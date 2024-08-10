@@ -37,7 +37,8 @@ namespace MusicSelection
         private void GenerateUIElements()
         {
             var isFirst = true;
-            var posY = 0f;
+            var posY = 400f;
+
             foreach (var beatmapInfo in _beatmapData.BeatmapDictionary.Values)
             {
                 var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
@@ -48,7 +49,8 @@ namespace MusicSelection
                 var pos = rectTransform.localPosition;
                 pos.y = posY;
                 rectTransform.localPosition = pos;
-                posY += 100f;
+
+                posY -= 100f;
 
                 if (!isFirst) continue;
                 _eventSystem.firstSelectedGameObject = element.gameObject;
