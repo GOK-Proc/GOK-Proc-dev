@@ -17,38 +17,11 @@ namespace Map
 		[SerializeField] private List<EpisodeFlagPair> _flagList;
 		public List<EpisodeFlagPair> FlagList { get { return _flagList; } private set { _flagList = value; } }
 
-		private Dictionary<(int, int), bool> _flagDict;
-		public Dictionary<(int, int), bool> FlagDict
-		{
-			get
-			{
-				if(FlagDict == null) InitializeDictionary();
-				
-				return _flagDict;
-			}
-
-			private set
-			{
-				_flagDict = value;
-			}
-		}
+		public Dictionary<(int, int), bool> FlagDict => FlagList.ToDictionary(x => x.Key, x => x.Value);
 
 		private void OnEnable()
 		{
 			LoadJson();
-		}
-
-		private void InitializeDictionary()
-		{
-			FlagDict = new Dictionary<(int, int), bool>();
-
-			foreach(var fp in FlagList)
-			{
-				if(!FlagDict.ContainsKey(fp.Key))
-				{
-					FlagDict.Add(fp.Key, fp.Value);
-				}
-			}
 		}
 
 		public void SetFlag((int, int) episodeId, bool value)
