@@ -30,6 +30,8 @@ namespace Rhythm
                     set.Add(item.Id);
                 }
             }
+
+            IdGenerator.GenerateRhythmId(this);
         }
 #endif
     }
