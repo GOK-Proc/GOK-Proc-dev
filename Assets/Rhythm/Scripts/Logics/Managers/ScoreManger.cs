@@ -33,9 +33,9 @@ namespace Rhythm
             _playerHitPointMax = playerHitPoint;
             _playerHitPoint = _playerHitPointMax;
 
-            var victory = lostRates[(int)difficulty - 1].Victory;
-            var overkill = lostRates[(int)difficulty - 1].Overkill;
-            var knockout = lostRates[(int)difficulty - 1].Knockout;
+            var victory = lostRates[(int)difficulty].Victory;
+            var overkill = lostRates[(int)difficulty].Overkill;
+            var knockout = lostRates[(int)difficulty].Knockout;
 
             _enemyHitPointMax = _playerHitPointMax * (knockout - victory) * (1 - overkill) / (knockout * (victory - overkill));
             _enemyHitPoint = _enemyHitPointMax;
