@@ -9,8 +9,12 @@ namespace MusicSelection
     public class MusicUIElement : MonoBehaviour
     {
         private RhythmId _rhythmId;
+        private TextMeshProUGUI _text;
         private BeatmapInformation _beatmapInfo;
         private Thumbnail _thumbnail;
+
+        private const int NormalFontSize = 60;
+        private const int FontSizeWhenSelected = 90;
 
         public void Init(BeatmapInformation info, Thumbnail thumbnail)
         {
@@ -27,14 +31,15 @@ namespace MusicSelection
             }
 
             _thumbnail = thumbnail;
-            GetComponent<TextMeshProUGUI>().text = info.Title;
+            _text = GetComponent<TextMeshProUGUI>();
+            _text.text = info.Title;
+            _text.fontSize = NormalFontSize;
         }
 
         public void OnSubmit()
         {
-            // TODO:
-            // issue#65 正しい難易度を渡す
-            SceneTransitionManager.TransitionToRhythm(_rhythmId, Difficulty.Undefined, false);
+            SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current,
+                false);
         }
 
         public void OnCancel()
@@ -46,7 +51,15 @@ namespace MusicSelection
 
         public void OnSelect()
         {
+            _text.fontSize = FontSizeWhenSelected;
             _thumbnail.Set(null, _beatmapInfo);
+            // TODO: ここで対応する楽曲を再生
+        }
+
+        public void OnDeselect()
+        {
+            _text.fontSize = NormalFontSize;
+            // TODO: ここで対応する楽曲を停止
         }
     }
 }
