@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Map
@@ -10,6 +11,17 @@ namespace Map
 
 		[SerializeField] private List<EpisodeInfomation> _dataList;
 		public List<EpisodeInfomation> DataList { get { return _dataList; } }
+
+		private Dictionary<(int, int), EpisodeInfomation> _dataDict;
+		public Dictionary<(int, int), EpisodeInfomation> DataDict
+		{
+			get
+			{
+				if(_dataDict == null) _dataDict = DataList.ToDictionary(x => (x.Chapter, x.Section));
+				
+				return _dataDict;
+			}
+		}
 
 #if UNITY_EDITOR
 		private HashSet<(int, int)> _episodeNumbers = new HashSet<(int, int)>();

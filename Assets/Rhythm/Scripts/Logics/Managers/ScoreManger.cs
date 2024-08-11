@@ -15,7 +15,7 @@ namespace Rhythm
 
         private readonly IList<JudgeRate> _judgeRates;
 
-        private readonly IUI _ui;
+        private readonly IGaugeDrawable _gaugeDrawable;
 
         private float _playerHitPoint;
         private float _enemyHitPoint;
@@ -25,7 +25,7 @@ namespace Rhythm
         public float PlayerHitPoint => _playerHitPoint;
         public float EnemyHitPoint => _enemyHitPoint;
 
-        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, (int attack, int defense) noteCount, float playerHitPoint, IUI ui)
+        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable)
         {
             _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length];
             _judgeRates = judgeRates;
@@ -43,7 +43,7 @@ namespace Rhythm
             _playerBasicDamage = _playerHitPointMax / (noteCount.defense * knockout);
             _enemyBasicDamage = _playerHitPointMax * (knockout - victory) / (noteCount.attack * knockout * (victory - overkill));
 
-            _ui = ui;
+            _gaugeDrawable = gaugeDrawable;
         }
 
         public JudgeCount JudgeCount { get => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]); }
@@ -57,20 +57,23 @@ namespace Rhythm
         public void Hit(NoteColor color, bool isLarge, Judgement judgement)
         {
             if (judgement == Judgement.Undefined) return;
+            float damage;
 
             switch (color)
             {
                 case NoteColor.Red:
-                    _enemyHitPoint -= _enemyBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Attack;
+                    damage = _enemyBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Attack;
+                    _enemyHitPoint -= damage;
                     if (_enemyHitPoint < 0) _enemyHitPoint = 0;
+                    if (damage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyHitPointMax);
                     break;
                 case NoteColor.Blue:
-                    _playerHitPoint -= _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
+                    damage = _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
+                    _playerHitPoint -= damage;
                     if (_playerHitPoint < 0) _playerHitPoint = 0;
+                    if (damage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerHitPointMax);
                     break;
             }
-
-            _ui.UpdateHitPointGauge(_playerHitPoint, _playerHitPointMax, _enemyHitPoint, _enemyHitPointMax);
         }
     }
 }

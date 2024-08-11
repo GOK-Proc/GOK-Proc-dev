@@ -17,7 +17,7 @@ namespace Rhythm
         [SerializeField] private NoteLayout _noteLayout;
         [SerializeField] private JudgeRange _judgeRange;
         [SerializeField] private float _cursorExtension;
-        [SerializeField] private float _cursorSpeed;
+        [SerializeField] private float _cursorDuration;
         [SerializeField] private double _startDelay;
 
         [Space(20)]
@@ -44,7 +44,7 @@ namespace Rhythm
         [SerializeField] private NotePrefab<TapNote>[] _notePrefabs;
         [SerializeField] private NotePrefab<HoldNote>[] _holdPrefabs;
         [SerializeField] private NotePrefab<HoldBand>[] _bandPrefabs;
-        [SerializeField] private Cursor _cursorPrefab;
+        [SerializeField] private EffectObject _cursorPrefab;
         [SerializeField] private Transform _holdMaskPrefab;
 
         [Space(20)]
@@ -116,54 +116,53 @@ namespace Rhythm
 
             _soundPlayer = new SoundPlayer(_audioSource, data.Sound, sounds);
 
-            _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, new Vector3(_cursorSpeed, 0f), _cursorPrefab, _cursorParent, _inputManager);
+            _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
             _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
 
-            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController);
-            _noteJudge = new NoteJudge(_noteCreator, _scoreManger, _scoreManger);
+            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
+            _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
         }
 
         // Start is called before the first frame update
         private void Start()
         {
+            IEnumerator RhythmGameUpdate()
+            {
+                _timeManager.StartTimer(-_startDelay);
+
+                while (_timeManager.Time < Time.deltaTime / 2)
+                {
+                    _noteCreator.Create();
+                    _inputManager.Update();
+                    _cursorController.Move();
+                    _cursorController.Update();
+                    _noteJudge.Judge();
+
+                    yield return null;
+                }
+
+                _soundPlayer.PlayMusic();
+
+                while (_timeManager.Time < _endTime)
+                {
+                    _noteCreator.Create();
+                    _inputManager.Update();
+                    _cursorController.Move();
+                    _cursorController.Update();
+                    _noteJudge.Judge();
+
+                    yield return null;
+                }
+
+                var judges = _scoreManger.JudgeCount;
+
+                Debug.Log("Perfect: " + judges.Perfect);
+                Debug.Log("Good: " + judges.Good);
+                Debug.Log("False: " + judges.False);
+            }
+
             StartCoroutine(RhythmGameUpdate());
         }
-
-        private IEnumerator RhythmGameUpdate()
-        {
-            _timeManager.StartTimer(-_startDelay);
-
-            while (_timeManager.Time < Time.deltaTime / 2)
-            {
-                _noteCreator.Create();
-                _inputManager.Update();
-                _cursorController.Move();
-                _cursorController.Update();
-                _noteJudge.Judge();
-
-                yield return null;
-            }
-
-            _soundPlayer.PlayMusic();
-
-            while (_timeManager.Time < _endTime)
-            {
-                _noteCreator.Create();
-                _inputManager.Update();
-                _cursorController.Move();
-                _cursorController.Update();
-                _noteJudge.Judge();
-
-                yield return null;
-            }
-
-            var judges = _scoreManger.JudgeCount;
-
-            Debug.Log("Perfect: " + judges.Perfect);
-            Debug.Log("Good: " + judges.Good);
-            Debug.Log("False: " + judges.False);
-        }
-
     }
 }

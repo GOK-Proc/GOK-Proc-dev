@@ -24,9 +24,9 @@ namespace Map
 			{
 				EditorGUILayout.LabelField("Flags", EditorStyles.boldLabel);
 
-				if (_episodeFlags.FlagsList != null)
+				if (_episodeFlags.FlagList != null)
 				{
-					foreach (var kvp in _episodeFlags.FlagsList)
+					foreach (var kvp in _episodeFlags.FlagList)
 					{
 						EditorGUILayout.BeginHorizontal();
 						EditorGUILayout.LabelField($"{kvp.Key.Item1}-{kvp.Key.Item2}", GUILayout.Width(100));

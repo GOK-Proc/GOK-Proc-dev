@@ -43,15 +43,7 @@ namespace Rhythm
             _mask = mask;
             _renderer.color = _defaultColor;
 
-            Create(position, velocity, survivalRect, lane, disposable);
-
-            _onDestroy = () =>
-            {
-                IsAlive = false;
-                gameObject.SetActive(false);
-                _mask.gameObject.SetActive(false);
-                disposable.Dispose();
-            };
+            Create(position, velocity, survivalRect, lane, x => { _mask.gameObject.SetActive(false); x?.Invoke(); }, disposable);
         }
 
         protected override void Update()
