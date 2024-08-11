@@ -38,6 +38,7 @@ namespace MusicSelection
         {
             var isFirst = true;
             var posY = 400f;
+            var height = _musicUIElementPrefab.GetComponent<RectTransform>().sizeDelta.y;
 
             foreach (var beatmapInfo in _beatmapData.BeatmapDictionary.Values)
             {
@@ -50,7 +51,7 @@ namespace MusicSelection
                 pos.y = posY;
                 rectTransform.localPosition = pos;
 
-                posY -= 100f;
+                posY -= height;
 
                 if (!isFirst) continue;
                 _eventSystem.firstSelectedGameObject = element.gameObject;
