@@ -1,11 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 
 namespace Rhythm
 {
-    public class ObjectPool<T> : IObjectPoolProvider<T> where T : RhythmGameObject
+    public class ObjectPool<T> : IObjectPoolProvider<T> where T : MonoBehaviour
     {
         private readonly Stack<T> _pool;
         private readonly T _obj;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+using DG.Tweening;
 
 namespace Rhythm
 {
@@ -26,21 +26,21 @@ namespace Rhythm
         private readonly int _laneCount;
         private readonly float _extension;
         private readonly NoteLayout _layout;
-        private readonly Vector3 _velocity;
+        private readonly float _duration;
         private readonly double[] _timeSinceLaneDeactivated;
-        private readonly ObjectPool<Cursor> _cursorPool;
+        private readonly ObjectPool<EffectObject> _cursorPool;
         private readonly IMoveInputProvider _vectorInputProvider;
 
         private int _currentLane;
-        private Cursor _cursor;
+        private EffectObject _cursor;
 
-        public CursorController(int laneCount, float extension, NoteLayout layout, Vector3 velocity, Cursor cursorPrefab, Transform parent, IMoveInputProvider vectorInputProvider)
+        public CursorController(int laneCount, float extension, NoteLayout layout, float duration, EffectObject cursorPrefab, Transform parent, IMoveInputProvider vectorInputProvider)
         {
             _laneCount = laneCount;
             _extension = extension;
             _layout = layout;
-            _velocity = velocity;
-            _cursorPool = new ObjectPool<Cursor>(cursorPrefab, parent);
+            _duration = duration;
+            _cursorPool = new ObjectPool<EffectObject>(cursorPrefab, parent);
             _vectorInputProvider = vectorInputProvider;
 
             _timeSinceLaneDeactivated = new double[laneCount];
@@ -64,6 +64,7 @@ namespace Rhythm
         public void Move()
         {
             var move = _vectorInputProvider.Move;
+            var isMoved = false;
 
             if (move > 0)
             {
@@ -71,12 +72,7 @@ namespace Rhythm
                 {
                     _currentLane++;
                     _timeSinceLaneDeactivated[_currentLane] = 0;
-
-                    if (_cursor != null)
-                    {
-                        _cursor.ChangeVelocity(Mathf.Sign(move) * _velocity);
-                    }
-                    Create();
+                    isMoved = true;
                 } 
             }
             else if (move < 0)
@@ -85,13 +81,23 @@ namespace Rhythm
                 {
                     _currentLane--;
                     _timeSinceLaneDeactivated[_currentLane] = 0;
-
-                    if (_cursor != null)
-                    {
-                        _cursor.ChangeVelocity(Mathf.Sign(move) * _velocity);
-                    }
-                    Create();
+                    isMoved = true;
                 }
+            }
+
+            if (isMoved)
+            {
+                if (_cursor != null)
+                {
+                    _cursor.Stop((t, s, d) =>
+                    {
+                        t.DOLocalMoveX(_layout.FirstLaneX + _currentLane * _layout.LaneDistanceX, _duration).OnComplete(() =>
+                        {
+                            d?.Invoke();
+                        });
+                    });
+                }
+                Create();
             }
         }
 
@@ -113,9 +119,10 @@ namespace Rhythm
         private void Create()
         {
             IDisposable disposable = _cursorPool.Create(out _cursor, out _);
-            var lanePosition = new Vector2(_layout.FirstLaneX + _currentLane * _layout.LaneDistanceX, _layout.JudgeLineY);
-            var delta = new Vector2(_layout.LaneDistanceX, -1f);
-            _cursor.Create(lanePosition, Vector3.zero, (lanePosition - delta, lanePosition + delta), disposable);
+            var pos = new Vector3(_layout.FirstLaneX + _currentLane * _layout.LaneDistanceX, _layout.JudgeLineY, 0f);
+
+            _cursor.Create(disposable);
+            _cursor.Play(pos);
         }
     }
 }

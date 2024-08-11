@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +8,8 @@ namespace Rhythm
     public class Note : LaneObject, IJudgeable, IComparable<Note>
     {
         public bool IsJudged { get; protected set; }
+
+        public int Id { get; private set; }
 
         protected double _justTime;
 
@@ -24,12 +26,13 @@ namespace Rhythm
             _activeLaneProvider = activeLaneProvider;
         }
 
-        public virtual void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, double justTime, IDisposable disposable)
+        public virtual void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, double justTime, int id, IDisposable disposable)
         {
             _justTime = justTime;
             Create(position, velocity, survivalRect, lane, disposable);
 
             IsJudged = false;
+            Id = id;
         }
 
         public virtual Judgement Judge()

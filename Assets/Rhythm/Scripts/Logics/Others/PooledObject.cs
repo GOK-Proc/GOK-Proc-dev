@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 
 namespace Rhythm
 {
-    public class PooledObject<T> : IDisposable where T : RhythmGameObject
+    public class PooledObject<T> : IDisposable where T : MonoBehaviour
     {
         private readonly T _obj;
         private readonly IObjectPoolProvider<T> _pool;
