@@ -20,11 +20,21 @@ namespace Rhythm
         [SerializeField] private string _composer;
         public readonly string Composer => _composer;
 
+        [SerializeField] private NotesInformation[] _notes;
+        public readonly NotesInformation[] Notes => _notes;
+
+    }
+
+    [System.Serializable]
+    public struct NotesInformation
+    {
+        [SerializeField] private int _level;
+        public readonly int Level => _level;
+
         [SerializeField] private string _notesDesigner;
         public readonly string NotesDesigner => _notesDesigner;
 
         [SerializeField] private TextAsset _file;
         public readonly TextAsset File => _file;
-
     }
 }

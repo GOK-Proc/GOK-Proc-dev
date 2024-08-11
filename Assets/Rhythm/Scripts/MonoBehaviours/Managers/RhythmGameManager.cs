@@ -91,8 +91,9 @@ namespace Rhythm
             var bandPrefabs = _bandPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
 
             var data = _beatmapData.BeatmapDictionary[_id];
+            var beatmap = data.Notes[(int)_difficulty];
 
-            (var notes, var endTime) = BeatmapLoader.Parse(data.File, data.Offset, _baseScroll);
+            (var notes, var endTime) = BeatmapLoader.Parse(beatmap.File, data.Offset, _baseScroll);
             _endTime = endTime;
 
             var holdMasks = new List<Transform>();
