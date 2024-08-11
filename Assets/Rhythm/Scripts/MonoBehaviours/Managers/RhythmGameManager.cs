@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Transition;
 
 namespace Rhythm
 {
@@ -66,8 +67,8 @@ namespace Rhythm
         [Space(20)]
         [Header("Beatmap")]
         [SerializeField] private BeatmapData _beatmapData;
-        [SerializeField] private string _id;
-        [SerializeField] private Difficulty _difficulty;
+        [SerializeField] private string _defaultId;
+        [SerializeField] private Difficulty _defaultDifficulty;
 
         [Space(20)]
         [Header("Options")]
@@ -86,14 +87,29 @@ namespace Rhythm
 
         private void Awake()
         {
+            var id = SceneTransitionManager.CurrentRhythmId.ToString();
+            var difficulty = SceneTransitionManager.CurrentDifficulty;
+            var isVs = SceneTransitionManager.CurrentIsVs;
+
+            var dictionary = _beatmapData.BeatmapDictionary;
+
+            if (!dictionary.ContainsKey(id))
+            {
+                id = _defaultId;
+                difficulty = _defaultDifficulty;
+
+                Debug.LogWarning("The specified ID does not exist. Using the default ID.");
+            }
+
+            var beatmapInfo = dictionary[id];
+            var notesData = beatmapInfo.Notes[(int)difficulty];
+
+            (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset, _baseScroll);
+            _endTime = endTime;
+
             var notePrefabs = _notePrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var bandPrefabs = _bandPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
-
-            var data = _beatmapData.BeatmapDictionary[_id];
-
-            (var notes, var endTime) = BeatmapLoader.Parse(data.File, data.Offset, _baseScroll);
-            _endTime = endTime;
 
             var holdMasks = new List<Transform>();
 
@@ -114,11 +130,11 @@ namespace Rhythm
 
             var sounds = _sounds.ToDictionary(x => x.Id, x => x.Clip);
 
-            _soundPlayer = new SoundPlayer(_audioSource, data.Sound, sounds);
+            _soundPlayer = new SoundPlayer(_audioSource, beatmapInfo.Sound, sounds);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManger = new ScoreManger(_difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
+            _scoreManger = new ScoreManger(difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
