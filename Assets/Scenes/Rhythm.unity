@@ -275,6 +275,7 @@ MonoBehaviour:
   _defenseEffectDuration: 0.5
   _enemyAttackEffectDuration: 1
   _hitTimeRatio: 0.85
+  _shakeDuration: 0.5
   _playerGaugeRenderer: {fileID: 1304861305}
   _enemyGaugeRenderer: {fileID: 1866404227}
   _judgeEffectPrefabs:
