@@ -25,13 +25,14 @@ namespace MusicSelection
             _eventSystem = GetComponent<EventSystem>();
             _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
             GenerateUIElements();
-            UpdateDifficultyCursor();
+            UpdateDifficultyUI();
         }
 
         public void OnNavigateHorizontal(InputValue inputValue)
         {
             var inputHorizontal = inputValue.Get<Vector2>().x;
             UpdateDifficultySelection(inputHorizontal);
+            UpdateDifficultyUI();
         }
 
         private void GenerateUIElements()
@@ -70,11 +71,9 @@ namespace MusicSelection
                     _difficultySelection.SelectNextEasier();
                     break;
             }
-
-            UpdateDifficultyCursor();
         }
 
-        private void UpdateDifficultyCursor()
+        private void UpdateDifficultyUI()
         {
             var x = 300f * ((float)DifficultySelection.Current - 1f);
             _difficultyCursor.transform.localPosition = new Vector2(x, 0f);
