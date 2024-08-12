@@ -13,7 +13,7 @@ namespace MusicSelection
 
         public void Set(Sprite sprite, BeatmapInformation beatmapInfo)
         {
-            _image.sprite = sprite;
+            _image.sprite = sprite ?? _image.sprite;
             _titleText.text = beatmapInfo.Title;
             _composerText.text = beatmapInfo.Composer;
         }
