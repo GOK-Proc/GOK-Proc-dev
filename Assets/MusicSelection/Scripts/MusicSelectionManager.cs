@@ -16,7 +16,7 @@ namespace MusicSelection
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
         [SerializeField] private Thumbnail _thumbnail;
-        [SerializeField] private GameObject _difficultyCursor;
+        [SerializeField] private DifficultyDisplay _difficultyDisplay;
 
         protected override void Awake()
         {
@@ -25,13 +25,14 @@ namespace MusicSelection
             _eventSystem = GetComponent<EventSystem>();
             _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
             GenerateUIElements();
-            UpdateDifficultyCursor();
+            UpdateDifficultyUI();
         }
 
         public void OnNavigateHorizontal(InputValue inputValue)
         {
             var inputHorizontal = inputValue.Get<Vector2>().x;
             UpdateDifficultySelection(inputHorizontal);
+            UpdateDifficultyUI();
         }
 
         private void GenerateUIElements()
@@ -69,14 +70,11 @@ namespace MusicSelection
                     _difficultySelection.SelectNextEasier();
                     break;
             }
-
-            UpdateDifficultyCursor();
         }
 
-        private void UpdateDifficultyCursor()
+        private void UpdateDifficultyUI()
         {
-            var x = 300f * ((float)DifficultySelection.Current - 1f);
-            _difficultyCursor.transform.localPosition = new Vector2(x, 0f);
+            _difficultyDisplay.Set();
         }
     }
 }
