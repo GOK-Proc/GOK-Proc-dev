@@ -92,17 +92,17 @@ namespace Rhythm
             _enemyShakeTween = null;
         }
 
-        public void DamagePlayer(float playerHitPoint, float playerHitPointMax)
+        public void DamagePlayer(float HitPoint, float MaxHitPoint)
         {
             void Draw()
             {
-                var width = playerHitPoint * _playerGaugeScale.x / playerHitPointMax;
+                var width = HitPoint * _playerGaugeScale.x / MaxHitPoint;
                 var x = _playerGaugePosition.x - (_playerGaugeScale.x - width) / 2;
 
                 _playerGauge.localPosition = new Vector3(x, _playerGaugePosition.y, _playerGaugePosition.z);
                 _playerGauge.localScale = new Vector3(width, _playerGaugeScale.y, _playerGaugeScale.z);
 
-                _playerGaugeRenderer.color = (playerHitPoint / playerHitPointMax) switch
+                _playerGaugeRenderer.color = (HitPoint / MaxHitPoint) switch
                 {
                     <= 0.1f => _gaugeColor.Pinch,
                     <= 0.5f => _gaugeColor.Damaged,
@@ -128,17 +128,17 @@ namespace Rhythm
             StartCoroutine(DelayedDraw());
         }
 
-        public void DamageEnemy(float enemyHitPoint, float enemyHitPointMax)
+        public void DamageEnemy(float HitPoint, float MaxHitPoint)
         {
             void Draw()
             {
-                var width = enemyHitPoint * _enemyGaugeScale.x / enemyHitPointMax;
+                var width = HitPoint * _enemyGaugeScale.x / MaxHitPoint;
                 var x = _enemyGaugePosition.x - (_enemyGaugeScale.x - width) / 2;
 
                 _enemyGauge.localPosition = new Vector3(x, _enemyGaugePosition.y, _enemyGaugePosition.z);
                 _enemyGauge.localScale = new Vector3(width, _enemyGaugeScale.y, _enemyGaugeScale.z);
 
-                _enemyGaugeRenderer.color = (enemyHitPoint / enemyHitPointMax) switch
+                _enemyGaugeRenderer.color = (HitPoint / MaxHitPoint) switch
                 {
                     <= 0.1f => _gaugeColor.Pinch,
                     <= 0.5f => _gaugeColor.Damaged,
