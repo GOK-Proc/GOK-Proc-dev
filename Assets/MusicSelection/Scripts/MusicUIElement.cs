@@ -13,8 +13,8 @@ namespace MusicSelection
         private BeatmapInformation _beatmapInfo;
         private Thumbnail _thumbnail;
 
-        private const int NormalFontSize = 48;
-        private const int FontSizeWhenSelected = 60;
+        private const int NormalFontSize = 60;
+        private const int FontSizeWhenSelected = 90;
 
         public void Init(BeatmapInformation info, Thumbnail thumbnail)
         {
