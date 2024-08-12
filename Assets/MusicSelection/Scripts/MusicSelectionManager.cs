@@ -16,7 +16,7 @@ namespace MusicSelection
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
         [SerializeField] private Thumbnail _thumbnail;
-        [SerializeField] private GameObject _difficultyCursor;
+        [SerializeField] private DifficultyDisplay _difficultyDisplay;
 
         protected override void Awake()
         {
@@ -75,8 +75,7 @@ namespace MusicSelection
 
         private void UpdateDifficultyUI()
         {
-            var x = 300f * ((float)DifficultySelection.Current - 1f);
-            _difficultyCursor.transform.localPosition = new Vector2(x, 0f);
+            _difficultyDisplay.Set();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace MusicSelection
 
         public static Difficulty Current { get; private set; }
         public static Color CurrentColor => Colors[Current];
+        public static bool IsEasiest => Current == Difficulty.Easy;
+        public static bool IsHardest => Current == Difficulty.Expert;
 
         public DifficultySelection(Difficulty difficulty)
         {
