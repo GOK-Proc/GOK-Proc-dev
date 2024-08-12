@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
@@ -9,7 +7,15 @@ namespace MusicSelection
 {
     public class DifficultySelection
     {
+        private readonly Dictionary<Difficulty, Color> _colors = new()
+        {
+            { Difficulty.Easy, new Color(0.73f, 1.00f, 0.78f) },
+            { Difficulty.Hard, new Color(1.00f, 0.73f, 0.73f) },
+            { Difficulty.Expert, new Color(0.87f, 0.73f, 1.00f) }
+        };
+
         public static Difficulty Current { get; private set; }
+        public static Color CurrentColor => _colors(Current);
 
         public DifficultySelection(Difficulty difficulty)
         {
