@@ -76,7 +76,10 @@ public static class EnumCreator
 
 		//ファイルの書き出し
 		File.WriteAllText(exportPath, _code, Encoding.UTF8);
+
+#if UNITY_EDITOR
 		AssetDatabase.Refresh(ImportAssetOptions.ImportRecursive);
+#endif
 
 		Debug.Log(enumName + "の作成が完了しました");
 	}
