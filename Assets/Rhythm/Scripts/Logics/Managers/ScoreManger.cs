@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public class ScoreManger : IJudgeCountable, IBattle
+    public class ScoreManger : IJudgeCountable, IComboCountable, IBattle
     {
         private readonly int[] _judgeCount;
 
@@ -20,10 +20,8 @@ namespace Rhythm
         private float _playerHitPoint;
         private float _enemyHitPoint;
 
-        public float PlayerHitPointMax => _playerHitPointMax;
-        public float EnemyHitPointMax => _enemyHitPointMax;
-        public float PlayerHitPoint => _playerHitPoint;
-        public float EnemyHitPoint => _enemyHitPoint;
+        public int Combo { get; private set; }
+        public int MaxCombo { get; private set; }
 
         public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable)
         {
@@ -44,6 +42,9 @@ namespace Rhythm
             _enemyBasicDamage = _playerHitPointMax * (knockout - victory) / (noteCount.attack * knockout * (victory - overkill));
 
             _gaugeDrawable = gaugeDrawable;
+
+            Combo = 0;
+            MaxCombo = 0;
         }
 
         public JudgeCount JudgeCount { get => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]); }
@@ -52,6 +53,16 @@ namespace Rhythm
         {
             if (judgement == Judgement.Undefined) return;
             _judgeCount[(int)judgement - 1]++;
+
+            if (judgement != Judgement.False)
+            {
+                Combo++;
+                if (Combo > MaxCombo) MaxCombo = Combo;
+            }
+            else
+            {
+                Combo = 0;
+            }
         }
 
         public void Hit(NoteColor color, bool isLarge, Judgement judgement)

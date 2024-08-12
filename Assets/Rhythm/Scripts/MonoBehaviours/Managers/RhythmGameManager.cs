@@ -176,6 +176,7 @@ namespace Rhythm
                 Debug.Log("Perfect: " + judges.Perfect);
                 Debug.Log("Good: " + judges.Good);
                 Debug.Log("False: " + judges.False);
+                Debug.Log("MaxCombo:" + _scoreManger.MaxCombo);
             }
 
             StartCoroutine(RhythmGameUpdate());
