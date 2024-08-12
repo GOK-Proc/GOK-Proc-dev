@@ -7,7 +7,7 @@ namespace MusicSelection
 {
     public class DifficultySelection
     {
-        private readonly Dictionary<Difficulty, Color> _colors = new()
+        private static readonly Dictionary<Difficulty, Color> Colors = new()
         {
             { Difficulty.Easy, new Color(0.73f, 1.00f, 0.78f) },
             { Difficulty.Hard, new Color(1.00f, 0.73f, 0.73f) },
@@ -15,7 +15,7 @@ namespace MusicSelection
         };
 
         public static Difficulty Current { get; private set; }
-        public static Color CurrentColor => _colors(Current);
+        public static Color CurrentColor => Colors[Current];
 
         public DifficultySelection(Difficulty difficulty)
         {
