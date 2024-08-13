@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IComboCountable
+namespace Rhythm
 {
-    int Combo { get; }
-    int MaxCombo { get; }
+    public interface IComboCountable
+    {
+        int Combo { get; }
+        int MaxCombo { get; }
+    }
 }

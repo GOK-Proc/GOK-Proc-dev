@@ -1437,6 +1437,40 @@ MonoBehaviour:
     _overkill: 0.015
     _knockout: 0.2
   _largeRate: 5
+  _comboBonus:
+  - _bonuses:
+    - _combo: 50
+      _type: 2
+      _value: 50
+    - _combo: 100
+      _type: 1
+      _value: 50
+    - _combo: 500
+      _type: 1
+      _value: 100
+    - _combo: 1000
+      _type: 1
+      _value: 150
+  - _bonuses:
+    - _combo: 100
+      _type: 1
+      _value: 100
+    - _combo: 500
+      _type: 2
+      _value: 100
+    - _combo: 1000
+      _type: 1
+      _value: 200
+  - _bonuses:
+    - _combo: 100
+      _type: 1
+      _value: 100
+    - _combo: 500
+      _type: 2
+      _value: 100
+    - _combo: 1000
+      _type: 1
+      _value: 200
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
   _holdMaskParent: {fileID: 82430260}

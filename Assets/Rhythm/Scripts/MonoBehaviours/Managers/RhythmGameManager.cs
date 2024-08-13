@@ -27,6 +27,7 @@ namespace Rhythm
         [SerializeField] private JudgeRate[] _judgeRates;
         [SerializeField] private LostRate[] _lostRates;
         [SerializeField] private int _largeRate;
+        [SerializeField] private ComboBonus[] _comboBonus;
 
         [Space(20)]
         [Header("Objects")]
@@ -134,7 +135,7 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManger = new ScoreManger(difficulty, _judgeRates, _lostRates, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
+            _scoreManger = new ScoreManger(difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
