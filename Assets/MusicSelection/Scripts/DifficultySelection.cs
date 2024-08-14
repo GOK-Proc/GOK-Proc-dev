@@ -12,12 +12,17 @@ namespace MusicSelection
             // Ryotan案
             { Difficulty.Easy, new Color(0.73f, 1.00f, 0.78f) },
             { Difficulty.Hard, new Color(1.00f, 0.73f, 0.73f) },
-            { Difficulty.Expert, new Color(0.87f, 0.73f, 1.00f) },
-            
-            // 社会のGOMI案
+            { Difficulty.Expert, new Color(0.87f, 0.73f, 1.00f) }
+
+            // 社会のGOMI案（どぎつい色）
             // { Difficulty.Easy, new Color(0.00f, 0.69f, 0.41f) },
             // { Difficulty.Hard, new Color(1.00f, 0.29f, 0.00f) },
             // { Difficulty.Expert, new Color(0.60f, 0.00f, 0.60f) }
+
+            // 社会のGOMI案（グレー#d6d6d6との乗算）
+            // { Difficulty.Easy, new Color(0.00f, 0.58f, 0.34f) },
+            // { Difficulty.Hard, new Color(0.84f, 0.24f, 0.00f) },
+            // { Difficulty.Expert, new Color(0.50f, 0.00f, 0.50f) }
         };
 
         public static Difficulty Current { get; private set; }
