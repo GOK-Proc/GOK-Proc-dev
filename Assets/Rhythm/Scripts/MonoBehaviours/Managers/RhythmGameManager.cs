@@ -108,6 +108,8 @@ namespace Rhythm
             (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset, _baseScroll);
             _endTime = endTime;
 
+            _uiManager.DrawHeader(beatmapInfo.Title, beatmapInfo.Composer, difficulty, notesData.Level);
+
             var notePrefabs = _notePrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var bandPrefabs = _bandPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
@@ -135,7 +137,7 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManger = new ScoreManger(difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager);
+            _scoreManger = new ScoreManger(difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable
+    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable
     {
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
@@ -38,6 +40,16 @@ namespace Rhythm
         [SerializeField] private EffectObject _enemyAttackEffectPrefabs;
         [SerializeField] private Transform _effectParent;
 
+        [SerializeField] private TextMeshProUGUI _titleText;
+        [SerializeField] private TextMeshProUGUI _composerText;
+        [SerializeField] private TextMeshProUGUI _difficultyText;
+        [SerializeField] private TextMeshProUGUI _levelText;
+        [SerializeField] private TextMeshProUGUI _comboText;
+
+        [SerializeField] private float _comboPopupScale;
+        [SerializeField] private float _comboPopupDuration;
+
+
         private Transform _playerGauge;
         private Transform _enemyGauge;
 
@@ -47,6 +59,8 @@ namespace Rhythm
 
         private Tweener _playerShakeTween;
         private Tweener _enemyShakeTween;
+
+        private Tweener _comboTween;
 
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
@@ -309,6 +323,42 @@ namespace Rhythm
         }
 
         public double GetTimeToCreateEnemyAttackEffect(double justTime) => justTime + _defenseEffectDuration - _hitTimeRatio * _enemyAttackEffectDuration;
+
+        public void DrawHeader(string title, string composer, Difficulty difficulty, int level)
+        {
+            _titleText.SetText(title);
+            _composerText.SetText(composer);
+            _difficultyText.SetText(difficulty switch {
+                Difficulty.Easy => "EASY",
+                Difficulty.Hard => "HARD",
+                Difficulty.Expert => "EXPERT",
+                _ => throw new InvalidEnumArgumentException()
+            });
+            _levelText.SetText("Lv. {0}", level);
+        }
+
+        public void DrawCombo(int combo)
+        {
+            if (combo >= 5)
+            {
+                _comboText.SetText("{0} Combo!!", combo);
+                _comboText.gameObject.SetActive(true);
+
+                if (_comboTween != null)
+                {
+                    _comboTween.Kill();
+                    _comboText.rectTransform.localScale = Vector3.one;
+                }
+                _comboTween = _comboText.rectTransform.DOScale(new Vector3(_comboPopupScale, _comboPopupScale, 1f), _comboPopupDuration / 2).OnComplete(() =>
+                {
+                    _comboText.rectTransform.DOScale(Vector3.one, _comboPopupDuration / 2);
+                });
+            }
+            else
+            {
+                _comboText.gameObject.SetActive(false);
+            }
+        }
         
     }
 }

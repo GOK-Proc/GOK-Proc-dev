@@ -18,6 +18,7 @@ namespace Rhythm
         private readonly IList<ComboBonusElement> _comboBonus;
 
         private readonly IGaugeDrawable _gaugeDrawable;
+        private readonly IUIDrawable _uiDrawable;
 
         private float _playerHitPoint;
         private float _enemyHitPoint;
@@ -25,7 +26,7 @@ namespace Rhythm
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
 
-        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable)
+        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
         {
             _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length];
             _judgeRates = judgeRates;
@@ -45,6 +46,7 @@ namespace Rhythm
             _enemyBasicDamage = _playerMaxHitPoint * (knockout - victory) / (noteCount.attack * knockout * (victory - overkill));
 
             _gaugeDrawable = gaugeDrawable;
+            _uiDrawable = uiDrawable;
 
             Combo = 0;
             MaxCombo = 0;
@@ -66,6 +68,8 @@ namespace Rhythm
             {
                 Combo = 0;
             }
+
+            _uiDrawable.DrawCombo(Combo);
         }
 
         public void Hit(NoteColor color, bool isLarge, Judgement judgement)
