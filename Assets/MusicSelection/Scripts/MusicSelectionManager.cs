@@ -27,6 +27,7 @@ namespace MusicSelection
             _eventSystem = GetComponent<EventSystem>();
             _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
             GenerateUIElements();
+            InitScrollbar();
             UpdateDifficultyUI();
         }
 
@@ -40,8 +41,8 @@ namespace MusicSelection
         private void GenerateUIElements()
         {
             var isFirst = true;
-            var posY = 400f;
-            var height = _musicUIElementPrefab.GetComponent<RectTransform>().sizeDelta.y;
+            var posY = 0f;
+            var height = _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
 
             foreach (var beatmapInfo in _beatmapData.BeatmapDictionary.Values)
             {
@@ -50,9 +51,9 @@ namespace MusicSelection
                 element.Init(beatmapInfo, _scrollbar, _thumbnail);
 
                 var rectTransform = element.gameObject.GetComponent<RectTransform>();
-                var pos = rectTransform.localPosition;
+                var pos = rectTransform.anchoredPosition;
                 pos.y = posY;
-                rectTransform.localPosition = pos;
+                rectTransform.anchoredPosition = pos;
 
                 posY -= height;
 
@@ -60,6 +61,19 @@ namespace MusicSelection
                 _eventSystem.firstSelectedGameObject = element.gameObject;
                 isFirst = false;
             }
+        }
+
+        // REVIEW: sizeを0.xにしないといけない条件（全楽曲>画面内楽曲）で試していないため意図した挙動にならない可能性あり．
+        // 体験版時点ではリズムゲームが6曲予定のため余裕で画面内に収まるため，スクロールバーがそもそも必要ない．
+        private void InitScrollbar()
+        {
+            // すべての楽曲数
+            var allMusicNum = (float)_beatmapData.BeatmapDictionary.Count;
+            // 画面内に収まる楽曲の数（小数考慮）
+            var musicInScreenNum = Screen.height /
+                                   _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
+
+            _scrollbar.size = musicInScreenNum / allMusicNum;
         }
 
         private void UpdateDifficultySelection(float input)
