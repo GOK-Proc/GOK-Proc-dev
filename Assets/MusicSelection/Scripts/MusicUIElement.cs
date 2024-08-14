@@ -3,32 +3,32 @@ using Rhythm;
 using TMPro;
 using UnityEngine;
 using Transition;
+using UnityEngine.UI;
 
 namespace MusicSelection
 {
     public class MusicUIElement : MonoBehaviour
     {
+        private bool _isInited = false;
+        
         private RhythmId _rhythmId;
         private TextMeshProUGUI _text;
         private BeatmapInformation _beatmapInfo;
+        private Scrollbar _scrollbar;
         private Thumbnail _thumbnail;
 
-        private const int NormalFontSize = 60;
-        private const int FontSizeWhenSelected = 90;
+        private const int NormalFontSize = 48;
+        private const int FontSizeWhenSelected = 60;
 
-        public void Init(BeatmapInformation info, Thumbnail thumbnail)
+        public void Init(BeatmapInformation info, Scrollbar scrollbar, Thumbnail thumbnail)
         {
+            if (_isInited) throw new InvalidOperationException("This instance has already been initialized.");
+            _isInited = true;
+            
             _beatmapInfo = info;
-            try
-            {
-                // TODO:
-                // issue#59 RhythmIdの自動生成ができていないとArgumentException
-                _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
-            }
-            catch
-            {
-                // Do nothing
-            }
+            _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
+
+            _scrollbar = scrollbar;
 
             _thumbnail = thumbnail;
             _text = GetComponent<TextMeshProUGUI>();
@@ -52,6 +52,7 @@ namespace MusicSelection
         public void OnSelect()
         {
             _text.fontSize = FontSizeWhenSelected;
+            // TODO: ここでスクロールバー制御
             _thumbnail.Set(null, _beatmapInfo);
             // TODO: ここで対応する楽曲を再生
         }
