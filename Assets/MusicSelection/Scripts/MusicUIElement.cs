@@ -9,6 +9,8 @@ namespace MusicSelection
 {
     public class MusicUIElement : MonoBehaviour
     {
+        private bool _isInited = false;
+        
         private RhythmId _rhythmId;
         private TextMeshProUGUI _text;
         private BeatmapInformation _beatmapInfo;
@@ -20,6 +22,9 @@ namespace MusicSelection
 
         public void Init(BeatmapInformation info, Scrollbar scrollbar, Thumbnail thumbnail)
         {
+            if (_isInited) throw new InvalidOperationException("This instance has already been initialized.");
+            _isInited = true;
+            
             _beatmapInfo = info;
             _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
 
