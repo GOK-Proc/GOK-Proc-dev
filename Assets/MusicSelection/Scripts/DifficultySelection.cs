@@ -9,9 +9,15 @@ namespace MusicSelection
     {
         private static readonly Dictionary<Difficulty, Color> Colors = new()
         {
+            // Ryotan案
             { Difficulty.Easy, new Color(0.73f, 1.00f, 0.78f) },
             { Difficulty.Hard, new Color(1.00f, 0.73f, 0.73f) },
-            { Difficulty.Expert, new Color(0.87f, 0.73f, 1.00f) }
+            { Difficulty.Expert, new Color(0.87f, 0.73f, 1.00f) },
+            
+            // 社会のGOMI案
+            // { Difficulty.Easy, new Color(0.00f, 0.69f, 0.41f) },
+            // { Difficulty.Hard, new Color(1.00f, 0.29f, 0.00f) },
+            // { Difficulty.Expert, new Color(0.60f, 0.00f, 0.60f) }
         };
 
         public static Difficulty Current { get; private set; }

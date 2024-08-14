@@ -13,22 +13,13 @@ namespace MusicSelection
         private BeatmapInformation _beatmapInfo;
         private Thumbnail _thumbnail;
 
-        private const int NormalFontSize = 60;
-        private const int FontSizeWhenSelected = 90;
+        private const int NormalFontSize = 48;
+        private const int FontSizeWhenSelected = 60;
 
         public void Init(BeatmapInformation info, Thumbnail thumbnail)
         {
             _beatmapInfo = info;
-            try
-            {
-                // TODO:
-                // issue#59 RhythmIdの自動生成ができていないとArgumentException
-                _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
-            }
-            catch
-            {
-                // Do nothing
-            }
+            _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
 
             _thumbnail = thumbnail;
             _text = GetComponent<TextMeshProUGUI>();
