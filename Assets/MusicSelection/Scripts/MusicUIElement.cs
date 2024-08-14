@@ -3,6 +3,7 @@ using Rhythm;
 using TMPro;
 using UnityEngine;
 using Transition;
+using UnityEngine.UI;
 
 namespace MusicSelection
 {
@@ -11,15 +12,18 @@ namespace MusicSelection
         private RhythmId _rhythmId;
         private TextMeshProUGUI _text;
         private BeatmapInformation _beatmapInfo;
+        private Scrollbar _scrollbar;
         private Thumbnail _thumbnail;
 
         private const int NormalFontSize = 48;
         private const int FontSizeWhenSelected = 60;
 
-        public void Init(BeatmapInformation info, Thumbnail thumbnail)
+        public void Init(BeatmapInformation info, Scrollbar scrollbar, Thumbnail thumbnail)
         {
             _beatmapInfo = info;
             _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
+
+            _scrollbar = scrollbar;
 
             _thumbnail = thumbnail;
             _text = GetComponent<TextMeshProUGUI>();
@@ -43,6 +47,7 @@ namespace MusicSelection
         public void OnSelect()
         {
             _text.fontSize = FontSizeWhenSelected;
+            // TODO: ここでスクロールバー制御
             _thumbnail.Set(null, _beatmapInfo);
             // TODO: ここで対応する楽曲を再生
         }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Rhythm;
+using UnityEngine.UI;
 
 namespace MusicSelection
 {
@@ -15,6 +16,7 @@ namespace MusicSelection
         [Header("参照")] [SerializeField] private BeatmapData _beatmapData;
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
+        [SerializeField] private Scrollbar _scrollbar;
         [SerializeField] private Thumbnail _thumbnail;
         [SerializeField] private DifficultyDisplay _difficultyDisplay;
 
@@ -45,7 +47,7 @@ namespace MusicSelection
             {
                 var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
-                element.Init(beatmapInfo, _thumbnail);
+                element.Init(beatmapInfo, _scrollbar, _thumbnail);
 
                 var rectTransform = element.gameObject.GetComponent<RectTransform>();
                 var pos = rectTransform.localPosition;

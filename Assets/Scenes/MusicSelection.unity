@@ -725,6 +725,7 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _uiElementParent: {fileID: 1608349275}
   _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _scrollbar: {fileID: 1782718322}
   _thumbnail: {fileID: 1671466897}
   _difficultyDisplay: {fileID: 983387257}
 --- !u!4 &1114070505
