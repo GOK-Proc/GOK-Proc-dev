@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,11 +15,14 @@ namespace Map
 
 		[SerializeField] private EpisodeBox _episodeBox;
 
-		[SerializeField] private GameObject _episodeBoxArea;
-
+		[SerializeField] private TextMeshProUGUI _labelText;
+		
 		[SerializeField] private GameObject _selectOff;
 		[SerializeField] private GameObject _selectOn;
 
+		[SerializeField] private GameObject _episodeBoxArea;
+
+		[SerializeField] private string _label;
 		[SerializeField] private List<EpisodeNumber> _episodes;
 
 		[HideInInspector] public static GameObject CurrentMapSpot { get; private set; }
@@ -33,6 +37,8 @@ namespace Map
 				gameObject.SetActive(false);
 				return;
 			}
+
+			_labelText.text = _label;
 
 			Selectable preSelectable = null;
 			foreach (var episode in _episodes)
