@@ -21,6 +21,8 @@ namespace Map
 
 		[SerializeField] private List<EpisodeNumber> _episodes;
 
+		[HideInInspector] public static GameObject CurrentMapSpot { get; private set; }
+
 		private void Start()
 		{
 			var dataDict = _episodeData.DataDict;
@@ -61,6 +63,7 @@ namespace Map
 		{
 			_selectOff.SetActive(false);
 			_selectOn.SetActive(true);
+			CurrentMapSpot = gameObject;
 		}
 
 		public void OnDeselect(BaseEventData eventData)

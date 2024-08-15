@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Map
 {
 	[RequireComponent(typeof(Selectable))]
-	public class EpisodeBox : MonoBehaviour, ISubmitHandler
+	public class EpisodeBox : MonoBehaviour, ISubmitHandler, ICancelHandler
 	{
 		[SerializeField] private TextMeshProUGUI _episodeNumberText;
 		[SerializeField] private TextMeshProUGUI _titleText;
@@ -35,6 +35,12 @@ namespace Map
 					SceneTransitionManager.TransitionToRhythm(_info.RhythmId, Difficulty.Expert, true);
 					break;
 			}
+		}
+
+		public void OnCancel(BaseEventData eventData)
+		{
+			transform.parent.gameObject.SetActive(false);
+			EventSystem.current.SetSelectedGameObject(MapSpot.CurrentMapSpot);
 		}
 	}
 }
