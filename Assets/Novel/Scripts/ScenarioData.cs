@@ -7,6 +7,6 @@ namespace Novel
 {
     public class ScenarioData : ScriptableObject
     {
-        [field: SerializeField] public List<OperationData> ScenarioLines { get; private set; } = new List<OperationData>();
+        public List<List<OperationData>> ScenarioLines { get; set; } = new List<List<OperationData>>();
     }
 }

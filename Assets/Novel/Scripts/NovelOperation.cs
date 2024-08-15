@@ -23,5 +23,25 @@ namespace Novel
             _nameText.text = name;
             _dialogueText.text = dialogue;
         }
+
+        public void UpdateCharacterLayout(CharacterLayoutData characterLayout)
+        {
+
+        }
+
+        public void UpdateBackground(BackgroundData backgroundData)
+        {
+            
+        }
+
+        public void UpdateBgm(BgmData bgmData)
+        {
+
+        }
+
+        public void ExecuteOtherOperation(OtherData otherData)
+        {
+
+        }
     }
 }

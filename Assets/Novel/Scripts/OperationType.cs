@@ -4,6 +4,8 @@
     {
         Dialogue,
         CharacterLayout,
-        Background
+        Background,
+        Bgm,
+        Other
     }
 }

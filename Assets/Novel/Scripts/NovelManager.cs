@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -13,6 +14,9 @@ namespace Novel
 
         [SerializeField] private int _currentLine = 0;
 
+        private bool _doFirstLine = false;
+
+
         private void Start()
         {
             StartCoroutine(LoadAsset());
@@ -20,22 +24,31 @@ namespace Novel
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (_doFirstLine)
             {
-                OperationData operationData = _scenarioData.ScenarioLines[_currentLine];
-                if (operationData is DialogueData)
-                {
-                    _novelOperation.UpdateDialogue((DialogueData)operationData);
-                }
-                else if (operationData is CharacterLayoutData)
-                {
-                    // このへんはSwitchにして、GetType()とTypeofで比較してもいいかも
-                }
-                else if (operationData is BackgroundData)
-                {
+                CallLineOperation();
 
-                }
                 _currentLine++;
+
+                _doFirstLine = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return) && !_doFirstLine)
+            {
+                CallLineOperation();
+
+                _currentLine++;
+            }
+        }
+
+        private void CallLineOperation()
+        {
+            List<OperationData> lineOperationList = _scenarioData.ScenarioLines[_currentLine];
+
+            // 各データに対して、foreachでExecuteOperationを実行できた方が綺麗かも
+            foreach (OperationData lineOperation in lineOperationList)
+            {
+                lineOperation.ExecuteOperation(_novelOperation);
             }
         }
 
@@ -50,7 +63,9 @@ namespace Novel
             yield return handle;
 
             ScenarioLoader.MakeScenarioData(handle.Result);
-            _scenarioData = ScenarioLoader.ScenarioData;
+            _scenarioData = ScenarioLoader._ScenarioData;
+
+            _doFirstLine = true;
         }
 
         private IEnumerator UnloadAsset()
