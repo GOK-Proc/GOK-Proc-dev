@@ -6,16 +6,15 @@ namespace Map
 	[Serializable]
 	public class EpisodeFlagPair
 	{
-		[SerializeField] private int _chapter;
-		[SerializeField] private int _section;
+		[SerializeField] private EpisodeNumber _episodeNumber;
 
 		public (int, int) Key
 		{
-			get { return (_chapter, _section); }
+			get { return (_episodeNumber.Chapter, _episodeNumber.Section); }
 			private set
 			{
-				_chapter = value.Item1;
-				_section = value.Item2;
+				_episodeNumber.Chapter = value.Item1;
+				_episodeNumber.Section = value.Item2;
 			}
 		}
 
