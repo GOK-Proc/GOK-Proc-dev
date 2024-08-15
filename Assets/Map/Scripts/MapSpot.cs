@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Map
 {
-	public class MapSpot : Selectable, ISubmitHandler
+	[RequireComponent(typeof(Selectable))]
+	public class MapSpot : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler
 	{
 		[SerializeField] private EpisodeData _episodeData;
 		[SerializeField] private EpisodeFlags _episodeFlags;
@@ -21,57 +21,50 @@ namespace Map
 
 		[SerializeField] private List<EpisodeNumber> _episodes;
 
-		protected override void Start()
+		private void Start()
 		{
-			base.Start();
-
 			var dataDict = _episodeData.DataDict;
 			var flagDict = _episodeFlags.FlagDict;
 
-			if (!flagDict.Values.Contains(true))
+			if (!_episodes.Any(x => flagDict.TryGetValue((x.Chapter, x.Section), out bool flag) && flag))
 			{
 				gameObject.SetActive(false);
 				return;
 			}
 
-			Selectable preObj = null;
+			Selectable preSelectable = null;
 			foreach (var episode in _episodes)
 			{
-				if (!flagDict.ContainsKey((episode.Chapter, episode.Section))) continue;
-
-				if (flagDict[(episode.Chapter, episode.Section)])
+				if (flagDict.TryGetValue((episode.Chapter, episode.Section), out bool flag) && flag)
 				{
 					var obj = Instantiate(_episodeBox, _episodeBoxArea.transform);
 					obj.SetInfo(dataDict[(episode.Chapter, episode.Section)]);
+					var selectable = obj.GetComponent<Selectable>();
 
-					if (preObj != null)
+					if (preSelectable != null)
 					{
-						Navigation preNavigation = preObj.navigation;
-						preNavigation.selectOnDown = obj;
-						preObj.navigation = preNavigation;
+						Navigation preNavigation = preSelectable.navigation;
+						preNavigation.selectOnDown = selectable;
+						preSelectable.navigation = preNavigation;
 
-						Navigation navigation = obj.navigation;
-						navigation.selectOnUp = preObj;
-						obj.navigation = navigation;
+						Navigation navigation = selectable.navigation;
+						navigation.selectOnUp = preSelectable;
+						selectable.navigation = navigation;
 					}
 
-					preObj = obj;
+					preSelectable = selectable;
 				}
 			}
 		}
 
-		public override void OnSelect(BaseEventData eventData)
+		public void OnSelect(BaseEventData eventData)
 		{
-			base.OnSelect(eventData);
-
 			_selectOff.SetActive(false);
 			_selectOn.SetActive(true);
 		}
 
-		public override void OnDeselect(BaseEventData eventData)
+		public void OnDeselect(BaseEventData eventData)
 		{
-			base.OnDeselect(eventData);
-
 			_selectOn.SetActive(false);
 			_selectOff.SetActive(true);
 		}

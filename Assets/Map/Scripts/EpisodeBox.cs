@@ -1,5 +1,4 @@
-﻿using Map;
-using Rhythm;
+﻿using Rhythm;
 using TMPro;
 using Transition;
 using UnityEngine;
@@ -8,7 +7,8 @@ using UnityEngine.UI;
 
 namespace Map
 {
-	public class EpisodeBox : Selectable, ISubmitHandler
+	[RequireComponent(typeof(Selectable))]
+	public class EpisodeBox : MonoBehaviour, ISubmitHandler
 	{
 		[SerializeField] private TextMeshProUGUI _episodeNumberText;
 		[SerializeField] private TextMeshProUGUI _titleText;

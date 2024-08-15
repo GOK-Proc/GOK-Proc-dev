@@ -279,7 +279,8 @@ GameObject:
   - component: {fileID: 1300208955591714408}
   - component: {fileID: 8178446171743609849}
   - component: {fileID: 649728881019620247}
-  - component: {fileID: 3311237229887741667}
+  - component: {fileID: 9056070086468347527}
+  - component: {fileID: 1812604396169786994}
   m_Layer: 5
   m_Name: EpisodeBox
   m_TagString: Untagged
@@ -346,7 +347,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3311237229887741667
+--- !u!114 &9056070086468347527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,7 +356,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8840880467909540305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 777318cd90bb6524f935426fbe16d111, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a98125502f715b4b83cfb77b434e436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -387,5 +388,17 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 649728881019620247}
+--- !u!114 &1812604396169786994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840880467909540305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777318cd90bb6524f935426fbe16d111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _episodeNumberText: {fileID: 7257399409865045128}
   _titleText: {fileID: 7733522467447737108}

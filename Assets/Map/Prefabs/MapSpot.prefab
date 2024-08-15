@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5215551418862832241}
   - component: {fileID: 2653086841611981354}
-  - component: {fileID: 4776986657935787828}
+  - component: {fileID: 3458057099442807698}
+  - component: {fileID: 873495957100875670}
   m_Layer: 0
   m_Name: MapSpot
   m_TagString: Untagged
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4776986657935787828
+--- !u!114 &3458057099442807698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 319662892196210845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ac122f67884d74c8e4a2f117faa7c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a98125502f715b4b83cfb77b434e436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -129,9 +130,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
+--- !u!114 &873495957100875670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319662892196210845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ac122f67884d74c8e4a2f117faa7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _episodeData: {fileID: 11400000, guid: 0092104524d84d742b87b66aa4058714, type: 2}
   _episodeFlags: {fileID: 11400000, guid: 93a1adb29502b3644b9591af525c4846, type: 2}
-  _episodeBox: {fileID: 3311237229887741667, guid: f8801adc194059644945614e4960f9e9, type: 3}
+  _episodeBox: {fileID: 1812604396169786994, guid: f8801adc194059644945614e4960f9e9, type: 3}
   _episodeBoxArea: {fileID: 1148270463895433482}
   _selectOff: {fileID: 7075257238016137302}
   _selectOn: {fileID: 6279655580577147318}
