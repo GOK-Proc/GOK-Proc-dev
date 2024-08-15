@@ -1,36 +1,39 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class MapNavPoint : Selectable
+namespace Map
 {
-    [SerializeField] private float _size = 1f;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-
-    protected override void Awake()
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class MapNavPoint : Selectable
     {
-        base.Awake();
+        [SerializeField] private float _size = 1f;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        UnityAction<SpriteRenderer> action = AdjustSpriteSize;
-        _spriteRenderer.RegisterSpriteChangeCallback(action);
-    }
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            UnityAction<SpriteRenderer> action = AdjustSpriteSize;
+            _spriteRenderer.RegisterSpriteChangeCallback(action);
+        }
 
 #if UNITY_EDITOR
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        AdjustSpriteSize(_spriteRenderer);
-    }
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            AdjustSpriteSize(_spriteRenderer);
+        }
 #endif
 
-    private void AdjustSpriteSize(SpriteRenderer spriteRenderer)
-    {
-        Vector3 originalSize = spriteRenderer.sprite.bounds.size;
-        Vector3 adjustedSize = new Vector3(_size / originalSize.x, _size / originalSize.y, 1f);
-        transform.localScale = adjustedSize;
+        private void AdjustSpriteSize(SpriteRenderer spriteRenderer)
+        {
+            Vector3 originalSize = spriteRenderer.sprite.bounds.size;
+            Vector3 adjustedSize = new Vector3(_size / originalSize.x, _size / originalSize.y, 1f);
+            transform.localScale = adjustedSize;
+        }
     }
 }

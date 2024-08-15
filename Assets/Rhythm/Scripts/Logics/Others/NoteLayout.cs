@@ -1,25 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Rhythm
 {
     [System.Serializable]
     public struct NoteLayout
     {
-        public float FirstLaneX;
-        public float LaneDistanceX;
-        public float JudgeLineY;
-        public float BeginLineY;
-        public float DestroyLineY;
+        [SerializeField] private float _firstLaneX;
+        public readonly float FirstLaneX => _firstLaneX;
 
-        public NoteLayout(float firstLaneX, float laneDistanceX, float judgeLineY, float beginLineY, float destroyLineY)
-        {
-            FirstLaneX = firstLaneX;
-            LaneDistanceX = laneDistanceX;
-            JudgeLineY = judgeLineY;
-            BeginLineY = beginLineY;
-            DestroyLineY = destroyLineY;
-        }
+        [SerializeField] private float _laneDistanceX;
+        public readonly float LaneDistanceX => _laneDistanceX;
+
+        [SerializeField] private float _judgeLineY;
+        public readonly float JudgeLineY => _judgeLineY;
+
+        [SerializeField] private float _beginLineY;
+        public readonly float BeginLineY => _beginLineY;
+
+        [SerializeField] private float _destroyLineY;
+        public readonly float DestroyLineY => _destroyLineY;
+
     }
 }

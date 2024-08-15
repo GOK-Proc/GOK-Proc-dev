@@ -2,60 +2,91 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using Map;
+using Rhythm;
 
-public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
+namespace Transition
 {
-	public static NovelId CurrentNovelId { get; private set; }
-	public static RhythmId CurrentRhythmId { get; private set; }
-	public static bool IsVs { get; private set; }
-
-	public static void TransitionToNovel(NovelId novelId)
+	public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
 	{
-		if(novelId == NovelId.None) return;
+		public static EpisodeType CurrentEpisodedType { get; private set; }
+		public static NovelId CurrentNovelId { get; private set; }
+		public static RhythmId CurrentRhythmId { get; private set; }
+		public static Difficulty CurrentDifficulty { get; private set; }
+		public static bool CurrentIsVs { get; private set; }
 
-		CurrentNovelId = novelId;
-
-		TransitionToScene(SceneName.Novel);
-	}
-
-	public static void TransitionToRhythm(RhythmId rhythmId, bool isVs = false)
-	{
-		if(rhythmId == RhythmId.None) return;
-	
-		CurrentRhythmId = rhythmId;
-		IsVs = isVs;
-		
-		TransitionToScene(SceneName.Rhythm);
-	}
-
-	// TODO: 各シーンへの遷移関数を定義したらprivateに
-	public static void TransitionToScene(SceneName sceneName)
-	{
-		Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
-	}
-
-	private static IEnumerator TransitionToSceneCoroutine(SceneName sceneName)
-	{
-		Scene prevScene = default;
-		for (int i = 0; i < SceneManager.sceneCount; i++)
+		public static void TransitionToMap()
 		{
-			if (SceneManager.GetSceneAt(i).name != "Transition")
-			{
-				prevScene = SceneManager.GetSceneAt(i);
-				break;
-			}
+			TransitionToScene(SceneName.Map);
 		}
 
-		CanvasGroup canvasGroup = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
+		public static void TransitionToMap(bool result)
+		{
+			EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
+		
+			switch(CurrentEpisodedType)
+			{
+				case EpisodeType.Novel:
+					episodeFlagManager.SetFlag(CurrentNovelId, result);
+					break;
+				case EpisodeType.Rhythm:
+					episodeFlagManager.SetFlag(CurrentRhythmId, result);
+					break;
+			}
 
-		yield return canvasGroup.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
+			TransitionToScene(SceneName.Map);
+		}
+		
+		public static void TransitionToNovel(NovelId novelId)
+		{
+			if (novelId == NovelId.None) return;
 
-		AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(prevScene);
-		yield return new WaitUntil(() => unloadOp.isDone);
+			CurrentEpisodedType = EpisodeType.Novel;
+			CurrentNovelId = novelId;
 
-		AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
-		yield return new WaitUntil(() => loadOp.isDone);
+			TransitionToScene(SceneName.Novel);
+		}
 
-		yield return canvasGroup.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
+		public static void TransitionToRhythm(RhythmId rhythmId, Difficulty difficulty, bool isVs = false)
+		{
+			if (rhythmId == RhythmId.None) return;
+
+			CurrentEpisodedType = EpisodeType.Rhythm;
+			CurrentRhythmId = rhythmId;
+			CurrentDifficulty = difficulty;
+			CurrentIsVs = isVs;
+
+			TransitionToScene(SceneName.Rhythm);
+		}
+
+		private static void TransitionToScene(SceneName sceneName)
+		{
+			Instance.StartCoroutine(TransitionToSceneCoroutine(sceneName));
+		}
+
+		private static IEnumerator TransitionToSceneCoroutine(SceneName sceneName)
+		{
+			Scene prevScene = default;
+			for (int i = 0; i < SceneManager.sceneCount; i++)
+			{
+				if (SceneManager.GetSceneAt(i).name != "Transition")
+				{
+					prevScene = SceneManager.GetSceneAt(i);
+					break;
+				}
+			}
+
+			CanvasGroup canvasGroup = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
+
+			yield return canvasGroup.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
+
+			AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(prevScene);
+			yield return new WaitUntil(() => unloadOp.isDone);
+
+			AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
+			yield return new WaitUntil(() => loadOp.isDone);
+
+			yield return canvasGroup.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
+		}
 	}
 }

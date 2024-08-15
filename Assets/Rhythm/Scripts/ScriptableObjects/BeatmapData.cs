@@ -1,34 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Rhythm
 {
     [CreateAssetMenu]
     public class BeatmapData : ScriptableObject
     {
-        public Dictionary<string, BeatmapInformation> BeatmapDictionary { get; private set; } = new Dictionary<string, BeatmapInformation>();
+        public Dictionary<string, BeatmapInformation> BeatmapDictionary => _beatmaps.ToDictionary(x => x.Id, x => x);
 
         [SerializeField] private BeatmapInformation[] _beatmaps;
  
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            BeatmapDictionary.Clear();
+            var set = new HashSet<string>();
 
             foreach (var item in _beatmaps)
             {
                 if (item.Id == string.Empty) continue;
 
-                if (BeatmapDictionary.ContainsKey(item.Id))
+                if (set.Contains(item.Id))
                 {
-                    Debug.LogWarning("There is data with duplicate IDs.");
+                    Debug.LogWarning($"There is data with duplicate IDs: { item.Id }");
                 }
                 else
                 {
-                    BeatmapDictionary.Add(item.Id, item);
+                    set.Add(item.Id);
                 }
             }
+
+            IdGenerator.GenerateRhythmId(this);
         }
 #endif
     }
