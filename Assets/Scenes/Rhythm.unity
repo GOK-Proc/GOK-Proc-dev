@@ -307,6 +307,10 @@ MonoBehaviour:
     Normal: {r: 0, g: 0.8627451, b: 0, a: 1}
     Damaged: {r: 1, g: 1, b: 0, a: 1}
     Pinch: {r: 1, g: 0, b: 0, a: 1}
+  _difficultyColor:
+  - {r: 0.73, g: 1, b: 0.78, a: 1}
+  - {r: 1, g: 0.73, b: 0.73, a: 1}
+  - {r: 0.87, g: 0.73, b: 1, a: 1}
 --- !u!4 &152221028
 Transform:
   m_ObjectHideFlags: 0
@@ -2032,8 +2036,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 180, y: -80}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchoredPosition: {x: 100, y: -80}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1687485115
 MonoBehaviour:
@@ -2300,8 +2304,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20, y: -80}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchoredPosition: {x: -130, y: -80}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1725885797
 MonoBehaviour:

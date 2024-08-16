@@ -83,6 +83,8 @@ namespace Rhythm
         private Vector3 _playerGaugeScale;
         private Vector3 _enemyGaugeScale;
 
+        [SerializeField] private Color[] _difficultyColor;
+
         private void Awake()
         {
             _playerPosition = _player.position;
@@ -334,6 +336,7 @@ namespace Rhythm
                 Difficulty.Expert => "EXPERT",
                 _ => throw new InvalidEnumArgumentException()
             });
+            _difficultyText.color = _difficultyColor[(int)difficulty];
             _levelText.SetText("Lv. {0}", level);
         }
 
