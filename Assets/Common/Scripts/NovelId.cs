@@ -1,4 +1,6 @@
-public enum NovelId
+﻿public enum NovelId
 {
-	None
+	None,
+	TestSheet1,
+	TestSheet2
 }

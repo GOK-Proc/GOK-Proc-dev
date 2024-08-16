@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5255daa65a2f36248ba56fbd6ee41ab1, type: 3}
-  m_Name: EpisodeData
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: NovelGroup_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  _episodeFlags: {fileID: 11400000, guid: 93a1adb29502b3644b9591af525c4846, type: 2}
-  _dataList:
-  - _chapter: 0
-    _section: 0
-    _title: 
-    _episodeType: 0
-    _novelId: 0
-    _rhythmId: 0
+  m_Group: {fileID: 11400000, guid: f2f84651adf8a2a4a8ae9e4c8272ee3b, type: 2}
+  m_StaticContent: 0

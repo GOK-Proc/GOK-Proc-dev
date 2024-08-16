@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5255daa65a2f36248ba56fbd6ee41ab1, type: 3}
-  m_Name: EpisodeData
+  m_Script: {fileID: 11500000, guid: b1487f5d688e4f94f828f879d599dbdc, type: 3}
+  m_Name: Built In Data_PlayerDataGroupSchema
   m_EditorClassIdentifier: 
-  _episodeFlags: {fileID: 11400000, guid: 93a1adb29502b3644b9591af525c4846, type: 2}
-  _dataList:
-  - _chapter: 0
-    _section: 0
-    _title: 
-    _episodeType: 0
-    _novelId: 0
-    _rhythmId: 0
+  m_Group: {fileID: 11400000, guid: a65e166d0185a50439a2136817377412, type: 2}
+  m_IncludeResourcesFolders: 1
+  m_IncludeBuildSettingsScenes: 1
