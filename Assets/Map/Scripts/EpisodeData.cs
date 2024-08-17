@@ -9,6 +9,8 @@ namespace Map
 	{
 		[SerializeField] private EpisodeFlags _episodeFlags;
 
+		private List<EpisodeInfomation> _preDataList;
+
 		[SerializeField] private List<EpisodeInfomation> _dataList;
 		public List<EpisodeInfomation> DataList { get { return _dataList; } }
 
@@ -17,8 +19,8 @@ namespace Map
 		{
 			get
 			{
-				if(_dataDict == null) _dataDict = DataList.ToDictionary(x => (x.Chapter, x.Section));
-				
+				if (_dataDict == null) _dataDict = DataList.ToDictionary(x => (x.Chapter, x.Section));
+
 				return _dataDict;
 			}
 		}
@@ -41,7 +43,12 @@ namespace Map
 				}
 			}
 
-			_episodeFlags.ResetFlags(this);
+			if (_preDataList != null && DataList.Count == _episodeNumbers.Count && DataList != _preDataList)
+			{
+				_episodeFlags.ResetFlags(this);
+			}
+
+			_preDataList = new List<EpisodeInfomation>(DataList);
 		}
 #endif
 	}
