@@ -10,7 +10,7 @@ namespace Gallery
 
         public override void Set(TrackInformation info)
         {
-            //TODO: ここで_image変更
+            _image.sprite = info.Thumbnail;
 
             _titleText.text = info.Title;
             _composerText.text = info.Composer;
