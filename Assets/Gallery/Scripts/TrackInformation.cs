@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Gallery
 {
     [System.Serializable]
-    public struct MusicInformation
+    public struct TrackInformation
     {
         [SerializeField] private string _id;
         public readonly string Id => _id;

@@ -1,23 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gallery
 {
     [CreateAssetMenu]
-    public class Album : ScriptableObject
+    public class TrackData : ScriptableObject
     {
-        public Dictionary<string, MusicInformation> AlbumDictionary =>
-            _musics.ToDictionary(x => x.Id, x => x);
+        public Dictionary<string, TrackInformation> AlbumDictionary =>
+            _tracks.ToDictionary(x => x.Id, x => x);
 
-        [SerializeField] private MusicInformation[] _musics;
+        [SerializeField] private TrackInformation[] _tracks;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
             var set = new HashSet<string>();
 
-            foreach (var item in _musics)
+            foreach (var item in _tracks)
             {
                 if (item.Id == string.Empty)
                 {
