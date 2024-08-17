@@ -22,5 +22,8 @@ namespace Gallery
 
         [SerializeField] private string _description;
         public readonly string Description => _description;
+
+        [SerializeField] private Sprite _thumbnail;
+        public readonly Sprite Thumbnail => _thumbnail;
     }
 }
