@@ -7,7 +7,7 @@ using Gallery;
 
 namespace MusicSelection
 {
-    public class MusicSelectionManagerBase : SingletonMonoBehaviour<MusicSelectionManagerBase>
+    public abstract class MusicSelectionManagerBase : SingletonMonoBehaviour<MusicSelectionManagerBase>
     {
         private EventSystem _eventSystem;
         protected Dictionary<string, TrackInformation> TrackDict;
