@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gallery
 {
     [CreateAssetMenu]
     public class TrackData : ScriptableObject
     {
-        public Dictionary<string, TrackInformation> AlbumDictionary =>
+        public Dictionary<string, TrackInformation> TrackDictionary =>
             _tracks.ToDictionary(x => x.Id, x => x);
 
         [SerializeField] private TrackInformation[] _tracks;
@@ -20,15 +19,10 @@ namespace Gallery
 
             foreach (var item in _tracks)
             {
-                if (item.Id == string.Empty)
-                {
-                    continue;
-                }
+                if (item.Id == string.Empty) continue;
 
                 if (!set.Add(item.Id))
-                {
                     Debug.LogWarning($"There are data with duplicate IDs: {item.Id}");
-                }
             }
         }
 #endif
