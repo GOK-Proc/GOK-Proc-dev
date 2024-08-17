@@ -1,7 +1,7 @@
-using Rhythm;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Gallery;
 
 namespace MusicSelection
 {
@@ -11,11 +11,11 @@ namespace MusicSelection
         [SerializeField] private TextMeshProUGUI _titleText;
         [SerializeField] private TextMeshProUGUI _composerText;
 
-        public void Set(Sprite sprite, BeatmapInformation beatmapInfo)
+        public void Set(Sprite sprite, TrackInformation trackInfo)
         {
             _image.sprite = sprite ?? _image.sprite;
-            _titleText.text = beatmapInfo.Title;
-            _composerText.text = beatmapInfo.Composer;
+            _titleText.text = trackInfo.Title;
+            _composerText.text = trackInfo.Composer;
         }
     }
 }

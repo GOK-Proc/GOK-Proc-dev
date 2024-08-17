@@ -1,16 +1,18 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using Rhythm;
 using UnityEngine.UI;
+using Gallery;
 
 namespace MusicSelection
 {
     public class MusicSelectionManagerBase : SingletonMonoBehaviour<MusicSelectionManagerBase>
     {
         private EventSystem _eventSystem;
+        protected Dictionary<string, TrackInformation> TrackDict;
 
-        [Header("参照")] [SerializeField] private BeatmapData _beatmapData;
+        [Header("参照")] [SerializeField] protected TrackData _trackData;
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
         [SerializeField] private Scrollbar _scrollbar;
@@ -21,6 +23,10 @@ namespace MusicSelection
             base.Awake();
 
             _eventSystem = GetComponent<EventSystem>();
+        }
+
+        protected virtual void Start()
+        {
             GenerateUIElements();
             InitScrollbar();
         }
@@ -31,11 +37,11 @@ namespace MusicSelection
             var posY = 0f;
             var height = _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
 
-            foreach (var beatmapInfo in _beatmapData.BeatmapDictionary.Values)
+            foreach (var trackInformation in TrackDict.Values)
             {
                 var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
-                element.Init(beatmapInfo, _scrollbar, _thumbnail);
+                element.Init(trackInformation, _scrollbar, _thumbnail);
 
                 var rectTransform = element.gameObject.GetComponent<RectTransform>();
                 var pos = rectTransform.anchoredPosition;
@@ -55,7 +61,7 @@ namespace MusicSelection
         private void InitScrollbar()
         {
             // すべての楽曲数
-            var allMusicNum = (float)_beatmapData.BeatmapDictionary.Count;
+            var allMusicNum = (float)TrackDict.Count;
             // 画面内に収まる楽曲の数（小数考慮）
             var musicInScreenNum = Screen.height /
                                    _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
