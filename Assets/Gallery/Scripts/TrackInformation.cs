@@ -11,6 +11,9 @@ namespace Gallery
         [SerializeField] private string _title;
         public readonly string Title => _title;
 
+        [SerializeField] private bool _hasBeatmap;
+        public readonly bool HasBeatmap => _hasBeatmap;
+
         [SerializeField] private AudioClip _sound;
         public readonly AudioClip Sound => _sound;
 

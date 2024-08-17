@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Rhythm;
-using UnityEngine.InputSystem.UI;
 
 namespace MusicSelection
 {
@@ -19,7 +19,16 @@ namespace MusicSelection
         {
             base.Awake();
 
+            TrackDict = _trackData.TrackDictionary.Where(x => x.Value.HasBeatmap)
+                .ToDictionary(x => x.Key, x => x.Value);
+            Debug.Log(TrackDict);
             _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
             UpdateDifficultyUI();
         }
 
