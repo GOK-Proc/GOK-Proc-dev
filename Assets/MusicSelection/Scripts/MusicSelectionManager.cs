@@ -21,7 +21,6 @@ namespace MusicSelection
 
             TrackDict = _trackData.TrackDictionary.Where(x => x.Value.HasBeatmap)
                 .ToDictionary(x => x.Key, x => x.Value);
-            Debug.Log(TrackDict);
             _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
         }
 
