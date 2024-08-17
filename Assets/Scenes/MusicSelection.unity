@@ -698,7 +698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1114070505}
-  - component: {fileID: 1114070503}
+  - component: {fileID: 1114070509}
   - component: {fileID: 1114070507}
   - component: {fileID: 1114070506}
   - component: {fileID: 1114070508}
@@ -709,25 +709,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1114070503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114070502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3abfe87e22b194ea0e6da09ca53f4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firstSelectedDifficulty: 0
-  _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
-  _uiElementParent: {fileID: 2054128551}
-  _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
-  _scrollbar: {fileID: 1782718322}
-  _thumbnail: {fileID: 1671466897}
-  _difficultyDisplay: {fileID: 983387257}
 --- !u!4 &1114070505
 Transform:
   m_ObjectHideFlags: 0
@@ -818,6 +799,25 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1114070509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114070502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cefc0d5f5de84135a906839cdaffd408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
+  _uiElementParent: {fileID: 2054128551}
+  _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _scrollbar: {fileID: 1782718322}
+  _thumbnail: {fileID: 1671466897}
+  _firstSelectedDifficulty: 0
+  _difficultyDisplay: {fileID: 983387257}
 --- !u!1 &1123369938
 GameObject:
   m_ObjectHideFlags: 0
