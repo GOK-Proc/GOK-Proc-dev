@@ -17,8 +17,8 @@ MonoBehaviour:
     _title: "\u30B4\u30D6\u30EA\u30F3"
     _hasBeatmap: 1
     _sound: {fileID: 0}
-    _composer: 
-    _description: 
+    _composer: "\u4F5C\u66F2\u8005"
+    _description: "\u8AAC\u660E\u6587"
   - _id: Chapter2_2
     _title: "\u30B4\u30D6\u30EA\u30F3\u7FA4\u308C"
     _hasBeatmap: 1
