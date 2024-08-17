@@ -2,6 +2,7 @@
 {
     public enum SceneName
     {
+        Gallery,
         Map,
         MusicSelection,
         Novel,

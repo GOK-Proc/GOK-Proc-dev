@@ -1,43 +1,52 @@
 ﻿using System;
-using Rhythm;
 using TMPro;
 using UnityEngine;
-using Transition;
 using UnityEngine.UI;
+using Gallery;
+using Transition;
 
 namespace MusicSelection
 {
     public class MusicUIElement : MonoBehaviour
     {
         private bool _isInited = false;
-        
+
         private RhythmId _rhythmId;
         private TextMeshProUGUI _text;
-        private BeatmapInformation _beatmapInfo;
+        private TrackInformation _trackInfo;
         private Scrollbar _scrollbar;
-        private Thumbnail _thumbnail;
+        private ThumbnailBase _thumbnailBase;
 
         private const int NormalFontSize = 48;
         private const int FontSizeWhenSelected = 60;
 
-        public void Init(BeatmapInformation info, Scrollbar scrollbar, Thumbnail thumbnail)
+        public void Init(TrackInformation info, Scrollbar scrollbar, ThumbnailBase thumbnailBase)
         {
-            if (_isInited) throw new InvalidOperationException("This instance has already been initialized.");
+            if (_isInited)
+                throw new InvalidOperationException("This instance has already been initialized.");
             _isInited = true;
-            
-            _beatmapInfo = info;
-            _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _beatmapInfo.Id);
+
+            _trackInfo = info;
+            _rhythmId = info.HasBeatmap switch
+            {
+                true => (RhythmId)Enum.Parse(typeof(RhythmId), _trackInfo.Id),
+                false => RhythmId.None
+            };
 
             _scrollbar = scrollbar;
 
-            _thumbnail = thumbnail;
+            _thumbnailBase = thumbnailBase;
             _text = GetComponent<TextMeshProUGUI>();
             _text.text = info.Title;
             _text.fontSize = NormalFontSize;
         }
 
+        // ギャラリーでは必要ない．
+        // InputSystemUIInputModuleのインスペクターでSubmitをNoneにすることで解決
         public void OnSubmit()
         {
+            if (_rhythmId == RhythmId.None) return;
+
             SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current,
                 false);
         }
@@ -53,7 +62,7 @@ namespace MusicSelection
         {
             _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
-            _thumbnail.Set(null, _beatmapInfo);
+            _thumbnailBase.Set(_trackInfo);
             // TODO: ここで対応する楽曲を再生
         }
 
