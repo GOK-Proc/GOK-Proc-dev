@@ -27,7 +27,11 @@ namespace MusicSelection
             _isInited = true;
 
             _trackInfo = info;
-            _rhythmId = (RhythmId)Enum.Parse(typeof(RhythmId), _trackInfo.Id);
+            _rhythmId = info.HasBeatmap switch
+            {
+                true => (RhythmId)Enum.Parse(typeof(RhythmId), _trackInfo.Id),
+                false => RhythmId.None
+            };
 
             _scrollbar = scrollbar;
 
@@ -37,8 +41,12 @@ namespace MusicSelection
             _text.fontSize = NormalFontSize;
         }
 
+        // ギャラリーでは必要ない．
+        // InputSystemUIInputModuleのインスペクターでSubmitをNoneにすることで解決
         public void OnSubmit()
         {
+            if (_rhythmId == RhythmId.None) return;
+
             SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current,
                 false);
         }
