@@ -15,12 +15,12 @@ namespace MusicSelection
         private TextMeshProUGUI _text;
         private TrackInformation _trackInfo;
         private Scrollbar _scrollbar;
-        private Thumbnail _thumbnail;
+        private ThumbnailBase _thumbnailBase;
 
         private const int NormalFontSize = 48;
         private const int FontSizeWhenSelected = 60;
 
-        public void Init(TrackInformation info, Scrollbar scrollbar, Thumbnail thumbnail)
+        public void Init(TrackInformation info, Scrollbar scrollbar, ThumbnailBase thumbnailBase)
         {
             if (_isInited)
                 throw new InvalidOperationException("This instance has already been initialized.");
@@ -35,7 +35,7 @@ namespace MusicSelection
 
             _scrollbar = scrollbar;
 
-            _thumbnail = thumbnail;
+            _thumbnailBase = thumbnailBase;
             _text = GetComponent<TextMeshProUGUI>();
             _text.text = info.Title;
             _text.fontSize = NormalFontSize;
@@ -62,7 +62,7 @@ namespace MusicSelection
         {
             _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
-            _thumbnail.Set(null, _trackInfo);
+            _thumbnailBase.Set(_trackInfo);
             // TODO: ここで対応する楽曲を再生
         }
 

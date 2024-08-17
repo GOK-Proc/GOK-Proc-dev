@@ -815,7 +815,7 @@ MonoBehaviour:
   _uiElementParent: {fileID: 2054128551}
   _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
   _scrollbar: {fileID: 1782718322}
-  _thumbnail: {fileID: 1671466897}
+  _thumbnailBase: {fileID: 1671466897}
   _firstSelectedDifficulty: 0
   _difficultyDisplay: {fileID: 983387257}
 --- !u!1 &1123369938
@@ -1509,7 +1509,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1671466893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d34caf9b86dd9549a2962f74255d56d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d57563e89c44834a4d9ebcb11bc043e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 1799237809}

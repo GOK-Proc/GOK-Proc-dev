@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Gallery;
+using UnityEngine.Serialization;
 
 namespace MusicSelection
 {
-    public abstract class MusicSelectionManagerBase : SingletonMonoBehaviour<MusicSelectionManagerBase>
+    public abstract class
+        MusicSelectionManagerBase : SingletonMonoBehaviour<MusicSelectionManagerBase>
     {
         private EventSystem _eventSystem;
         protected Dictionary<string, TrackInformation> TrackDict;
@@ -16,7 +18,7 @@ namespace MusicSelection
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
         [SerializeField] private Scrollbar _scrollbar;
-        [SerializeField] private Thumbnail _thumbnail;
+        [SerializeField] private ThumbnailBase _thumbnailBase;
 
         protected override void Awake()
         {
@@ -42,7 +44,7 @@ namespace MusicSelection
             {
                 var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
                     .GetComponent<MusicUIElement>();
-                element.Init(trackInformation, _scrollbar, _thumbnail);
+                element.Init(trackInformation, _scrollbar, _thumbnailBase);
 
                 var rectTransform = element.gameObject.GetComponent<RectTransform>();
                 var pos = rectTransform.anchoredPosition;
