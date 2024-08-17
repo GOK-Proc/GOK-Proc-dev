@@ -22,6 +22,7 @@ namespace MusicSelection
         {
             base.Awake();
 
+            TrackDict = _trackData.TrackDictionary;
             _eventSystem = GetComponent<EventSystem>();
         }
 
