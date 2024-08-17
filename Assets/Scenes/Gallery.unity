@@ -698,34 +698,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1114070505}
-  - component: {fileID: 1114070503}
+  - component: {fileID: 1114070509}
   - component: {fileID: 1114070507}
   - component: {fileID: 1114070506}
   - component: {fileID: 1114070508}
   m_Layer: 0
-  m_Name: MusicSelectionManager
+  m_Name: GalleryManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1114070503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114070502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3abfe87e22b194ea0e6da09ca53f4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
-  _uiElementParent: {fileID: 2054128551}
-  _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
-  _scrollbar: {fileID: 1782718322}
-  _thumbnail: {fileID: 1671466897}
+  m_IsActive: 1
 --- !u!4 &1114070505
 Transform:
   m_ObjectHideFlags: 0
@@ -760,7 +743,7 @@ MonoBehaviour:
   m_ActionsAsset: {fileID: -944628639613478452, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_MoveAction: {fileID: -8784545083839296357, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
+  m_SubmitAction: {fileID: 0}
   m_CancelAction: {fileID: 7727032971491509709, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_LeftClickAction: {fileID: 3001919216989983466, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_MiddleClickAction: {fileID: -2185481485913320682, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
@@ -793,7 +776,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114070502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -816,6 +799,23 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1114070509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114070502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13540c4b000497840bfeba2c94e2a07e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _trackData: {fileID: 11400000, guid: 0bc08e45255eccc4ebaf04c197a1173e, type: 2}
+  _uiElementParent: {fileID: 2054128551}
+  _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _scrollbar: {fileID: 1782718322}
+  _thumbnail: {fileID: 1671466897}
 --- !u!1 &1123369938
 GameObject:
   m_ObjectHideFlags: 0
