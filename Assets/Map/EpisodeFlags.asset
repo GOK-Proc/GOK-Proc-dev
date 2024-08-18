@@ -12,4 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a7ac6b8cc18b5428c692e506d45563, type: 3}
   m_Name: EpisodeFlags
   m_EditorClassIdentifier: 
-  _flagList: []
+  _flagList:
+  - _episodeNumber:
+      _chapter: 1
+      _section: 1
+    _value: 1
+  - _episodeNumber:
+      _chapter: 1
+      _section: 2
+    _value: 0
+  - _episodeNumber:
+      _chapter: 1
+      _section: 3
+    _value: 0
+  - _episodeNumber:
+      _chapter: 2
+      _section: 1
+    _value: 0
+  - _episodeNumber:
+      _chapter: 2
+      _section: 2
+    _value: 0
+  - _episodeNumber:
+      _chapter: 2
+      _section: 3
+    _value: 0
+  - _episodeNumber:
+      _chapter: 2
+      _section: 4
+    _value: 0
+  - _episodeNumber:
+      _chapter: 2
+      _section: 5
+    _value: 0

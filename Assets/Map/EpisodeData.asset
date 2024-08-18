@@ -14,8 +14,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _episodeFlags: {fileID: 11400000, guid: 93a1adb29502b3644b9591af525c4846, type: 2}
   _dataList:
-  - _chapter: 0
-    _section: 0
+  - _chapter: 1
+    _section: 1
+    _title: 
+    _episodeType: 0
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 1
+    _section: 2
+    _title: 
+    _episodeType: 1
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 1
+    _section: 3
+    _title: 
+    _episodeType: 0
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 2
+    _section: 1
+    _title: 
+    _episodeType: 0
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 2
+    _section: 2
+    _title: 
+    _episodeType: 1
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 2
+    _section: 3
+    _title: 
+    _episodeType: 0
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 2
+    _section: 4
+    _title: 
+    _episodeType: 1
+    _novelId: 0
+    _rhythmId: 0
+  - _chapter: 2
+    _section: 5
     _title: 
     _episodeType: 0
     _novelId: 0
