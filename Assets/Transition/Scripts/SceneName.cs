@@ -4,6 +4,7 @@
     {
         Gallery,
         Map,
+        ModeSelection,
         MusicSelection,
         Novel,
         Rhythm
