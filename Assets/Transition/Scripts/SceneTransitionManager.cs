@@ -15,6 +15,11 @@ namespace Transition
 		public static Difficulty CurrentDifficulty { get; private set; }
 		public static bool CurrentIsVs { get; private set; }
 
+		public static void TransitionToGallery()
+		{
+			TransitionToScene(SceneName.Gallery);
+		}
+
 		public static void TransitionToMap()
 		{
 			TransitionToScene(SceneName.Map);
@@ -35,6 +40,16 @@ namespace Transition
 			}
 
 			TransitionToScene(SceneName.Map);
+		}
+
+		public static void TransitionToModeSelection()
+		{
+			TransitionToScene(SceneName.ModeSelection);
+		}
+
+		public static void TransitionToMusicSelection()
+		{
+			TransitionToScene(SceneName.MusicSelection);
 		}
 		
 		public static void TransitionToNovel(NovelId novelId)

@@ -53,9 +53,7 @@ namespace MusicSelection
 
         public void OnCancel()
         {
-            // モードセレクトSceneへ
-            // SceneTransitionManager.TransitionTo();
-            Debug.Log("OnCancel()が実行されました");
+            SceneTransitionManager.TransitionToModeSelection();
         }
 
         public void OnSelect()
