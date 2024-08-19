@@ -6,6 +6,7 @@
         Map,
         MusicSelection,
         Novel,
-        Rhythm
+        Rhythm,
+        Title
     }
 }
