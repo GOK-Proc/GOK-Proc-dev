@@ -13,6 +13,8 @@ namespace Map
 		[SerializeField] private TextMeshProUGUI _episodeNumberText;
 		[SerializeField] private TextMeshProUGUI _titleText;
 
+		[SerializeField] private GameObject _vsIcon;
+
 		private EpisodeInfomation _info = new EpisodeInfomation();
 
 		public void SetInfo(EpisodeInfomation info)
@@ -21,6 +23,11 @@ namespace Map
 
 			_episodeNumberText.text = $"Chapter {_info.Chapter}-{_info.Section}";
 			_titleText.text = _info.Title;
+
+			if (info.EpisodeType == EpisodeType.Rhythm)
+			{
+				_vsIcon.SetActive(true);
+			}
 		}
 
 		public void OnSubmit(BaseEventData eventData)
