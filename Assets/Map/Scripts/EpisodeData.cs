@@ -43,7 +43,7 @@ namespace Map
 				}
 			}
 
-			if (_preDataList != null && DataList.Count == _episodeNumbers.Count && DataList != _preDataList)
+			if (_preDataList != null && DataList.Count == _episodeNumbers.Count && !DataList.SequenceEqual(_preDataList))
 			{
 				_episodeFlags.ResetFlags(this);
 			}

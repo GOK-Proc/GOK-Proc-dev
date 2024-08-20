@@ -48,6 +48,7 @@ namespace Map
 				if (GUI.changed)
 				{
 					EditorUtility.SetDirty(target);
+					AssetDatabase.SaveAssets();
 				}
 			}
 		}
