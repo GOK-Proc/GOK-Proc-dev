@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4518620499223616912, guid: eff388e10239b1a4cb3e1a31d04244a3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 85bc35e7cb0e6fb40998c4780a61c079, type: 3}
     - target: {fileID: 8245661465662753980, guid: eff388e10239b1a4cb3e1a31d04244a3, type: 3}
       propertyPath: m_Name
-      value: Character1 Variant
+      value: Character3
       objectReference: {fileID: 0}
     - target: {fileID: 8274820912798778043, guid: eff388e10239b1a4cb3e1a31d04244a3, type: 3}
       propertyPath: m_Pivot.x

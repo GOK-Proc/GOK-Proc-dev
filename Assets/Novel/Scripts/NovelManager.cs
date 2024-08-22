@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Novel
 
         private void Start()
         {
-            StartCoroutine(LoadAsset());
+            StartCoroutine(Initialize());
         }
 
         private void Update()
@@ -57,16 +58,44 @@ namespace Novel
             StartCoroutine(UnloadAsset());
         }
 
-        private IEnumerator LoadAsset()
+        private IEnumerator Initialize()
         {
-            var handle = Addressables.LoadAssetAsync<TextAsset>(_novelId.ToString());
-            yield return handle;
-
-            ScenarioLoader.MakeScenarioData(handle.Result);
+            // シナリオのロード
+            yield return LoadAsset(_novelId.ToString(), scenario =>
+            {
+                ScenarioLoader.MakeScenarioData((TextAsset)scenario);
+            });
             _scenarioData = ScenarioLoader._ScenarioData;
+
+            // キャラクタアセットのロード
+            yield return LoadAsset(AssetLabels.CharacterLables, characterImages =>
+            {
+                for (int i = 0; i < AssetLabels.CharacterLables.Count; i++)
+                {
+                    _novelOperation.CharacterPrefabs[AssetLabels.CharacterLables[i]] = (GameObject)characterImages[i];
+                }
+            });
+
 
             _doFirstLine = true;
         }
+
+        private IEnumerator LoadAsset(string address, Action<UnityEngine.Object> callback)
+        {
+            var handle = Addressables.LoadAssetAsync<UnityEngine.Object>(address);
+            yield return handle;
+
+            callback(handle.Result);
+        }
+
+        private IEnumerator LoadAsset(List<string> addresses, Action<List<UnityEngine.Object>> callback)
+        {
+            var handle = Addressables.LoadAssetAsync<List<UnityEngine.Object>>(addresses);
+            yield return handle;
+
+            callback(handle.Result);
+        }
+
 
         private IEnumerator UnloadAsset()
         {
