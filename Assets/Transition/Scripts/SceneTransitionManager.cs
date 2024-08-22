@@ -17,11 +17,14 @@ namespace Transition
 
 		private static CanvasGroup _overlay;
 
+		private static Scene _prevScene;
+
 		private void OnEnable()
 		{
 			_overlay = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
 
 			SceneManager.LoadScene(SceneName.Title.ToString(), LoadSceneMode.Additive);
+			_prevScene = SceneManager.GetSceneByName(SceneName.Title.ToString());
 		}
 
 		public static void TransitionToGallery()
@@ -37,8 +40,8 @@ namespace Transition
 		public static void TransitionToMap(bool result)
 		{
 			EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
-		
-			switch(CurrentEpisodedType)
+
+			switch (CurrentEpisodedType)
 			{
 				case EpisodeType.Novel:
 					episodeFlagManager.SetFlag(CurrentNovelId, result);
@@ -60,7 +63,7 @@ namespace Transition
 		{
 			TransitionToScene(SceneName.MusicSelection);
 		}
-		
+
 		public static void TransitionToNovel(NovelId novelId)
 		{
 			if (novelId == NovelId.None) return;
@@ -90,25 +93,17 @@ namespace Transition
 
 		private static IEnumerator TransitionToSceneCoroutine(SceneName sceneName)
 		{
-			Scene prevScene = default;
-			for (int i = 0; i < SceneManager.sceneCount; i++)
-			{
-				if (SceneManager.GetSceneAt(i).name != "Transition")
-				{
-					prevScene = SceneManager.GetSceneAt(i);
-					break;
-				}
-			}
-
 			yield return _overlay.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
 
-			AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(prevScene);
+			AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(_prevScene);
 			yield return new WaitUntil(() => unloadOp.isDone);
 
 			AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
 			yield return new WaitUntil(() => loadOp.isDone);
 
 			yield return _overlay.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
+
+			_prevScene = SceneManager.GetSceneByName(sceneName.ToString());
 		}
 	}
 }
