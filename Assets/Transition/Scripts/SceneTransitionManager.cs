@@ -15,6 +15,15 @@ namespace Transition
 		public static Difficulty CurrentDifficulty { get; private set; }
 		public static bool CurrentIsVs { get; private set; }
 
+		private static CanvasGroup _overlay;
+
+		private void OnEnable()
+		{
+			_overlay = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
+
+			SceneManager.LoadScene(SceneName.Title.ToString(), LoadSceneMode.Additive);
+		}
+
 		public static void TransitionToGallery()
 		{
 			TransitionToScene(SceneName.Gallery);
@@ -91,9 +100,7 @@ namespace Transition
 				}
 			}
 
-			CanvasGroup canvasGroup = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
-
-			yield return canvasGroup.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
+			yield return _overlay.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
 
 			AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(prevScene);
 			yield return new WaitUntil(() => unloadOp.isDone);
@@ -101,7 +108,7 @@ namespace Transition
 			AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
 			yield return new WaitUntil(() => loadOp.isDone);
 
-			yield return canvasGroup.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
+			yield return _overlay.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
 		}
 	}
 }
