@@ -5,11 +5,29 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Transition.unity
+    guid: e58eb4b7e3a7fbd47959ad46f15bae70
+  - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: f71960f8cbfe0ff45bfb53be87017132
+  - enabled: 1
+    path: Assets/Scenes/ModeSelection.unity
+    guid: 04e59b573d35159429eb94ef2d6203f8
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: 9a4cf086de301364eb7d7fcd79880875
+  - enabled: 1
+    path: Assets/Scenes/Novel.unity
+    guid: f84d0df5675dfa747842763378c0bd35
   - enabled: 1
     path: Assets/Scenes/Rhythm.unity
     guid: b76c5d458e2b0b04ea605cdab89f48a6
+  - enabled: 1
+    path: Assets/Scenes/MusicSelection.unity
+    guid: 0cd7e9e91aa8b3a4db8d0dfc7bf81326
+  - enabled: 1
+    path: Assets/Scenes/Gallery.unity
+    guid: 0bfc6bcd6a99928448ab117275349e8c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: d663ad81de4c9fc43bf5dfc6133e10a4, type: 2}
