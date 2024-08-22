@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Transition;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 namespace Map
 {
 	[RequireComponent(typeof(Selectable))]
-	public class MapSpot : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler
+	public class MapSpot : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler, ICancelHandler
 	{
 		[SerializeField] private EpisodeData _episodeData;
 		[SerializeField] private EpisodeFlags _episodeFlags;
@@ -93,6 +94,11 @@ namespace Map
 			_episodeBoxArea.SetActive(true);
 
 			EventSystem.current.SetSelectedGameObject(_episodeBoxArea.transform.GetChild(0).gameObject);
+		}
+
+		public void OnCancel(BaseEventData eventData)
+		{
+			SceneTransitionManager.TransitionToModeSelection();
 		}
 	}
 }
