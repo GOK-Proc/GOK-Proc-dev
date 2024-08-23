@@ -14,11 +14,7 @@ namespace Title
 
         public void ToModeSelection()
         {
-            // TODO: BGM停止
-            // BGMManager.Instance.Stop();
-
-            // TODO: モードセレクトへ遷移
-            // SceneTransitionManager.TransitionTo();
+            SceneTransitionManager.TransitionToModeSelection();
         }
     }
 }
