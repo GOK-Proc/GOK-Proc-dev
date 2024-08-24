@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
@@ -85,6 +86,32 @@ namespace Rhythm
 
         [SerializeField] private Color[] _difficultyColor;
 
+        [Space(20)]
+        [SerializeField] private RectTransform _battleResultBox;
+        [SerializeField] private RectTransform _battleResultContents;
+        [SerializeField] private RectTransform[] _battleResultLabels;
+        [SerializeField] private TextMeshProUGUI _battleResultTitle;
+        [SerializeField] private TextMeshProUGUI _battleResultComposer;
+        [SerializeField] private TextMeshProUGUI _battleResultDifficulty;
+        [SerializeField] private TextMeshProUGUI _battleResultLevel;
+        [SerializeField] private TextMeshProUGUI[] _battleResultJudgeCount;
+        [SerializeField] private TextMeshProUGUI _battleResultMaxComboCount;
+        [SerializeField] private TextMeshProUGUI[] _battleResultComboLabel;
+        [SerializeField] private Image _battleResultPlayerGaugeImage;
+        [SerializeField] private Image _battleResultEnemyGaugeImage;
+
+        private CanvasGroup _battleResultBoxCanvasGroup;
+        private CanvasGroup _battleResultContentsCanvasGroup;
+        private RectTransform _battleResultPlayerGauge;
+        private RectTransform _battleResultEnemyGauge;
+        private Vector2 _battleResultPlayerGaugePosition;
+        private Vector2 _battleResultEnemyGaugePosition;
+        private Vector2 _battleResultPlayerGaugeSizeDelta;
+        private Vector2 _battleResultEnemyGaugeSizeDelta;
+
+        [SerializeField] private float _resultBoxDuration;
+        [SerializeField] private float _resultContentsDuration;
+
         private void Awake()
         {
             _playerPosition = _player.position;
@@ -106,24 +133,56 @@ namespace Rhythm
 
             _playerShakeTween = null;
             _enemyShakeTween = null;
+
+            _battleResultBoxCanvasGroup = _battleResultBox.GetComponent<CanvasGroup>();
+            _battleResultContentsCanvasGroup = _battleResultContents.GetComponent<CanvasGroup>();
+
+            _battleResultPlayerGauge = _battleResultPlayerGaugeImage.rectTransform;
+            _battleResultEnemyGauge = _battleResultEnemyGaugeImage.rectTransform;
+            _battleResultPlayerGaugePosition = _battleResultPlayerGauge.anchoredPosition;
+            _battleResultEnemyGaugePosition = _battleResultEnemyGauge.anchoredPosition;
+            _battleResultPlayerGaugeSizeDelta = _battleResultPlayerGauge.sizeDelta;
+            _battleResultEnemyGaugeSizeDelta = _battleResultEnemyGauge.sizeDelta;
         }
 
-        public void DamagePlayer(float HitPoint, float MaxHitPoint)
+        private void DrawGauge(Transform gauge, SpriteRenderer gaugeRenderer, Vector3 position, Vector3 scale, float hitPoint, float maxHitPoint)
+        {
+            var width = hitPoint * scale.x / maxHitPoint;
+            var x = position.x - (scale.x - width) / 2;
+
+            gauge.localPosition = new Vector3(x, position.y, position.z);
+            gauge.localScale = new Vector3(width, scale.y, scale.z);
+
+            gaugeRenderer.color = (hitPoint / maxHitPoint) switch
+            {
+                <= 0.1f => _gaugeColor.Pinch,
+                <= 0.5f => _gaugeColor.Damaged,
+                _ => _gaugeColor.Normal,
+            };
+        }
+
+        private void DrawGauge(RectTransform gauge, Image gaugeImage, Vector2 position, Vector2 sizeDelta, float hitPoint, float maxHitPoint)
+        {
+            var width = hitPoint * sizeDelta.x / maxHitPoint;
+            var x = position.x - (sizeDelta.x - width) / 2;
+
+            gauge.anchoredPosition = new Vector2(x, position.y);
+            gauge.sizeDelta = new Vector2(width, sizeDelta.y);
+
+            gaugeImage.color = (hitPoint / maxHitPoint) switch
+            {
+                <= 0.1f => _gaugeColor.Pinch,
+                <= 0.5f => _gaugeColor.Damaged,
+                _ => _gaugeColor.Normal,
+            };
+        }
+
+
+        public void DamagePlayer(float hitPoint, float maxHitPoint)
         {
             void Draw()
             {
-                var width = HitPoint * _playerGaugeScale.x / MaxHitPoint;
-                var x = _playerGaugePosition.x - (_playerGaugeScale.x - width) / 2;
-
-                _playerGauge.localPosition = new Vector3(x, _playerGaugePosition.y, _playerGaugePosition.z);
-                _playerGauge.localScale = new Vector3(width, _playerGaugeScale.y, _playerGaugeScale.z);
-
-                _playerGaugeRenderer.color = (HitPoint / MaxHitPoint) switch
-                {
-                    <= 0.1f => _gaugeColor.Pinch,
-                    <= 0.5f => _gaugeColor.Damaged,
-                    _ => _gaugeColor.Normal,
-                };
+                DrawGauge(_playerGauge, _playerGaugeRenderer, _playerGaugePosition, _playerGaugeScale, hitPoint, maxHitPoint);
 
                 if (_playerShakeTween != null)
                 {
@@ -144,22 +203,11 @@ namespace Rhythm
             StartCoroutine(DelayedDraw());
         }
 
-        public void DamageEnemy(float HitPoint, float MaxHitPoint)
+        public void DamageEnemy(float hitPoint, float maxHitPoint)
         {
             void Draw()
             {
-                var width = HitPoint * _enemyGaugeScale.x / MaxHitPoint;
-                var x = _enemyGaugePosition.x - (_enemyGaugeScale.x - width) / 2;
-
-                _enemyGauge.localPosition = new Vector3(x, _enemyGaugePosition.y, _enemyGaugePosition.z);
-                _enemyGauge.localScale = new Vector3(width, _enemyGaugeScale.y, _enemyGaugeScale.z);
-
-                _enemyGaugeRenderer.color = (HitPoint / MaxHitPoint) switch
-                {
-                    <= 0.1f => _gaugeColor.Pinch,
-                    <= 0.5f => _gaugeColor.Damaged,
-                    _ => _gaugeColor.Normal,
-                };
+                DrawGauge(_enemyGauge, _enemyGaugeRenderer, _enemyGaugePosition, _enemyGaugeScale, hitPoint, maxHitPoint);
 
                 if (_enemyShakeTween != null)
                 {
@@ -178,6 +226,14 @@ namespace Rhythm
             }
 
             StartCoroutine(DelayedDraw());
+        }
+
+        public void HealPlayer(float hitPoint, float maxHitPoint)
+        {
+            DrawGauge(_playerGauge, _playerGaugeRenderer, _playerGaugePosition, _playerGaugeScale, hitPoint, maxHitPoint);
+
+            // ToDo: Effect
+
         }
 
         public void DrawJudgeEffect(Vector3 position, Judgement judgement)
@@ -326,18 +382,18 @@ namespace Rhythm
 
         public double GetTimeToCreateEnemyAttackEffect(double justTime) => justTime + _defenseEffectDuration - _hitTimeRatio * _enemyAttackEffectDuration;
 
-        public void DrawHeader(string title, string composer, Difficulty difficulty, int level)
+        public void DrawHeader(in HeaderInformation header)
         {
-            _titleText.SetText(title);
-            _composerText.SetText(composer);
-            _difficultyText.SetText(difficulty switch {
+            _titleText.SetText(header.Title);
+            _composerText.SetText(header.Composer);
+            _difficultyText.SetText(header.Difficulty switch {
                 Difficulty.Easy => "EASY",
                 Difficulty.Hard => "HARD",
                 Difficulty.Expert => "EXPERT",
                 _ => throw new InvalidEnumArgumentException()
             });
-            _difficultyText.color = _difficultyColor[(int)difficulty];
-            _levelText.SetText("Lv. {0}", level);
+            _difficultyText.color = _difficultyColor[(int)header.Difficulty];
+            _levelText.SetText("Lv. {0}", header.Level);
         }
 
         public void DrawCombo(int combo)
@@ -361,6 +417,55 @@ namespace Rhythm
             {
                 _comboText.gameObject.SetActive(false);
             }
+        }
+
+        public void DrawBattleResult(in HeaderInformation header, bool isWin, float playerHitPoint, float playerMaxHitPoint, float enemyHitPoint, float enemyMaxHitPoint, JudgeCount judgeCount, int maxCombo)
+        {
+            _battleResultBoxCanvasGroup.alpha = 0f;
+            _battleResultContentsCanvasGroup.alpha = 0f;
+            _battleResultBox.gameObject.SetActive(true);
+            _battleResultContents.gameObject.SetActive(true);
+
+            _battleResultLabels[0].gameObject.SetActive(isWin);
+            _battleResultLabels[1].gameObject.SetActive(!isWin);
+
+            _battleResultTitle.SetText(header.Title);
+            _battleResultComposer.SetText(header.Composer);
+            _battleResultDifficulty.SetText(header.Difficulty switch
+            {
+                Difficulty.Easy => "EASY",
+                Difficulty.Hard => "HARD",
+                Difficulty.Expert => "EXPERT",
+                _ => throw new InvalidEnumArgumentException()
+            });
+            _battleResultDifficulty.color = _difficultyColor[(int)header.Difficulty];
+            _battleResultLevel.SetText("Lv. {0}", header.Level);
+
+            DrawGauge(_battleResultPlayerGauge, _battleResultPlayerGaugeImage, _battleResultPlayerGaugePosition, _battleResultPlayerGaugeSizeDelta, playerHitPoint, playerMaxHitPoint);
+            DrawGauge(_battleResultEnemyGauge, _battleResultEnemyGaugeImage, _battleResultEnemyGaugePosition, _battleResultEnemyGaugeSizeDelta, enemyHitPoint, enemyMaxHitPoint);
+
+            var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
+
+            for (int i = 0; i < 3; i++)
+            {
+                _battleResultJudgeCount[i].SetText("{0}", judges[i]);
+            }
+
+            _battleResultMaxComboCount.SetText("{0}", maxCombo);
+
+            _battleResultComboLabel[0].gameObject.SetActive(judgeCount.Good == 0 && judgeCount.False == 0);
+            _battleResultComboLabel[1].gameObject.SetActive(judgeCount.Good > 0 && judgeCount.False == 0);
+
+            var size = _battleResultBox.sizeDelta;
+            _battleResultBox.sizeDelta = new Vector2(size.x, 0f);
+
+            var sequence = DOTween.Sequence();
+
+            sequence.Append(_battleResultBoxCanvasGroup.DOFade(1f, _resultBoxDuration));
+            sequence.Join(_battleResultBox.DOSizeDelta(size, _resultBoxDuration));
+            sequence.Append(_battleResultContentsCanvasGroup.DOFade(1f, _resultContentsDuration));
+
+            sequence.Play();
         }
         
     }

@@ -84,6 +84,8 @@ namespace Rhythm
         private CursorController _cursorController;
         private SoundPlayer _soundPlayer;
 
+
+        private HeaderInformation _headerInformation;
         private double _endTime;
 
         private void Awake()
@@ -108,7 +110,8 @@ namespace Rhythm
             (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset, _baseScroll);
             _endTime = endTime;
 
-            _uiManager.DrawHeader(beatmapInfo.Title, beatmapInfo.Composer, difficulty, notesData.Level);
+            _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
+            _uiManager.DrawHeader(_headerInformation);
 
             var notePrefabs = _notePrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
@@ -174,12 +177,7 @@ namespace Rhythm
                     yield return null;
                 }
 
-                var judges = _scoreManger.JudgeCount;
-
-                Debug.Log("Perfect: " + judges.Perfect);
-                Debug.Log("Good: " + judges.Good);
-                Debug.Log("False: " + judges.False);
-                Debug.Log("MaxCombo:" + _scoreManger.MaxCombo);
+                _scoreManger.DisplayBattleResult(_headerInformation);
             }
 
             StartCoroutine(RhythmGameUpdate());

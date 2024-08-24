@@ -54,6 +54,7 @@ namespace Rhythm
             var isHold = false;
             var isComment = false;
             var endTime = double.PositiveInfinity;
+            var isEnd = false;
 
             var just = offset;
             var bpm = 0d;
@@ -248,9 +249,11 @@ namespace Rhythm
                         case 'E':
 
                             endTime = just;
-
+                            isEnd = true;
                             break;
                     }
+
+                    if (isEnd) break;
                 }
             }
             catch (System.Exception)

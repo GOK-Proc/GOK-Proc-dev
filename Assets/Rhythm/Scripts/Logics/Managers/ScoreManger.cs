@@ -25,6 +25,7 @@ namespace Rhythm
 
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
+        public bool IsWin => _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
 
         public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
         {
@@ -91,10 +92,14 @@ namespace Rhythm
                         switch (i.Type)
                         {
                             case BonusType.Attack:
-                                _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -i.Value);
+                                var enemyDamage = i.Value;
+                                _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
+                                if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint);
                                 break;
                             case BonusType.Heal:
-                                _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, i.Value);
+                                var playerHealing = i.Value;
+                                _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
+                                if (playerHealing > 0) _gaugeDrawable.HealPlayer(_playerHitPoint, _playerMaxHitPoint);
                                 break;
                         }
                     }
@@ -115,6 +120,11 @@ namespace Rhythm
                     break;
             }
 
+        }
+
+        public void DisplayBattleResult(in HeaderInformation header)
+        {
+            _uiDrawable.DrawBattleResult(header, IsWin, _playerHitPoint, _playerMaxHitPoint, _enemyHitPoint, _enemyMaxHitPoint, JudgeCount, MaxCombo);
         }
 
     }
