@@ -98,6 +98,7 @@ namespace Map
 
 		public void OnCancel(BaseEventData eventData)
 		{
+			DOTween.KillAll();
 			SceneTransitionManager.TransitionToModeSelection();
 		}
 	}
