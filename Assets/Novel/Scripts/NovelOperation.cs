@@ -27,70 +27,69 @@ namespace Novel
             _dialogueText.text = dialogue;
         }
 
-        public Dictionary<string, GameObject> CharacterPrefabs { get; set; }
-        [SerializeField] private GameObject _characterParent;
+        public Dictionary<string, GameObject> CharacterPrefabs { get; set; } = new Dictionary<string, GameObject>();
+        [SerializeField] private Transform _characterParent;
         [SerializeField] private RectTransform _mainCanvasTransform;
         [SerializeField] private float _margin;
         private float _width;
+        private float _duration = 0.75f;
 
-        //private List<string> _preCharacterLayout = new List<string>();
         private Dictionary<string, GameObject> _preCharacter = new Dictionary<string, GameObject>();
 
         public void UpdateCharacterLayout(CharacterLayoutData characterLayoutData)
         {
-            // キャラクターがどう変化するかの辞書
-            Dictionary<string, CharacterTransition> characterTransitionDict = new Dictionary<string, CharacterTransition>();
+            float space = (_width - _margin * 2) / (characterLayoutData.CharacterLayout.Count + 1);
 
-            foreach (string character in characterLayoutData.CharacterLayout)
+            var sequence = DOTween.Sequence();
+
+            Dictionary<string, GameObject> currentCharacter = new Dictionary<string, GameObject>();
+
+            for (int i = 0; i < characterLayoutData.CharacterLayout.Count; i++)
             {
+                string character = characterLayoutData.CharacterLayout[i];
+
                 if (_preCharacter.ContainsKey(character))
                 {
-                    characterTransitionDict[character] = CharacterTransition.Remain;
+                    GameObject characterObject = _preCharacter[character];
+                    currentCharacter[character] = characterObject;
+
+                    sequence.Join(characterObject.transform.DOLocalMove(new Vector2(- _width / 2 + _margin + (i + 1) * space, 0), _duration));
                 }
                 else
                 {
-                    characterTransitionDict[character] = CharacterTransition.Appear;
+                    GameObject characterObject = Instantiate(CharacterPrefabs[character], _characterParent);
+                    currentCharacter[character] = characterObject;
+                    characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
+                    Color color = characterObject.GetComponent<Image>().color;
+                    color.a = 0f;
+                    characterObject.GetComponent<Image>().color = color;
+
+                    sequence.Join(characterObject.GetComponent<Image>().DOFade(1f, _duration));
                 }
             }
+
+            List<GameObject> exitCharacter = new List<GameObject>();
 
             foreach (string character in _preCharacter.Keys)
             {
                 if (!characterLayoutData.CharacterLayout.Contains(character))
                 {
-                    characterTransitionDict[character] = CharacterTransition.Disappear;
+                    GameObject characterObject = _preCharacter[character];
+                    exitCharacter.Add(characterObject);
+                    sequence.Join(characterObject.GetComponent<Image>().DOFade(0f, _duration));
                 }
             }
 
-            float space = _width / (characterLayoutData.CharacterLayout.Count + 1);
+            // _preCharacterの更新
+            _preCharacter = currentCharacter;
 
-            var sequence = DOTween.Sequence();
-
-            for (int i = 0; i < characterLayoutData.CharacterLayout.Count; i++)
+            sequence.Play().OnComplete(() =>
             {
-                string character = characterLayoutData.CharacterLayout[i];
-                switch (characterTransitionDict[character])
+                foreach (GameObject characterObject in exitCharacter)
                 {
-                    case CharacterTransition.Remain:
-                        // dotween使って動かす
-                        break;
-
-                    case CharacterTransition.Appear:
-                        //GameObject characterObject = Instantiate();
-                        //sequence.Join(characterObject.DOFade)
-                        break;
-
-                    default:
-                        throw new Exception("CharacterTransition Type is not appropriate!");
-
+                    Destroy(characterObject);
                 }
-            }
-        }
-
-        enum CharacterTransition
-        {
-            Remain,
-            Appear,
-            Disappear
+            });
         }
 
 

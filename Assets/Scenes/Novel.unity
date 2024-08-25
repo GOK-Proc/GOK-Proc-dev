@@ -807,12 +807,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696d567efac603945bdab9733b070ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _backgroundImage: {fileID: 865290045}
   _nameText: {fileID: 972629702}
   _dialogueText: {fileID: 718274286}
-  _characterParent: {fileID: 1793036220}
+  _characterParent: {fileID: 1793036221}
   _mainCanvasTransform: {fileID: 24657818}
   _margin: 0
+  _backgroundImage: {fileID: 865290045}
 --- !u!4 &1649501992
 Transform:
   m_ObjectHideFlags: 0
