@@ -12,19 +12,50 @@ namespace Novel
     {
         private void Start()
         {
+            _replaceDictionary = new ReplaceDictionary();
+
             _width = _mainCanvasTransform.sizeDelta.x;
         }
 
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _dialogueText;
 
+        private ReplaceDictionary _replaceDictionary;
+
         public void UpdateDialogue(DialogueData dialogueData)
         {
             string name = dialogueData.Name;
             string dialogue = dialogueData.Dialogue;
 
+            name = ReplaceParamater(name);
+            dialogue = ReplaceParamater(dialogue);
+
             _nameText.text = name;
             _dialogueText.text = dialogue;
+        }
+
+        private string ReplaceParamater(string sentence)
+        {
+            int foundIndex = sentence.IndexOf("${");
+            if (foundIndex >= 0)
+            {
+                int nextIndex = sentence.IndexOf("}", foundIndex + 2);
+                if (nextIndex >= 0)
+                {
+                    string target = sentence.Substring(foundIndex + 2, nextIndex - (foundIndex + 2));
+                    string replaced = sentence.Replace("${" + target + "}", _replaceDictionary.ReplaceDict[target]);
+
+                    return ReplaceParamater(replaced);
+                }
+                else
+                {
+                    throw new Exception("変数置換のための\"${\"に対応する\"}\"がありません。");
+                }
+            }
+            else
+            {
+                return sentence;
+            }
         }
 
         public Dictionary<string, GameObject> CharacterPrefabs { get; set; } = new Dictionary<string, GameObject>();
