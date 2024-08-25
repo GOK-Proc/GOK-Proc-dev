@@ -9,15 +9,15 @@ namespace Rhythm
         private readonly NoteLayout _layout;
         private readonly INoteProvider _noteProvider;
         private readonly IJudgeCountable _judgeCountable;
-        private readonly IBattle _battle;
+        private readonly IScoreEvaluable _scoreEvaluable;
         private readonly IEffectDrawable _effectDrawable;
 
-        public NoteJudge(NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattle battle, IEffectDrawable effectDrawable)
+        public NoteJudge(NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IScoreEvaluable scoreEvaluable, IEffectDrawable effectDrawable)
         {
             _layout = layout;
             _noteProvider = noteProvider;
             _judgeCountable = judgeCountable;
-            _battle = battle;
+            _scoreEvaluable = scoreEvaluable;
             _effectDrawable = effectDrawable;
         }
 
@@ -32,7 +32,7 @@ namespace Rhythm
                     if (judge != Judgement.Undefined)
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
-                        _battle.Hit(note.Color, note.IsLarge, judge);
+                        _scoreEvaluable.Hit(note.Color, note.IsLarge, judge);
                         _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge, note.Id);
                     }

@@ -5,8 +5,10 @@ using System.Linq;
 
 namespace Rhythm
 {
-    public class ScoreManger : IJudgeCountable, IComboCountable, IBattle
+    public class ScoreManger : IJudgeCountable, IComboCountable, IScoreEvaluable, IResultProvider, IBattleMode, IRhythmMode
     {
+        private readonly bool _isVs;
+
         private readonly int[] _judgeCount;
 
         private readonly float _playerMaxHitPoint;
@@ -25,9 +27,14 @@ namespace Rhythm
 
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
+        public bool IsWin => _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
+        public bool IsClear => true;
+        public int Score => 1000000;
 
-        public ScoreManger(Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
+        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
         {
+            _isVs = isVs;
+
             _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length];
             _judgeRates = judgeRates;
             _comboBonus = comboBonus[(int)difficulty].Bonuses.OrderByDescending(x => x.Combo).ToArray();
@@ -91,10 +98,14 @@ namespace Rhythm
                         switch (i.Type)
                         {
                             case BonusType.Attack:
-                                _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -i.Value);
+                                var enemyDamage = i.Value;
+                                _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
+                                if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint);
                                 break;
                             case BonusType.Heal:
-                                _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, i.Value);
+                                var playerHealing = i.Value;
+                                _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
+                                if (playerHealing > 0) _gaugeDrawable.HealPlayer(_playerHitPoint, _playerMaxHitPoint);
                                 break;
                         }
                     }
@@ -117,5 +128,16 @@ namespace Rhythm
 
         }
 
+        public void DisplayResult(in HeaderInformation header)
+        {
+            if (_isVs)
+            {
+                _uiDrawable.DrawBattleResult(header, IsWin, _playerHitPoint, _playerMaxHitPoint, _enemyHitPoint, _enemyMaxHitPoint, JudgeCount, MaxCombo);
+            }
+            else
+            {
+                _uiDrawable.DrawRhythmResult(header, IsClear, JudgeCount, MaxCombo, Score, ScoreRank.SS, 1);
+            }
+        }
     }
 }

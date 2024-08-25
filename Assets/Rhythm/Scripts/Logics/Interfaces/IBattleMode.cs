@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Rhythm
 {
-    public interface IBattle
+    public interface IBattleMode
     {
-        void Hit(NoteColor color, bool isLarge, Judgement judgement);
+        bool IsWin { get; }
     }
 }

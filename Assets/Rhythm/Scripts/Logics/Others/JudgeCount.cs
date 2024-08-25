@@ -1,13 +1,16 @@
-public readonly struct JudgeCount
+﻿namespace Rhythm
 {
-    public readonly int Perfect;
-    public readonly int Good;
-    public readonly int False;
-
-    public JudgeCount(int p, int g, int f)
+    public readonly struct JudgeCount
     {
-        Perfect = p;
-        Good = g;
-        False = f;
+        public readonly int Perfect;
+        public readonly int Good;
+        public readonly int False;
+
+        public JudgeCount(int p, int g, int f)
+        {
+            Perfect = p;
+            Good = g;
+            False = f;
+        }
     }
 }

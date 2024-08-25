@@ -37,4 +37,20 @@ namespace Rhythm
         [SerializeField] private TextAsset _file;
         public readonly TextAsset File => _file;
     }
+
+    public struct HeaderInformation
+    {
+        public string Title { get; private set; }
+        public string Composer { get; private set; }
+        public Difficulty Difficulty { get; private set; }
+        public int Level { get; private set; }
+
+        public HeaderInformation(in BeatmapInformation beatmap, Difficulty difficulty)
+        {
+            Title = beatmap.Title;
+            Composer = beatmap.Composer;
+            Difficulty = difficulty;
+            Level = beatmap.Notes[(int)difficulty].Level;
+        }
+    }
 }

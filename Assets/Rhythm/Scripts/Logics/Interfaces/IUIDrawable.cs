@@ -6,7 +6,9 @@ namespace Rhythm
 {
     public interface IUIDrawable
     {
-        void DrawHeader(string title, string composer, Difficulty difficulty, int level);
+        void DrawHeader(in HeaderInformation header);
         void DrawCombo(int combo);
+        void DrawBattleResult(in HeaderInformation header, bool isWin, float playerHitPoint, float playerMaxHitPoint, float enemyHitPoint, float enemyMaxHitPoint, JudgeCount judgeCount, int maxCombo);
+        void DrawRhythmResult(in HeaderInformation header, bool isClear, JudgeCount judgeCount, int maxCombo, int score, ScoreRank scoreRank, int ranking);
     }
 }
