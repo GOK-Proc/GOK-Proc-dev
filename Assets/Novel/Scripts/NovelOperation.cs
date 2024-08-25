@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using DG.Tweening;
 
 namespace Novel
 {
     public class NovelOperation : MonoBehaviour
     {
+        private void Start()
+        {
+            _width = _mainCanvasTransform.sizeDelta.x;
+        }
+
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _dialogueText;
-        [SerializeField] private Image _backgroundImage;
-
-        [SerializeField] private GameObject _characterParent;
 
         public void UpdateDialogue(DialogueData dialogueData)
         {
@@ -24,20 +27,85 @@ namespace Novel
             _dialogueText.text = dialogue;
         }
 
-        public void UpdateCharacterLayout(CharacterLayoutData characterLayout)
-        {
+        public Dictionary<string, GameObject> CharacterPrefabs { get; set; } = new Dictionary<string, GameObject>();
+        [SerializeField] private Transform _characterParent;
+        [SerializeField] private RectTransform _mainCanvasTransform;
+        [SerializeField] private float _margin;
+        private float _width;
+        private float _duration = 0.75f;
 
+        private Dictionary<string, GameObject> _preCharacter = new Dictionary<string, GameObject>();
+
+        public void UpdateCharacterLayout(CharacterLayoutData characterLayoutData)
+        {
+            float space = (_width - _margin * 2) / (characterLayoutData.CharacterLayout.Count + 1);
+
+            var sequence = DOTween.Sequence();
+
+            Dictionary<string, GameObject> currentCharacter = new Dictionary<string, GameObject>();
+
+            for (int i = 0; i < characterLayoutData.CharacterLayout.Count; i++)
+            {
+                string character = characterLayoutData.CharacterLayout[i];
+
+                if (_preCharacter.ContainsKey(character))
+                {
+                    GameObject characterObject = _preCharacter[character];
+                    currentCharacter[character] = characterObject;
+
+                    sequence.Join(characterObject.transform.DOLocalMove(new Vector2(- _width / 2 + _margin + (i + 1) * space, 0), _duration));
+                }
+                else
+                {
+                    GameObject characterObject = Instantiate(CharacterPrefabs[character], _characterParent);
+                    currentCharacter[character] = characterObject;
+                    characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
+                    Color color = characterObject.GetComponent<Image>().color;
+                    color.a = 0f;
+                    characterObject.GetComponent<Image>().color = color;
+
+                    sequence.Join(characterObject.GetComponent<Image>().DOFade(1f, _duration));
+                }
+            }
+
+            List<GameObject> exitCharacter = new List<GameObject>();
+
+            foreach (string character in _preCharacter.Keys)
+            {
+                if (!characterLayoutData.CharacterLayout.Contains(character))
+                {
+                    GameObject characterObject = _preCharacter[character];
+                    exitCharacter.Add(characterObject);
+                    sequence.Join(characterObject.GetComponent<Image>().DOFade(0f, _duration));
+                }
+            }
+
+            // _preCharacterの更新
+            _preCharacter = currentCharacter;
+
+            sequence.Play().OnComplete(() =>
+            {
+                foreach (GameObject characterObject in exitCharacter)
+                {
+                    Destroy(characterObject);
+                }
+            });
         }
 
+
+        [SerializeField] private Image _backgroundImage;
+        
         public void UpdateBackground(BackgroundData backgroundData)
         {
             
         }
 
+
         public void UpdateBgm(BgmData bgmData)
         {
 
         }
+
 
         public void ExecuteOtherOperation(OtherData otherData)
         {

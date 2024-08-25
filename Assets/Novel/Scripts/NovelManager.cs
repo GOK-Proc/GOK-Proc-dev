@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 namespace Novel
 {
@@ -16,10 +19,11 @@ namespace Novel
 
         private bool _doFirstLine = false;
 
+        private List<AsyncOperationHandle> _handles = new List<AsyncOperationHandle>();
 
         private void Start()
         {
-            StartCoroutine(LoadAsset());
+            StartCoroutine(Initialize());
         }
 
         private void Update()
@@ -54,24 +58,53 @@ namespace Novel
 
         public void OnDestroy()
         {
-            StartCoroutine(UnloadAsset());
+            foreach (var handle in _handles)
+            {
+                Addressables.Release(handle);
+            }
         }
 
-        private IEnumerator LoadAsset()
+        private IEnumerator Initialize()
         {
-            var handle = Addressables.LoadAssetAsync<TextAsset>(_novelId.ToString());
-            yield return handle;
-
-            ScenarioLoader.MakeScenarioData(handle.Result);
+            // シナリオのロード
+            yield return LoadAsset<TextAsset>(_novelId.ToString(), scenario =>
+            {
+                ScenarioLoader.MakeScenarioData(scenario);
+            });
             _scenarioData = ScenarioLoader._ScenarioData;
+
+            // キャラクターアセットのロード
+            yield return LoadAssets<GameObject>("NovelCharacter", characterAssets =>
+            {
+                foreach (GameObject characterAsset in characterAssets)
+                {
+                    _novelOperation.CharacterPrefabs[characterAsset.name] = characterAsset;
+                }
+            });
+
 
             _doFirstLine = true;
         }
 
-        private IEnumerator UnloadAsset()
+
+        private IEnumerator LoadAsset<T>(string address, Action<T> callback)
         {
-            // 後で書く
-            yield return null;
+            var handle = Addressables.LoadAssetAsync<T>(address);
+            yield return handle;
+
+            _handles.Add(handle);
+
+            callback(handle.Result);
+        }
+
+        private IEnumerator LoadAssets<T>(string addresses, Action<IList<T>> callback)
+        {
+            var handle = Addressables.LoadAssetsAsync<T>(addresses, null);
+            yield return handle;
+
+            _handles.Add(handle);
+
+            callback(handle.Result);
         }
     }
 }
