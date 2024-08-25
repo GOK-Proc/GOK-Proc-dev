@@ -100,6 +100,21 @@ namespace Rhythm
         [SerializeField] private Image _battleResultPlayerGaugeImage;
         [SerializeField] private Image _battleResultEnemyGaugeImage;
 
+        [Space(20)]
+        [SerializeField] private RectTransform _rhythmResultBox;
+        [SerializeField] private RectTransform _rhythmResultContents;
+        [SerializeField] private RectTransform[] _rhythmResultLabels;
+        [SerializeField] private TextMeshProUGUI _rhythmResultTitle;
+        [SerializeField] private TextMeshProUGUI _rhythmResultComposer;
+        [SerializeField] private TextMeshProUGUI _rhythmResultDifficulty;
+        [SerializeField] private TextMeshProUGUI _rhythmResultLevel;
+        [SerializeField] private TextMeshProUGUI[] _rhythmResultJudgeCount;
+        [SerializeField] private TextMeshProUGUI _rhythmResultMaxComboCount;
+        [SerializeField] private TextMeshProUGUI[] _rhythmResultComboLabel;
+        [SerializeField] private TextMeshProUGUI _rhythmResultScoreNumber;
+        [SerializeField] private TextMeshProUGUI _rhythmResultScoreRank;
+        [SerializeField] private TextMeshProUGUI _rhythmResultRanking;
+
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
         private RectTransform _battleResultPlayerGauge;
@@ -109,6 +124,10 @@ namespace Rhythm
         private Vector2 _battleResultPlayerGaugeSizeDelta;
         private Vector2 _battleResultEnemyGaugeSizeDelta;
 
+        private CanvasGroup _rhythmResultBoxCanvasGroup;
+        private CanvasGroup _rhythmResultContentsCanvasGroup;
+
+        [Space(20)]
         [SerializeField] private float _resultBoxDuration;
         [SerializeField] private float _resultContentsDuration;
 
@@ -143,6 +162,9 @@ namespace Rhythm
             _battleResultEnemyGaugePosition = _battleResultEnemyGauge.anchoredPosition;
             _battleResultPlayerGaugeSizeDelta = _battleResultPlayerGauge.sizeDelta;
             _battleResultEnemyGaugeSizeDelta = _battleResultEnemyGauge.sizeDelta;
+
+            _rhythmResultBoxCanvasGroup = _rhythmResultBox.GetComponent<CanvasGroup>();
+            _rhythmResultContentsCanvasGroup = _rhythmResultContents.GetComponent<CanvasGroup>();
         }
 
         private void DrawGauge(Transform gauge, SpriteRenderer gaugeRenderer, Vector3 position, Vector3 scale, float hitPoint, float maxHitPoint)
@@ -467,6 +489,70 @@ namespace Rhythm
 
             sequence.Play();
         }
-        
+
+        public void DrawRhythmResult(in HeaderInformation header, bool isClear, JudgeCount judgeCount, int maxCombo, int score, ScoreRank scoreRank, int ranking)
+        {
+            _rhythmResultBoxCanvasGroup.alpha = 0f;
+            _rhythmResultContentsCanvasGroup.alpha = 0f;
+            _rhythmResultBox.gameObject.SetActive(true);
+            _rhythmResultContents.gameObject.SetActive(true);
+
+            _rhythmResultLabels[0].gameObject.SetActive(isClear);
+            _rhythmResultLabels[1].gameObject.SetActive(!isClear);
+
+            _rhythmResultTitle.SetText(header.Title);
+            _rhythmResultComposer.SetText(header.Composer);
+            _rhythmResultDifficulty.SetText(header.Difficulty switch
+            {
+                Difficulty.Easy => "EASY",
+                Difficulty.Hard => "HARD",
+                Difficulty.Expert => "EXPERT",
+                _ => throw new InvalidEnumArgumentException()
+            });
+            _rhythmResultDifficulty.color = _difficultyColor[(int)header.Difficulty];
+            _rhythmResultLevel.SetText("Lv. {0}", header.Level);
+
+            _rhythmResultScoreNumber.SetText($"{score:N0}");
+            _rhythmResultScoreRank.SetText(scoreRank switch
+            {
+                ScoreRank.SS => "SS",
+                ScoreRank.S => "S",
+                ScoreRank.A => "A",
+                ScoreRank.B => "B",
+                _ => ""
+            });
+
+            _rhythmResultRanking.text = "Rank " + ranking + ranking switch
+            {
+                1 => "st",
+                2 => "nd",
+                3 => "rd",
+                _ => "th"
+            };
+
+            var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
+
+            for (int i = 0; i < 3; i++)
+            {
+                _rhythmResultJudgeCount[i].SetText("{0}", judges[i]);
+            }
+
+            _rhythmResultMaxComboCount.SetText("{0}", maxCombo);
+
+            _rhythmResultComboLabel[0].gameObject.SetActive(judgeCount.Good == 0 && judgeCount.False == 0);
+            _rhythmResultComboLabel[1].gameObject.SetActive(judgeCount.Good > 0 && judgeCount.False == 0);
+
+            var size = _rhythmResultBox.sizeDelta;
+            _rhythmResultBox.sizeDelta = new Vector2(size.x, 0f);
+
+            var sequence = DOTween.Sequence();
+
+            sequence.Append(_rhythmResultBoxCanvasGroup.DOFade(1f, _resultBoxDuration));
+            sequence.Join(_rhythmResultBox.DOSizeDelta(size, _resultBoxDuration));
+            sequence.Append(_rhythmResultContentsCanvasGroup.DOFade(1f, _resultContentsDuration));
+
+            sequence.Play();
+        }
+
     }
 }

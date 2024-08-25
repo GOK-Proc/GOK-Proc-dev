@@ -68,8 +68,10 @@ namespace Rhythm
         [Space(20)]
         [Header("Beatmap")]
         [SerializeField] private BeatmapData _beatmapData;
+        [SerializeField] private bool _overrideSettings;
         [SerializeField] private string _defaultId;
         [SerializeField] private Difficulty _defaultDifficulty;
+        [SerializeField] private bool _defaultIsVs;
 
         [Space(20)]
         [Header("Options")]
@@ -96,12 +98,13 @@ namespace Rhythm
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
-            if (!dictionary.ContainsKey(id))
+            if (_overrideSettings || !dictionary.ContainsKey(id))
             {
                 id = _defaultId;
                 difficulty = _defaultDifficulty;
+                isVs = _defaultIsVs;
 
-                Debug.LogWarning("The specified ID does not exist. Using the default ID.");
+                if (!_overrideSettings) Debug.LogWarning("The specified ID does not exist. Using the default ID.");
             }
 
             var beatmapInfo = dictionary[id];
@@ -140,7 +143,7 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManger = new ScoreManger(difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
+            _scoreManger = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
 
             _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
@@ -177,7 +180,7 @@ namespace Rhythm
                     yield return null;
                 }
 
-                _scoreManger.DisplayBattleResult(_headerInformation);
+                _scoreManger.DisplayResult(_headerInformation);
             }
 
             StartCoroutine(RhythmGameUpdate());
