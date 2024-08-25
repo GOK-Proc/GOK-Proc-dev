@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Transition;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +11,7 @@ using UnityEngine.UI;
 namespace Map
 {
 	[RequireComponent(typeof(Selectable))]
-	public class MapSpot : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler
+	public class MapSpot : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler, ICancelHandler
 	{
 		[SerializeField] private EpisodeData _episodeData;
 		[SerializeField] private EpisodeFlags _episodeFlags;
@@ -25,7 +28,9 @@ namespace Map
 		[SerializeField] private string _label;
 		[SerializeField] private List<EpisodeNumber> _episodes;
 
-		[HideInInspector] public static GameObject CurrentMapSpot { get; private set; }
+		public static GameObject CurrentMapSpot { get; private set; }
+
+		private GameObject _camera;
 
 		private void Start()
 		{
@@ -63,13 +68,19 @@ namespace Map
 					preSelectable = selectable;
 				}
 			}
+
+			_camera = GameObject.FindWithTag("MainCamera");
 		}
 
 		public void OnSelect(BaseEventData eventData)
 		{
 			_selectOff.SetActive(false);
 			_selectOn.SetActive(true);
+
 			CurrentMapSpot = gameObject;
+
+			var pos = new Vector3(Math.Max(transform.position.x, -4), transform.position.y, _camera.transform.position.z);
+			_camera.transform.DOMove(pos, 0.8f).SetEase(Ease.OutCubic);
 		}
 
 		public void OnDeselect(BaseEventData eventData)
@@ -81,7 +92,13 @@ namespace Map
 		public void OnSubmit(BaseEventData eventData)
 		{
 			_episodeBoxArea.SetActive(true);
+
 			EventSystem.current.SetSelectedGameObject(_episodeBoxArea.transform.GetChild(0).gameObject);
+		}
+
+		public void OnCancel(BaseEventData eventData)
+		{
+			SceneTransitionManager.TransitionToModeSelection();
 		}
 	}
 }

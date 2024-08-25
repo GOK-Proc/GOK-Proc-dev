@@ -68,6 +68,11 @@ namespace Map
 
 			FlagList = FlagList.OrderBy(kvp => kvp.Key.Item1).ThenBy(kvp => kvp.Key.Item2).ToList();
 
+			if (FlagList.Count > 0)
+			{
+				FlagList[0].Value = true;
+			}
+
 			SaveJson();
 		}
 #endif

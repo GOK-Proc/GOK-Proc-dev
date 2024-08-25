@@ -10,61 +10,83 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb87f2926bbd9a648b53876b48aa6bdf, type: 3}
-  m_Name: Album
+  m_Name: TrackData
   m_EditorClassIdentifier: 
-  _musics:
+  _tracks:
   - _id: Chapter1_2
-    _title: "\u30B4\u30D6\u30EA\u30F3(\u4EEE)"
+    _title: "\u30B4\u30D6\u30EA\u30F3"
+    _hasBeatmap: 1
     _sound: {fileID: 0}
-    _composer: 
-    _description: 
+    _composer: "\u4F5C\u66F2\u8005"
+    _description: "\u8AAC\u660E\u6587"
+    _thumbnail: {fileID: 21300000, guid: 31783df9a89ced74a995dd8f93d420e4, type: 3}
   - _id: Chapter2_2
-    _title: "\u30B4\u30D6\u30EA\u30F3\u7FA4\u308C(\u4EEE)"
+    _title: "\u30B4\u30D6\u30EA\u30F3\u7FA4\u308C"
+    _hasBeatmap: 1
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Chapter2_4
-    _title: "\u7FA4\u308C\u89AA\u5206(\u4EEE)"
+    _title: "\u7FA4\u308C\u89AA\u5206"
+    _hasBeatmap: 1
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Chapter1
-    _title: "\u6751(\u4EEE)"
+    _title: "\u6751"
+    _hasBeatmap: 1
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Chapter2
-    _title: "\u68EE(\u4EEE)"
+    _title: "\u68EE"
+    _hasBeatmap: 1
     _sound: {fileID: 0}
     _composer: 
     _description: 
-  - _id: 
-    _title: "\u7DCA\u8FEB\uFF08\u30C7\u30D5\u30A9\u30EB\u30C8\uFF09(\u4EEE)"
+    _thumbnail: {fileID: 0}
+  - _id: Tension
+    _title: "\u7DCA\u8FEB"
+    _hasBeatmap: 0
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: MainTheme
-    _title: "\u30E1\u30A4\u30F3\u30C6\u30FC\u30DE(\u4EEE)"
+    _title: "\u30E1\u30A4\u30F3\u30C6\u30FC\u30DE"
+    _hasBeatmap: 1
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Title
-    _title: "\u30BF\u30A4\u30C8\u30EB\u753B\u9762(\u4EEE)"
+    _title: "\u30BF\u30A4\u30C8\u30EB\u753B\u9762"
+    _hasBeatmap: 0
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Setting_ModeSelection
-    _title: "\u8A2D\u5B9A\uFF0C\u30E2\u30FC\u30C9\u9078\u629E(\u4EEE)"
+    _title: "\u8A2D\u5B9A\uFF0C\u30E2\u30FC\u30C9\u9078\u629E"
+    _hasBeatmap: 0
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Map
-    _title: "\u30DE\u30C3\u30D7(\u4EEE)"
+    _title: "\u30DE\u30C3\u30D7"
+    _hasBeatmap: 0
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
   - _id: Victory
-    _title: "\u52DD\u5229(\u4EEE)"
+    _title: "\u52DD\u5229"
+    _hasBeatmap: 0
     _sound: {fileID: 0}
     _composer: 
     _description: 
+    _thumbnail: {fileID: 0}
