@@ -19,6 +19,7 @@ namespace Rhythm
             }
         }
 
+        private readonly bool _isVs;
         private readonly IList<NoteData> _data;
         private readonly IList<bool> _isCreated;
         private readonly NoteLayout _layout;
@@ -35,8 +36,9 @@ namespace Rhythm
         private int _noteCount;
 
 
-        public NoteCreator(IList<NoteData> data, NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
+        public NoteCreator(bool isVs, IList<NoteData> data, in NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
         {
+            _isVs = isVs;
             _data = data;
             _isCreated = data.Select(x => false).ToList();
             _layout = layout;
@@ -60,7 +62,7 @@ namespace Rhythm
                 IDisposable disposable = pool.Create(out var obj, out var isNew);
                 var id = _noteCount++;
                 obj.Create(pos, new Vector3(0f, -note.Speed), _survivalRect, note.Lane, time, id, disposable);
-                if (note.Color == NoteColor.Blue) _effectDrawable.DrawEnemyAttackEffect((float)(_effectDrawable.GetTimeToCreateEnemyAttackEffect(time) - _timeProvider.Time), id);
+                if (_isVs && note.Color == NoteColor.Blue) _effectDrawable.DrawEnemyAttackEffect((float)(_effectDrawable.GetTimeToCreateEnemyAttackEffect(time) - _timeProvider.Time), id);
                 return (obj, isNew);
             }
 

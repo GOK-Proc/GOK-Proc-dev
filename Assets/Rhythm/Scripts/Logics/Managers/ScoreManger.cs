@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Rhythm
 {
-    public class ScoreManger : IJudgeCountable, IComboCountable, IScoreEvaluable, IResultProvider, IBattleMode, IRhythmMode
+    public class ScoreManger : IJudgeCountable, IComboCountable, IResultProvider, IBattleMode, IRhythmMode
     {
         private readonly bool _isVs;
 
@@ -15,9 +15,11 @@ namespace Rhythm
         private readonly float _enemyMaxHitPoint;
         private readonly float _playerBasicDamage;
         private readonly float _enemyBasicDamage;
+        private readonly int _noteCount;
 
         private readonly IList<JudgeRate> _judgeRates;
         private readonly IList<ComboBonusElement> _comboBonus;
+        private readonly IList<float> _scoreRates;
 
         private readonly IGaugeDrawable _gaugeDrawable;
         private readonly IUIDrawable _uiDrawable;
@@ -29,15 +31,24 @@ namespace Rhythm
         public int MaxCombo { get; private set; }
         public bool IsWin => _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
         public bool IsClear => true;
-        public int Score => 1000000;
+        public int Score { get
+            {
+                float s = 0;
+                for (int i = 0; i < System.Enum.GetValues(typeof(Judgement)).Length - 1; i++)
+                {
+                    s += _scoreRates[i] * _judgeCount[i];
+                }
+                return (int)(s * 1000000 / _noteCount);
+            } }
 
-        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, (int attack, int defense) noteCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
+        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
         {
             _isVs = isVs;
 
-            _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length];
+            _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length - 1];
             _judgeRates = judgeRates;
             _comboBonus = comboBonus[(int)difficulty].Bonuses.OrderByDescending(x => x.Combo).ToArray();
+            _scoreRates = scoreRates;
 
             _playerMaxHitPoint = playerHitPoint;
             _playerHitPoint = _playerMaxHitPoint;
@@ -49,8 +60,10 @@ namespace Rhythm
             _enemyMaxHitPoint = _playerMaxHitPoint * (knockout - victory) * (1 - overkill) / (knockout * (victory - overkill));
             _enemyHitPoint = _enemyMaxHitPoint;
 
-            _playerBasicDamage = _playerMaxHitPoint / (noteCount.defense * knockout);
-            _enemyBasicDamage = _playerMaxHitPoint * (knockout - victory) / (noteCount.attack * knockout * (victory - overkill));
+            _playerBasicDamage = _playerMaxHitPoint / (notePointCount.defense * knockout);
+            _enemyBasicDamage = _playerMaxHitPoint * (knockout - victory) / (notePointCount.attack * knockout * (victory - overkill));
+
+            _noteCount = noteCount;
 
             _gaugeDrawable = gaugeDrawable;
             _uiDrawable = uiDrawable;

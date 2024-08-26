@@ -33,7 +33,7 @@ namespace Rhythm
         private int _currentLane;
         private EffectObject _cursor;
 
-        public CursorController(int laneCount, float extension, NoteLayout layout, float duration, EffectObject cursorPrefab, Transform parent, IMoveInputProvider vectorInputProvider)
+        public CursorController(int laneCount, float extension, in NoteLayout layout, float duration, EffectObject cursorPrefab, Transform parent, IMoveInputProvider vectorInputProvider)
         {
             _laneCount = laneCount;
             _extension = extension;

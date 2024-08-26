@@ -30,6 +30,10 @@ namespace Rhythm
         [SerializeField] private ComboBonus[] _comboBonus;
 
         [Space(20)]
+        [Header("Score Settings")]
+        [SerializeField] private float[] _scoreRates;
+
+        [Space(20)]
         [Header("Objects")]
         [SerializeField] private Transform _noteParent;
         [SerializeField] private Transform _cursorParent;
@@ -143,10 +147,10 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManger = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
+            _scoreManger = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
 
-            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
-            _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
+            _noteCreator = new NoteCreator(isVs, notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
+            _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
         }
 
         // Start is called before the first frame update
