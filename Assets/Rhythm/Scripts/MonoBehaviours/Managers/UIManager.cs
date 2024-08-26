@@ -519,7 +519,7 @@ namespace Rhythm
                 ScoreRank.S => "S",
                 ScoreRank.A => "A",
                 ScoreRank.B => "B",
-                _ => ""
+                _ => "C"
             });
 
             _rhythmResultRanking.text = "Rank " + ranking + ranking switch

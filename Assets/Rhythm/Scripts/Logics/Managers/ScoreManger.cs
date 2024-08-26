@@ -20,6 +20,7 @@ namespace Rhythm
         private readonly IList<JudgeRate> _judgeRates;
         private readonly IList<ComboBonusElement> _comboBonus;
         private readonly IList<float> _scoreRates;
+        private readonly IList<int> _scoreRankBorders;
 
         private readonly IGaugeDrawable _gaugeDrawable;
         private readonly IUIDrawable _uiDrawable;
@@ -41,7 +42,17 @@ namespace Rhythm
                 return (int)(s * 1000000 / _noteCount);
             } }
 
-        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
+        public ScoreRank ScoreRank { get
+            {
+                int rankCount = System.Enum.GetValues(typeof(ScoreRank)).Length;
+                for (int i = 0; i < rankCount - 1; i++)
+                {
+                    if (Score >= _scoreRankBorders[i]) return (ScoreRank)i;
+                }
+                return (ScoreRank)(rankCount - 1);
+            } }
+
+        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
         {
             _isVs = isVs;
 
@@ -49,6 +60,7 @@ namespace Rhythm
             _judgeRates = judgeRates;
             _comboBonus = comboBonus[(int)difficulty].Bonuses.OrderByDescending(x => x.Combo).ToArray();
             _scoreRates = scoreRates;
+            _scoreRankBorders = scoreRankBorders;
 
             _playerMaxHitPoint = playerHitPoint;
             _playerHitPoint = _playerMaxHitPoint;
@@ -149,7 +161,7 @@ namespace Rhythm
             }
             else
             {
-                _uiDrawable.DrawRhythmResult(header, IsClear, JudgeCount, MaxCombo, Score, ScoreRank.SS, 1);
+                _uiDrawable.DrawRhythmResult(header, IsClear, JudgeCount, MaxCombo, Score, ScoreRank, 1);
             }
         }
     }

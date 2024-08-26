@@ -10,5 +10,6 @@ namespace Rhythm
         S,
         A,
         B,
+        C,
     }
 }

@@ -2553,7 +2553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &558017278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7954,6 +7954,7 @@ MonoBehaviour:
   - 1
   - 0.5
   - 0
+  _scoreRankBorders: 20f40e00f07e0e00a0bb0d0000350c00
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
   _holdMaskParent: {fileID: 82430260}
