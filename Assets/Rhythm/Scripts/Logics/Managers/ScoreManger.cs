@@ -17,10 +17,14 @@ namespace Rhythm
         private readonly float _enemyBasicDamage;
         private readonly int _noteCount;
 
+        private readonly float _clearGaugePoint;
+        private readonly float _incrementalGaugePoint;
+
         private readonly IList<JudgeRate> _judgeRates;
         private readonly IList<ComboBonusElement> _comboBonus;
         private readonly IList<float> _scoreRates;
         private readonly IList<int> _scoreRankBorders;
+        private readonly GaugeRate _gaugeRate;
 
         private readonly IGaugeDrawable _gaugeDrawable;
         private readonly IUIDrawable _uiDrawable;
@@ -28,10 +32,17 @@ namespace Rhythm
         private float _playerHitPoint;
         private float _enemyHitPoint;
 
+        private float _gaugePoint;
+
+        private readonly int _maxScore = 1000000;
+        private readonly float _maxGaugePoint = 10000;
+
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
         public bool IsWin => _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
-        public bool IsClear => true;
+        public bool IsOverkill => _enemyHitPoint == 0;
+        public bool IsKnockout => _playerHitPoint == 0;
+        public bool IsClear => _gaugePoint >= _clearGaugePoint;
         public int Score { get
             {
                 float s = 0;
@@ -39,7 +50,7 @@ namespace Rhythm
                 {
                     s += _scoreRates[i] * _judgeCount[i];
                 }
-                return (int)(s * 1000000 / _noteCount);
+                return (int)(s * _maxScore / _noteCount);
             } }
 
         public ScoreRank ScoreRank { get
@@ -52,7 +63,7 @@ namespace Rhythm
                 return (ScoreRank)(rankCount - 1);
             } }
 
-        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
+        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
         {
             _isVs = isVs;
 
@@ -61,6 +72,7 @@ namespace Rhythm
             _comboBonus = comboBonus[(int)difficulty].Bonuses.OrderByDescending(x => x.Combo).ToArray();
             _scoreRates = scoreRates;
             _scoreRankBorders = scoreRankBorders;
+            _gaugeRate = gaugeRates[(int)difficulty];
 
             _playerMaxHitPoint = playerHitPoint;
             _playerHitPoint = _playerMaxHitPoint;
@@ -74,6 +86,10 @@ namespace Rhythm
 
             _playerBasicDamage = _playerMaxHitPoint / (notePointCount.defense * knockout);
             _enemyBasicDamage = _playerMaxHitPoint * (knockout - victory) / (notePointCount.attack * knockout * (victory - overkill));
+
+            _gaugePoint = 0;
+            _incrementalGaugePoint = _maxGaugePoint / (noteCount * _gaugeRate.PerfectRate);
+            _clearGaugePoint = _maxGaugePoint * _gaugeRate.Border;
 
             _noteCount = noteCount;
 
@@ -151,6 +167,23 @@ namespace Rhythm
                     break;
             }
 
+        }
+
+        public void Hit(Judgement judgement)
+        {
+            if (judgement == Judgement.Undefined) return;
+
+            _uiDrawable.DrawScore(Score);
+            _gaugePoint += _incrementalGaugePoint * judgement switch
+            {
+                Judgement.Perfect => 1,
+                Judgement.Good => _gaugeRate.GoodCoefficient,
+                Judgement.False => _gaugeRate.FalseCoefficient,
+                _ => 0,
+            };
+
+            _gaugePoint = Mathf.Clamp(_gaugePoint, 0f, _maxGaugePoint);
+            _gaugeDrawable.DrawClearGauge(_maxGaugePoint, _gaugePoint, _clearGaugePoint);
         }
 
         public void DisplayResult(in HeaderInformation header)

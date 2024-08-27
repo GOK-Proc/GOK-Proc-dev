@@ -11,15 +11,17 @@ namespace Rhythm
         private readonly INoteProvider _noteProvider;
         private readonly IJudgeCountable _judgeCountable;
         private readonly IBattleMode _battle;
+        private readonly IRhythmMode _rhythm;
         private readonly IEffectDrawable _effectDrawable;
 
-        public NoteJudge(bool isVs, in NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattleMode battle, IEffectDrawable effectDrawable)
+        public NoteJudge(bool isVs, in NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattleMode battle, IRhythmMode rhythm, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
             _layout = layout;
             _noteProvider = noteProvider;
             _judgeCountable = judgeCountable;
             _battle = battle;
+            _rhythm = rhythm;
             _effectDrawable = effectDrawable;
         }
 
@@ -34,9 +36,16 @@ namespace Rhythm
                     if (judge != Judgement.Undefined)
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
-                        if (_isVs) _battle.Hit(note.Color, note.IsLarge, judge);
                         _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
-                        _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge, note.Id);
+                        if (_isVs)
+                        {
+                            _battle.Hit(note.Color, note.IsLarge, judge);
+                            _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge, note.Id);
+                        }
+                        else
+                        {
+                            _rhythm.Hit(judge);
+                        }
                     }
                 }
             }
