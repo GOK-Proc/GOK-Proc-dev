@@ -267,7 +267,37 @@ namespace Rhythm
             return (notes.ToArray(), endTime);
         }
 
-        public static (int attack, int defense) GetNoteCount(IEnumerable<NoteData> notes, int largeRate)
+        public static int GetNoteCount(IEnumerable<NoteData> notes)
+        {
+            var count = 0;
+
+            foreach (var note in notes)
+            {
+                count++;
+
+                if (note.Length > 0 && note.Bpm > 0)
+                {
+                    if (note.Bpm > 0)
+                    {
+                        var deltaTime = 30 / note.Bpm;
+                        var time = note.JustTime + deltaTime;
+                        var endTime = note.JustTime + note.Length;
+
+                        while (time < endTime)
+                        {
+                            count++;
+                            time += deltaTime;
+                        }
+
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        public static (int attack, int defense) GetNotePointCount(IEnumerable<NoteData> notes, int largeRate)
         {
             var attackCount = 0;
             var defenseCount = 0;

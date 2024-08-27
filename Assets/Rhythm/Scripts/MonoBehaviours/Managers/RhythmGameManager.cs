@@ -30,6 +30,12 @@ namespace Rhythm
         [SerializeField] private ComboBonus[] _comboBonus;
 
         [Space(20)]
+        [Header("Score Settings")]
+        [SerializeField] private float[] _scoreRates;
+        [SerializeField] private int[] _scoreRankBorders;
+        [SerializeField] private GaugeRate[] _gaugeRates;
+
+        [Space(20)]
         [Header("Objects")]
         [SerializeField] private Transform _noteParent;
         [SerializeField] private Transform _cursorParent;
@@ -81,7 +87,7 @@ namespace Rhythm
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
         private TimeManager _timeManager;
-        private ScoreManger _scoreManger;
+        private ScoreManger _scoreManager;
         private InputManager _inputManager;
         private CursorController _cursorController;
         private SoundPlayer _soundPlayer;
@@ -143,10 +149,13 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManger = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, BeatmapLoader.GetNoteCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
+            _scoreManager = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
 
-            _noteCreator = new NoteCreator(notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
-            _noteJudge = new NoteJudge(_noteLayout, _noteCreator, _scoreManger, _scoreManger, _uiManager);
+            _noteCreator = new NoteCreator(isVs, notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
+            _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _uiManager);
+
+            _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
+            _uiManager.SwitchUI(isVs);
         }
 
         // Start is called before the first frame update
@@ -180,7 +189,7 @@ namespace Rhythm
                     yield return null;
                 }
 
-                _scoreManger.DisplayResult(_headerInformation);
+                _scoreManager.DisplayResult(_headerInformation);
             }
 
             StartCoroutine(RhythmGameUpdate());

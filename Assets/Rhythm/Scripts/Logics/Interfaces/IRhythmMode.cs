@@ -8,5 +8,6 @@ namespace Rhythm
     {
         bool IsClear { get; }
         int Score { get; }
+        void Hit(Judgement judgement);
     }
 }

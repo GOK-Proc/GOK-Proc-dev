@@ -70,14 +70,14 @@ namespace Rhythm
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
         [System.Serializable]
-        private struct GaugeColor
+        private struct BattleGaugeColor
         {
             public Color Normal;
             public Color Damaged;
             public Color Pinch;
         }
 
-        [SerializeField] private GaugeColor _gaugeColor;
+        [SerializeField] private BattleGaugeColor _battleGaugeColor;
 
         private Vector3 _playerGaugePosition;
         private Vector3 _enemyGaugePosition;
@@ -85,6 +85,25 @@ namespace Rhythm
         private Vector3 _enemyGaugeScale;
 
         [SerializeField] private Color[] _difficultyColor;
+
+        [Space(20)]
+        [SerializeField] private RectTransform _score;
+        [SerializeField] private TextMeshProUGUI _scoreNumber;
+        [SerializeField] private RectTransform _clearGaugeLower;
+        [SerializeField] private Image _clearGaugeUpperImage;
+
+        private RectTransform _clearGaugeUpper;
+        private Vector2 _clearGaugePosition;
+        private Vector2 _clearGaugeSizeDelta;
+
+        [System.Serializable]
+        private struct ClearGaugeColor
+        {
+            public Color Normal;
+            public Color Clear;
+        }
+
+        [SerializeField] private ClearGaugeColor _clearGaugeColor;
 
         [Space(20)]
         [SerializeField] private RectTransform _battleResultBox;
@@ -153,6 +172,10 @@ namespace Rhythm
             _playerShakeTween = null;
             _enemyShakeTween = null;
 
+            _clearGaugeUpper = _clearGaugeUpperImage.rectTransform;
+            _clearGaugePosition = _clearGaugeLower.anchoredPosition;
+            _clearGaugeSizeDelta = _clearGaugeLower.sizeDelta;
+
             _battleResultBoxCanvasGroup = _battleResultBox.GetComponent<CanvasGroup>();
             _battleResultContentsCanvasGroup = _battleResultContents.GetComponent<CanvasGroup>();
 
@@ -167,44 +190,57 @@ namespace Rhythm
             _rhythmResultContentsCanvasGroup = _rhythmResultContents.GetComponent<CanvasGroup>();
         }
 
-        private void DrawGauge(Transform gauge, SpriteRenderer gaugeRenderer, Vector3 position, Vector3 scale, float hitPoint, float maxHitPoint)
+        private void DrawGauge(Transform gauge, Vector3 position, Vector3 scale, float value)
         {
-            var width = hitPoint * scale.x / maxHitPoint;
+            var width = value * scale.x;
             var x = position.x - (scale.x - width) / 2;
 
             gauge.localPosition = new Vector3(x, position.y, position.z);
             gauge.localScale = new Vector3(width, scale.y, scale.z);
+        }
 
-            gaugeRenderer.color = (hitPoint / maxHitPoint) switch
+        private void SetBattleGaugeColor(SpriteRenderer gaugeRenderer, float value)
+        {
+            gaugeRenderer.color = value switch
             {
-                <= 0.1f => _gaugeColor.Pinch,
-                <= 0.5f => _gaugeColor.Damaged,
-                _ => _gaugeColor.Normal,
+                <= 0.2f => _battleGaugeColor.Pinch,
+                <= 0.5f => _battleGaugeColor.Damaged,
+                _ => _battleGaugeColor.Normal,
             };
         }
 
-        private void DrawGauge(RectTransform gauge, Image gaugeImage, Vector2 position, Vector2 sizeDelta, float hitPoint, float maxHitPoint)
+        private void DrawGauge(RectTransform gauge, Vector2 position, Vector2 sizeDelta, float value)
         {
-            var width = hitPoint * sizeDelta.x / maxHitPoint;
+            var width = value * sizeDelta.x;
             var x = position.x - (sizeDelta.x - width) / 2;
 
             gauge.anchoredPosition = new Vector2(x, position.y);
             gauge.sizeDelta = new Vector2(width, sizeDelta.y);
+        }
 
-            gaugeImage.color = (hitPoint / maxHitPoint) switch
+        private void SetBattleGaugeColor(Image gaugeImage, float value)
+        {
+            gaugeImage.color = value switch
             {
-                <= 0.1f => _gaugeColor.Pinch,
-                <= 0.5f => _gaugeColor.Damaged,
-                _ => _gaugeColor.Normal,
+                <= 0.2f => _battleGaugeColor.Pinch,
+                <= 0.5f => _battleGaugeColor.Damaged,
+                _ => _battleGaugeColor.Normal,
             };
         }
 
+        private void SetClearGaugeColor(Image gaugeImage, float value, float border)
+        {
+            gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
+        }
 
         public void DamagePlayer(float hitPoint, float maxHitPoint)
         {
             void Draw()
             {
-                DrawGauge(_playerGauge, _playerGaugeRenderer, _playerGaugePosition, _playerGaugeScale, hitPoint, maxHitPoint);
+                var value = hitPoint / maxHitPoint;
+
+                DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
+                SetBattleGaugeColor(_playerGaugeRenderer, value);
 
                 if (_playerShakeTween != null)
                 {
@@ -229,7 +265,10 @@ namespace Rhythm
         {
             void Draw()
             {
-                DrawGauge(_enemyGauge, _enemyGaugeRenderer, _enemyGaugePosition, _enemyGaugeScale, hitPoint, maxHitPoint);
+                var value = hitPoint / maxHitPoint;
+
+                DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
+                SetBattleGaugeColor(_enemyGaugeRenderer, value);
 
                 if (_enemyShakeTween != null)
                 {
@@ -252,7 +291,10 @@ namespace Rhythm
 
         public void HealPlayer(float hitPoint, float maxHitPoint)
         {
-            DrawGauge(_playerGauge, _playerGaugeRenderer, _playerGaugePosition, _playerGaugeScale, hitPoint, maxHitPoint);
+            var value = hitPoint / maxHitPoint;
+
+            DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
+            SetBattleGaugeColor(_playerGaugeRenderer, value);
 
             // ToDo: Effect
 
@@ -463,8 +505,14 @@ namespace Rhythm
             _battleResultDifficulty.color = _difficultyColor[(int)header.Difficulty];
             _battleResultLevel.SetText("Lv. {0}", header.Level);
 
-            DrawGauge(_battleResultPlayerGauge, _battleResultPlayerGaugeImage, _battleResultPlayerGaugePosition, _battleResultPlayerGaugeSizeDelta, playerHitPoint, playerMaxHitPoint);
-            DrawGauge(_battleResultEnemyGauge, _battleResultEnemyGaugeImage, _battleResultEnemyGaugePosition, _battleResultEnemyGaugeSizeDelta, enemyHitPoint, enemyMaxHitPoint);
+
+            var playerValue = playerHitPoint / playerMaxHitPoint;
+            DrawGauge(_battleResultPlayerGauge, _battleResultPlayerGaugePosition, _battleResultPlayerGaugeSizeDelta, playerValue);
+            SetBattleGaugeColor(_battleResultPlayerGaugeImage, playerValue);
+
+            var enemyValue = enemyHitPoint / enemyMaxHitPoint;
+            DrawGauge(_battleResultEnemyGauge, _battleResultEnemyGaugePosition, _battleResultEnemyGaugeSizeDelta, enemyValue);
+            SetBattleGaugeColor(_battleResultEnemyGaugeImage, enemyValue);
 
             var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
 
@@ -519,7 +567,7 @@ namespace Rhythm
                 ScoreRank.S => "S",
                 ScoreRank.A => "A",
                 ScoreRank.B => "B",
-                _ => ""
+                _ => "C"
             });
 
             _rhythmResultRanking.text = "Rank " + ranking + ranking switch
@@ -552,6 +600,38 @@ namespace Rhythm
             sequence.Append(_rhythmResultContentsCanvasGroup.DOFade(1f, _resultContentsDuration));
 
             sequence.Play();
+        }
+
+        public void DrawScore(int score)
+        {
+            _scoreNumber.SetText($"{score:N0}");
+        }
+
+        public void SwitchUI(bool isVs)
+        {
+            _player.gameObject.SetActive(isVs);
+            _enemy.gameObject.SetActive(isVs);
+            _score.gameObject.SetActive(!isVs);
+        }
+
+        public void SetClearGaugeBorder(float border)
+        {
+            var position = _clearGaugeLower.anchoredPosition;
+            var sizeDelta = _clearGaugeLower.sizeDelta;
+
+            _clearGaugeLower.sizeDelta *= new Vector2(1 - border, 1f);
+
+            var x = position.x + sizeDelta.x / 2 - _clearGaugeLower.sizeDelta.x / 2;
+            _clearGaugeLower.anchoredPosition = new Vector2(x, _clearGaugeLower.anchoredPosition.y);
+        }
+
+        public void DrawClearGauge(float maxGugePoint, float gaugePoint, float clearGaugePoint)
+        {
+            var value = gaugePoint / maxGugePoint;
+            var border = clearGaugePoint / maxGugePoint;
+
+            DrawGauge(_clearGaugeUpper, _clearGaugePosition, _clearGaugeSizeDelta, value);
+            SetClearGaugeColor(_clearGaugeUpperImage, value, border);
         }
 
     }
