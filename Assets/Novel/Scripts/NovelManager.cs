@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 namespace Novel
@@ -78,9 +79,20 @@ namespace Novel
             {
                 foreach (GameObject characterAsset in characterAssets)
                 {
-                    _novelOperation.CharacterPrefabs[characterAsset.name] = characterAsset;
+                    _novelOperation.CharacterPrefabDict[characterAsset.name] = characterAsset;
                 }
             });
+
+            // 背景アセットのロード
+            yield return LoadAssets<Sprite>("NovelBackground", backgroundAssets =>
+            {
+                foreach (Sprite backgroundAsset in backgroundAssets)
+                {
+                    _novelOperation.BackgroundImageDict[backgroundAsset.name] = backgroundAsset;
+                }
+            });
+
+
 
 
             _doFirstLine = true;

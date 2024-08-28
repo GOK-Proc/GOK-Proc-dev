@@ -10,6 +10,8 @@ namespace Novel
 {
     public class NovelOperation : MonoBehaviour
     {
+        private float _duration = 0.75f;
+
         private void Start()
         {
             _replaceDictionary = new ReplaceDictionary();
@@ -58,12 +60,11 @@ namespace Novel
             }
         }
 
-        public Dictionary<string, GameObject> CharacterPrefabs { get; set; } = new Dictionary<string, GameObject>();
+        public Dictionary<string, GameObject> CharacterPrefabDict { get; set; } = new Dictionary<string, GameObject>();
         [SerializeField] private Transform _characterParent;
         [SerializeField] private RectTransform _mainCanvasTransform;
         [SerializeField] private float _margin;
         private float _width;
-        private float _duration = 0.75f;
 
         private Dictionary<string, GameObject> _preCharacter = new Dictionary<string, GameObject>();
 
@@ -88,14 +89,15 @@ namespace Novel
                 }
                 else
                 {
-                    GameObject characterObject = Instantiate(CharacterPrefabs[character], _characterParent);
+                    GameObject characterObject = Instantiate(CharacterPrefabDict[character], _characterParent);
                     currentCharacter[character] = characterObject;
                     characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
-                    Color color = characterObject.GetComponent<Image>().color;
+                    Image characterImage = characterObject.GetComponent<Image>();
+                    Color color = characterImage.color;
                     color.a = 0f;
-                    characterObject.GetComponent<Image>().color = color;
+                    characterImage.color = color;
 
-                    sequence.Join(characterObject.GetComponent<Image>().DOFade(1f, _duration));
+                    sequence.Join(characterImage.DOFade(1f, _duration));
                 }
             }
 
@@ -124,11 +126,29 @@ namespace Novel
         }
 
 
+        public Dictionary<string, Sprite> BackgroundImageDict { get; set; } = new Dictionary<string, Sprite>();
         [SerializeField] private Image _backgroundImage;
         
         public void UpdateBackground(BackgroundData backgroundData)
         {
-            
+            if (_backgroundImage.sprite != null)
+            {
+                _backgroundImage.DOFade(0f, _duration).OnComplete(() =>
+                {
+                    _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+
+                    _backgroundImage.DOFade(1f, _duration);
+                });
+            }
+            else
+            {
+                _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+                Color color = _backgroundImage.color;
+                color.a = 0f;
+                _backgroundImage.color = color;
+
+                _backgroundImage.DOFade(1f, _duration);
+            }
         }
 
 

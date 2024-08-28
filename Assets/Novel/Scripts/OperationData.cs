@@ -36,7 +36,7 @@ namespace Novel
         public OperationType OperationType { get; } = OperationType.CharacterLayout;
         public List<string> CharacterLayout { get; }
 
-        public CharacterLayoutData(string characterLayout)
+        public CharacterLayoutData(string characterLayout, string characterMotion)
         {
             CharacterLayout = new List<string>(characterLayout.Split(" "));
         }

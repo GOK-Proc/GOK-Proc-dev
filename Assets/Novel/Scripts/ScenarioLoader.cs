@@ -29,20 +29,20 @@ namespace Novel
 
                 if (items[2] != "") 
                 {
-                    lineOperationList.Add(new CharacterLayoutData(items[2]));
-                }
-
-                if (items[3] != "")
-                {
-                    lineOperationList.Add(new BackgroundData(items[3]));
+                    lineOperationList.Add(new CharacterLayoutData(items[2], items[3]));
                 }
 
                 if (items[4] != "")
                 {
-                    lineOperationList.Add(new BgmData(items[3]));
+                    lineOperationList.Add(new BackgroundData(items[4]));
                 }
 
                 if (items[5] != "")
+                {
+                    lineOperationList.Add(new BgmData(items[5]));
+                }
+
+                if (items[6] != "")
                 {
                     lineOperationList.Add(new OtherData());
                 }
