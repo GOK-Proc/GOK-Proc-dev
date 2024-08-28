@@ -21,6 +21,9 @@ namespace Rhythm
         [SerializeField] private float _attackEffectDuration;
         [SerializeField] private float _defenseEffectDuration;
         [SerializeField] private float _enemyAttackEffectDuration;
+        [SerializeField] private float _judgeFontDuration;
+        [SerializeField] private Vector3 _judgeFontDelta;
+
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
 
@@ -39,6 +42,7 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _judgeEffectPrefabs;
         [SerializeField] private EffectPrefab[] _battleEffectPrefabs;
         [SerializeField] private EffectObject _enemyAttackEffectPrefabs;
+        [SerializeField] private EffectObject[] _judgeFontPrefabs;
         [SerializeField] private Transform _effectParent;
 
         [SerializeField] private TextMeshProUGUI _titleText;
@@ -66,6 +70,7 @@ namespace Rhythm
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
         private ObjectPool<EffectObject> _enemyAttackEffectPool;
+        private ObjectPool<EffectObject>[] _judgeFontPools;
 
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
@@ -167,6 +172,7 @@ namespace Rhythm
             _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
             _enemyAttackEffectPool = new ObjectPool<EffectObject>(_enemyAttackEffectPrefabs, _effectParent);
+            _judgeFontPools = _judgeFontPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
 
             _playerShakeTween = null;
@@ -309,6 +315,40 @@ namespace Rhythm
                     IDisposable disposable = _judgeEffectPools[(int)judgement - 1].Create(out var obj, out var _);
                     obj.Create(disposable);
                     obj.PlayAnimation(position);
+                    break;
+            }
+        }
+
+        public void DrawJudgeFontEffect(Vector3 position, Judgement judgement)
+        {
+            switch (judgement)
+            {
+                case Judgement.Perfect:
+                case Judgement.Good:
+                case Judgement.False:
+                    IDisposable disposable = _judgeFontPools[(int)judgement - 1].Create(out var obj, out var _);
+                    obj.Create(
+                        (t, s, d) =>
+                        {
+                            var color = s.color;
+
+                            var sequence = DOTween.Sequence();
+                            sequence.Append(t.DOLocalMove(position + _judgeFontDelta, _judgeFontDuration));
+                            sequence.Join(s.DOFade(0f, 0.1f).SetDelay(_judgeFontDuration - 0.1f));
+                            sequence.Play().OnComplete(() =>
+                            {
+                                s.color = color;
+                                d?.Invoke();
+                            });
+                        },
+                        (t, s, d) =>
+                        {
+                            d?.Invoke();
+                        },
+                        disposable
+                        );
+
+                    obj.Play(position);
                     break;
             }
         }
