@@ -20,10 +20,16 @@ namespace Rhythm
 
         [SerializeField] private float _attackEffectDuration;
         [SerializeField] private float _defenseEffectDuration;
+        [SerializeField] private float _battleEffectFadeDuration;
+        [SerializeField] private float _battleEffectFadeScale;
         [SerializeField] private float _enemyAttackEffectDuration;
+        [SerializeField] private float _enemyAttackEffectFadeDuration;
+        [SerializeField] private float _enemyAttackEffectFadeScale;
         [SerializeField] private float _judgeFontDuration;
+        [SerializeField] private float _judgeFontFadeDuration;
         [SerializeField] private Vector3 _judgeFontDelta;
         [SerializeField] private float _laneFlashDuration;
+        [SerializeField] private float _laneFlashFadeDuration;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -339,7 +345,7 @@ namespace Rhythm
 
                             var sequence = DOTween.Sequence();
                             sequence.Append(t.DOLocalMove(position + _judgeFontDelta, _judgeFontDuration));
-                            sequence.Join(s.DOFade(0f, 0.1f).SetDelay(_judgeFontDuration - 0.1f));
+                            sequence.Join(s.DOFade(0f, _judgeFontFadeDuration).SetDelay(_judgeFontDuration - _judgeFontFadeDuration));
                             sequence.Play().OnComplete(() =>
                             {
                                 s.color = color;
@@ -378,7 +384,7 @@ namespace Rhythm
                 {
                     var color = s.color;
 
-                    s.DOFade(0f, 0.3f).OnComplete(() =>
+                    s.DOFade(0f, _laneFlashFadeDuration).OnComplete(() =>
                     {
                         s.color = color;
                         d?.Invoke();
@@ -414,8 +420,8 @@ namespace Rhythm
                                 {
                                     var color = s.color;
                                     var sequence = DOTween.Sequence();
-                                    sequence.Append(t.DOScale(1.5f, 0.3f));
-                                    sequence.Join(s.DOFade(0f, 0.3f));
+                                    sequence.Append(t.DOScale(_battleEffectFadeScale, _battleEffectFadeDuration));
+                                    sequence.Join(s.DOFade(0f, _battleEffectFadeDuration));
                                     sequence.Play().OnComplete(() =>
                                     {
                                         t.localScale = Vector3.one;
@@ -451,8 +457,8 @@ namespace Rhythm
                                 {
                                     var color = s.color;
                                     var sequence = DOTween.Sequence();
-                                    sequence.Append(t.DOScale(1.5f, 0.3f));
-                                    sequence.Join(s.DOFade(0f, 0.3f));
+                                    sequence.Append(t.DOScale(_battleEffectFadeScale, _battleEffectFadeDuration));
+                                    sequence.Join(s.DOFade(0f, _battleEffectFadeDuration));
                                     sequence.Play().OnComplete(() =>
                                     {
                                         t.localScale = Vector3.one;
@@ -486,8 +492,8 @@ namespace Rhythm
             {
                 var color = s.color;
                 var sequence = DOTween.Sequence();
-                sequence.Append(t.DOScale(1.5f, 0.3f));
-                sequence.Join(s.DOFade(0f, 0.3f));
+                sequence.Append(t.DOScale(_enemyAttackEffectFadeScale, _enemyAttackEffectFadeDuration));
+                sequence.Join(s.DOFade(0f, _enemyAttackEffectFadeDuration));
                 sequence.Play().OnComplete(() =>
                 {
                     t.localScale = Vector3.one;

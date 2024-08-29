@@ -865,10 +865,16 @@ MonoBehaviour:
   _enemy: {fileID: 454082186}
   _attackEffectDuration: 0.5
   _defenseEffectDuration: 0.5
+  _battleEffectFadeDuration: 0.3
+  _battleEffectFadeScale: 1.5
   _enemyAttackEffectDuration: 1
+  _enemyAttackEffectFadeDuration: 0.3
+  _enemyAttackEffectFadeScale: 1.5
   _judgeFontDuration: 0.4
+  _judgeFontFadeDuration: 0.1
   _judgeFontDelta: {x: 0, y: 3, z: 0}
   _laneFlashDuration: 0.05
+  _laneFlashFadeDuration: 0.2
   _hitTimeRatio: 0.85
   _shakeDuration: 0.5
   _playerGaugeRenderer: {fileID: 1304861305}
