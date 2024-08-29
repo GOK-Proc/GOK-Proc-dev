@@ -16,6 +16,7 @@ namespace Gallery
             _composerText.text = info.Composer;
 
             _descriptionText.text = info.Description;
+            _descriptionText.pageToDisplay = 1;
         }
     }
 }
