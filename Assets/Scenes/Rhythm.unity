@@ -868,6 +868,7 @@ MonoBehaviour:
   _enemyAttackEffectDuration: 1
   _judgeFontDuration: 0.4
   _judgeFontDelta: {x: 0, y: 3, z: 0}
+  _laneFlashDuration: 0.05
   _hitTimeRatio: 0.85
   _shakeDuration: 0.5
   _playerGaugeRenderer: {fileID: 1304861305}
@@ -893,6 +894,9 @@ MonoBehaviour:
   - {fileID: 3114196519367107314, guid: f7af3463af87ec848ada8d8d35fec9ee, type: 3}
   - {fileID: 2361069125775815967, guid: 59b903543719c7845b34ac0d70a4b9ff, type: 3}
   - {fileID: 764776549038496587, guid: 563fd3f22ba76fa4d83e938adb2ece8f, type: 3}
+  _laneFlashPrefabs:
+  - {fileID: -3549549560560496001, guid: 3ef942142ebea6248897f701346f0f0f, type: 3}
+  - {fileID: 4470924126722884707, guid: cc33d94fa4b9e5447b47502b007a82a1, type: 3}
   _effectParent: {fileID: 1644396144}
   _titleText: {fileID: 1690732409}
   _composerText: {fileID: 1247792226}

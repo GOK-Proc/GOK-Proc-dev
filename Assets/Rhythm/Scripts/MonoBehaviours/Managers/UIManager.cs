@@ -23,6 +23,7 @@ namespace Rhythm
         [SerializeField] private float _enemyAttackEffectDuration;
         [SerializeField] private float _judgeFontDuration;
         [SerializeField] private Vector3 _judgeFontDelta;
+        [SerializeField] private float _laneFlashDuration;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -43,6 +44,7 @@ namespace Rhythm
         [SerializeField] private EffectPrefab[] _battleEffectPrefabs;
         [SerializeField] private EffectObject _enemyAttackEffectPrefabs;
         [SerializeField] private EffectObject[] _judgeFontPrefabs;
+        [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private Transform _effectParent;
 
         [SerializeField] private TextMeshProUGUI _titleText;
@@ -71,6 +73,7 @@ namespace Rhythm
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
         private ObjectPool<EffectObject> _enemyAttackEffectPool;
         private ObjectPool<EffectObject>[] _judgeFontPools;
+        private ObjectPool<EffectObject>[] _laneFlashPools;
 
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
@@ -173,6 +176,8 @@ namespace Rhythm
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
             _enemyAttackEffectPool = new ObjectPool<EffectObject>(_enemyAttackEffectPrefabs, _effectParent);
             _judgeFontPools = _judgeFontPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
+            _laneFlashPools = _laneFlashPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
+
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
 
             _playerShakeTween = null;
@@ -351,6 +356,38 @@ namespace Rhythm
                     obj.Play(position);
                     break;
             }
+        }
+
+        public void DrawLaneFlash(Vector3 position, NoteColor color)
+        {
+            if (color == NoteColor.Undefined) return;
+
+            IDisposable disposable = _laneFlashPools[(int)color - 1].Create(out var obj, out var _);
+            obj.Create(
+                (t, s, d) =>
+                {
+                    var scaleX = t.localScale.x;
+                    t.localScale = new Vector3(0f, t.localScale.y, t.localScale.z);
+
+                    t.DOScaleX(scaleX, _laneFlashDuration).OnComplete(() =>
+                    {
+                        d?.Invoke();
+                    });
+                },
+                (t, s, d) =>
+                {
+                    var color = s.color;
+
+                    s.DOFade(0f, 0.3f).OnComplete(() =>
+                    {
+                        s.color = color;
+                        d?.Invoke();
+                    });
+
+                },
+                disposable);
+
+            obj.Play(position);
         }
 
         public void DrawBattleEffect(Vector3 position, NoteColor color, bool isLarge, Judgement judgement, int id)
