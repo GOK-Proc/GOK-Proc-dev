@@ -20,7 +20,17 @@ namespace Rhythm
 
         [SerializeField] private float _attackEffectDuration;
         [SerializeField] private float _defenseEffectDuration;
+        [SerializeField] private float _battleEffectFadeDuration;
+        [SerializeField] private float _battleEffectFadeScale;
         [SerializeField] private float _enemyAttackEffectDuration;
+        [SerializeField] private float _enemyAttackEffectFadeDuration;
+        [SerializeField] private float _enemyAttackEffectFadeScale;
+        [SerializeField] private float _judgeFontDuration;
+        [SerializeField] private float _judgeFontFadeDuration;
+        [SerializeField] private Vector3 _judgeFontDelta;
+        [SerializeField] private float _laneFlashDuration;
+        [SerializeField] private float _laneFlashFadeDuration;
+
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
 
@@ -39,6 +49,8 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _judgeEffectPrefabs;
         [SerializeField] private EffectPrefab[] _battleEffectPrefabs;
         [SerializeField] private EffectObject _enemyAttackEffectPrefabs;
+        [SerializeField] private EffectObject[] _judgeFontPrefabs;
+        [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private Transform _effectParent;
 
         [SerializeField] private TextMeshProUGUI _titleText;
@@ -66,6 +78,8 @@ namespace Rhythm
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
         private ObjectPool<EffectObject> _enemyAttackEffectPool;
+        private ObjectPool<EffectObject>[] _judgeFontPools;
+        private ObjectPool<EffectObject>[] _laneFlashPools;
 
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
@@ -167,6 +181,9 @@ namespace Rhythm
             _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
             _enemyAttackEffectPool = new ObjectPool<EffectObject>(_enemyAttackEffectPrefabs, _effectParent);
+            _judgeFontPools = _judgeFontPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
+            _laneFlashPools = _laneFlashPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
+
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
 
             _playerShakeTween = null;
@@ -313,6 +330,72 @@ namespace Rhythm
             }
         }
 
+        public void DrawJudgeFontEffect(Vector3 position, Judgement judgement)
+        {
+            switch (judgement)
+            {
+                case Judgement.Perfect:
+                case Judgement.Good:
+                case Judgement.False:
+                    IDisposable disposable = _judgeFontPools[(int)judgement - 1].Create(out var obj, out var _);
+                    obj.Create(
+                        (t, s, d) =>
+                        {
+                            var color = s.color;
+
+                            var sequence = DOTween.Sequence();
+                            sequence.Append(t.DOLocalMove(position + _judgeFontDelta, _judgeFontDuration));
+                            sequence.Join(s.DOFade(0f, _judgeFontFadeDuration).SetDelay(_judgeFontDuration - _judgeFontFadeDuration));
+                            sequence.Play().OnComplete(() =>
+                            {
+                                s.color = color;
+                                d?.Invoke();
+                            });
+                        },
+                        (t, s, d) =>
+                        {
+                            d?.Invoke();
+                        },
+                        disposable
+                        );
+
+                    obj.Play(position);
+                    break;
+            }
+        }
+
+        public void DrawLaneFlash(Vector3 position, NoteColor color)
+        {
+            if (color == NoteColor.Undefined) return;
+
+            IDisposable disposable = _laneFlashPools[(int)color - 1].Create(out var obj, out var _);
+            obj.Create(
+                (t, s, d) =>
+                {
+                    var scaleX = t.localScale.x;
+                    t.localScale = new Vector3(0f, t.localScale.y, t.localScale.z);
+
+                    t.DOScaleX(scaleX, _laneFlashDuration).OnComplete(() =>
+                    {
+                        d?.Invoke();
+                    });
+                },
+                (t, s, d) =>
+                {
+                    var color = s.color;
+
+                    s.DOFade(0f, _laneFlashFadeDuration).OnComplete(() =>
+                    {
+                        s.color = color;
+                        d?.Invoke();
+                    });
+
+                },
+                disposable);
+
+            obj.Play(position);
+        }
+
         public void DrawBattleEffect(Vector3 position, NoteColor color, bool isLarge, Judgement judgement, int id)
         {
             switch (judgement)
@@ -337,8 +420,8 @@ namespace Rhythm
                                 {
                                     var color = s.color;
                                     var sequence = DOTween.Sequence();
-                                    sequence.Append(t.DOScale(1.5f, 0.3f));
-                                    sequence.Join(s.DOFade(0f, 0.3f));
+                                    sequence.Append(t.DOScale(_battleEffectFadeScale, _battleEffectFadeDuration));
+                                    sequence.Join(s.DOFade(0f, _battleEffectFadeDuration));
                                     sequence.Play().OnComplete(() =>
                                     {
                                         t.localScale = Vector3.one;
@@ -374,8 +457,8 @@ namespace Rhythm
                                 {
                                     var color = s.color;
                                     var sequence = DOTween.Sequence();
-                                    sequence.Append(t.DOScale(1.5f, 0.3f));
-                                    sequence.Join(s.DOFade(0f, 0.3f));
+                                    sequence.Append(t.DOScale(_battleEffectFadeScale, _battleEffectFadeDuration));
+                                    sequence.Join(s.DOFade(0f, _battleEffectFadeDuration));
                                     sequence.Play().OnComplete(() =>
                                     {
                                         t.localScale = Vector3.one;
@@ -409,8 +492,8 @@ namespace Rhythm
             {
                 var color = s.color;
                 var sequence = DOTween.Sequence();
-                sequence.Append(t.DOScale(1.5f, 0.3f));
-                sequence.Join(s.DOFade(0f, 0.3f));
+                sequence.Append(t.DOScale(_enemyAttackEffectFadeScale, _enemyAttackEffectFadeDuration));
+                sequence.Join(s.DOFade(0f, _enemyAttackEffectFadeDuration));
                 sequence.Play().OnComplete(() =>
                 {
                     t.localScale = Vector3.one;

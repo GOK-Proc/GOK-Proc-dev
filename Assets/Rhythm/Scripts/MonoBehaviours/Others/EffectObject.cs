@@ -42,7 +42,7 @@ namespace Rhythm
 
         public void Play(Vector3 position, Action<Transform, SpriteRenderer, Action> onPlay = null)
         {
-            transform.position = position;
+            transform.localPosition = position;
             gameObject.SetActive(true);
 
             if (onPlay is not null)
@@ -63,15 +63,15 @@ namespace Rhythm
                 {
                     foreach (var sprite in _sprites)
                     {
-                        _spriteRenderer.sprite = sprite;
+                        if (_spriteRenderer != null) _spriteRenderer.sprite = sprite;
                         yield return new WaitForSeconds(_frameTime);
                     }
                 } while (isLoop);
                 Stop();
             }
 
-            transform.position = position;
-            _spriteRenderer.sprite = _sprites.FirstOrDefault();
+            transform.localPosition = position;
+            if (_spriteRenderer != null) _spriteRenderer.sprite = _sprites.FirstOrDefault();
             gameObject.SetActive(true);
 
             if (onPlay is not null)

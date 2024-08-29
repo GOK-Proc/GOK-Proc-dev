@@ -91,7 +91,7 @@ namespace Rhythm
         private InputManager _inputManager;
         private CursorController _cursorController;
         private SoundPlayer _soundPlayer;
-
+        private LaneEffectManager _laneEffectManager;
 
         private HeaderInformation _headerInformation;
         private double _endTime;
@@ -154,6 +154,8 @@ namespace Rhythm
             _noteCreator = new NoteCreator(isVs, notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _uiManager);
 
+            _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
+
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SwitchUI(isVs);
         }
@@ -163,16 +165,21 @@ namespace Rhythm
         {
             IEnumerator RhythmGameUpdate()
             {
-                _timeManager.StartTimer(-_startDelay);
-
-                while (_timeManager.Time < Time.deltaTime / 2)
+                void Update()
                 {
                     _noteCreator.Create();
                     _inputManager.Update();
                     _cursorController.Move();
                     _cursorController.Update();
+                    _laneEffectManager.Flash();
                     _noteJudge.Judge();
+                }
 
+                _timeManager.StartTimer(-_startDelay);
+
+                while (_timeManager.Time < Time.deltaTime / 2)
+                {
+                    Update();
                     yield return null;
                 }
 
@@ -180,12 +187,7 @@ namespace Rhythm
 
                 while (_timeManager.Time < _endTime)
                 {
-                    _noteCreator.Create();
-                    _inputManager.Update();
-                    _cursorController.Move();
-                    _cursorController.Update();
-                    _noteJudge.Judge();
-
+                    Update();
                     yield return null;
                 }
 

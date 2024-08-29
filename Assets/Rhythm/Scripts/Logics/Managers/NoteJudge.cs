@@ -37,6 +37,7 @@ namespace Rhythm
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
                         _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
+                        _effectDrawable.DrawJudgeFontEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         if (_isVs)
                         {
                             _battle.Hit(note.Color, note.IsLarge, judge);
