@@ -30,7 +30,7 @@ namespace Rhythm
 
         public virtual void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, double justTime, int id, IDisposable disposable)
         {
-            _justTime = justTime + _judgeOffset;
+            _justTime = justTime;
             Create(position, velocity, survivalRect, lane, disposable);
 
             IsJudged = false;
@@ -40,6 +40,20 @@ namespace Rhythm
         public virtual Judgement Judge()
         {
             return default;
+        }
+
+        protected override void Update()
+        {
+            if (IsAlive)
+            {
+                _position += _velocity * Time.deltaTime;
+                transform.position = _position;
+
+                if (IsJudged && IsOutsideSurvivalRect())
+                {
+                    Destroy();
+                }
+            }
         }
 
         public int CompareTo(Note note)

@@ -19,7 +19,7 @@ namespace Rhythm
         {
             if (_colorInputProvider.IsColorPressed(_color))
             {
-                var d = Math.Abs(_timeProvider.Time - _justTime);
+                var d = Math.Abs(_timeProvider.Time - (_justTime + _judgeOffset));
 
                 if (d <= _judgeRange.Perfect)
                 {
@@ -30,7 +30,7 @@ namespace Rhythm
                     _judgement = Judgement.Good;
                 }
 
-                if (_timeProvider.Time - _justTime >= 0 && _judgement != default)
+                if (_timeProvider.Time - (_justTime + _judgeOffset) >= 0 && _judgement != default)
                 {
                     IsJudged = true;
                     Destroy();
@@ -48,7 +48,7 @@ namespace Rhythm
                 }
             }
 
-            if (_timeProvider.Time - _justTime > _judgeRange.Good)
+            if (_timeProvider.Time - (_justTime + _judgeOffset) > _judgeRange.Good)
             {
                 IsJudged = true;
 
