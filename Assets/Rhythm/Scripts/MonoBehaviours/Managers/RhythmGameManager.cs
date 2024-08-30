@@ -96,8 +96,6 @@ namespace Rhythm
         private HeaderInformation _headerInformation;
         private double _endTime;
 
-        private readonly float _baseScroll = 2f;
-
         private void Awake()
         {
             var id = SceneTransitionManager.CurrentRhythmId.ToString();
@@ -118,7 +116,7 @@ namespace Rhythm
             var beatmapInfo = dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, _baseScroll * _option.ScrollSpeed);
+            (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, _option.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);

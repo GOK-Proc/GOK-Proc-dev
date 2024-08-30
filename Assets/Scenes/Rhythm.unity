@@ -8128,7 +8128,7 @@ MonoBehaviour:
   _defaultDifficulty: 0
   _defaultIsVs: 0
   _option:
-    _scrollSpeed: 5
+    _scrollSpeed: 10
     _offset: 0
     _judgeOffset: 0
     _volumeOption:
