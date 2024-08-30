@@ -33,6 +33,7 @@ namespace Rhythm
         private readonly IEffectDrawable _effectDrawable;
 
         private readonly List<Note> _notes;
+        private readonly List<RhythmGameObject> _rhythmGameObjects;
         private int _noteCount;
 
 
@@ -52,6 +53,7 @@ namespace Rhythm
             _effectDrawable = effectDrawable;
 
             _notes = new List<Note>();
+            _rhythmGameObjects = new List<RhythmGameObject>();
             _noteCount = 0;
         }
 
@@ -71,6 +73,7 @@ namespace Rhythm
                 if (note.isNew)
                 {
                     _notes.Add(note.obj);
+                    _rhythmGameObjects.Add(note.obj);
 
                     for (int i = _notes.Count - 1; i >= 1; i--)
                     {
@@ -130,10 +133,22 @@ namespace Rhythm
                                 var bandPosition = (firstPosition + lastPosition) / 2;
                                 var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandPosition.y));
                                 obj.Create(bandPosition, new Vector3(0f, -note.Speed), rect, note.Lane, (lastPosition - firstPosition).y, note.JustTime, endTime, _holdMasks[note.Lane], disposable);
+                                _rhythmGameObjects.Add(obj);
                             }
                         }
                         
                     }
+                }
+            }
+        }
+
+        public void AdjustPosition(double difference)
+        {
+            foreach (var obj in _rhythmGameObjects)
+            {
+                if (obj.IsAlive)
+                {
+                    obj.AdjustPosition(difference);
                 }
             }
         }

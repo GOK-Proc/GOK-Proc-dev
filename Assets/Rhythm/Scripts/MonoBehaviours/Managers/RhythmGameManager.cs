@@ -20,6 +20,7 @@ namespace Rhythm
         [SerializeField] private float _cursorExtension;
         [SerializeField] private float _cursorDuration;
         [SerializeField] private double _startDelay;
+        [SerializeField] private double _adjustThreshold;
 
         [Space(20)]
         [Header("Battle Settings")]
@@ -184,9 +185,19 @@ namespace Rhythm
                 }
 
                 _soundPlayer.PlayMusic();
+                _noteCreator.AdjustPosition(_soundPlayer.Time - _timeManager.Time);
+                _timeManager.Time = _soundPlayer.Time;
 
                 while (_timeManager.Time < _endTime)
                 {
+                    var difference = _soundPlayer.Time - _timeManager.Time;
+
+                    if (Mathf.Abs((float)difference) >= _adjustThreshold)
+                    {
+                        _noteCreator.AdjustPosition(difference);
+                        _timeManager.Time = _soundPlayer.Time;
+                    }
+
                     Update();
                     yield return null;
                 }

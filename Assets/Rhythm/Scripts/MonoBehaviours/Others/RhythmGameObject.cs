@@ -46,6 +46,12 @@ namespace Rhythm
             gameObject.SetActive(true);
         }
 
+        public void AdjustPosition(double difference)
+        {
+            _position += _velocity * (float)difference;
+            transform.position = _position;
+        }
+
         protected bool IsOutsideSurvivalRect()
         {
             (var ul, var lr) = _survivalRect;

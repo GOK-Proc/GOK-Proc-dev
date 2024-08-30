@@ -8001,6 +8001,7 @@ MonoBehaviour:
   _cursorExtension: 0.12
   _cursorDuration: 0.15
   _startDelay: 3
+  _adjustThreshold: 0.03
   _playerHitPoint: 1000
   _judgeRates:
   - _attack: 1
