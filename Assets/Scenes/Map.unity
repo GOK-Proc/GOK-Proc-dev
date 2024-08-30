@@ -220,6 +220,10 @@ PrefabInstance:
       value: MapSpot
       objectReference: {fileID: 0}
     - target: {fileID: 873495957100875670, guid: 35a5241549d49034fa9976b6b44771b4, type: 3}
+      propertyPath: _label
+      value: "\u30BD\u30CC\u30B9\u30EB\u30D7\u30B9\u8857"
+      objectReference: {fileID: 0}
+    - target: {fileID: 873495957100875670, guid: 35a5241549d49034fa9976b6b44771b4, type: 3}
       propertyPath: _episodes.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -493,6 +497,10 @@ PrefabInstance:
     - target: {fileID: 319662892196210845, guid: 35a5241549d49034fa9976b6b44771b4, type: 3}
       propertyPath: m_Name
       value: MapSpot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 873495957100875670, guid: 35a5241549d49034fa9976b6b44771b4, type: 3}
+      propertyPath: _label
+      value: "\u30EA\u30FC\u30C8\u306E\u68EE"
       objectReference: {fileID: 0}
     - target: {fileID: 873495957100875670, guid: 35a5241549d49034fa9976b6b44771b4, type: 3}
       propertyPath: _episodes.Array.size
