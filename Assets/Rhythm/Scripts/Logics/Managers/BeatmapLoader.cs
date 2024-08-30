@@ -36,7 +36,7 @@ namespace Rhythm
             Scroll,
         }
 
-        public static (NoteData[] notes, double endTime) Parse(TextAsset file, double offset, float baseScroll)
+        public static (NoteData[] notes, double endTime) Parse(TextAsset file, double offset, float scrollSpeed)
         {
             var text = file.text;
             var types = new Dictionary<char, (NoteColor, bool)>()
@@ -122,7 +122,7 @@ namespace Rhythm
 
                                 foreach (var d in data)
                                 {
-                                    if (d.Lane != 0) notes.Add(new NoteData(d.Scroll * baseScroll, d.Lane - 1, d.Color, d.IsLarge, just, d.Length, d.Bpm));
+                                    if (d.Lane != 0) notes.Add(new NoteData(d.Scroll * scrollSpeed, d.Lane - 1, d.Color, d.IsLarge, just, d.Length, d.Bpm));
                                     just += 240 * measure1 / measure2 / beat / d.Bpm;
                                 }
 

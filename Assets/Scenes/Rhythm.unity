@@ -8127,7 +8127,14 @@ MonoBehaviour:
   _defaultId: MainTheme
   _defaultDifficulty: 0
   _defaultIsVs: 0
-  _baseScroll: 10
+  _option:
+    _scrollSpeed: 5
+    _offset: 0
+    _judgeOffset: 0
+    _volumeOption:
+      _track: 0
+      _se: 0
+      _noteSe: 0
 --- !u!4 &1770842084
 Transform:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ namespace Rhythm
         private int _noteCount;
 
 
-        public NoteCreator(bool isVs, IList<NoteData> data, in NoteLayout layout, JudgeRange judgeRange, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
+        public NoteCreator(bool isVs, IList<NoteData> data, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
             _data = data;
@@ -44,8 +44,8 @@ namespace Rhythm
             _layout = layout;
             _survivalRect = (new Vector2(float.NegativeInfinity, float.PositiveInfinity), new Vector2(float.PositiveInfinity, _layout.DestroyLineY));
 
-            _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
-            _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, timeProvider, colorInputProvider, activeLaneProvider)));
+            _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
+            _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
             _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(timeProvider, colorInputProvider)));
             _holdMasks = holdMasks;
             _timeProvider = timeProvider;

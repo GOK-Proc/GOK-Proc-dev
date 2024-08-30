@@ -81,7 +81,7 @@ namespace Rhythm
 
         [Space(20)]
         [Header("Options")]
-        [SerializeField] private float _baseScroll;
+        [SerializeField] private RhythmOption _option;
 
 
         private NoteCreator _noteCreator;
@@ -95,6 +95,8 @@ namespace Rhythm
 
         private HeaderInformation _headerInformation;
         private double _endTime;
+
+        private readonly float _baseScroll = 2f;
 
         private void Awake()
         {
@@ -116,7 +118,7 @@ namespace Rhythm
             var beatmapInfo = dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset, _baseScroll);
+            (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, _baseScroll * _option.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
@@ -151,7 +153,7 @@ namespace Rhythm
 
             _scoreManager = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
 
-            _noteCreator = new NoteCreator(isVs, notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
+            _noteCreator = new NoteCreator(isVs, notes, _noteLayout, _judgeRange, _option.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
