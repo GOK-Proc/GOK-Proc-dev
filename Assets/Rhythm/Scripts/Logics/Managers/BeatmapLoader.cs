@@ -36,7 +36,7 @@ namespace Rhythm
             Scroll,
         }
 
-        public static (NoteData[] notes, double endTime) Parse(TextAsset file, double offset, float scrollSpeed)
+        public static (NoteData[] notes, LineData[] lines, double endTime) Parse(TextAsset file, double offset, float scrollSpeed)
         {
             var text = file.text;
             var types = new Dictionary<char, (NoteColor, bool)>()
@@ -48,6 +48,7 @@ namespace Rhythm
             };
 
             var notes = new List<NoteData>();
+            var lines = new List<LineData>();
             var data = new List<Note>();
             var mode = ParseMode.Lane;
             var numstr = string.Empty;
@@ -119,6 +120,8 @@ namespace Rhythm
                                     data.Add(new Note(0, NoteColor.Undefined, false, 0, bpm, scroll));
                                     beat++;
                                 }
+
+                                lines.Add(new LineData(data.First().Scroll * scrollSpeed, just));
 
                                 foreach (var d in data)
                                 {
@@ -264,7 +267,7 @@ namespace Rhythm
                 return default;
             }
 
-            return (notes.ToArray(), endTime);
+            return (notes.ToArray(), lines.ToArray(), endTime);
         }
 
         public static int GetNoteCount(IEnumerable<NoteData> notes)

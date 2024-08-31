@@ -20,13 +20,16 @@ namespace Rhythm
         }
 
         private readonly bool _isVs;
-        private readonly IList<NoteData> _data;
-        private readonly IList<bool> _isCreated;
+        private readonly IList<NoteData> _noteData;
+        private readonly IList<LineData> _lineData;
+        private readonly IList<bool> _isNoteCreated;
+        private readonly IList<bool> _isLineCreated;
         private readonly NoteLayout _layout;
         private readonly (Vector2 UpperLeft, Vector2 LowerRight) _survivalRect;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<TapNote>> _notePools;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<HoldNote>> _holdPools;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<HoldBand>> _bandPools;
+        private readonly ObjectPool<RhythmGameObject> _linePool;
         private readonly IList<Transform> _holdMasks;
 
         private readonly ITimeProvider _timeProvider;
@@ -37,17 +40,20 @@ namespace Rhythm
         private int _noteCount;
 
 
-        public NoteCreator(bool isVs, IList<NoteData> data, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
+        public NoteCreator(bool isVs, IList<NoteData> noteData, IList<LineData> lineData, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, RhythmGameObject linePrefab, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
-            _data = data;
-            _isCreated = data.Select(x => false).ToList();
+            _noteData = noteData;
+            _lineData = lineData;
+            _isNoteCreated = noteData.Select(x => false).ToArray();
+            _isLineCreated = lineData.Select(x => false).ToArray();
             _layout = layout;
             _survivalRect = (new Vector2(float.NegativeInfinity, float.PositiveInfinity), new Vector2(float.PositiveInfinity, _layout.DestroyLineY));
 
             _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
             _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
             _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(timeProvider, colorInputProvider)));
+            _linePool = new ObjectPool<RhythmGameObject>(linePrefab, parent);
             _holdMasks = holdMasks;
             _timeProvider = timeProvider;
             _effectDrawable = effectDrawable;
@@ -59,13 +65,20 @@ namespace Rhythm
 
         public void Create()
         {
-            (T obj, bool isNew) Create<T>(NoteData note, ObjectPool<T> pool, Vector3 pos, double time) where T : Note
+            (T obj, bool isNew) CreateNote<T>(NoteData note, ObjectPool<T> pool, Vector3 pos, double time) where T : Note
             {
                 IDisposable disposable = pool.Create(out var obj, out var isNew);
                 var id = _noteCount++;
                 obj.Create(pos, new Vector3(0f, -note.Speed), _survivalRect, note.Lane, time, id, disposable);
                 if (_isVs && note.Color == NoteColor.Blue) _effectDrawable.DrawEnemyAttackEffect((float)(_effectDrawable.GetTimeToCreateEnemyAttackEffect(time) - _timeProvider.Time), id);
                 return (obj, isNew);
+            }
+
+            RhythmGameObject CreateLine(LineData line, ObjectPool<RhythmGameObject> pool, Vector3 pos)
+            {
+                IDisposable disposable = pool.Create(out var obj, out var _);
+                obj.Create(pos, new Vector3(0f, -line.Speed), _survivalRect, disposable);
+                return obj;
             }
 
             void Add((Note obj, bool isNew) note)
@@ -95,19 +108,19 @@ namespace Rhythm
                 }
             }
 
-            for (int i = 0; i < _data.Count; i++)
+            for (int i = 0; i < _noteData.Count; i++)
             {
-                var note = _data[i];
+                var note = _noteData[i];
                 var firstPosition = new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - note.JustTime));
 
-                if (!_isCreated[i])
+                if (!_isNoteCreated[i])
                 {
                     if (firstPosition.y <= _layout.BeginLineY || _effectDrawable.GetTimeToCreateEnemyAttackEffect(note.JustTime) <= _timeProvider.Time)
                     {
                         if (_notePools.ContainsKey((note.Color, note.IsLarge)))
                         {
-                            Add(Create(note, _notePools[(note.Color, note.IsLarge)], firstPosition, note.JustTime));
-                            _isCreated[i] = true;
+                            Add(CreateNote(note, _notePools[(note.Color, note.IsLarge)], firstPosition, note.JustTime));
+                            _isNoteCreated[i] = true;
                         }
 
                         if (note.Length > 0)
@@ -121,12 +134,12 @@ namespace Rhythm
                                 while (time < endTime)
                                 {
                                     var position = new Vector3(firstPosition.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - time));
-                                    Add(Create(note, _holdPools[(note.Color, note.IsLarge)], position, time));
+                                    Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], position, time));
                                     time += deltaTime;
                                 }
 
                                 var lastPosition = new Vector3(firstPosition.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - endTime));
-                                Add(Create(note, _holdPools[(note.Color, note.IsLarge)], lastPosition, time));
+                                Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], lastPosition, time));
 
                                 IDisposable disposable = _bandPools[(note.Color, note.IsLarge)].Create(out var obj, out _);
 
@@ -137,6 +150,21 @@ namespace Rhythm
                             }
                         }
                         
+                    }
+                }
+            }
+
+            for (int i = 0; i < _lineData.Count; i++)
+            {
+                var line = _lineData[i];
+                var position = new Vector3(_layout.CenterX, _layout.JudgeLineY - line.Speed * (float)(_timeProvider.Time - line.JustTime));
+
+                if (!_isLineCreated[i])
+                {
+                    if (position.y <= _layout.BeginLineY)
+                    {
+                        _rhythmGameObjects.Add(CreateLine(line, _linePool, position));
+                        _isLineCreated[i] = true;
                     }
                 }
             }

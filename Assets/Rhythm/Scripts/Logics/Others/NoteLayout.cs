@@ -20,5 +20,7 @@ namespace Rhythm
         [SerializeField] private float _destroyLineY;
         public readonly float DestroyLineY => _destroyLineY;
 
+        [SerializeField] private float _centerX;
+        public readonly float CenterX => _centerX;
     }
 }
