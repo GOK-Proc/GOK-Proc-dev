@@ -6,7 +6,7 @@ namespace Rhythm
 {
     public class TimeManager : ITimeProvider
     {
-        public double Time { get => _isStartTimer ? UnityEngine.Time.timeAsDouble - _startTime : throw new System.InvalidOperationException(); }
+        public double Time { get => _isStartTimer ? UnityEngine.Time.timeAsDouble - _startTime : throw new System.InvalidOperationException(); set => _startTime = UnityEngine.Time.timeAsDouble - value; }
 
         private double _startTime;
         private bool _isStartTimer;

@@ -1,4 +1,4 @@
-namespace Rhythm
+﻿namespace Rhythm
 {
     public readonly struct NoteData
     {
@@ -19,6 +19,18 @@ namespace Rhythm
             JustTime = justTime;
             Length = length;
             Bpm = bpm;
+        }
+    }
+
+    public readonly struct LineData
+    {
+        public readonly float Speed;
+        public readonly double JustTime;
+
+        public LineData(float speed, double justTime)
+        {
+            Speed = speed;
+            JustTime = justTime;
         }
     }
 }

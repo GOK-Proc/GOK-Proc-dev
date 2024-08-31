@@ -46,23 +46,29 @@ namespace Rhythm
             gameObject.SetActive(true);
         }
 
+        public void AdjustPosition(double difference)
+        {
+            _position += _velocity * (float)difference;
+            transform.position = _position;
+        }
+
+        protected bool IsOutsideSurvivalRect()
+        {
+            (var ul, var lr) = _survivalRect;
+
+            if (_position.x < ul.x) return true;
+
+            if (_position.y > ul.y) return true;
+
+            if (_position.x > lr.x) return true;
+
+            if (_position.y < lr.y) return true;
+
+            return false;
+        }
+
         protected virtual void Update()
         {
-            bool IsOutsideSurvivalRect()
-            {
-                (var ul, var lr) = _survivalRect;
-
-                if (_position.x < ul.x) return true;
-
-                if (_position.y > ul.y) return true;
-
-                if (_position.x > lr.x) return true;
-
-                if (_position.y < lr.y) return true;
-
-                return false;
-            }
-
             if (IsAlive)
             {
                 _position += _velocity * Time.deltaTime;

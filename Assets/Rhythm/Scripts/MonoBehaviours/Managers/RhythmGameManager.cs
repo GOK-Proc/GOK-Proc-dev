@@ -20,6 +20,7 @@ namespace Rhythm
         [SerializeField] private float _cursorExtension;
         [SerializeField] private float _cursorDuration;
         [SerializeField] private double _startDelay;
+        [SerializeField] private double _adjustThreshold;
 
         [Space(20)]
         [Header("Battle Settings")]
@@ -52,6 +53,7 @@ namespace Rhythm
         [SerializeField] private NotePrefab<TapNote>[] _notePrefabs;
         [SerializeField] private NotePrefab<HoldNote>[] _holdPrefabs;
         [SerializeField] private NotePrefab<HoldBand>[] _bandPrefabs;
+        [SerializeField] private RhythmGameObject _linePrefab;
         [SerializeField] private EffectObject _cursorPrefab;
         [SerializeField] private Transform _holdMaskPrefab;
 
@@ -81,7 +83,7 @@ namespace Rhythm
 
         [Space(20)]
         [Header("Options")]
-        [SerializeField] private float _baseScroll;
+        [SerializeField] private RhythmOption _option;
 
 
         private NoteCreator _noteCreator;
@@ -116,7 +118,7 @@ namespace Rhythm
             var beatmapInfo = dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset, _baseScroll);
+            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, _option.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
@@ -151,7 +153,7 @@ namespace Rhythm
 
             _scoreManager = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
 
-            _noteCreator = new NoteCreator(isVs, notes, _noteLayout, _judgeRange, notePrefabs, holdPrefabs, bandPrefabs, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
+            _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _option.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
@@ -184,9 +186,19 @@ namespace Rhythm
                 }
 
                 _soundPlayer.PlayMusic();
+                _noteCreator.AdjustPosition(_soundPlayer.Time - _timeManager.Time);
+                _timeManager.Time = _soundPlayer.Time;
 
                 while (_timeManager.Time < _endTime)
                 {
+                    var difference = _soundPlayer.Time - _timeManager.Time;
+
+                    if (Mathf.Abs((float)difference) >= _adjustThreshold)
+                    {
+                        _noteCreator.AdjustPosition(difference);
+                        _timeManager.Time = _soundPlayer.Time;
+                    }
+
                     Update();
                     yield return null;
                 }

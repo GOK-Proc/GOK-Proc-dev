@@ -7995,12 +7995,14 @@ MonoBehaviour:
     _judgeLineY: -4.21
     _beginLineY: 6.5
     _destroyLineY: -6.5
+    _centerX: 0.23
   _judgeRange:
     _perfect: 0.041666
     _good: 0.083333
   _cursorExtension: 0.12
   _cursorDuration: 0.15
   _startDelay: 3
+  _adjustThreshold: 0.03
   _playerHitPoint: 1000
   _judgeRates:
   - _attack: 1
@@ -8117,6 +8119,7 @@ MonoBehaviour:
   - Color: 2
     IsLarge: 1
     Prefab: {fileID: 4239273506915315414, guid: 489dce8a04286454daab0a0b69c16d3b, type: 3}
+  _linePrefab: {fileID: 7541579685019163358, guid: 2dc77f0b44302b542b858f48e4a891aa, type: 3}
   _cursorPrefab: {fileID: 5363066825430250750, guid: 266cabebdc3a26b4894458b552f4242f, type: 3}
   _holdMaskPrefab: {fileID: 3401838677374369432, guid: 873ebd032ec88584c90f572accb43e18, type: 3}
   _playerInput: {fileID: 732199901}
@@ -8127,7 +8130,14 @@ MonoBehaviour:
   _defaultId: MainTheme
   _defaultDifficulty: 0
   _defaultIsVs: 0
-  _baseScroll: 10
+  _option:
+    _scrollSpeed: 10
+    _offset: 0
+    _judgeOffset: 0
+    _volumeOption:
+      _track: 0
+      _se: 0
+      _noteSe: 0
 --- !u!4 &1770842084
 Transform:
   m_ObjectHideFlags: 0

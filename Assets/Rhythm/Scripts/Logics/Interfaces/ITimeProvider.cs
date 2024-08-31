@@ -1,7 +1,7 @@
-namespace Rhythm
+﻿namespace Rhythm
 {
     public interface ITimeProvider
     {
-        double Time {  get; }
+        double Time { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace Rhythm
                 {
                     if (_colorInputProvider.IsColorPressedThisFrame(_color) && !_colorInputProvider.IsColorJudged(_color))
                     {
-                        var d = Math.Abs(_timeProvider.Time - _justTime);
+                        var d = Math.Abs(_timeProvider.Time - (_justTime + _judgeOffset));
 
                         if (d <= _judgeRange.Perfect)
                         {
@@ -36,7 +36,7 @@ namespace Rhythm
                 }
             }
 
-            if (judge == Judgement.Undefined && _timeProvider.Time - _justTime > _judgeRange.Good)
+            if (judge == Judgement.Undefined && _timeProvider.Time - (_justTime + _judgeOffset) > _judgeRange.Good)
             {
                 judge = Judgement.False;
             }

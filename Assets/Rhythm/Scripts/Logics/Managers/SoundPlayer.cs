@@ -19,7 +19,7 @@ namespace Rhythm
             _audioSource.clip = _audioClip;
         }
 
-        public double Time { get => _audioSource.timeSamples / _audioClip.frequency; }
+        public double Time { get => (double)_audioSource.timeSamples / _audioClip.frequency; set => _audioSource.timeSamples = (int)(value * _audioClip.frequency); }
 
         public void PlayMusic()
         {

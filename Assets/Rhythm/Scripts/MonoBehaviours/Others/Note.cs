@@ -14,13 +14,15 @@ namespace Rhythm
         protected double _justTime;
 
         protected JudgeRange _judgeRange;
+        protected double _judgeOffset;
         protected ITimeProvider _timeProvider;
         protected IColorInputProvider _colorInputProvider;
         protected IActiveLaneProvider _activeLaneProvider;
 
-        public void Initialize(JudgeRange judgeRange, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
+        public void Initialize(JudgeRange judgeRange, double judgeOffset, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider)
         {
             _judgeRange = judgeRange;
+            _judgeOffset = judgeOffset;
             _timeProvider = timeProvider;
             _colorInputProvider = colorInputProvider;
             _activeLaneProvider = activeLaneProvider;
@@ -38,6 +40,20 @@ namespace Rhythm
         public virtual Judgement Judge()
         {
             return default;
+        }
+
+        protected override void Update()
+        {
+            if (IsAlive)
+            {
+                _position += _velocity * Time.deltaTime;
+                transform.position = _position;
+
+                if (IsJudged && IsOutsideSurvivalRect())
+                {
+                    Destroy();
+                }
+            }
         }
 
         public int CompareTo(Note note)
