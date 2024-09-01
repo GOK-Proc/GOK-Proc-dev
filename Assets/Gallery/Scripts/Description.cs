@@ -15,6 +15,16 @@ namespace Gallery
             _descriptionText = GetComponent<TextMeshProUGUI>();
         }
 
+        public void Set(string description)
+        {
+            _text.text = description;
+            _text.pageToDisplay = 1;
+
+            // ForceMeshUpdate()を挟むことでtextInfoが更新される
+            _text.ForceMeshUpdate();
+            _dotIndicator.Init(_text.textInfo.pageCount);
+        }
+
         public void OnNavigateHorizontal(InputValue inputValue)
         {
             var inputHorizontal = inputValue.Get<Vector2>().x;
