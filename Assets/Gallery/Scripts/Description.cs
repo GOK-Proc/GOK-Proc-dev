@@ -28,7 +28,6 @@ namespace Gallery
         public void OnNavigateHorizontal(InputValue inputValue)
         {
             var inputHorizontal = inputValue.Get<Vector2>().x;
-            Debug.Log("horizontal");
 
             switch (inputHorizontal)
             {
