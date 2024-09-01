@@ -9,6 +9,7 @@ namespace Gallery
     public class Description : MonoBehaviour
     {
         private TextMeshProUGUI _text;
+        [SerializeField] private DotIndicator _dotIndicator;
 
         private void Awake()
         {
@@ -46,6 +47,7 @@ namespace Gallery
             if (pageIsLast) return;
 
             _text.pageToDisplay++;
+            _dotIndicator.Indicate(_text.pageToDisplay);
         }
 
         private void ShowPreviousPage()
@@ -55,6 +57,7 @@ namespace Gallery
             if (pageIsFirst) return;
 
             _text.pageToDisplay--;
+            _dotIndicator.Indicate(_text.pageToDisplay);
         }
     }
 }
