@@ -1,4 +1,5 @@
-﻿using Rhythm;
+﻿using DG.Tweening;
+using Rhythm;
 using TMPro;
 using Transition;
 using UnityEngine;
@@ -46,7 +47,7 @@ namespace Map
 
 		public void OnCancel(BaseEventData eventData)
 		{
-			transform.parent.gameObject.SetActive(false);
+			transform.parent.GetComponent<CanvasGroup>().DOFade(endValue: 0f, duration: 0.5f);
 			EventSystem.current.SetSelectedGameObject(MapSpot.CurrentMapSpot);
 		}
 	}
