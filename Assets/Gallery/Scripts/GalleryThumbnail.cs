@@ -6,7 +6,7 @@ namespace Gallery
 {
     public class GalleryThumbnail : ThumbnailBase
     {
-        [SerializeField] private TextMeshProUGUI _descriptionText;
+        [SerializeField] private Description _description;
 
         public override void Set(TrackInformation info)
         {
@@ -15,8 +15,7 @@ namespace Gallery
             _titleText.text = info.Title;
             _composerText.text = info.Composer;
 
-            _descriptionText.text = info.Description;
-            _descriptionText.pageToDisplay = 1;
+            _description.Set(info.Description);
         }
     }
 }
