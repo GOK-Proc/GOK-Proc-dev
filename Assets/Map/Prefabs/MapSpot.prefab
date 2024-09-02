@@ -149,7 +149,7 @@ MonoBehaviour:
   _labelText: {fileID: 6876288332445037732}
   _selectOff: {fileID: 7075257238016137302}
   _selectOn: {fileID: 6279655580577147318}
-  _episodeBoxArea: {fileID: 1148270463895433482}
+  _episodeBoxArea: {fileID: 4588897439671624967}
   _label: 
   _episodes: []
 --- !u!1 &1148270463895433482
@@ -164,13 +164,14 @@ GameObject:
   - component: {fileID: 9205148122172450990}
   - component: {fileID: 9122301297384291361}
   - component: {fileID: 2998706959803491730}
+  - component: {fileID: 4588897439671624967}
   m_Layer: 5
   m_Name: EpisodeBoxArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2124198609697845689
 RectTransform:
   m_ObjectHideFlags: 0
@@ -254,6 +255,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &4588897439671624967
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148270463895433482}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6092056160288367294
 GameObject:
   m_ObjectHideFlags: 0

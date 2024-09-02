@@ -23,7 +23,7 @@ namespace Map
 		[SerializeField] private GameObject _selectOff;
 		[SerializeField] private GameObject _selectOn;
 
-		[SerializeField] private GameObject _episodeBoxArea;
+		[SerializeField] private CanvasGroup _episodeBoxArea;
 
 		[SerializeField] private string _label;
 		[SerializeField] private List<EpisodeNumber> _episodes;
@@ -91,7 +91,7 @@ namespace Map
 
 		public void OnSubmit(BaseEventData eventData)
 		{
-			_episodeBoxArea.SetActive(true);
+			_episodeBoxArea.DOFade(endValue: 1f, duration: 0.5f);
 
 			EventSystem.current.SetSelectedGameObject(_episodeBoxArea.transform.GetChild(0).gameObject);
 		}
