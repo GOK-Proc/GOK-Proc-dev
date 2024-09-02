@@ -1,10 +1,13 @@
-﻿using Gallery;
+﻿using TMPro;
+using UnityEngine;
+using Gallery;
 
 namespace MusicSelection
 {
     public class MusicSelectionThumbnail : ThumbnailBase
     {
-        // TODO: ここでベストスコアと最大コンボ数のフィールド宣言
+        [SerializeField] private TextMeshProUGUI _bestScoreText;
+        [SerializeField] private TextMeshProUGUI _maxComboText;
 
         public override void Set(TrackInformation info)
         {
