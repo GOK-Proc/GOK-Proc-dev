@@ -10,7 +10,7 @@ namespace Novel
 {
     public class NovelOperation : MonoBehaviour
     {
-        private float _duration = 0.75f;
+        private float _duration = 1f;
 
         private void Start()
         {
@@ -70,46 +70,108 @@ namespace Novel
 
         public void UpdateCharacterLayout(CharacterLayoutData characterLayoutData)
         {
-            float space = (_width - _margin * 2) / (characterLayoutData.CharacterLayout.Count + 1);
+            float space = (_width - _margin * 2) / (characterLayoutData.Layout.Count + 1);
 
             var sequence = DOTween.Sequence();
 
             Dictionary<string, GameObject> currentCharacter = new Dictionary<string, GameObject>();
 
-            for (int i = 0; i < characterLayoutData.CharacterLayout.Count; i++)
+            for (int i = 0; i < characterLayoutData.Layout.Count; i++)
             {
-                string character = characterLayoutData.CharacterLayout[i];
+                string character = characterLayoutData.Layout[i];
 
+                // キャラクターの移動処理
                 if (_preCharacter.ContainsKey(character))
                 {
                     GameObject characterObject = _preCharacter[character];
                     currentCharacter[character] = characterObject;
 
-                    sequence.Join(characterObject.transform.DOLocalMove(new Vector2(- _width / 2 + _margin + (i + 1) * space, 0), _duration));
+                    switch (characterLayoutData.Motion[0])
+                    {
+                        case "Cut":
+                            characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
+                            break;
+
+                        default:
+                            sequence.Join(characterObject.transform.DOLocalMove(new Vector2(-_width / 2 + _margin + (i + 1) * space, 0), _duration).SetEase(Ease.InOutQuad));
+                            break;
+                    }
                 }
+                // キャラクターの登場処理
                 else
                 {
                     GameObject characterObject = Instantiate(CharacterPrefabDict[character], _characterParent);
                     currentCharacter[character] = characterObject;
-                    characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
-                    Image characterImage = characterObject.GetComponent<Image>();
-                    Color color = characterImage.color;
-                    color.a = 0f;
-                    characterImage.color = color;
+                    switch (characterLayoutData.Motion[0])
+                    {
+                        case "Cut":
+                            characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
+                            break;
 
-                    sequence.Join(characterImage.DOFade(1f, _duration));
+                        case "Enter":
+                            switch (characterLayoutData.Motion[1])
+                            {
+                                case "right":
+                                    characterObject.transform.localPosition = new Vector2(_width, 0);
+                                    break;
+                                case "left":
+                                    characterObject.transform.localPosition = new Vector2(-_width, 0);
+                                    break;
+                                default:
+                                    throw new Exception("キャラモーション\"Enter\"の方向が正しく指定されていません。");
+                            }
+
+                            sequence.Join(characterObject.transform.DOLocalMove(new Vector2(-_width / 2 + _margin + (i + 1) * space, 0), _duration));
+                            break;
+
+                        default:
+                            characterObject.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
+                            Image characterImage = characterObject.GetComponent<Image>();
+                            Color color = characterImage.color;
+                            color.a = 0f;
+                            characterImage.color = color;
+
+                            sequence.Join(characterImage.DOFade(1f, _duration));
+                            break;
+                    }
                 }
             }
 
             List<GameObject> exitCharacter = new List<GameObject>();
 
+            // キャラクターの退場処理
             foreach (string character in _preCharacter.Keys)
             {
-                if (!characterLayoutData.CharacterLayout.Contains(character))
+                if (!characterLayoutData.Layout.Contains(character))
                 {
                     GameObject characterObject = _preCharacter[character];
-                    exitCharacter.Add(characterObject);
-                    sequence.Join(characterObject.GetComponent<Image>().DOFade(0f, _duration));
+
+                    switch (characterLayoutData.Motion[0])
+                    {
+                        case "Cut":
+                            Destroy(characterObject);
+                            break;
+                        case "Leave":
+                            exitCharacter.Add(characterObject);
+
+                            switch (characterLayoutData.Motion[1])
+                            {
+                                case "right":
+                                    sequence.Join(characterObject.transform.DOLocalMove(new Vector2(_width, 0), _duration).SetEase(Ease.InQuad));
+                                    break;
+                                case "left":
+                                    sequence.Join(characterObject.transform.DOLocalMove(new Vector2(- _width, 0), _duration).SetEase(Ease.InQuad));
+                                    break;
+                                default:
+                                    throw new Exception("キャラモーション\"Leave\"の方向が正しく指定されていません。");
+                            }
+
+                            break;
+                        default:
+                            exitCharacter.Add(characterObject);
+                            sequence.Join(characterObject.GetComponent<Image>().DOFade(0f, _duration));
+                            break;
+                    }
                 }
             }
 

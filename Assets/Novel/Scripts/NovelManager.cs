@@ -50,7 +50,6 @@ namespace Novel
         {
             List<OperationData> lineOperationList = _scenarioData.ScenarioLines[_currentLine];
 
-            // 各データに対して、foreachでExecuteOperationを実行できた方が綺麗かも
             foreach (OperationData lineOperation in lineOperationList)
             {
                 lineOperation.ExecuteOperation(_novelOperation);
