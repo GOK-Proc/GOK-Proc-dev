@@ -144,6 +144,10 @@ namespace Novel
                         });
                         break;
 
+                    case "Cut":
+                        _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+                        break;
+
                     default:
                         throw new Exception("背景の変化方法が正しく指定されていません。");
                 }
@@ -159,6 +163,10 @@ namespace Novel
                         _backgroundImage.color = color;
 
                         _backgroundImage.DOFade(1f, _duration);
+                        break;
+
+                    case "Cut":
+                        _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
                         break;
 
                     default:

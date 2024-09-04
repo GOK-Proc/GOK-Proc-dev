@@ -48,7 +48,13 @@ MonoBehaviour:
     - NovelCharacter
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63da16cfc1474ae45bc7b9ff97838d1d
-    m_Address: BackgroundTemp
+    m_Address: Forest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NovelBackground
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b0c774f15ffcfb4990709a1491234ad
+    m_Address: Town
     m_ReadOnly: 0
     m_SerializedLabels:
     - NovelBackground
