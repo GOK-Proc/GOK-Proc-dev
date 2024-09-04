@@ -1,5 +1,6 @@
 ﻿using Map;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Transition
@@ -10,45 +11,46 @@ namespace Transition
 		[SerializeField] private EpisodeFlags _episodeFlags;
 
 		private Dictionary<NovelId, (int, int)> _novelDict;
+		private Dictionary<NovelId, (int, int)> NovelDict
+		{
+			get
+			{
+				if (_novelDict == null)
+				{
+					_novelDict = _episodeData.DataList.ToDictionary(x => x.NovelId, x => (x.Chapter, x.Section));
+				}
+
+				return _novelDict;
+			}
+		}
+
 		private Dictionary<RhythmId, (int, int)> _rhythmDict;
+		private Dictionary<RhythmId, (int, int)> RhythmDict
+		{
+			get
+			{
+				if (_rhythmDict == null)
+				{
+					_rhythmDict = _episodeData.DataList.ToDictionary(x => x.RhythmId, x => (x.Chapter, x.Section));
+				}
+
+				return _rhythmDict;
+			}
+		}
 
 		public void SetFlag(NovelId novelId, bool value)
 		{
-			if (_novelDict == null)
+			if (NovelDict.ContainsKey(novelId))
 			{
-				_novelDict = new Dictionary<NovelId, (int, int)>();
-				foreach (var episode in _episodeData.DataList)
-				{
-					if (!_novelDict.ContainsKey(episode.NovelId))
-					{
-						_novelDict.Add(episode.NovelId, (episode.Chapter, episode.Section));
-					}
-				}
-			}
-
-			if (_novelDict.ContainsKey(novelId))
-			{
-				_episodeFlags.SetFlag(_novelDict[novelId], value);
+				_episodeFlags.SetFlag(NovelDict[novelId], value);
 			}
 		}
 
 		public void SetFlag(RhythmId rhythmId, bool value)
 		{
-			if (_rhythmDict == null)
+			if (RhythmDict.ContainsKey(rhythmId))
 			{
-				_rhythmDict = new Dictionary<RhythmId, (int, int)>();
-				foreach (var episode in _episodeData.DataList)
-				{
-					if (!_rhythmDict.ContainsKey(episode.RhythmId))
-					{
-						_rhythmDict.Add(episode.RhythmId, (episode.Chapter, episode.Section));
-					}
-				}
-			}
-
-			if (_rhythmDict.ContainsKey(rhythmId))
-			{
-				_episodeFlags.SetFlag(_rhythmDict[rhythmId], value);
+				_episodeFlags.SetFlag(RhythmDict[rhythmId], value);
 			}
 		}
 	}
