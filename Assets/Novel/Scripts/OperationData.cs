@@ -34,11 +34,13 @@ namespace Novel
     public class CharacterLayoutData : OperationData
     {
         public OperationType OperationType { get; } = OperationType.CharacterLayout;
-        public List<string> CharacterLayout { get; }
+        public List<string> Layout { get; }
+        public List<string> Motion { get; }
 
         public CharacterLayoutData(string characterLayout, string characterMotion)
         {
-            CharacterLayout = new List<string>(characterLayout.Split(" "));
+            Layout = new List<string>(characterLayout.Split(" "));
+            Motion = new List<string>(characterMotion.Split(" "));
         }
 
         public void ExecuteOperation(NovelOperation novelOperation)
