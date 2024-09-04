@@ -133,21 +133,37 @@ namespace Novel
         {
             if (_backgroundImage.sprite != null)
             {
-                _backgroundImage.DOFade(0f, _duration).OnComplete(() =>
+                switch (backgroundData.Motion)
                 {
-                    _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+                    case "Fade":
+                        _backgroundImage.DOFade(0f, _duration).OnComplete(() =>
+                        {
+                            _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
 
-                    _backgroundImage.DOFade(1f, _duration);
-                });
+                            _backgroundImage.DOFade(1f, _duration);
+                        });
+                        break;
+
+                    default:
+                        throw new Exception("背景の変化方法が正しく指定されていません。");
+                }
             }
             else
             {
-                _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                Color color = _backgroundImage.color;
-                color.a = 0f;
-                _backgroundImage.color = color;
+                switch (backgroundData.Motion)
+                {
+                    case "Fade":
+                        _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+                        Color color = _backgroundImage.color;
+                        color.a = 0f;
+                        _backgroundImage.color = color;
 
-                _backgroundImage.DOFade(1f, _duration);
+                        _backgroundImage.DOFade(1f, _duration);
+                        break;
+
+                    default:
+                        throw new Exception("背景の変化方法が正しく指定されていません。");
+                }
             }
         }
 
