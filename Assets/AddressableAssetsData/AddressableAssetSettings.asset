@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: d23755679929b4045b0b899cd860b918
   m_currentHash:
     serializedVersion: 2
-    Hash: e54fee8a15f301bf67eab964a40de1a0
+    Hash: 995386eb91ab550df1ed372bab6f56d5
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -89,6 +89,7 @@ MonoBehaviour:
     - default
     - NovelCharacter
     - NovelScenario
+    - NovelBackground
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 506a989001c0e4c4c88179be16506749, type: 2}

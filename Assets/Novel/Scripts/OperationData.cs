@@ -36,7 +36,7 @@ namespace Novel
         public OperationType OperationType { get; } = OperationType.CharacterLayout;
         public List<string> CharacterLayout { get; }
 
-        public CharacterLayoutData(string characterLayout)
+        public CharacterLayoutData(string characterLayout, string characterMotion)
         {
             CharacterLayout = new List<string>(characterLayout.Split(" "));
         }
@@ -51,10 +51,22 @@ namespace Novel
     {
         public OperationType OperationType { get; } = OperationType.Background;
         public string Background { get; }
+        public string Motion { get; }
 
         public BackgroundData(string background)
         {
-            Background = background;
+            string[] arguments = background.Split(" ");
+
+            Background = arguments[0];
+            
+            if (arguments.Length > 1)
+            {
+                Motion = arguments[1];
+            }
+            else
+            {
+                Motion = "Fade";
+            }
         }
 
         public void ExecuteOperation(NovelOperation novelOperation)
