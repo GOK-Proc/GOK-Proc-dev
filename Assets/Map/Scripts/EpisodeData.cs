@@ -19,7 +19,10 @@ namespace Map
 		{
 			get
 			{
-				if (_dataDict == null) _dataDict = DataList.ToDictionary(x => (x.Chapter, x.Section));
+				if (_dataDict == null)
+				{
+					_dataDict = DataList.ToDictionary(x => (x.Chapter, x.Section));
+				}
 
 				return _dataDict;
 			}

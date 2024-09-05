@@ -1,5 +1,6 @@
 ﻿using Map;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Transition
@@ -10,45 +11,46 @@ namespace Transition
 		[SerializeField] private EpisodeFlags _episodeFlags;
 
 		private Dictionary<NovelId, (int, int)> _novelDict;
-		private Dictionary<RhythmId, (int, int)> _rhythmDict;
-
-		public void SetFlag(NovelId novelId, bool value)
+		private Dictionary<NovelId, (int, int)> NovelDict
 		{
-			if (_novelDict == null)
+			get
 			{
-				_novelDict = new Dictionary<NovelId, (int, int)>();
-				foreach (var episode in _episodeData.DataList)
+				if (_novelDict == null)
 				{
-					if (!_novelDict.ContainsKey(episode.NovelId))
-					{
-						_novelDict.Add(episode.NovelId, (episode.Chapter, episode.Section));
-					}
+					_novelDict = _episodeData.DataList.Where(x => x.EpisodeType == EpisodeType.Novel).ToDictionary(x => x.NovelId, x => (x.Chapter, x.Section));
 				}
-			}
 
-			if (_novelDict.ContainsKey(novelId))
-			{
-				_episodeFlags.SetFlag(_novelDict[novelId], value);
+				return _novelDict;
 			}
 		}
 
-		public void SetFlag(RhythmId rhythmId, bool value)
+		private Dictionary<RhythmId, (int, int)> _rhythmDict;
+		private Dictionary<RhythmId, (int, int)> RhythmDict
 		{
-			if (_rhythmDict == null)
+			get
 			{
-				_rhythmDict = new Dictionary<RhythmId, (int, int)>();
-				foreach (var episode in _episodeData.DataList)
+				if (_rhythmDict == null)
 				{
-					if (!_rhythmDict.ContainsKey(episode.RhythmId))
-					{
-						_rhythmDict.Add(episode.RhythmId, (episode.Chapter, episode.Section));
-					}
+					_rhythmDict = _episodeData.DataList.Where(x => x.EpisodeType == EpisodeType.Rhythm).ToDictionary(x => x.RhythmId, x => (x.Chapter, x.Section));
 				}
-			}
 
-			if (_rhythmDict.ContainsKey(rhythmId))
+				return _rhythmDict;
+			}
+		}
+
+		public void SetNextFlag(NovelId novelId)
+		{
+			if (NovelDict.ContainsKey(novelId))
 			{
-				_episodeFlags.SetFlag(_rhythmDict[rhythmId], value);
+				_episodeFlags.SetNextFlag(NovelDict[novelId]);
+			}
+		}
+
+		public void SetNextFlag(RhythmId rhythmId)
+		{
+			if (RhythmDict.ContainsKey(rhythmId))
+			{
+				_episodeFlags.SetNextFlag(RhythmDict[rhythmId]);
 			}
 		}
 	}
