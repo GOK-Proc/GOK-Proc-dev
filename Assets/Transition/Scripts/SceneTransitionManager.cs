@@ -39,16 +39,19 @@ namespace Transition
 
 		public static void TransitionToMap(bool result)
 		{
-			EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
-
-			switch (CurrentEpisodedType)
+			if (result)
 			{
-				case EpisodeType.Novel:
-					episodeFlagManager.SetFlag(CurrentNovelId, result);
-					break;
-				case EpisodeType.Rhythm:
-					episodeFlagManager.SetFlag(CurrentRhythmId, result);
-					break;
+				EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
+
+				switch (CurrentEpisodedType)
+				{
+					case EpisodeType.Novel:
+						episodeFlagManager.SetNextFlag(CurrentNovelId);
+						break;
+					case EpisodeType.Rhythm:
+						episodeFlagManager.SetNextFlag(CurrentRhythmId);
+						break;
+				}
 			}
 
 			TransitionToScene(SceneName.Map);

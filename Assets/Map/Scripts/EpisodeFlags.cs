@@ -24,11 +24,13 @@ namespace Map
 			LoadJson();
 		}
 
-		public void SetFlag((int, int) episodeId, bool value)
+		public void SetNextFlag((int, int) episodeId)
 		{
-			if (!value) return;
-
-			_flagList.Select(flag => flag.Key == episodeId ? new EpisodeFlagPair(episodeId, true) : flag).ToList();
+			var index = FlagList.FindIndex(x => x.Key == episodeId);
+			if (index >= 0 && index < FlagList.Count - 1)
+			{
+				FlagList[index + 1].Value = true;
+			}
 
 			SaveJson();
 		}

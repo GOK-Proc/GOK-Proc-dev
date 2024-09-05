@@ -38,19 +38,19 @@ namespace Transition
 			}
 		}
 
-		public void SetFlag(NovelId novelId, bool value)
+		public void SetNextFlag(NovelId novelId)
 		{
 			if (NovelDict.ContainsKey(novelId))
 			{
-				_episodeFlags.SetFlag(NovelDict[novelId], value);
+				_episodeFlags.SetNextFlag(NovelDict[novelId]);
 			}
 		}
 
-		public void SetFlag(RhythmId rhythmId, bool value)
+		public void SetNextFlag(RhythmId rhythmId)
 		{
 			if (RhythmDict.ContainsKey(rhythmId))
 			{
-				_episodeFlags.SetFlag(RhythmDict[rhythmId], value);
+				_episodeFlags.SetNextFlag(RhythmDict[rhythmId]);
 			}
 		}
 	}
