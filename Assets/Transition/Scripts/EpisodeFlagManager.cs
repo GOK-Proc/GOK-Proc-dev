@@ -17,7 +17,7 @@ namespace Transition
 			{
 				if (_novelDict == null)
 				{
-					_novelDict = _episodeData.DataList.ToDictionary(x => x.NovelId, x => (x.Chapter, x.Section));
+					_novelDict = _episodeData.DataList.Where(x => x.EpisodeType == EpisodeType.Novel).ToDictionary(x => x.NovelId, x => (x.Chapter, x.Section));
 				}
 
 				return _novelDict;
@@ -31,7 +31,7 @@ namespace Transition
 			{
 				if (_rhythmDict == null)
 				{
-					_rhythmDict = _episodeData.DataList.ToDictionary(x => x.RhythmId, x => (x.Chapter, x.Section));
+					_rhythmDict = _episodeData.DataList.Where(x => x.EpisodeType == EpisodeType.Rhythm).ToDictionary(x => x.RhythmId, x => (x.Chapter, x.Section));
 				}
 
 				return _rhythmDict;
