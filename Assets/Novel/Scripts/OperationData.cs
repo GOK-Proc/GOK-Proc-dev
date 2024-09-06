@@ -81,10 +81,21 @@ namespace Novel
     {
         public OperationType OperationType { get; } = OperationType.Bgm;
         public string Bgm { get; }
+        public string Motion { get; }
 
         public BgmData(string bgm)
         {
-            Bgm = bgm;
+            string[] arguments = bgm.Split(" ");
+            Bgm = arguments[0];
+
+            if (arguments.Length > 1)
+            {
+                Motion = arguments[1];
+            }
+            else
+            {
+                Motion = "Fade";
+            }
         }
 
         public void ExecuteOperation(NovelOperation novelOperation)
