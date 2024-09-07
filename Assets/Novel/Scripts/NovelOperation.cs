@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using DG.Tweening;
+using KanKikuchi.AudioManager;
 
 namespace Novel
 {
@@ -240,7 +241,43 @@ namespace Novel
 
         public void UpdateBgm(BgmData bgmData)
         {
+            string prefix = bgmData.Bgm.Split('_')[0];
 
+            if (prefix == "Bgm")
+            {
+                if (!BGMManager.Instance.IsPlaying())
+                {
+                    BGMManager.Instance.Play("BGM/" + bgmData.Bgm);
+                }
+                else
+                {
+                    switch (bgmData.Motion)
+                    {
+                        case "Fade":
+                            BGMManager.Instance.FadeOut(_duration, () =>
+                            {
+                                BGMManager.Instance.Play("BGM/" + bgmData.Bgm);
+                            });
+                            break;
+
+                        case "Cut":
+                            BGMManager.Instance.Stop();
+                            BGMManager.Instance.Play("BGM/" + bgmData.Bgm);
+                            break;
+
+                        default:
+                            throw new Exception("BGMの変化方法が正しく指定されていません。");
+                    }
+                }
+            }
+            else if (prefix == "Se")
+            {
+                BGMManager.Instance.Play("BGM/" + bgmData.Bgm, isLoop: false, allowsDuplicate: true);
+            }
+            else
+            {
+                throw new Exception("BGMファイル名の接頭辞は\"Bgm_\"または\"Se_\"である必要があります。");
+            }
         }
 
 
