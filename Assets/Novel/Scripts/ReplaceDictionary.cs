@@ -11,7 +11,7 @@ namespace Novel
 
         public ReplaceDictionary()
         {
-            ReplaceDict["name"] = "白黒";
+            ReplaceDict["name"] = "オーザ・ウィリス";
         }
     }
 }
