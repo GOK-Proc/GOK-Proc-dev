@@ -39,7 +39,7 @@ namespace Novel
 
                 if (items[5] != "")
                 {
-                    lineOperationList.Add(new BgmData(items[5]));
+                    lineOperationList.Add(new SoundData(items[5]));
                 }
 
                 if (items[6] != "")

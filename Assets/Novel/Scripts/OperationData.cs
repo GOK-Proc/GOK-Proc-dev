@@ -8,14 +8,11 @@ namespace Novel
 {
     public interface OperationData
     {
-        public OperationType OperationType { get; }
-
-        public void ExecuteOperation(NovelOperation novelOperation);
+        public void ExecuteOperation();
     }
 
     public class DialogueData : OperationData
     {
-        public OperationType OperationType { get; } = OperationType.Dialogue;
         public string Name { get; }
         public string Dialogue { get; }
 
@@ -25,33 +22,32 @@ namespace Novel
             Dialogue = dialogue;
         }
 
-        public void ExecuteOperation(NovelOperation novelOperation)
+        public void ExecuteOperation()
         {
-            novelOperation.UpdateDialogue(this);
+            NovelManager.Instance.DialogueOperation.UpdateDialogue(this);
         }
     }
 
     public class CharacterLayoutData : OperationData
     {
-        public OperationType OperationType { get; } = OperationType.CharacterLayout;
         public List<string> Layout { get; }
         public List<string> Motion { get; }
 
         public CharacterLayoutData(string characterLayout, string characterMotion)
         {
             Layout = new List<string>(characterLayout.Split(" "));
+
             Motion = new List<string>(characterMotion.Split(" "));
         }
 
-        public void ExecuteOperation(NovelOperation novelOperation)
+        public void ExecuteOperation()
         {
-            novelOperation.UpdateCharacterLayout(this);
+            NovelManager.Instance.CharacterOperation.UpdateCharacterLayout(this);
         }
     }
 
     public class BackgroundData : OperationData
     {
-        public OperationType OperationType { get; } = OperationType.Background;
         public string Background { get; }
         public string Motion { get; }
 
@@ -71,22 +67,21 @@ namespace Novel
             }
         }
 
-        public void ExecuteOperation(NovelOperation novelOperation)
+        public void ExecuteOperation()
         {
-            novelOperation.UpdateBackground(this);
+            NovelManager.Instance.BackgroundOperation.UpdateBackground(this);
         }
     }
 
-    public class BgmData : OperationData
+    public class SoundData : OperationData
     {
-        public OperationType OperationType { get; } = OperationType.Bgm;
-        public string Bgm { get; }
+        public string Sound { get; }
         public string Motion { get; }
 
-        public BgmData(string bgm)
+        public SoundData(string bgm)
         {
             string[] arguments = bgm.Split(" ");
-            Bgm = arguments[0];
+            Sound = arguments[0];
 
             if (arguments.Length > 1)
             {
@@ -98,15 +93,14 @@ namespace Novel
             }
         }
 
-        public void ExecuteOperation(NovelOperation novelOperation)
+        public void ExecuteOperation()
         {
-            novelOperation.UpdateBgm(this);
+            NovelManager.Instance.SoundOperation.UpdateSound(this);
         }
     }
 
     public class OtherData : OperationData
     {
-        public OperationType OperationType { get; } = OperationType.Other;
         // 現在は使っていないので、何の情報も保持していない(演出の拡張用)
 
         public OtherData()
@@ -114,9 +108,9 @@ namespace Novel
 
         }
 
-        public void ExecuteOperation(NovelOperation novelOperation)
+        public void ExecuteOperation()
         {
-            novelOperation.ExecuteOtherOperation(this);
+            NovelManager.Instance.OtherOperation.ExecuteOtherOperation(this);
         }
     }
 
@@ -125,7 +119,7 @@ namespace Novel
         public DialogueData LineDialogueData { get; set; }
         public CharacterLayoutData LineCharacterLayoutData { get; set; }
         public BackgroundData LineBackgroundData { get; set; }
-        public BgmData LineBgmData { get; set; }
+        public SoundData LineBgmData { get; set; }
         public OtherData LineOtherData { get; set; }
     }
 }

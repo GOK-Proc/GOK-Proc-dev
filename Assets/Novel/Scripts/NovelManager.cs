@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,15 +11,28 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 namespace Novel
 {
-    public class NovelManager : MonoBehaviour
+    public class NovelManager : SingletonMonoBehaviour<NovelManager>
     {
+        [SerializeField] private float _defaultDuration = 0.75f;
         [SerializeField] private NovelId _novelId;
         [SerializeField] private ScenarioData _scenarioData;
-        [SerializeField] private NovelOperation _novelOperation;
+
+        [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
+        [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
+        [field: SerializeField] public BackgroundOperation BackgroundOperation { get; set; }
+        [field: SerializeField] public SoundOperation SoundOperation { get; set; }
+        [field: SerializeField] public OtherOperation OtherOperation { get; set; }
 
         [SerializeField] private int _currentLine = 0;
 
-        private bool _doFirstLine = false;
+        public float Duration { get; private set; }
+
+        private bool _completeInitialize = false;
+        private bool _notFirstLine = false;
+
+        public bool StopDialogue { get; set; } = false;      // 前の行で会話文が更新されたか
+        public bool IsProcessingCharacter { get; set; } = false;
+        public bool IsProcessingBackground { get; set; } = false;
 
         private List<AsyncOperationHandle> _handles = new List<AsyncOperationHandle>();
 
@@ -29,31 +43,52 @@ namespace Novel
 
         private void Update()
         {
-            if (_doFirstLine)
+            // 1行目の場合
+            if (!_notFirstLine)
             {
-                CallLineOperation();
+                // 初期化処理が終わったら自動で実行
+                if (_completeInitialize)
+                {
+                    CallLineOperation();
 
-                _currentLine++;
-
-                _doFirstLine = false;
+                    _notFirstLine = true;
+                }
             }
-
-            if (Input.GetKeyDown(KeyCode.Return) && !_doFirstLine)
+            else
             {
-                CallLineOperation();
-
-                _currentLine++;
+                // すべての処理が完了しており、かつ最後の行に達していない場合
+                if (IsFinishedOperation() && _scenarioData.ScenarioLines.Count > _currentLine)
+                {
+                    // 前の行で会話文が更新されていた場合(入力待ち)
+                    if (StopDialogue)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Return))
+                        {
+                            CallLineOperation();
+                        }
+                    }
+                    else
+                    {
+                        CallLineOperation();
+                    }
+                }
             }
         }
 
         private void CallLineOperation()
         {
+            StopDialogue = false;
+
+            Duration = _defaultDuration;
+
             List<OperationData> lineOperationList = _scenarioData.ScenarioLines[_currentLine];
 
             foreach (OperationData lineOperation in lineOperationList)
             {
-                lineOperation.ExecuteOperation(_novelOperation);
+                lineOperation.ExecuteOperation();
             }
+
+            _currentLine++;
         }
 
         public void OnDestroy()
@@ -78,7 +113,7 @@ namespace Novel
             {
                 foreach (GameObject characterAsset in characterAssets)
                 {
-                    _novelOperation.CharacterPrefabDict[characterAsset.name] = characterAsset;
+                    CharacterOperation.CharacterPrefabDict[characterAsset.name] = characterAsset;
                 }
             });
 
@@ -87,14 +122,16 @@ namespace Novel
             {
                 foreach (Sprite backgroundAsset in backgroundAssets)
                 {
-                    _novelOperation.BackgroundImageDict[backgroundAsset.name] = backgroundAsset;
+                    BackgroundOperation.BackgroundImageDict[backgroundAsset.name] = backgroundAsset;
                 }
             });
 
+            _completeInitialize = true;
+        }
 
-
-
-            _doFirstLine = true;
+        private bool IsFinishedOperation()
+        {
+            return !IsProcessingCharacter && !IsProcessingBackground;
         }
 
 
