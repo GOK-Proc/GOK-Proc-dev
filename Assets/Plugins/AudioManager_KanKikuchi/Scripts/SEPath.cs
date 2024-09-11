@@ -5,8 +5,6 @@
 /// </summary>
 public static class SEPath{
 
-	public const string SYSTEM20 = "SE/system20";
-	public const string SYSTEM23 = "SE/system23";
 
 }
 
