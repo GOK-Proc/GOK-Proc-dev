@@ -35,6 +35,9 @@ namespace Rhythm
         [SerializeField] private float _shakeDuration;
 
         [Space(20)]
+        [SerializeField] private SpriteRenderer _backgroundRenderer;
+        [SerializeField] private SpriteRenderer _enemyRenderer;
+
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
 
@@ -715,6 +718,16 @@ namespace Rhythm
 
             DrawGauge(_clearGaugeUpper, _clearGaugePosition, _clearGaugeSizeDelta, value);
             SetClearGaugeColor(_clearGaugeUpperImage, value, border);
+        }
+
+        public void SetBackgroundSprite(Sprite sprite)
+        {
+            _backgroundRenderer.sprite = sprite;
+        }
+
+        public void SetEnemySprite(Sprite sprite)
+        {
+            _enemyRenderer.sprite = sprite;
         }
 
     }

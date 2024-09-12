@@ -20,6 +20,12 @@ namespace Rhythm
         [SerializeField] private string _composer;
         public readonly string Composer => _composer;
 
+        [SerializeField] private Sprite _backgroundSprite;
+        public readonly Sprite BackgroundSprite => _backgroundSprite;
+
+        [SerializeField] private Sprite _enemySprite;
+        public readonly Sprite EnemySprite => _enemySprite;
+
         [SerializeField] private NotesInformation[] _notes;
         public readonly NotesInformation[] Notes => _notes;
 

@@ -159,6 +159,8 @@ namespace Rhythm
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
+            _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);
+            _uiManager.SetEnemySprite(beatmapInfo.EnemySprite);
             _uiManager.SwitchUI(isVs);
         }
 
