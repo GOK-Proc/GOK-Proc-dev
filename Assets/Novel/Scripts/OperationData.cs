@@ -35,7 +35,14 @@ namespace Novel
 
         public CharacterLayoutData(string characterLayout, string characterMotion)
         {
-            Layout = new List<string>(characterLayout.Split(" "));
+            if (characterLayout == "Clear")
+            {
+                Layout = new List<string> { };
+            }
+            else
+            {
+                Layout = new List<string>(characterLayout.Split(" "));
+            }
 
             Motion = new List<string>(characterMotion.Split(" "));
         }
