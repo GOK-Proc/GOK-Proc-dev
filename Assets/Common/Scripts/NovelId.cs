@@ -1,6 +1,5 @@
 ﻿public enum NovelId
 {
 	None,
-	TestSheet1,
-	TestSheet2
+	Chapter1_1
 }

@@ -28,7 +28,7 @@ namespace Novel
                 case "Fade":
                     if (_backgroundImage.sprite != null)
                     {
-                        if (backgroundData.Background == "Black")
+                        if (backgroundData.Background == "Blackout")
                         {
                             sequence.Join(_backgroundImage.DOFade(0f, NovelManager.Instance.Duration));
                         }
@@ -44,7 +44,7 @@ namespace Novel
                     }
                     else
                     {
-                        if (backgroundData.Background != "Black")
+                        if (backgroundData.Background != "Blackout")
                         {
                             _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
                             Color color = _backgroundImage.color;
@@ -57,7 +57,7 @@ namespace Novel
                     break;
 
                 case "Cut":
-                    if (backgroundData.Background != "Black")
+                    if (backgroundData.Background != "Blackout")
                     {
                         _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
                     }
