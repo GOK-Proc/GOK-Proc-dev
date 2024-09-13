@@ -6,8 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.UI;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 namespace Novel
 {
@@ -15,7 +13,7 @@ namespace Novel
     {
         [SerializeField] private float _defaultDuration = 0.75f;
         [SerializeField] private NovelId _novelId;
-        [SerializeField] private ScenarioData _scenarioData;
+        [SerializeField] private NovelData _novelData;
 
         [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
         [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
@@ -24,6 +22,8 @@ namespace Novel
         [field: SerializeField] public OtherOperation OtherOperation { get; set; }
 
         [SerializeField] private int _currentLine = 0;
+
+        private ScenarioData _scenarioData;
 
         public float Duration { get; private set; }
 
@@ -101,11 +101,8 @@ namespace Novel
 
         private IEnumerator Initialize()
         {
-            // シナリオのロード
-            yield return LoadAsset<TextAsset>(_novelId.ToString(), scenario =>
-            {
-                ScenarioLoader.MakeScenarioData(scenario);
-            });
+            // シナリオデータのロード
+            ScenarioLoader.MakeScenarioData(_novelData.NovelDictionary[_novelId.ToString()]);
             _scenarioData = ScenarioLoader._ScenarioData;
 
             // キャラクターアセットのロード
