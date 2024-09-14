@@ -18,6 +18,8 @@ MonoBehaviour:
     _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
     _offset: 1.2
     _composer: See Scrapbox.
+    _backgroundSprite: {fileID: 21300000, guid: 5dd2b93433282ef40a1dae03839d8a6d, type: 3}
+    _enemySprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
     _notes:
     - _level: 0
       _notesDesigner: 
@@ -33,28 +35,38 @@ MonoBehaviour:
     _sound: {fileID: 0}
     _offset: 0
     _composer: See Scrapbox.
+    _backgroundSprite: {fileID: 0}
+    _enemySprite: {fileID: 0}
     _notes: []
   - _id: Chapter2_2
     _title: Monster (Swarm of Goblins) - tentative
     _sound: {fileID: 0}
     _offset: 0
     _composer: See Scrapbox.
+    _backgroundSprite: {fileID: 0}
+    _enemySprite: {fileID: 0}
     _notes: []
   - _id: Chapter2_4
     _title: Monster (Boss of the Swarm) - tentative
     _sound: {fileID: 0}
     _offset: 0
     _composer: See Scrapbox.
+    _backgroundSprite: {fileID: 0}
+    _enemySprite: {fileID: 0}
     _notes: []
   - _id: Chapter1
     _title: Chapter1 village - tentative
     _sound: {fileID: 0}
     _offset: 0
     _composer: See Scrapbox.
+    _backgroundSprite: {fileID: 0}
+    _enemySprite: {fileID: 0}
     _notes: []
   - _id: Chapter2
     _title: Chapter2 forest - tentative
     _sound: {fileID: 0}
     _offset: 0
     _composer: See Scrapbox.
+    _backgroundSprite: {fileID: 0}
+    _enemySprite: {fileID: 0}
     _notes: []

@@ -85,6 +85,10 @@ namespace Rhythm
         [Header("Options")]
         [SerializeField] private RhythmOption _option;
 
+        [Space(20)]
+        [Header("Record")]
+        [SerializeField] private RecordList _recordList;
+
 
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
@@ -151,7 +155,7 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
 
-            _scoreManager = new ScoreManger(isVs, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager);
+            _scoreManager = new ScoreManger(isVs, id, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _uiManager, _uiManager, _recordList);
 
             _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _option.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _uiManager);
@@ -159,6 +163,8 @@ namespace Rhythm
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
+            _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);
+            _uiManager.SetEnemySprite(beatmapInfo.EnemySprite);
             _uiManager.SwitchUI(isVs);
         }
 
@@ -204,6 +210,7 @@ namespace Rhythm
                 }
 
                 _scoreManager.DisplayResult(_headerInformation);
+                _scoreManager.SaveRecordData();
             }
 
             StartCoroutine(RhythmGameUpdate());
