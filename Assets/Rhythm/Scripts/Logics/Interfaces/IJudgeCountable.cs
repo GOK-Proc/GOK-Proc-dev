@@ -1,4 +1,4 @@
-namespace Rhythm
+﻿namespace Rhythm
 {
     public interface IJudgeCountable
     {

@@ -140,6 +140,7 @@ namespace Rhythm
         [SerializeField] private RectTransform _rhythmResultBox;
         [SerializeField] private RectTransform _rhythmResultContents;
         [SerializeField] private RectTransform[] _rhythmResultLabels;
+        [SerializeField] private RectTransform _ryhthmResultNewRecord;
         [SerializeField] private TextMeshProUGUI _rhythmResultTitle;
         [SerializeField] private TextMeshProUGUI _rhythmResultComposer;
         [SerializeField] private TextMeshProUGUI _rhythmResultDifficulty;
@@ -149,7 +150,7 @@ namespace Rhythm
         [SerializeField] private TextMeshProUGUI[] _rhythmResultComboLabel;
         [SerializeField] private TextMeshProUGUI _rhythmResultScoreNumber;
         [SerializeField] private TextMeshProUGUI _rhythmResultScoreRank;
-        [SerializeField] private TextMeshProUGUI _rhythmResultRanking;
+        [SerializeField] private TextMeshProUGUI _rhythmResultHighScoreNumber;
 
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
@@ -624,7 +625,7 @@ namespace Rhythm
             sequence.Play();
         }
 
-        public void DrawRhythmResult(in HeaderInformation header, bool isClear, JudgeCount judgeCount, int maxCombo, int score, ScoreRank scoreRank, int ranking)
+        public void DrawRhythmResult(in HeaderInformation header, bool isClear, JudgeCount judgeCount, int maxCombo, int score, ScoreRank scoreRank, int highScore)
         {
             _rhythmResultBoxCanvasGroup.alpha = 0f;
             _rhythmResultContentsCanvasGroup.alpha = 0f;
@@ -656,13 +657,9 @@ namespace Rhythm
                 _ => "C"
             });
 
-            _rhythmResultRanking.text = "Rank " + ranking + ranking switch
-            {
-                1 => "st",
-                2 => "nd",
-                3 => "rd",
-                _ => "th"
-            };
+            _rhythmResultHighScoreNumber.SetText($"{highScore:N0}");
+
+            _ryhthmResultNewRecord.gameObject.SetActive(score > highScore);
 
             var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
 

@@ -8,6 +8,8 @@ namespace Rhythm
     public class ScoreManger : IJudgeCountable, IComboCountable, IResultProvider, IBattleMode, IRhythmMode
     {
         private readonly bool _isVs;
+        private readonly Difficulty _difficulty;
+        private readonly string _id;
 
         private readonly int[] _judgeCount;
 
@@ -28,6 +30,7 @@ namespace Rhythm
 
         private readonly IGaugeDrawable _gaugeDrawable;
         private readonly IUIDrawable _uiDrawable;
+        private readonly IDataHandler<RecordData[]> _recordDataHandler;
 
         private float _playerHitPoint;
         private float _enemyHitPoint;
@@ -63,9 +66,13 @@ namespace Rhythm
                 return (ScoreRank)(rankCount - 1);
             } }
 
-        public ScoreManger(bool isVs, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable)
+        public JudgeCount JudgeCount => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]);
+
+        public ScoreManger(bool isVs, string id, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDataHandler<RecordData[]> recordDataHandler)
         {
             _isVs = isVs;
+            _difficulty = difficulty;
+            _id = id;
 
             _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length - 1];
             _judgeRates = judgeRates;
@@ -95,12 +102,11 @@ namespace Rhythm
 
             _gaugeDrawable = gaugeDrawable;
             _uiDrawable = uiDrawable;
+            _recordDataHandler = recordDataHandler;
 
             Combo = 0;
             MaxCombo = 0;
         }
-
-        public JudgeCount JudgeCount { get => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]); }
 
         public void CountUpJudgeCounter(Judgement judgement)
         {
@@ -194,7 +200,21 @@ namespace Rhythm
             }
             else
             {
-                _uiDrawable.DrawRhythmResult(header, IsClear, JudgeCount, MaxCombo, Score, ScoreRank, 1);
+                _uiDrawable.DrawRhythmResult(header, IsClear, JudgeCount, MaxCombo, Score, ScoreRank, _recordDataHandler[_id][(int)_difficulty].Score);
+            }
+        }
+
+        public void SaveRecordData()
+        {
+            if (!_isVs)
+            {
+                var records = _recordDataHandler[_id];
+                var record = records[(int)_difficulty];
+                var achievement = _judgeCount[2] == 0 ? (_judgeCount[1] == 0 ? Achievement.AllPerfect : Achievement.FullCombo) : Achievement.None;
+
+                records[(int)_difficulty] = new RecordData(Mathf.Max(Score, record.Score), IsClear || record.IsCleared, Mathf.Max(MaxCombo, record.MaxCombo), (Achievement)Mathf.Max((int)achievement, (int)record.Achievement), Score > record.Score ? JudgeCount : record.JudgeCount);
+
+                _recordDataHandler[_id] = records;
             }
         }
     }
