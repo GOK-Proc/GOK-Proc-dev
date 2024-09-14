@@ -10,7 +10,7 @@ namespace Novel
 {
     public class CharacterOperation : MonoBehaviour
     {
-        public Dictionary<string, GameObject> CharacterPrefabDict { get; set; } = new Dictionary<string, GameObject>();
+        public Dictionary<string, CharacterMatarial> CharacterMaterialDict { get; set; }
         [SerializeField] private Transform _characterParent;
         [SerializeField] private RectTransform _mainCanvasTransform;
         [SerializeField] private float _margin;
@@ -60,7 +60,7 @@ namespace Novel
                 // キャラクターの登場処理
                 else
                 {
-                    GameObject characterObject = Instantiate(CharacterPrefabDict[character], _characterParent);
+                    GameObject characterObject = Instantiate(CharacterMaterialDict[character].Default, _characterParent);
                     currentCharacter[character] = characterObject;
                     switch (characterLayoutData.Motion[0])
                     {
