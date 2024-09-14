@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea46acab0d30c34ea57c36b9d2ef8ca, type: 3}
+  m_Name: NovelrMaterial Data
+  m_EditorClassIdentifier: 
+  _characterMaterials:
+  - _name: Hero
+    _default: {fileID: 2286995298420433717, guid: 51606bddb971c1847b3802a18e556fc5, type: 3}
+    _characterDifferences: []
+  - _name: Urura
+    _default: {fileID: 5972782281776397193, guid: 637f05f71d5dbea419e8f9aea4d55311, type: 3}
+    _characterDifferences: []
+  - _name: Libelta
+    _default: {fileID: 6532444791575691359, guid: 840f27c7c9db7db4c9afe04f6cf93826, type: 3}
+    _characterDifferences: []
+  - _name: Urura
+    _default: {fileID: 5972782281776397193, guid: 637f05f71d5dbea419e8f9aea4d55311, type: 3}
+    _characterDifferences: []
+  - _name: Coworker
+    _default: {fileID: 618201589054293405, guid: 3898526cf6ed2194caed40107c30721f, type: 3}
+    _characterDifferences: []
+  - _name: MobA
+    _default: {fileID: 1106847323092741173, guid: c9e6586eeb597704eb7cf4cb06581f60, type: 3}
+    _characterDifferences: []
+  - _name: MobB
+    _default: {fileID: 6892818501438804236, guid: 8be861417d569b647964c3912cd8bb77, type: 3}
+    _characterDifferences: []
+  - _name: MobC
+    _default: {fileID: 7243294335463189136, guid: aea7d3f4ee92cf64aa52f8dc89c7bc7e, type: 3}
+    _characterDifferences: []
+  - _name: Villager_blue_happy
+    _default: {fileID: 9188927887095765375, guid: 387e4bb48bde197468ffd8683d3dde2c, type: 3}
+    _characterDifferences: []
+  - _name: Villager_blue_fear
+    _default: {fileID: 1672589173168313610, guid: 947ad29b6e7d0b147bd1393ba675949d, type: 3}
+    _characterDifferences: []
+  - _name: Villager_green_happy
+    _default: {fileID: 7668222286354816790, guid: 16e80c679f4b13744b02f30b9df68016, type: 3}
+    _characterDifferences: []
+  - _name: Villager_green_fear
+    _default: {fileID: 852095377352495529, guid: c2865f2a2f040904fa04cd71a78fee2a, type: 3}
+    _characterDifferences: []
+  - _name: GatekeeperA
+    _default: {fileID: 5265124079928218263, guid: 2624c884cc6b54e40a50daa573ba543d, type: 3}
+    _characterDifferences: []
+  - _name: GatekeeperB
+    _default: {fileID: 3362022310222043085, guid: 7ecf17eee0f9cb04da52f97f508c0aac, type: 3}
+    _characterDifferences: []
+  - _name: Monster
+    _default: {fileID: 8090005189443385508, guid: f7201aa53f0862841a9a44ec89cbf6b6, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_green_A
+    _default: {fileID: 4089880193371814978, guid: 740db5400a35c7147863ee78614ca463, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_green_B
+    _default: {fileID: 3136516189703036558, guid: cfc16fb948f8fce48b6c309f9a9ee134, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_blue_A
+    _default: {fileID: 7961131946050326322, guid: e924bc38ef5dba04c9b58b09018b677d, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_blue_B
+    _default: {fileID: 5479370899937538578, guid: 21b1b9c505413f649a70a7c5f5a7085b, type: 3}
+    _characterDifferences: []
+  - _name: Monster_pack
+    _default: {fileID: 4208710453778300129, guid: 584b1f82e3f1d194cbe7ae8b3afa07c8, type: 3}
+    _characterDifferences: []
+  - _name: Boss_middle
+    _default: {fileID: 1112094429965770427, guid: 62c17913e9bc17042b0ca30288f11aa2, type: 3}
+    _characterDifferences: []

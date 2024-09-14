@@ -102,7 +102,7 @@ namespace Novel
         private IEnumerator Initialize()
         {
             // シナリオデータのロード
-            ScenarioLoader.MakeScenarioData(_novelData.NovelDictionary[_novelId.ToString()]);
+            ScenarioLoader.MakeScenarioData(_novelData.NovelDict[_novelId.ToString()]);
             _scenarioData = ScenarioLoader._ScenarioData;
 
             // キャラクターアセットのロード

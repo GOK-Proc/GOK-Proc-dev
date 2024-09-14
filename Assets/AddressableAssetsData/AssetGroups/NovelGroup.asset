@@ -17,18 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d23755679929b4045b0b899cd860b918
   m_SerializeEntries:
-  - m_GUID: a0441327348a5374780c3598dc3196e4
-    m_Address: TestSheet1
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - NovelScenario
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9849d705eb7c8fa4eb59fcaca72a966d
-    m_Address: TestSheet2
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - NovelScenario
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cfc16fb948f8fce48b6c309f9a9ee134
     m_Address: Goblin_green_B
     m_ReadOnly: 0

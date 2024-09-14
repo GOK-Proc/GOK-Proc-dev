@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac0635938120834fb36bc2a27d62d5a, type: 3}
   m_Name: NovelData
   m_EditorClassIdentifier: 
-  _scenarios: []
+  _novelScenarios:
+  - {fileID: 4900000, guid: eac636dc9b9bd564b90e3864124cc7f3, type: 3}
+  - {fileID: 4900000, guid: 0c3b032b23664fa43aeda287bb33b0e0, type: 3}
+  - {fileID: 4900000, guid: 8386f5212c922574d9175c80362398c4, type: 3}
+  - {fileID: 4900000, guid: e868f1812262d954baab8db0004b2cd4, type: 3}
+  - {fileID: 4900000, guid: 1e66b62e62aaafd48b37c646a708df81, type: 3}
