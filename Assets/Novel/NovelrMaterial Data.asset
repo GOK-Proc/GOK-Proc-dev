@@ -22,9 +22,6 @@ MonoBehaviour:
   - _name: Libelta
     _default: {fileID: 6532444791575691359, guid: 840f27c7c9db7db4c9afe04f6cf93826, type: 3}
     _characterDifferences: []
-  - _name: Urura
-    _default: {fileID: 5972782281776397193, guid: 637f05f71d5dbea419e8f9aea4d55311, type: 3}
-    _characterDifferences: []
   - _name: Coworker
     _default: {fileID: 618201589054293405, guid: 3898526cf6ed2194caed40107c30721f, type: 3}
     _characterDifferences: []
@@ -76,3 +73,7 @@ MonoBehaviour:
   - _name: Boss_middle
     _default: {fileID: 1112094429965770427, guid: 62c17913e9bc17042b0ca30288f11aa2, type: 3}
     _characterDifferences: []
+  _backgroundMaterials:
+  - {fileID: 21300000, guid: 9b0c774f15ffcfb4990709a1491234ad, type: 3}
+  - {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
+  - {fileID: 21300000, guid: c075903fa8f8e66458bcd072aceff76d, type: 3}

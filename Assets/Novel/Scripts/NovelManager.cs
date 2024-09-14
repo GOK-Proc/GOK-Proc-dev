@@ -14,6 +14,7 @@ namespace Novel
         [SerializeField] private float _defaultDuration = 0.75f;
         [SerializeField] private NovelId _novelId;
         [SerializeField] private NovelData _novelData;
+        [SerializeField] private NovelMaterialData _novelMaterialData;
 
         [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
         [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
@@ -38,7 +39,7 @@ namespace Novel
 
         private void Start()
         {
-            StartCoroutine(Initialize());
+            Initialize();
         }
 
         private void Update()
@@ -99,29 +100,17 @@ namespace Novel
             }
         }
 
-        private IEnumerator Initialize()
+        private void Initialize()
         {
             // シナリオデータのロード
             ScenarioLoader.MakeScenarioData(_novelData.NovelDict[_novelId.ToString()]);
             _scenarioData = ScenarioLoader._ScenarioData;
 
             // キャラクターアセットのロード
-            yield return LoadAssets<GameObject>("NovelCharacter", characterAssets =>
-            {
-                foreach (GameObject characterAsset in characterAssets)
-                {
-                    CharacterOperation.CharacterPrefabDict[characterAsset.name] = characterAsset;
-                }
-            });
+            CharacterOperation.CharacterMaterialDict = _novelMaterialData.CharacterMaterialDict;
 
             // 背景アセットのロード
-            yield return LoadAssets<Sprite>("NovelBackground", backgroundAssets =>
-            {
-                foreach (Sprite backgroundAsset in backgroundAssets)
-                {
-                    BackgroundOperation.BackgroundImageDict[backgroundAsset.name] = backgroundAsset;
-                }
-            });
+            BackgroundOperation.BackgroundImageDict = _novelMaterialData.BackgroundMaterialDict;
 
             _completeInitialize = true;
         }
@@ -129,27 +118,6 @@ namespace Novel
         private bool IsFinishedOperation()
         {
             return !IsProcessingCharacter && !IsProcessingBackground;
-        }
-
-
-        private IEnumerator LoadAsset<T>(string address, Action<T> callback)
-        {
-            var handle = Addressables.LoadAssetAsync<T>(address);
-            yield return handle;
-
-            _handles.Add(handle);
-
-            callback(handle.Result);
-        }
-
-        private IEnumerator LoadAssets<T>(string addresses, Action<IList<T>> callback)
-        {
-            var handle = Addressables.LoadAssetsAsync<T>(addresses, null);
-            yield return handle;
-
-            _handles.Add(handle);
-
-            callback(handle.Result);
         }
     }
 }

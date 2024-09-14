@@ -19,7 +19,9 @@ namespace Novel
     public class CharacterMatarial
     {
         [SerializeField] private string _name;
-        public string Name { get { return _name; } }
+        public string Name => _name;
+
+        public GameObject Default => _default;
 
         public Dictionary<string, GameObject> CharacterDifferenceDict
         { 
