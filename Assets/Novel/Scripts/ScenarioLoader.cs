@@ -16,7 +16,8 @@ namespace Novel
 
             string[] lines =  textAsset.text.Split("\n");
 
-            foreach (var line in lines.Take(lines.Length - 1))
+            // 先頭行(カラム名)と最後の行(空行)を除去
+            foreach (var line in lines.Take(lines.Length - 1).Skip(1))
             {
                 List<OperationData> lineOperationList = new List<OperationData>();
 

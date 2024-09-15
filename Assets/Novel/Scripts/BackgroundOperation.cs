@@ -22,46 +22,49 @@ namespace Novel
                 NovelManager.Instance.IsProcessingBackground = true;
             }
 
-            if (_backgroundImage.sprite != null)
+
+            switch (backgroundData.Motion)
             {
-                switch (backgroundData.Motion)
-                {
-                    case "Fade":
-                        sequence.Join(_backgroundImage.DOFade(0f, NovelManager.Instance.Duration).OnComplete(() =>
+                case "Fade":
+                    if (_backgroundImage.sprite != null)
+                    {
+                        if (backgroundData.Background == "Blackout")
+                        {
+                            sequence.Join(_backgroundImage.DOFade(0f, NovelManager.Instance.Duration));
+                        }
+                        else
+                        {
+                            sequence.Join(_backgroundImage.DOFade(0f, NovelManager.Instance.Duration).OnComplete(() =>
+                            {
+                                _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+                            }));
+
+                            sequence.Append(_backgroundImage.DOFade(1f, NovelManager.Instance.Duration));
+                        }
+                    }
+                    else
+                    {
+                        if (backgroundData.Background != "Blackout")
                         {
                             _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                        }));
-                        sequence.Append(_backgroundImage.DOFade(1f, NovelManager.Instance.Duration));
-                        break;
+                            Color color = _backgroundImage.color;
+                            color.a = 0f;
+                            _backgroundImage.color = color;
 
-                    case "Cut":
+                            sequence.Append(_backgroundImage.DOFade(1f, NovelManager.Instance.Duration));
+                        }
+                    }
+                    break;
+
+                case "Cut":
+                    if (backgroundData.Background != "Blackout")
+                    {
                         _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                        break;
+                    }
+                    break;
 
-                    default:
-                        throw new Exception("背景の変化方法が正しく指定されていません。");
-                }
-            }
-            else
-            {
-                switch (backgroundData.Motion)
-                {
-                    case "Fade":
-                        _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                        Color color = _backgroundImage.color;
-                        color.a = 0f;
-                        _backgroundImage.color = color;
-
-                        sequence.Join(_backgroundImage.DOFade(1f, NovelManager.Instance.Duration));
-                        break;
-
-                    case "Cut":
-                        _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                        break;
-
-                    default:
-                        throw new Exception("背景の変化方法が正しく指定されていません。");
-                }
+                default:
+                    throw new Exception("背景の変化方法が正しく指定されていません。");
             }
 
             sequence.Play().OnComplete(() =>

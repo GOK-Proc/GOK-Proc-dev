@@ -258,7 +258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultDuration: 0.75
   _novelId: 1
-  _scenarioData: {fileID: 0}
+  _novelData: {fileID: 11400000, guid: 587bff0387dccb94a971efba913d094d, type: 2}
+  _novelMaterialData: {fileID: 11400000, guid: f57550eb0a36b774c9a1f120f772d443, type: 2}
   <DialogueOperation>k__BackingField: {fileID: 1649501997}
   <CharacterOperation>k__BackingField: {fileID: 1649501996}
   <BackgroundOperation>k__BackingField: {fileID: 1649501995}
@@ -464,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
