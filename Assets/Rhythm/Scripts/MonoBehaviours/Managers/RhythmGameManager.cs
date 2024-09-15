@@ -89,6 +89,11 @@ namespace Rhythm
         [Header("Record")]
         [SerializeField] private RecordList _recordList;
 
+        [Space(20)]
+        [Header("Buttons")]
+        [SerializeField] private CustomButton _battleResultButton;
+        [SerializeField] private CustomButton _rhythmResultButton;
+
 
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
@@ -162,6 +167,8 @@ namespace Rhythm
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
 
+            SetButtonEvent();
+
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);
             _uiManager.SetEnemySprite(beatmapInfo.EnemySprite);
@@ -214,6 +221,32 @@ namespace Rhythm
             }
 
             StartCoroutine(RhythmGameUpdate());
+        }
+
+        private void SetButtonEvent()
+        {
+            _battleResultButton.OnClickEvent = () => { 
+                try { 
+                    _battleResultButton.interactable = false;
+                    SceneTransitionManager.TransitionToMap(_scoreManager.IsClear);
+                } 
+                catch
+                { 
+
+                } 
+            };
+
+            _rhythmResultButton.OnClickEvent = () => {
+                try
+                {
+                    _rhythmResultButton.interactable = false;
+                    SceneTransitionManager.TransitionToMusicSelection();
+                }
+                catch
+                {
+
+                }
+            };
         }
     }
 }
