@@ -2129,6 +2129,7 @@ MonoBehaviour:
   _composerText: {fileID: 275685219}
   _bestScoreText: {fileID: 1295608596}
   _maxComboText: {fileID: 1059607589}
+  _recordList: {fileID: 11400000, guid: e00e481882f388c419b380ce48e3d8b8, type: 2}
 --- !u!1 &1691401063
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,6 +54,7 @@ namespace MusicSelection
         private void UpdateDifficultyUI()
         {
             _difficultyDisplay.Set();
+            ((MusicSelectionThumbnail)_thumbnailBase).Set(DifficultySelection.Current);
         }
     }
 }
