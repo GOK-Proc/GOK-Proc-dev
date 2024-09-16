@@ -14,14 +14,14 @@ namespace MusicSelection
 
         [SerializeField] private RecordList _recordList;
 
-        public override void Set(TrackInformation info)
+        public override void Set(TrackInformation track)
         {
-            _trackCache = info;
+            _trackCache = track;
             
-            _image.sprite = info.Thumbnail;
+            _image.sprite = track.Thumbnail;
 
-            _titleText.text = info.Title;
-            _composerText.text = info.Composer;
+            _titleText.text = track.Title;
+            _composerText.text = track.Composer;
 
             Set(DifficultySelection.Current);
         }

@@ -8,14 +8,14 @@ namespace Gallery
     {
         [SerializeField] private Description _description;
 
-        public override void Set(TrackInformation info)
+        public override void Set(TrackInformation track)
         {
-            _image.sprite = info.Thumbnail;
+            _image.sprite = track.Thumbnail;
 
-            _titleText.text = info.Title;
-            _composerText.text = info.Composer;
+            _titleText.text = track.Title;
+            _composerText.text = track.Composer;
 
-            _description.Set(info.Description);
+            _description.Set(track.Description);
         }
     }
 }
