@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IDataHandler<T>
+﻿namespace Rhythm
 {
-    T this[string id] { get; set; }
+    public interface IDataHandler<T>
+    {
+        T this[string id] { get; set; }
+    }
 }
