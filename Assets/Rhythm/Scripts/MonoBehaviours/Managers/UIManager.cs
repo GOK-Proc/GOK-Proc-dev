@@ -10,7 +10,7 @@ using TMPro;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable
+    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable
     {
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
@@ -152,6 +152,9 @@ namespace Rhythm
         [SerializeField] private TextMeshProUGUI _rhythmResultScoreRank;
         [SerializeField] private TextMeshProUGUI _rhythmResultHighScoreNumber;
 
+        [Space(20)]
+        [SerializeField] private RectTransform _pauseBox;
+
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
         private RectTransform _battleResultPlayerGauge;
@@ -163,10 +166,12 @@ namespace Rhythm
 
         private CanvasGroup _rhythmResultBoxCanvasGroup;
         private CanvasGroup _rhythmResultContentsCanvasGroup;
+        private CanvasGroup _pauseBoxCanvasGroup;
 
         [Space(20)]
         [SerializeField] private float _resultBoxDuration;
         [SerializeField] private float _resultContentsDuration;
+        [SerializeField] private float _pauseBoxDuration;
 
         private void Awake()
         {
@@ -209,6 +214,7 @@ namespace Rhythm
 
             _rhythmResultBoxCanvasGroup = _rhythmResultBox.GetComponent<CanvasGroup>();
             _rhythmResultContentsCanvasGroup = _rhythmResultContents.GetComponent<CanvasGroup>();
+            _pauseBoxCanvasGroup = _pauseBox.GetComponent<CanvasGroup>();
         }
 
         private void DrawGauge(Transform gauge, Vector3 position, Vector3 scale, float value)
@@ -725,6 +731,23 @@ namespace Rhythm
         public void SetEnemySprite(Sprite sprite)
         {
             _enemyRenderer.sprite = sprite;
+        }
+
+        public Tweener DrawPauseScreen()
+        {
+            _pauseBoxCanvasGroup.alpha = 0f;
+            _pauseBox.gameObject.SetActive(true);
+
+            return _pauseBoxCanvasGroup.DOFade(1f, _pauseBoxDuration).SetUpdate(true);
+        }
+
+        public Tweener ErasePauseScreen()
+        {
+            return _pauseBoxCanvasGroup.DOFade(0f, _pauseBoxDuration).SetUpdate(true).OnComplete(() =>
+            {
+                _pauseBox.gameObject.SetActive(false);
+                _pauseBoxCanvasGroup.alpha = 1f;
+            });
         }
 
     }

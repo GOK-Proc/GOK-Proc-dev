@@ -74,11 +74,11 @@ namespace Rhythm
                 return (obj, isNew);
             }
 
-            RhythmGameObject CreateLine(LineData line, ObjectPool<RhythmGameObject> pool, Vector3 pos)
+            (RhythmGameObject obj, bool isNew) CreateLine(LineData line, ObjectPool<RhythmGameObject> pool, Vector3 pos)
             {
-                IDisposable disposable = pool.Create(out var obj, out var _);
+                IDisposable disposable = pool.Create(out var obj, out var isNew);
                 obj.Create(pos, new Vector3(0f, -line.Speed), _survivalRect, disposable);
-                return obj;
+                return (obj, isNew);
             }
 
             void Add((Note obj, bool isNew) note)
@@ -141,12 +141,12 @@ namespace Rhythm
                                 var lastPosition = new Vector3(firstPosition.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - endTime));
                                 Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], lastPosition, time));
 
-                                IDisposable disposable = _bandPools[(note.Color, note.IsLarge)].Create(out var obj, out _);
+                                IDisposable disposable = _bandPools[(note.Color, note.IsLarge)].Create(out var obj, out var isNew);
 
                                 var bandPosition = (firstPosition + lastPosition) / 2;
                                 var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandPosition.y));
                                 obj.Create(bandPosition, new Vector3(0f, -note.Speed), rect, note.Lane, (lastPosition - firstPosition).y, note.JustTime, endTime, _holdMasks[note.Lane], disposable);
-                                _rhythmGameObjects.Add(obj);
+                                if (isNew) _rhythmGameObjects.Add(obj);
                             }
                         }
                         
@@ -163,7 +163,8 @@ namespace Rhythm
                 {
                     if (position.y <= _layout.BeginLineY)
                     {
-                        _rhythmGameObjects.Add(CreateLine(line, _linePool, position));
+                        (var obj, var isNew) = CreateLine(line, _linePool, position);
+                        if (isNew) _rhythmGameObjects.Add(obj);
                         _isLineCreated[i] = true;
                     }
                 }
