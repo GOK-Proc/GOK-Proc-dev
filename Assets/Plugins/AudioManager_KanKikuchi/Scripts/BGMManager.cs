@@ -54,7 +54,7 @@ public class BGMManager : AudioManager<BGMManager> {
     }
     RunPlayer(audioClip, volumeRate, delay, pitch, isLoop);
   }
-  
+
   /// <summary>
   /// 再生
   /// </summary>
@@ -66,5 +66,46 @@ public class BGMManager : AudioManager<BGMManager> {
     RunPlayer(audioPath, volumeRate, delay, pitch, isLoop);
   }
 
+  /// <summary>
+  /// イントロ付き楽曲の再生
+  /// </summary>
+  /// <remarks>MicomProcedureプログラマによる拡張機能です</remarks>
+  public void Play(AudioClip introAudioClip, AudioClip mainAudioClip, float volumeRate = 1, float delay = 0,
+    float pitch = 1, bool isLoop = true, bool allowsDuplicate = false)
+  {
+    if (!introAudioClip)
+    {
+      Play(mainAudioClip, volumeRate, delay, pitch, isLoop);
+      return;
+    }
+    //重複が許可されてない場合は、既に再生しているものを止める
+    if (!allowsDuplicate)
+    {
+      Stop();
+    }
+    RunPlayer(introAudioClip, volumeRate, delay, pitch, false);
+    float introLength = introAudioClip.length;
+    RunPlayer(mainAudioClip, volumeRate, delay + introLength, pitch, isLoop);
+  }
+  
+  /// <summary>
+  /// イントロ付き楽曲の再生
+  /// </summary>
+  /// <remarks>MicomProcedureプログラマによる拡張機能です</remarks>
+  public void Play(string introAudioPath, string mainAudioPath, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = true, bool allowsDuplicate = false) {
+    var introAudioClip = GetAudioClip(introAudioPath);
+    if (!introAudioClip)
+    {
+      Play(mainAudioPath, volumeRate, delay, pitch, isLoop);
+      return;
+    }
+    //重複が許可されてない場合は、既に再生しているものを止める
+    if (!allowsDuplicate) {
+      Stop();
+    }
+    RunPlayer(introAudioPath, volumeRate, delay, pitch, false);
+    float introLength = introAudioClip.length;
+    RunPlayer(mainAudioPath, volumeRate, delay + introLength, pitch, isLoop);
+  }
 }
 }
