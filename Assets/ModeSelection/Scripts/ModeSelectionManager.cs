@@ -8,8 +8,7 @@ namespace ModeSelection
     {
         private void Start()
         {
-            // TODO: BGM再生
-            // BGMManager.Instance.Play("path");
+            BGMManager.Instance.Play(BGMPath.MODE_INTRO, BGMPath.MODE_LOOP);
         }
         
         public void ToMap()
