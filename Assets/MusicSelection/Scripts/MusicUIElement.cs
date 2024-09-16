@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Gallery;
+using KanKikuchi.AudioManager;
 using Transition;
 
 namespace MusicSelection
@@ -61,7 +62,8 @@ namespace MusicSelection
             _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
             _thumbnailBase.Set(_trackInfo);
-            // TODO: ここで対応する楽曲を再生
+
+            BGMManager.Instance.Play(_trackInfo.Intro, _trackInfo.Sound);
         }
 
         public void OnDeselect()
