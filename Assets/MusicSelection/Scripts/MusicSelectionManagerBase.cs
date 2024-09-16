@@ -18,7 +18,7 @@ namespace MusicSelection
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
         [SerializeField] private Scrollbar _scrollbar;
-        [SerializeField] private ThumbnailBase _thumbnailBase;
+        [SerializeField] protected ThumbnailBase _thumbnailBase;
 
         protected override void Awake()
         {
