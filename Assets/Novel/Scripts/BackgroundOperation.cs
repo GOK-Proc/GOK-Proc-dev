@@ -10,11 +10,17 @@ namespace Novel
 {
     public class BackgroundOperation : MonoBehaviour
     {
-        public Dictionary<string, Sprite> BackgroundImageDict { get; set; } = new Dictionary<string, Sprite>();
-        [SerializeField] private Image _backgroundImage;
+        public Dictionary<string, GameObject> BackgroundImageDict { get; set; }
+
+        [SerializeField] private Transform _backgroundParent;
+
+        private GameObject _preBackground;
+
 
         public void UpdateBackground(BackgroundData backgroundData)
         {
+            GameObject backgroundObject= null;
+
             var sequence = DOTween.Sequence();
 
             if (backgroundData.Motion != "Cut")
@@ -26,32 +32,41 @@ namespace Novel
             switch (backgroundData.Motion)
             {
                 case "Fade":
-                    if (_backgroundImage.sprite != null)
+                    // もともと画像があった場合
+                    if (_preBackground != null)
                     {
                         if (backgroundData.Background == "Blackout")
                         {
-                            sequence.Join(_backgroundImage.DOFade(0f, NovelManager.Instance.Duration));
+                            sequence.Join(_preBackground.GetComponent<Image>().DOFade(0f, NovelManager.Instance.Duration).SetEase(Ease.Linear));
                         }
                         else
                         {
-                            sequence.Join(_backgroundImage.DOFade(0f, NovelManager.Instance.Duration).OnComplete(() =>
+                            sequence.Join(_preBackground.GetComponent<Image>().DOFade(0f, NovelManager.Instance.Duration).SetEase(Ease.Linear)).OnComplete(() =>
                             {
-                                _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                            }));
+                                Destroy(_preBackground);
+                            });
 
-                            sequence.Append(_backgroundImage.DOFade(1f, NovelManager.Instance.Duration));
+                            backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background], _backgroundParent);
+                            Image backgroundImage = backgroundObject.GetComponent<Image>();
+                            Color color = backgroundImage.color;
+                            color.a = 0f;
+                            backgroundImage.color = color;
+
+                            sequence.Join(backgroundImage.DOFade(1f, NovelManager.Instance.Duration).SetEase(Ease.Linear));
                         }
                     }
+                    // もともと画像がなかった場合
                     else
                     {
                         if (backgroundData.Background != "Blackout")
                         {
-                            _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
-                            Color color = _backgroundImage.color;
+                            backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background], _backgroundParent);
+                            Image backgroundImage = backgroundObject.GetComponent<Image>();
+                            Color color = backgroundImage.color;
                             color.a = 0f;
-                            _backgroundImage.color = color;
+                            backgroundImage.color = color;
 
-                            sequence.Append(_backgroundImage.DOFade(1f, NovelManager.Instance.Duration));
+                            sequence.Join(backgroundImage.DOFade(1f, NovelManager.Instance.Duration).SetEase(Ease.Linear));
                         }
                     }
                     break;
@@ -59,13 +74,16 @@ namespace Novel
                 case "Cut":
                     if (backgroundData.Background != "Blackout")
                     {
-                        _backgroundImage.sprite = BackgroundImageDict[backgroundData.Background];
+                        Destroy(_preBackground);
+                        backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background]);
                     }
                     break;
 
                 default:
                     throw new Exception("背景の変化方法が正しく指定されていません。");
             }
+
+            _preBackground = backgroundObject;
 
             sequence.Play().OnComplete(() =>
             {
