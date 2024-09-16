@@ -130,7 +130,7 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 	}
 
 	//指定したパスのAudioClipを取得
-	private AudioClip GetAudioClip(string audioPath) {
+	protected AudioClip GetAudioClip(string audioPath) {
 		string audioName = PathToName(audioPath);
 		
 		if (_audioClipDict.ContainsKey(audioName)) {
