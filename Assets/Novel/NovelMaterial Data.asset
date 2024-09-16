@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ea46acab0d30c34ea57c36b9d2ef8ca, type: 3}
-  m_Name: NovelrMaterial Data
+  m_Name: NovelMaterial Data
   m_EditorClassIdentifier: 
   _characterMaterials:
   - _name: Hero
     _default: {fileID: 2286995298420433717, guid: 51606bddb971c1847b3802a18e556fc5, type: 3}
-    _characterDifferences: []
+    _characterDifferences:
+    - {fileID: 7961131946050326322, guid: e924bc38ef5dba04c9b58b09018b677d, type: 3}
   - _name: Urura
     _default: {fileID: 5972782281776397193, guid: 637f05f71d5dbea419e8f9aea4d55311, type: 3}
     _characterDifferences: []

@@ -52,7 +52,9 @@ namespace Novel
             }
             else if (prefix == "Se")
             {
-                BGMManager.Instance.Play("BGM/" + _soundDict[SoundData.Sound], isLoop: false, allowsDuplicate: true);
+                // SEは再生が終わるまで待機
+                NovelManager.Instance.IsProcessingSound = true;
+                BGMManager.Instance.Play("BGM/" + _soundDict[SoundData.Sound], isLoop: false, allowsDuplicate: true, callback: () => NovelManager.Instance.IsProcessingSound = false);
             }
             else
             {

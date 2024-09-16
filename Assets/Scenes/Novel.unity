@@ -266,6 +266,7 @@ MonoBehaviour:
   <SoundOperation>k__BackingField: {fileID: 1649501994}
   <OtherOperation>k__BackingField: {fileID: 1649501993}
   _currentLine: 0
+  <IsProcessingSound>k__BackingField: 0
 --- !u!4 &128341943
 Transform:
   m_ObjectHideFlags: 0
