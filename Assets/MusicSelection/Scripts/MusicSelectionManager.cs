@@ -28,14 +28,14 @@ namespace MusicSelection
         {
             base.Start();
 
-            UpdateDifficultyUI();
+            UpdateDifficultyRelatedUI();
         }
 
         public void OnNavigateHorizontal(InputValue inputValue)
         {
             var inputHorizontal = inputValue.Get<Vector2>().x;
             UpdateDifficultySelection(inputHorizontal);
-            UpdateDifficultyUI();
+            UpdateDifficultyRelatedUI();
         }
 
         private void UpdateDifficultySelection(float input)
@@ -51,7 +51,7 @@ namespace MusicSelection
             }
         }
 
-        private void UpdateDifficultyUI()
+        private void UpdateDifficultyRelatedUI()
         {
             _difficultyDisplay.Set();
             ((MusicSelectionThumbnail)_thumbnailBase).Set(DifficultySelection.Current);
