@@ -18,7 +18,7 @@ MonoBehaviour:
     _section: 1
     _title: "\u899A\u609F\u306E\u30AA\u30FC\u30D0\u30C1\u30E5\u30A2"
     _episodeType: 0
-    _novelId: 0
+    _novelId: 1
     _rhythmId: 0
   - _chapter: 1
     _section: 2
@@ -30,13 +30,13 @@ MonoBehaviour:
     _section: 3
     _title: "\u65C5\u7ACB\u3061\u306E\u30B3\u30F3\u30C0\u30AF\u30BF\u30FC"
     _episodeType: 0
-    _novelId: 0
+    _novelId: 2
     _rhythmId: 0
   - _chapter: 2
     _section: 1
     _title: "\u8ABF\u548C\u306E\u6307\u63EE\u68D2"
     _episodeType: 0
-    _novelId: 0
+    _novelId: 3
     _rhythmId: 0
   - _chapter: 2
     _section: 2
@@ -48,7 +48,7 @@ MonoBehaviour:
     _section: 3
     _title: "\u68EE\u4E2D\u306E\u5909\u62CD\u5B50"
     _episodeType: 0
-    _novelId: 0
+    _novelId: 4
     _rhythmId: 0
   - _chapter: 2
     _section: 4
@@ -60,5 +60,5 @@ MonoBehaviour:
     _section: 5
     _title: "\u7DCA\u8FEB\u306E\u30EF\u30F3\u30D5\u30EC\u30FC\u30BA"
     _episodeType: 0
-    _novelId: 0
+    _novelId: 5
     _rhythmId: 0
