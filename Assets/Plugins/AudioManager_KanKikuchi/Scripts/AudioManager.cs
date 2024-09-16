@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+    using System.Collections;
 
-//オーディオのキャッシュの種類
+    //オーディオのキャッシュの種類
 public enum AudioCacheType {
 	None, All, Used
 }
@@ -191,13 +192,24 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 		var audioName = PathToName(audioPathOrName);
 		_audioPlayerList.ForEach(player => player.Fade(audioName, duration, from, to, callback));
 	}
-	
-	/// <summary>
-	/// 指定されたパスまたは名前のものが再生されていたらフェードアウトする
-	/// </summary>
-	public void FadeOut(string audioPathOrName, float duration = 1f, Action callback = null) {
+
+    /// <summary>
+    /// 指定されたパスまたは名前のものが再生されていたらフェードアウトする
+    /// コルーチンとして待機できるものも追加しましたby 白井黒子)
+    /// </summary>
+    public void FadeOut(string audioPathOrName, float duration = 1f, Action callback = null) {
+        var audioName = PathToName(audioPathOrName);
+        Fade(audioName, duration, 1, 0, callback);
+    }
+
+    public IEnumerator FadeOutCoroutine(string audioPathOrName, float duration = 1f, Action callback = null) {
 		var audioName = PathToName(audioPathOrName);
-		Fade(audioName, duration, 1, 0, callback);
+		bool flag = false;
+		Fade(audioName, duration, 1, 0, () => {
+			callback();
+			flag = true;
+		});
+		yield return new WaitUntil(() => flag);
 	}
 	
 	/// <summary>
@@ -214,12 +226,22 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 	public void Fade(float duration, float from, float to, Action callback) {
 		_audioPlayerList.ForEach(player => player.Fade(duration, from, to, callback));
 	}
-	
-	/// <summary>
-	/// 再生しているものをフェードアウトする
-	/// </summary>
-	public void FadeOut(float duration = 1f, Action callback = null) {
-		Fade(duration, 1, 0, callback);
+
+    /// <summary>
+    /// 再生しているものをフェードアウトする
+    /// コルーチンとして待機できるものも追加しましたby 白井黒子)
+    /// </summary>
+    public void FadeOut(float duration = 1f, Action callback = null) {
+        Fade(duration, 1, 0, callback);
+    }
+
+    public IEnumerator FadeOutCoroutine(float duration = 1f, Action callback = null) {
+        bool flag = false;
+        Fade(duration, 1, 0, () => {
+            callback();
+            flag = true;
+        });
+        yield return new WaitUntil(() => flag);
 	}
 	
 	/// <summary>
