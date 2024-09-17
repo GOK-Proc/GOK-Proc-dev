@@ -163,7 +163,7 @@ namespace Rhythm
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _uiManager);
 
-            _eventManager.Initialize(isVs, _scoreManager, _soundPlayer, _uiManager);
+            _eventManager.Initialize(isVs, _scoreManager, _soundPlayer, _inputManager, _inputManager, _uiManager);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);

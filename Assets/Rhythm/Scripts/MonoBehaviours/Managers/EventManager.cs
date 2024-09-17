@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Transition;
+using DG.Tweening;
 
 namespace Rhythm
 {
@@ -11,6 +12,8 @@ namespace Rhythm
         private bool _isVs;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
+        private IColorInputProvider _colorInputProvider;
+        private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
 
         [SerializeField] private PlayerInput _playerInput;
@@ -18,11 +21,13 @@ namespace Rhythm
         [SerializeField] private CustomButton _battleNextButton;
         [SerializeField] private CustomButton _rhythmNextButton;
 
-        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, IPauseScreenDrawable pauseScreenDrawable)
+        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
         {
             _isVs = isVs;
             _battleMode = battleMode;
             _soundPlayable = soundPlayable;
+            _colorInputProvider = colorInputProvider;
+            _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
         }
 
@@ -103,12 +108,24 @@ namespace Rhythm
         {
             if (context.performed)
             {
-                _pauseScreenDrawable.ErasePauseScreen().onComplete += () =>
+                _pauseScreenDrawable.ErasePauseScreen().OnComplete(() =>
                 {
+                    _colorInputProvider.IsColorInputValid = false;
+                    _moveInputProvider.IsMoveInputValid = false;
                     _playerInput.SwitchCurrentActionMap("Rhythm");
-                    _soundPlayable.UnPauseMusic();
-                    Time.timeScale = 1;
-                };
+
+                    var sequence = _pauseScreenDrawable.DrawCountDownScreen();
+                    sequence.OnComplete(() =>
+                    {
+                        _colorInputProvider.IsColorInputValid = true;
+                        _moveInputProvider.IsMoveInputValid = true;
+
+                        _soundPlayable.UnPauseMusic();
+                        Time.timeScale = 1;
+                    });
+
+                    sequence.Play();
+                });
             }
         }
     }

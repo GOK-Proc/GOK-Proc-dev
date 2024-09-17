@@ -154,6 +154,7 @@ namespace Rhythm
 
         [Space(20)]
         [SerializeField] private RectTransform _pauseBox;
+        [SerializeField] private TextMeshProUGUI _countDownNumber;
 
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
@@ -748,6 +749,20 @@ namespace Rhythm
                 _pauseBox.gameObject.SetActive(false);
                 _pauseBoxCanvasGroup.alpha = 1f;
             });
+        }
+
+        public Sequence DrawCountDownScreen()
+        {
+            var sequence = DOTween.Sequence();
+
+            var color = _countDownNumber.color;
+
+            sequence.AppendInterval(0.5f).AppendCallback(() => { _countDownNumber.SetText("3"); _countDownNumber.gameObject.SetActive(true); })
+                    .Append(_countDownNumber.DOFade(0f, 1f)).AppendCallback(() => { _countDownNumber.SetText("2"); _countDownNumber.color = color; })
+                    .Append(_countDownNumber.DOFade(0f, 1f)).AppendCallback(() => { _countDownNumber.SetText("1"); _countDownNumber.color = color; })
+                    .Append(_countDownNumber.DOFade(0f, 1f)).AppendCallback(() => { _countDownNumber.gameObject.SetActive(false); _countDownNumber.color = color; }).SetUpdate(true);
+
+            return sequence;
         }
 
     }
