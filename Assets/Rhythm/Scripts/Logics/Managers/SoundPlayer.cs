@@ -31,6 +31,16 @@ namespace Rhythm
             _audioSource.Stop();
         }
 
+        public void PauseMusic()
+        {
+            _audioSource.Pause();
+        }
+
+        public void UnPauseMusic()
+        {
+            _audioSource.UnPause();
+        }
+
         public void PlaySE(string id)
         {
             if (_soundData.TryGetValue(id, out var clip))

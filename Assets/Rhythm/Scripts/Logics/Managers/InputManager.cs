@@ -21,9 +21,12 @@ namespace Rhythm
                     isPressedThisFrame |= move.WasPressedThisFrame();
                 }
 
-                return isPressedThisFrame ? value : 0f;
+                return IsMoveInputValid ? (isPressedThisFrame ? value : 0f) : 0f;
             }
         }
+
+        public bool IsColorInputValid { get; set; }
+        public bool IsMoveInputValid { get; set; }
 
         private readonly IList<InputAction> _attacks;
         private readonly IList<InputAction> _defenses;
@@ -45,10 +48,15 @@ namespace Rhythm
             _attackMaxCount = 0;
             _defenseCount = 0;
             _defenseMaxCount = 0;
+
+            IsColorInputValid = true;
+            IsMoveInputValid = true;
         }
 
         public bool IsColorPressed(NoteColor color)
         {
+            if (!IsColorInputValid) return false;
+
             switch (color)
             {
                 case NoteColor.Red:
@@ -77,6 +85,8 @@ namespace Rhythm
 
         public bool IsColorPressedThisFrame(NoteColor color)
         {
+            if (!IsColorInputValid) return false;
+
             switch (color)
             {
                 case NoteColor.Red:

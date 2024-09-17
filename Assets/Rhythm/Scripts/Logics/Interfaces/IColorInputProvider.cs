@@ -1,4 +1,4 @@
-namespace Rhythm
+﻿namespace Rhythm
 {
     public interface IColorInputProvider
     {
@@ -6,5 +6,6 @@ namespace Rhythm
         bool IsColorPressedThisFrame(NoteColor color);
         bool IsColorJudged(NoteColor color);
         void CompleteColorJudge(NoteColor color);
+        bool IsColorInputValid { get; set; }
     }
 }
