@@ -9,10 +9,10 @@ namespace Novel
     public class NovelMaterialData : ScriptableObject
     {
         public Dictionary<string, CharacterMatarial> CharacterMaterialDict => _characterMaterials.ToDictionary(x => x.Name, x => x);
-        public Dictionary<string, Sprite> BackgroundMaterialDict => _backgroundMaterials.ToDictionary(x => x.name, x => x);
+        public Dictionary<string, GameObject> BackgroundMaterialDict => _backgroundMaterials.ToDictionary(x => x.name, x => x);
 
         [SerializeField] private CharacterMatarial[] _characterMaterials;
-        [SerializeField] private Sprite[] _backgroundMaterials;
+        [SerializeField] private GameObject[] _backgroundMaterials;
     }
 
     [System.Serializable]

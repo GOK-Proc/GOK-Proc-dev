@@ -1,5 +1,6 @@
 ﻿namespace KanKikuchi.AudioManager {
 
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -45,25 +46,25 @@ public class BGMManager : AudioManager<BGMManager> {
   //=================================================================================
 
   /// <summary>
-  /// 再生
+  /// 再生(引数にコールバックを追加しました by白井黒子)
   /// </summary>
-  public void Play(AudioClip audioClip, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = true, bool allowsDuplicate = false) {
+  public void Play(AudioClip audioClip, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = true, bool allowsDuplicate = false, Action callback = null) {
     //重複が許可されてない場合は、既に再生しているものを止める
     if (!allowsDuplicate) {
       Stop();
     }
-    RunPlayer(audioClip, volumeRate, delay, pitch, isLoop);
+    RunPlayer(audioClip, volumeRate, delay, pitch, isLoop, callback);
   }
 
   /// <summary>
-  /// 再生
+  /// 再生(引数にコールバックを追加しました by白井黒子)
   /// </summary>
-  public void Play(string audioPath, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = true, bool allowsDuplicate = false) {
+        public void Play(string audioPath, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = true, bool allowsDuplicate = false, Action callback = null) {
     //重複が許可されてない場合は、既に再生しているものを止める
     if (!allowsDuplicate) {
       Stop();
     }
-    RunPlayer(audioPath, volumeRate, delay, pitch, isLoop);
+    RunPlayer(audioPath, volumeRate, delay, pitch, isLoop, callback);
   }
 
   /// <summary>

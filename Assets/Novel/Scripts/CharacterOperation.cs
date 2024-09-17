@@ -31,6 +31,7 @@ namespace Novel
 
             Dictionary<string, GameObject> currentCharacter = new Dictionary<string, GameObject>();
 
+            // 処理が終わるまで進まないようにする
             if (characterLayoutData.Motion[0] != "Cut")
             {
                 NovelManager.Instance.IsProcessingCharacter = true;
@@ -40,7 +41,13 @@ namespace Novel
             {
                 string character = characterLayoutData.Layout[i];
 
-                // キャラクターの移動処理
+                // Noneの場合はなにもしない(_preCharacterにも追加されない)
+                if (character == "None")
+                {
+                    continue;
+                }
+
+                // キャラクターの移動処理(配置が変化していないキャラも処理の対象)
                 if (_preCharacter.ContainsKey(character))
                 {
                     GameObject characterObject = _preCharacter[character];
