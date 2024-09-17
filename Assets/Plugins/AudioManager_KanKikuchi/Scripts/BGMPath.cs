@@ -9,6 +9,7 @@ public static class BGMPath{
 	public const string BATTLE_GOBLIN_BOSS  = "BGM/Battle_Goblin_boss";
 	public const string BATTLE_GOBLIN_GROUP = "BGM/Battle_Goblin_group";
 	public const string FOREST              = "BGM/Forest";
+	public const string MAP_INTRO           = "BGM/Map_Intro";
 	public const string MAP_LOOP            = "BGM/Map_Loop";
 	public const string MODE_INTRO          = "BGM/Mode_Intro";
 	public const string MODE_LOOP           = "BGM/Mode_Loop";
