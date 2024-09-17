@@ -155,7 +155,8 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private RectTransform _pauseBox;
         [SerializeField] private TextMeshProUGUI _countDownNumber;
-
+        [SerializeField] private RectTransform _pauseMenuCursor;
+ 
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
         private RectTransform _battleResultPlayerGauge;
@@ -737,6 +738,7 @@ namespace Rhythm
         public Tweener DrawPauseScreen()
         {
             _pauseBoxCanvasGroup.alpha = 0f;
+            _pauseMenuCursor.gameObject.SetActive(true);
             _pauseBox.gameObject.SetActive(true);
 
             return _pauseBoxCanvasGroup.DOFade(1f, _pauseBoxDuration).SetUpdate(true);
@@ -744,6 +746,8 @@ namespace Rhythm
 
         public Tweener ErasePauseScreen()
         {
+            _pauseMenuCursor.gameObject.SetActive(false);
+
             return _pauseBoxCanvasGroup.DOFade(0f, _pauseBoxDuration).SetUpdate(true).OnComplete(() =>
             {
                 _pauseBox.gameObject.SetActive(false);
@@ -763,6 +767,13 @@ namespace Rhythm
                     .Append(_countDownNumber.DOFade(0f, 1f)).AppendCallback(() => { _countDownNumber.gameObject.SetActive(false); _countDownNumber.color = color; }).SetUpdate(true);
 
             return sequence;
+        }
+
+        public void SetPauseCursorPositionY(float y)
+        {
+            var pos = _pauseMenuCursor.transform.position;
+            pos.y = y;
+            _pauseMenuCursor.transform.position = pos;
         }
 
     }

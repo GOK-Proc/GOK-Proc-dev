@@ -7,5 +7,6 @@ namespace Rhythm
         Tweener DrawPauseScreen();
         Tweener ErasePauseScreen();
         Sequence DrawCountDownScreen();
+        void SetPauseCursorPositionY(float y);
     }
 }
