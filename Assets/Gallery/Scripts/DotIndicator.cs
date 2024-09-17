@@ -69,8 +69,9 @@ namespace Gallery
             dot.ObjectPool = _pool;
 
             dot.rectTransform.SetParent(gameObject.transform);
-            dot.rectTransform.sizeDelta = new Vector2(_size, _size);
-
+            dot.rectTransform.localScale = Vector3.one;
+            dot.rectTransform.sizeDelta = _size * Vector2.one;
+            
             return dot;
         }
     }
