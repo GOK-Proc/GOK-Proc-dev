@@ -42,10 +42,10 @@ namespace Rhythm
 
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
-        public bool IsWin => _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
-        public bool IsOverkill => _enemyHitPoint == 0;
-        public bool IsKnockout => _playerHitPoint == 0;
-        public bool IsClear => _gaugePoint >= _clearGaugePoint;
+        public bool IsWin => _isVs && _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
+        public bool IsOverkill => _isVs && _enemyHitPoint == 0;
+        public bool IsKnockout => _isVs && _playerHitPoint == 0;
+        public bool IsClear => !_isVs && _gaugePoint >= _clearGaugePoint;
         public int Score { get
             {
                 float s = 0;

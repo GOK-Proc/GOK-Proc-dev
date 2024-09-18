@@ -174,6 +174,8 @@ namespace Rhythm
         // Start is called before the first frame update
         private void Start()
         {
+            var complete = true;
+
             IEnumerator RhythmGameUpdate()
             {
                 void Update()
@@ -209,12 +211,27 @@ namespace Rhythm
                     }
 
                     Update();
+
+                    if (_scoreManager.IsKnockout)
+                    {
+                        complete = false;
+                        break;
+                    }
+
                     yield return null;
+                }
+
+                if (!complete)
+                {
+                    _uiManager.DrawKnockout();
+                    _soundPlayer.FadeOutMusic();
+                    yield return new WaitForSeconds(2f);
                 }
 
                 _playerInput.SwitchCurrentActionMap("Result");
                 _scoreManager.DisplayResult(_headerInformation);
                 _scoreManager.SaveRecordData();
+
             }
 
             StartCoroutine(RhythmGameUpdate());

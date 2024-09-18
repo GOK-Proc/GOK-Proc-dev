@@ -6,6 +6,7 @@
         void StopMusic();
         void PauseMusic();
         void UnPauseMusic();
+        void FadeOutMusic();
         void PlaySE(string id);
     }
 }

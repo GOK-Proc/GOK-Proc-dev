@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Rhythm
 {
@@ -9,6 +10,8 @@ namespace Rhythm
         private readonly AudioSource _audioSource;
         private readonly AudioClip _audioClip;
         private readonly IDictionary<string, AudioClip> _soundData;
+
+        private readonly float _audioFadeOutDuration = 0.5f;
 
         public SoundPlayer(AudioSource source, AudioClip clip, IDictionary<string, AudioClip> soundData)
         {
@@ -39,6 +42,14 @@ namespace Rhythm
         public void UnPauseMusic()
         {
             _audioSource.UnPause();
+        }
+
+        public void FadeOutMusic()
+        {
+            _audioSource.DOFade(0f, _audioFadeOutDuration).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                StopMusic();
+            });
         }
 
         public void PlaySE(string id)

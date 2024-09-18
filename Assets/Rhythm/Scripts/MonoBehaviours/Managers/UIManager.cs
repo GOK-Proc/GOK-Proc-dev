@@ -30,6 +30,7 @@ namespace Rhythm
         [SerializeField] private Vector3 _judgeFontDelta;
         [SerializeField] private float _laneFlashDuration;
         [SerializeField] private float _laneFlashFadeDuration;
+        [SerializeField] private float _knockoutFadeDuration;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -55,6 +56,7 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _judgeFontPrefabs;
         [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private Transform _effectParent;
+        [SerializeField] private CanvasGroup _knockout;
 
         [SerializeField] private TextMeshProUGUI _titleText;
         [SerializeField] private TextMeshProUGUI _composerText;
@@ -774,6 +776,14 @@ namespace Rhythm
             var pos = _pauseMenuCursor.transform.position;
             pos.y = y;
             _pauseMenuCursor.transform.position = pos;
+        }
+
+        public void DrawKnockout()
+        {
+            _knockout.alpha = 0f;
+            _knockout.gameObject.SetActive(true);
+
+            _knockout.DOFade(1f, _knockoutFadeDuration);
         }
 
     }

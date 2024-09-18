@@ -7,5 +7,6 @@
         void DrawBattleResult(in HeaderInformation header, bool isWin, float playerHitPoint, float playerMaxHitPoint, float enemyHitPoint, float enemyMaxHitPoint, JudgeCount judgeCount, int maxCombo);
         void DrawRhythmResult(in HeaderInformation header, bool isClear, JudgeCount judgeCount, int maxCombo, int score, ScoreRank scoreRank, int highScore);
         void DrawScore(int score);
+        void DrawKnockout();
     }
 }
