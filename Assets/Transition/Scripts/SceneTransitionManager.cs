@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using Map;
 using Rhythm;
+using KanKikuchi.AudioManager;
 
 namespace Transition
 {
@@ -96,6 +97,8 @@ namespace Transition
 
 		private static IEnumerator TransitionToSceneCoroutine(SceneName sceneName)
 		{
+			BGMManager.Instance.FadeOut(duration: 0.5f);
+
 			yield return _overlay.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
 
 			AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(_prevScene);
