@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
@@ -10,11 +11,12 @@ namespace Transition
 {
 	public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
 	{
-		public static EpisodeType CurrentEpisodedType { get; private set; }
+		public static EpisodeType CurrentEpisodeType { get; private set; }
 		public static NovelId CurrentNovelId { get; private set; }
 		public static RhythmId CurrentRhythmId { get; private set; }
 		public static Difficulty CurrentDifficulty { get; private set; }
 		public static bool CurrentIsVs { get; private set; }
+		public static SceneName RecentSceneName { get; private set; }
 
 		private static CanvasGroup _overlay;
 
@@ -44,7 +46,7 @@ namespace Transition
 			{
 				EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
 
-				switch (CurrentEpisodedType)
+				switch (CurrentEpisodeType)
 				{
 					case EpisodeType.Novel:
 						episodeFlagManager.SetNextFlag(CurrentNovelId);
@@ -72,7 +74,7 @@ namespace Transition
 		{
 			if (novelId == NovelId.None) return;
 
-			CurrentEpisodedType = EpisodeType.Novel;
+			CurrentEpisodeType = EpisodeType.Novel;
 			CurrentNovelId = novelId;
 
 			TransitionToScene(SceneName.Novel);
@@ -82,7 +84,7 @@ namespace Transition
 		{
 			if (rhythmId == RhythmId.None) return;
 
-			CurrentEpisodedType = EpisodeType.Rhythm;
+			CurrentEpisodeType = EpisodeType.Rhythm;
 			CurrentRhythmId = rhythmId;
 			CurrentDifficulty = difficulty;
 			CurrentIsVs = isVs;
@@ -101,6 +103,8 @@ namespace Transition
 
 			yield return _overlay.DOFade(endValue: 1f, duration: 0.5f).WaitForCompletion();
 
+			RecentSceneName = (SceneName)Enum.Parse(typeof(SceneName), _prevScene.name);
+			
 			AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(_prevScene);
 			yield return new WaitUntil(() => unloadOp.isDone);
 

@@ -597,6 +597,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0dc8915e4647cf8ae722181df9739b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _eventSystem: {fileID: 767891202}
+  _selectableBanners:
+  - {fileID: 709731543}
+  - {fileID: 1966655476}
+  - {fileID: 1551117317}
 --- !u!1 &1123369938
 GameObject:
   m_ObjectHideFlags: 0
