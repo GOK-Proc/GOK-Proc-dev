@@ -38,6 +38,7 @@ namespace Rhythm
 
         private float _gaugePoint;
         private bool _wasAlerted;
+        private bool _wasOverkilled;
 
         private readonly int _maxScore = 1000000;
         private readonly float _maxGaugePoint = 10000;
@@ -109,6 +110,9 @@ namespace Rhythm
             _uiDrawable = uiDrawable;
             _recordDataHandler = recordDataHandler;
 
+            _wasAlerted = false;
+            _wasOverkilled = false;
+
             Combo = 0;
             MaxCombo = 0;
             IsKnockoutAfterEffect = false;
@@ -153,8 +157,24 @@ namespace Rhythm
                             case BonusType.Attack:
                                 var enemyDamage = i.Value;
                                 _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
-                                if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint);
+
+                                var overkill = false;
+                                if (IsOverkill)
+                                {
+                                    if (!_wasOverkilled)
+                                    {
+                                        overkill = true;
+                                        _wasOverkilled = true;
+                                    }
+                                }
+
+                                if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint, () =>
+                                {
+                                    if (overkill) _soundPlayable.PlaySE("Overkill");
+                                });
+
                                 break;
+
                             case BonusType.Heal:
                                 var playerHealing = i.Value;
                                 _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
@@ -171,8 +191,24 @@ namespace Rhythm
                 case NoteColor.Red:
                     var enemyDamage = _enemyBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Attack;
                     _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
-                    if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint);
+
+                    var overkill = false;
+                    if (IsOverkill)
+                    {
+                        if (!_wasOverkilled)
+                        {
+                            overkill = true;
+                            _wasOverkilled = true;
+                        }
+                    }
+
+                    if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint, () =>
+                    {
+                        if (overkill) _soundPlayable.PlaySE("Overkill");
+                    });
+
                     break;
+
                 case NoteColor.Blue:
                     var playerDamage = _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
                     _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, -playerDamage);
@@ -196,6 +232,7 @@ namespace Rhythm
                         IsKnockoutAfterEffect = IsKnockout;
                         if (alert) _soundPlayable.PlaySE("Alert");
                     });
+
                     break;
             }
         }

@@ -9836,6 +9836,16 @@ MonoBehaviour:
     IsNoteSe: 0
     SourceCount: 0
     IsLoop: 0
+  - Id: Overkill
+    Clip: {fileID: 0}
+    IsNoteSe: 0
+    SourceCount: 0
+    IsLoop: 0
+  - Id: Move
+    Clip: {fileID: 0}
+    IsNoteSe: 0
+    SourceCount: 0
+    IsLoop: 0
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _overrideSettings: 0
   _defaultId: MainTheme

@@ -158,7 +158,7 @@ namespace Rhythm
 
             _soundPlayer = new SoundPlayer(_audioSource, _seSource, beatmapInfo.Sound, sounds);
 
-            _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager);
+            _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
             _scoreManager = new ScoreManger(isVs, id, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _soundPlayer, _uiManager, _uiManager, _recordList);
 
