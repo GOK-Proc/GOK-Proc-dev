@@ -10,7 +10,7 @@ namespace Transition
 {
 	public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
 	{
-		public static EpisodeType CurrentEpisodedType { get; private set; }
+		public static EpisodeType CurrentEpisodeType { get; private set; }
 		public static NovelId CurrentNovelId { get; private set; }
 		public static RhythmId CurrentRhythmId { get; private set; }
 		public static Difficulty CurrentDifficulty { get; private set; }
@@ -44,7 +44,7 @@ namespace Transition
 			{
 				EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
 
-				switch (CurrentEpisodedType)
+				switch (CurrentEpisodeType)
 				{
 					case EpisodeType.Novel:
 						episodeFlagManager.SetNextFlag(CurrentNovelId);
@@ -72,7 +72,7 @@ namespace Transition
 		{
 			if (novelId == NovelId.None) return;
 
-			CurrentEpisodedType = EpisodeType.Novel;
+			CurrentEpisodeType = EpisodeType.Novel;
 			CurrentNovelId = novelId;
 
 			TransitionToScene(SceneName.Novel);
@@ -82,7 +82,7 @@ namespace Transition
 		{
 			if (rhythmId == RhythmId.None) return;
 
-			CurrentEpisodedType = EpisodeType.Rhythm;
+			CurrentEpisodeType = EpisodeType.Rhythm;
 			CurrentRhythmId = rhythmId;
 			CurrentDifficulty = difficulty;
 			CurrentIsVs = isVs;
