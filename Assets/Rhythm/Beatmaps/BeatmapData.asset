@@ -19,7 +19,7 @@ MonoBehaviour:
     _offset: 1.2
     _composer: See Scrapbox.
     _backgroundSprite: {fileID: 21300000, guid: 5dd2b93433282ef40a1dae03839d8a6d, type: 3}
-    _enemySprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+    _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
     _notes:
     - _level: 0
       _notesDesigner: 

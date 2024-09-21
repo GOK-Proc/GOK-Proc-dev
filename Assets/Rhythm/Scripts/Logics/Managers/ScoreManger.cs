@@ -176,23 +176,25 @@ namespace Rhythm
                 case NoteColor.Blue:
                     var playerDamage = _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
                     _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, -playerDamage);
-                    if (playerDamage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerMaxHitPoint, () => { _soundPlayable.PlaySE("PlayerDamage"); IsKnockoutAfterEffect = IsKnockout; });
+                    if (playerDamage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerMaxHitPoint, () => { 
+                        _soundPlayable.PlaySE("PlayerDamage"); 
+                        IsKnockoutAfterEffect = IsKnockout;
+
+                        if (_playerHitPoint / _playerMaxHitPoint <= _alertRate)
+                        {
+                            if (!_wasAlerted)
+                            {
+                                _soundPlayable.PlaySE("Alert");
+                                _wasAlerted = true;
+                            }
+                        }
+                        else
+                        {
+                            _wasAlerted = false;
+                        }
+                    });
                     break;
             }
-
-            if (_playerHitPoint / _playerMaxHitPoint <= _alertRate)
-            {
-                if (!_wasAlerted)
-                {
-                    _soundPlayable.PlaySE("Alert");
-                    _wasAlerted = true;
-                }
-            }
-            else
-            {
-                _wasAlerted = false;
-            }
-
         }
 
         public void Hit(Judgement judgement)
