@@ -14,7 +14,7 @@ namespace ModeSelection
         {
             BGMManager.Instance.Play(BGMPath.MODE_INTRO, BGMPath.MODE_LOOP);
 
-            _eventSystem.firstSelectedGameObject = SceneTransitionManager.PreviousSceneName switch
+            _eventSystem.firstSelectedGameObject = SceneTransitionManager.RecentSceneName switch
             {
                 SceneName.Title or SceneName.Map => _selectableBanners[0],
                 SceneName.MusicSelection => _selectableBanners[1],
