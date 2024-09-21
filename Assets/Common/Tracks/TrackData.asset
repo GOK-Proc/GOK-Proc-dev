@@ -53,7 +53,7 @@ MonoBehaviour:
     _hasBeatmap: 1
     _composer: "\u5965\u91CE\u7950\u751F"
     _description: "\u305D\u3088\u98A8\u306E\u5439\u3044\u3066\u3044\u308B\u6751\u3092\u30A4\u30E1\u30FC\u30B8\u3057\u305F\u66F2\u3067\u3059\u3002"
-    _thumbnail: {fileID: 21300000, guid: 31783df9a89ced74a995dd8f93d420e4, type: 3}
+    _thumbnail: {fileID: 21300000, guid: f4da7b1deccfcb34dbee064c72c7b1a8, type: 3}
   - _id: Chapter2
     _title: "\u30EA\u30FC\u30C8\u306E\u68EE"
     _intro: {fileID: 0}
