@@ -264,7 +264,7 @@ namespace Rhythm
             gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
         }
 
-        public void DamagePlayer(float hitPoint, float maxHitPoint)
+        public void DamagePlayer(float hitPoint, float maxHitPoint, Action callback = null)
         {
             void Draw()
             {
@@ -282,17 +282,10 @@ namespace Rhythm
                 _playerShakeTween = _player.DOShakePosition(_shakeDuration);
             }
 
-            IEnumerator DelayedDraw()
-            {
-                yield return new WaitForSeconds(_attackEffectDuration);
-
-                Draw();
-            }
-
-            StartCoroutine(DelayedDraw());
+            DOVirtual.DelayedCall(_attackEffectDuration, () => { callback?.Invoke(); Draw(); });
         }
 
-        public void DamageEnemy(float hitPoint, float maxHitPoint)
+        public void DamageEnemy(float hitPoint, float maxHitPoint, Action callback = null)
         {
             void Draw()
             {
@@ -310,22 +303,17 @@ namespace Rhythm
                 _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
             }
 
-            IEnumerator DelayedDraw()
-            {
-                yield return new WaitForSeconds(_defenseEffectDuration);
-
-                Draw();
-            }
-
-            StartCoroutine(DelayedDraw());
+            DOVirtual.DelayedCall(_defenseEffectDuration, () => { callback?.Invoke(); Draw(); });
         }
 
-        public void HealPlayer(float hitPoint, float maxHitPoint)
+        public void HealPlayer(float hitPoint, float maxHitPoint, Action callback = null)
         {
             var value = hitPoint / maxHitPoint;
 
             DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
             SetBattleGaugeColor(_playerGaugeRenderer, value);
+
+            callback?.Invoke();
 
             // ToDo: Effect
 

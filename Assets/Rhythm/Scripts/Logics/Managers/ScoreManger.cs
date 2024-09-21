@@ -28,6 +28,7 @@ namespace Rhythm
         private readonly IList<int> _scoreRankBorders;
         private readonly GaugeRate _gaugeRate;
 
+        private readonly ISoundPlayable _soundPlayable;
         private readonly IGaugeDrawable _gaugeDrawable;
         private readonly IUIDrawable _uiDrawable;
         private readonly IDataHandler<RecordData[]> _recordDataHandler;
@@ -36,15 +37,18 @@ namespace Rhythm
         private float _enemyHitPoint;
 
         private float _gaugePoint;
+        private bool _wasAlerted;
 
         private readonly int _maxScore = 1000000;
         private readonly float _maxGaugePoint = 10000;
+        private readonly float _alertRate = 0.2f;
 
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
         public bool IsWin => _isVs && _playerHitPoint / _playerMaxHitPoint >= _enemyHitPoint / _enemyMaxHitPoint;
         public bool IsOverkill => _isVs && _enemyHitPoint == 0;
         public bool IsKnockout => _isVs && _playerHitPoint == 0;
+        public bool IsKnockoutAfterEffect { get; private set; }
         public bool IsClear => !_isVs && _gaugePoint >= _clearGaugePoint;
         public int Score { get
             {
@@ -68,7 +72,7 @@ namespace Rhythm
 
         public JudgeCount JudgeCount => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]);
 
-        public ScoreManger(bool isVs, string id, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDataHandler<RecordData[]> recordDataHandler)
+        public ScoreManger(bool isVs, string id, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDataHandler<RecordData[]> recordDataHandler)
         {
             _isVs = isVs;
             _difficulty = difficulty;
@@ -100,12 +104,14 @@ namespace Rhythm
 
             _noteCount = noteCount;
 
+            _soundPlayable = soundPlayable;
             _gaugeDrawable = gaugeDrawable;
             _uiDrawable = uiDrawable;
             _recordDataHandler = recordDataHandler;
 
             Combo = 0;
             MaxCombo = 0;
+            IsKnockoutAfterEffect = false;
         }
 
         public void CountUpJudgeCounter(Judgement judgement)
@@ -153,6 +159,7 @@ namespace Rhythm
                                 var playerHealing = i.Value;
                                 _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
                                 if (playerHealing > 0) _gaugeDrawable.HealPlayer(_playerHitPoint, _playerMaxHitPoint);
+                                _soundPlayable.PlaySE("PlayerHeal");
                                 break;
                         }
                     }
@@ -169,8 +176,21 @@ namespace Rhythm
                 case NoteColor.Blue:
                     var playerDamage = _playerBasicDamage * (isLarge ? 5 : 1) * _judgeRates[(int)judgement - 1].Defense;
                     _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, -playerDamage);
-                    if (playerDamage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerMaxHitPoint);
+                    if (playerDamage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerMaxHitPoint, () => { _soundPlayable.PlaySE("PlayerDamage"); IsKnockoutAfterEffect = IsKnockout; });
                     break;
+            }
+
+            if (_playerHitPoint / _playerMaxHitPoint <= _alertRate)
+            {
+                if (!_wasAlerted)
+                {
+                    _soundPlayable.PlaySE("Alert");
+                    _wasAlerted = true;
+                }
+            }
+            else
+            {
+                _wasAlerted = false;
             }
 
         }
