@@ -29,8 +29,8 @@ namespace MusicSelection
         public void Set(Difficulty difficulty)
         {
             var record = _recordList[_trackCache.Id][(int)difficulty];
-            _bestScoreText.text = record.Score.ToString();
-            _maxComboText.text = record.MaxCombo.ToString();
+            _bestScoreText.text = $"{record.Score.ToString()} pt";
+            _maxComboText.text = $"{record.MaxCombo.ToString()} combo";
         }
     }
 }
