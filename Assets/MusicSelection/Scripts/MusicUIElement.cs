@@ -1,14 +1,16 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 using Gallery;
-using KanKikuchi.AudioManager;
 using Transition;
+using KanKikuchi.AudioManager;
 
 namespace MusicSelection
 {
-    public class MusicUIElement : MonoBehaviour
+    public class MusicUIElement : MonoBehaviour, ISubmitHandler, ICancelHandler, ISelectHandler,
+        IDeselectHandler
     {
         private bool _isInited = false;
 
@@ -44,7 +46,7 @@ namespace MusicSelection
 
         // ギャラリーでは必要ない．
         // InputSystemUIInputModuleのインスペクターでSubmitをNoneにすることで解決
-        public void OnSubmit()
+        public void OnSubmit(BaseEventData _)
         {
             if (_rhythmId == RhythmId.None) return;
 
@@ -52,12 +54,12 @@ namespace MusicSelection
                 false);
         }
 
-        public void OnCancel()
+        public void OnCancel(BaseEventData _)
         {
             SceneTransitionManager.TransitionToModeSelection();
         }
 
-        public void OnSelect()
+        public void OnSelect(BaseEventData _)
         {
             _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
@@ -66,10 +68,9 @@ namespace MusicSelection
             BGMManager.Instance.Play(_trackInfo.Intro, _trackInfo.Sound);
         }
 
-        public void OnDeselect()
+        public void OnDeselect(BaseEventData _)
         {
             _text.fontSize = NormalFontSize;
-            // TODO: ここで対応する楽曲を停止
         }
     }
 }
