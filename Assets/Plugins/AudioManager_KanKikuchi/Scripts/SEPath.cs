@@ -5,6 +5,7 @@
 /// </summary>
 public static class SEPath{
 
+	public const string SE_TEMP = "SE/Novel_SE_temp/Se_temp";
 
 }
 
