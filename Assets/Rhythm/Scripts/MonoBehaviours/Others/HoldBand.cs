@@ -19,11 +19,17 @@ namespace Rhythm
 
         private ITimeProvider _timeProvider;
         private IColorInputProvider _colorInputProvider;
+        private ISoundPlayable _soundPlayable;
 
-        public void Initialize(ITimeProvider timeProvider, IColorInputProvider colorInputProvider)
+        private bool _isSePlayed;
+
+        private readonly float _fadeOutDuration = 0.3f;
+
+        public void Initialize(ITimeProvider timeProvider, IColorInputProvider colorInputProvider, ISoundPlayable soundPlayable)
         {
             _timeProvider = timeProvider;
             _colorInputProvider = colorInputProvider;
+            _soundPlayable = soundPlayable;
 
             _renderer = GetComponent<SpriteRenderer>();
             _defaultColor = _renderer.color;
@@ -44,6 +50,8 @@ namespace Rhythm
             _renderer.color = _defaultColor;
 
             Create(position, velocity, survivalRect, lane, x => { _mask.gameObject.SetActive(false); x?.Invoke(); }, disposable);
+
+            _isSePlayed = false;
         }
 
         protected override void Update()
@@ -58,14 +66,33 @@ namespace Rhythm
                 {
                     _mask.gameObject.SetActive(true);
                     _renderer.color = _pressedColor;
+
+                    if (!_isSePlayed)
+                    {
+                        _soundPlayable.PlaySE("Hold", _lane);
+                        _isSePlayed = true;
+                    }
                 }
                 else
                 {
                     _mask.gameObject.SetActive(false);
                     _renderer.color = _releasedColor;
+
+                    if (_isSePlayed)
+                    {
+                        _soundPlayable.FadeOutSE("Hold", _lane, _fadeOutDuration);
+                        _isSePlayed = false;
+                    }
                 }
             }
-            
+            else if (time > _endTime)
+            {
+                if (_isSePlayed)
+                {
+                    _soundPlayable.FadeOutSE("Hold", _lane, _fadeOutDuration);
+                    _isSePlayed = false;
+                }
+            }
         }
     }
 }

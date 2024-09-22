@@ -30,6 +30,7 @@ namespace Rhythm
         [SerializeField] private Vector3 _judgeFontDelta;
         [SerializeField] private float _laneFlashDuration;
         [SerializeField] private float _laneFlashFadeDuration;
+        [SerializeField] private float _knockoutFadeDuration;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -55,6 +56,7 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _judgeFontPrefabs;
         [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private Transform _effectParent;
+        [SerializeField] private CanvasGroup _knockout;
 
         [SerializeField] private TextMeshProUGUI _titleText;
         [SerializeField] private TextMeshProUGUI _composerText;
@@ -262,7 +264,7 @@ namespace Rhythm
             gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
         }
 
-        public void DamagePlayer(float hitPoint, float maxHitPoint)
+        public void DamagePlayer(float hitPoint, float maxHitPoint, Action callback = null)
         {
             void Draw()
             {
@@ -280,17 +282,10 @@ namespace Rhythm
                 _playerShakeTween = _player.DOShakePosition(_shakeDuration);
             }
 
-            IEnumerator DelayedDraw()
-            {
-                yield return new WaitForSeconds(_attackEffectDuration);
-
-                Draw();
-            }
-
-            StartCoroutine(DelayedDraw());
+            DOVirtual.DelayedCall(_attackEffectDuration, () => { callback?.Invoke(); Draw(); });
         }
 
-        public void DamageEnemy(float hitPoint, float maxHitPoint)
+        public void DamageEnemy(float hitPoint, float maxHitPoint, Action callback = null)
         {
             void Draw()
             {
@@ -308,22 +303,17 @@ namespace Rhythm
                 _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
             }
 
-            IEnumerator DelayedDraw()
-            {
-                yield return new WaitForSeconds(_defenseEffectDuration);
-
-                Draw();
-            }
-
-            StartCoroutine(DelayedDraw());
+            DOVirtual.DelayedCall(_defenseEffectDuration, () => { callback?.Invoke(); Draw(); });
         }
 
-        public void HealPlayer(float hitPoint, float maxHitPoint)
+        public void HealPlayer(float hitPoint, float maxHitPoint, Action callback = null)
         {
             var value = hitPoint / maxHitPoint;
 
             DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
             SetBattleGaugeColor(_playerGaugeRenderer, value);
+
+            callback?.Invoke();
 
             // ToDo: Effect
 
@@ -774,6 +764,14 @@ namespace Rhythm
             var pos = _pauseMenuCursor.transform.position;
             pos.y = y;
             _pauseMenuCursor.transform.position = pos;
+        }
+
+        public void DrawKnockout()
+        {
+            _knockout.alpha = 0f;
+            _knockout.gameObject.SetActive(true);
+
+            _knockout.DOFade(1f, _knockoutFadeDuration);
         }
 
     }

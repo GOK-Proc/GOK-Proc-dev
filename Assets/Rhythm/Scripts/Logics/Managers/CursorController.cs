@@ -29,11 +29,12 @@ namespace Rhythm
         private readonly double[] _timeSinceLaneDeactivated;
         private readonly ObjectPool<EffectObject> _cursorPool;
         private readonly IMoveInputProvider _vectorInputProvider;
+        private readonly ISoundPlayable _soundPlayable;
 
         private int _currentLane;
         private EffectObject _cursor;
 
-        public CursorController(int laneCount, float extension, in NoteLayout layout, float duration, EffectObject cursorPrefab, Transform parent, IMoveInputProvider vectorInputProvider)
+        public CursorController(int laneCount, float extension, in NoteLayout layout, float duration, EffectObject cursorPrefab, Transform parent, IMoveInputProvider vectorInputProvider, ISoundPlayable soundPlayable)
         {
             _laneCount = laneCount;
             _extension = extension;
@@ -41,6 +42,7 @@ namespace Rhythm
             _duration = duration;
             _cursorPool = new ObjectPool<EffectObject>(cursorPrefab, parent);
             _vectorInputProvider = vectorInputProvider;
+            _soundPlayable = soundPlayable;
 
             _timeSinceLaneDeactivated = new double[laneCount];
             _currentLane = 0;
@@ -71,6 +73,7 @@ namespace Rhythm
                 {
                     _currentLane++;
                     _timeSinceLaneDeactivated[_currentLane] = 0;
+                    _soundPlayable.PlaySE("Move");
                     isMoved = true;
                 } 
             }
@@ -80,6 +83,7 @@ namespace Rhythm
                 {
                     _currentLane--;
                     _timeSinceLaneDeactivated[_currentLane] = 0;
+                    _soundPlayable.PlaySE("Move");
                     isMoved = true;
                 }
             }
