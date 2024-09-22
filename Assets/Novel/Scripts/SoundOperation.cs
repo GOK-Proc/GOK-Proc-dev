@@ -56,6 +56,22 @@ namespace Novel
                 NovelManager.Instance.IsProcessingSound = true;
                 SEManager.Instance.Play("SE/" + _soundDict[SoundData.Sound], isLoop: false, callback: () => NovelManager.Instance.IsProcessingSound = false);
             }
+            else if (prefix == "Stop")
+            {
+                switch (SoundData.Motion)
+                {
+                    case "Fade":
+                        BGMManager.Instance.FadeOut(NovelManager.Instance.Duration);
+                        break;
+
+                    case "Cut":
+                        BGMManager.Instance.Stop();
+                        break;
+
+                    default:
+                        throw new Exception("BGMの変化方法が正しく指定されていません。");
+                }
+            }
             else
             {
                 throw new Exception("BGMファイル名の接頭辞は\"Bgm_\"または\"Se_\"である必要があります。");
