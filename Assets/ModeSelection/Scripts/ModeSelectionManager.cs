@@ -10,10 +10,8 @@ namespace ModeSelection
         [SerializeField] private EventSystem _eventSystem;
         [SerializeField] private GameObject[] _selectableBanners;
 
-        private void Start()
+        private void Awake()
         {
-            BGMManager.Instance.Play(BGMPath.MODE_INTRO, BGMPath.MODE_LOOP);
-
             _eventSystem.firstSelectedGameObject = SceneTransitionManager.RecentSceneName switch
             {
                 SceneName.Title or SceneName.Map => _selectableBanners[0],
@@ -21,6 +19,11 @@ namespace ModeSelection
                 SceneName.Gallery => _selectableBanners[2],
                 _ => _selectableBanners[0]
             };
+        }
+
+        private void Start()
+        {
+            BGMManager.Instance.Play(BGMPath.MODE_INTRO, BGMPath.MODE_LOOP);
         }
 
         public void ToMap()
