@@ -1,61 +1,30 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using KanKikuchi.AudioManager;
 
-/// <summary>
-/// UIに関連するEventを発生させるEventTriggerをコンポーネントに持つゲームオブジェクトにアタッチすることで，
-/// システムSEを再生するイベントを自動で登録する．
-/// </summary>
-[RequireComponent(typeof(EventTrigger))]
-public class SystemSoundEffect : MonoBehaviour
+public class SystemSoundEffect : MonoBehaviour, ISubmitHandler, ICancelHandler, IDeselectHandler
 {
-    private EventTrigger _trigger;
+    [SerializeField] private bool _submit = true, _cancel = true, _deselect = true;
 
-    private void Awake()
+    public void OnSubmit(BaseEventData _)
     {
-        _trigger = GetComponent<EventTrigger>();
+        if (!_submit) return;
+        SEManager.Instance.Play(SEPath.SYSTEM_SUBMIT);
     }
 
-    private void Start()
+
+    public void OnCancel(BaseEventData _)
     {
-        var triggerTypes = new[]
-        {
-            EventTriggerType.Submit,
-            EventTriggerType.Cancel,
-            // SelectではなくDeselectのタイミング．
-            // もしSelectにすると，Awake()やStart()のタイミングで
-            // EventSystem.firstSelectedGameObjectを更新した時にも音が鳴ってしまうため．
-            EventTriggerType.Deselect
-        };
+        if (!_cancel) return;
+        SEManager.Instance.Play(SEPath.SYSTEM_CANCEL);
+    }
 
-        foreach (var triggerType in triggerTypes)
-        {
-            EventTrigger.Entry entry = new() { eventID = triggerType };
-
-            var sePath = triggerType switch
-            {
-                EventTriggerType.Submit => SEPath.SYSTEM_SUBMIT,
-                EventTriggerType.Cancel => SEPath.SYSTEM_CANCEL,
-                EventTriggerType.Deselect => SEPath.SYSTEM_SELECT,
-                _ => null
-            };
-            entry.callback.AddListener((_) => SEManager.Instance.Play(sePath));
-
-            // DeSelectには必ず再生イベントを登録する．
-            if (triggerType == EventTriggerType.Deselect)
-            {
-                _trigger.triggers.Add(entry);
-                continue;
-            }
-
-            // すでにエントリが登録されているタイプのトリガーにのみ再生イベントを登録する．
-            // これがないと，特定の場面ではボタンを押しても何も起きないのに音だけ鳴ってしまう．
-            // 例：タイトルでのCancel，ギャラリーでのSubmit
-            if (_trigger.triggers.Any(e => e.eventID == triggerType))
-            {
-                _trigger.triggers.Add(entry);
-            }
-        }
+    // SelectではなくDeselectのタイミング．
+    // もしSelectにすると，Awake()やStart()のタイミングで
+    // EventSystem.firstSelectedGameObjectを更新した時にも音が鳴ってしまうため． 
+    public void OnDeselect(BaseEventData _)
+    {
+        if (!_deselect) return;
+        SEManager.Instance.Play(SEPath.SYSTEM_SELECT);
     }
 }
