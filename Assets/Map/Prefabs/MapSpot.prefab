@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2653086841611981354}
   - component: {fileID: 3458057099442807698}
   - component: {fileID: 873495957100875670}
+  - component: {fileID: 3853562825141409335}
   m_Layer: 0
   m_Name: MapSpot
   m_TagString: Untagged
@@ -152,6 +153,21 @@ MonoBehaviour:
   _episodeBoxArea: {fileID: 4588897439671624967}
   _label: 
   _episodes: []
+--- !u!114 &3853562825141409335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319662892196210845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb28c71f8f7ac744a9388824a38e66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 1
+  _cancel: 1
+  _deselect: 1
 --- !u!1 &1148270463895433482
 GameObject:
   m_ObjectHideFlags: 0
