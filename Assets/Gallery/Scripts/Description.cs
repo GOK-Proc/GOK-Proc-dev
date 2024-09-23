@@ -47,7 +47,7 @@ namespace Gallery
             var pageIsLast = _text.pageToDisplay >= _text.textInfo.pageCount;
             if (pageIsLast) return;
 
-            SEManager.Instance.Play(SEPath.SYSTEM_SELECT);
+            SystemSoundEffect.PlaySelect();
             _text.pageToDisplay++;
             _dotIndicator.Indicate(_text.pageToDisplay);
         }
@@ -58,7 +58,7 @@ namespace Gallery
             var pageIsFirst = _text.pageToDisplay <= 1;
             if (pageIsFirst) return;
 
-            SEManager.Instance.Play(SEPath.SYSTEM_SELECT);
+            SystemSoundEffect.PlaySelect();
             _text.pageToDisplay--;
             _dotIndicator.Indicate(_text.pageToDisplay);
         }
