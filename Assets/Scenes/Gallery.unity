@@ -740,8 +740,8 @@ MonoBehaviour:
   _sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   _size: 16
   _interval: 36
-  _activeColor: {r: 0, g: 0, b: 0, a: 1}
-  _inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _activeColor: {r: 0.22352941, g: 0.22352941, b: 0.22352941, a: 1}
+  _inactiveColor: {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
 --- !u!1 &1114070502
 GameObject:
   m_ObjectHideFlags: 0

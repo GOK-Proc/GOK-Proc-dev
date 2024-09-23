@@ -40,7 +40,7 @@ namespace MusicSelection
         {
             if (IsHardest) return;
 
-            SEManager.Instance.Play(SEPath.SYSTEM_SELECT);
+            SystemSoundEffect.PlaySelect();
             Current = Current switch
             {
                 Difficulty.Easy => Difficulty.Hard,
@@ -54,7 +54,7 @@ namespace MusicSelection
         {
             if (IsEasiest) return;
 
-            SEManager.Instance.Play(SEPath.SYSTEM_SELECT);
+            SystemSoundEffect.PlaySelect();
             Current = Current switch
             {
                 Difficulty.Easy => Difficulty.Easy,
