@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,6 +21,8 @@ namespace MusicSelection
         private Scrollbar _scrollbar;
         private ThumbnailBase _thumbnailBase;
 
+        private Coroutine _bgmSwitchCor;
+
         private const int NormalFontSize = 48;
         private const int FontSizeWhenSelected = 60;
 
@@ -29,6 +32,7 @@ namespace MusicSelection
             {
                 throw new InvalidOperationException("This instance has already been initialized.");
             }
+
             _isInitialized = true;
 
             _trackInfo = info;
@@ -66,12 +70,28 @@ namespace MusicSelection
             // TODO: ここでスクロールバー制御
             _thumbnailBase.Set(_trackInfo);
 
-            BGMManager.Instance.Play(_trackInfo.Intro, _trackInfo.Sound);
+            _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
         }
 
         public void OnDeselect(BaseEventData _)
         {
             _text.fontSize = NormalFontSize;
+
+            StopCoroutine(_bgmSwitchCor);
+        }
+
+        private IEnumerator SwitchBGMIfNeeded()
+        {
+            // この曲が選択されてから，一定時間以上選択されたままになっているか？
+            // Yes -> 曲を切り替える
+            // No  -> 「通り道」で選択されただけとみなして曲はそのまま
+
+            // InputSystemUIInputModule.MoveRepeatDelayに合わせて0.5秒待つ
+            yield return new WaitForSeconds(0.5f);
+
+            BGMManager.Instance.FadeOut(0.3f);
+            BGMManager.Instance.Play(_trackInfo.Intro, _trackInfo.Sound,
+                delay: 0.5f, allowsDuplicate: true);
         }
     }
 }
