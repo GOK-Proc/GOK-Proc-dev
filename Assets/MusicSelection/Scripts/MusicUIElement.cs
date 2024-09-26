@@ -12,7 +12,7 @@ namespace MusicSelection
     public class MusicUIElement : MonoBehaviour, ISubmitHandler, ICancelHandler, ISelectHandler,
         IDeselectHandler
     {
-        private bool _isInited = false;
+        private bool _isInitialized = false;
 
         private RhythmId _rhythmId;
         private TextMeshProUGUI _text;
@@ -25,9 +25,11 @@ namespace MusicSelection
 
         public void Init(TrackInformation info, Scrollbar scrollbar, ThumbnailBase thumbnailBase)
         {
-            if (_isInited)
+            if (_isInitialized)
+            {
                 throw new InvalidOperationException("This instance has already been initialized.");
-            _isInited = true;
+            }
+            _isInitialized = true;
 
             _trackInfo = info;
             _rhythmId = info.HasBeatmap switch
@@ -50,8 +52,7 @@ namespace MusicSelection
         {
             if (_rhythmId == RhythmId.None) return;
 
-            SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current,
-                false);
+            SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current);
         }
 
         public void OnCancel(BaseEventData _)
