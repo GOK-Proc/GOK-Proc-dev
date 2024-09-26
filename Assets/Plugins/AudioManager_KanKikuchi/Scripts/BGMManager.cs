@@ -76,7 +76,7 @@ public class BGMManager : AudioManager<BGMManager> {
   {
     if (!introAudioClip)
     {
-      Play(mainAudioClip, volumeRate, delay, pitch, isLoop);
+      Play(mainAudioClip, volumeRate, delay, pitch, isLoop, allowsDuplicate);
       return;
     }
     //重複が許可されてない場合は、既に再生しているものを止める
@@ -97,7 +97,7 @@ public class BGMManager : AudioManager<BGMManager> {
     var introAudioClip = GetAudioClip(introAudioPath);
     if (!introAudioClip)
     {
-      Play(mainAudioPath, volumeRate, delay, pitch, isLoop);
+      Play(mainAudioPath, volumeRate, delay, pitch, isLoop, allowsDuplicate);
       return;
     }
     //重複が許可されてない場合は、既に再生しているものを止める
