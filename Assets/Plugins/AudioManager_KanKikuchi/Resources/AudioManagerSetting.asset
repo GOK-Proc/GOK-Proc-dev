@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AudioManagerSetting
   m_EditorClassIdentifier: 
   _isAutoUpdateAudioPath: 1
-  _bgmAudioPlayerNum: 3
+  _bgmAudioPlayerNum: 4
   _seAudioPlayerNum: 10
   _bgmBaseVolume: 1
   _seBaseVolume: 1
