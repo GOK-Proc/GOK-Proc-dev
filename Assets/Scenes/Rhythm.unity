@@ -9782,12 +9782,12 @@ MonoBehaviour:
   _seSource: {fileID: 1096648017161074464, guid: 5212d1b1be0a7a8458167bced6c1f076, type: 3}
   _sounds:
   - Id: Red
-    Clip: {fileID: 8300000, guid: 3e13cf6973a5d1b46ba32bd9338a9607, type: 3}
+    Clip: {fileID: 8300000, guid: 191c942c58ab66843910f8c863dcc4da, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
   - Id: Blue
-    Clip: {fileID: 8300000, guid: 3eb02f182d1f88e4a8d52fe827a9dcd2, type: 3}
+    Clip: {fileID: 8300000, guid: 9333acf8e636a014baa1286f470aac55, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
@@ -9832,7 +9832,7 @@ MonoBehaviour:
     SourceCount: 0
     IsLoop: 0
   - Id: Alert
-    Clip: {fileID: 8300000, guid: 491be083eab8a6d4c97dd053225ad515, type: 3}
+    Clip: {fileID: 8300000, guid: 4043f566bac891e46a694dcb0a7ffda1, type: 3}
     IsNoteSe: 0
     SourceCount: 0
     IsLoop: 0
