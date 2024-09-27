@@ -72,11 +72,22 @@ namespace Rhythm
             public bool IsLoop;
         }
 
+        [System.Serializable]
+        private struct IntroSound
+        {
+            public string Id;
+            public AudioClip IntroClip;
+            public AudioClip MainClip;
+            public bool IsLoop;
+        }
+
         [Space(20)]
         [Header("Sounds")]
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _seSource;
+        [SerializeField] private IntroSoundPlayer _introSoundPlayer;
         [SerializeField] private Sound[] _sounds;
+        [SerializeField] private IntroSound[] _introSounds;
 
         [Space(20)]
         [Header("Beatmap")]
@@ -155,8 +166,9 @@ namespace Rhythm
             _inputManager = new InputManager(attackActions, defenseActions, moveActions);
 
             var sounds = _sounds.ToDictionary(x => x.Id, x => new SoundPlayer.AudioClipData(x.Clip, x.IsNoteSe, x.SourceCount, x.IsLoop));
+            var introSounds = _introSounds.ToDictionary(x => x.Id, x => new SoundPlayer.IntroAudioData(x.IntroClip, x.MainClip, x.IsLoop));
 
-            _soundPlayer = new SoundPlayer(_audioSource, _seSource, beatmapInfo.Sound, sounds);
+            _soundPlayer = new SoundPlayer(_audioSource, _seSource, _introSoundPlayer, beatmapInfo.Sound, sounds, introSounds);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
@@ -225,6 +237,17 @@ namespace Rhythm
                     yield return null;
                 }
 
+                _playerInput.SwitchCurrentActionMap("Result");
+
+                if (_scoreManager.IsWin || _scoreManager.IsClear)
+                {
+                    _soundPlayer.PlayIntroSE("Victory", 0.7f);
+                }
+                else
+                {
+                    _soundPlayer.PlaySE("Lose", 0.7f);
+                }
+
                 if (!complete)
                 {
                     _uiManager.DrawKnockout();
@@ -232,7 +255,6 @@ namespace Rhythm
                     yield return new WaitForSeconds(2f);
                 }
 
-                _playerInput.SwitchCurrentActionMap("Result");
                 _scoreManager.DisplayResult(_headerInformation);
                 _scoreManager.SaveRecordData();
 

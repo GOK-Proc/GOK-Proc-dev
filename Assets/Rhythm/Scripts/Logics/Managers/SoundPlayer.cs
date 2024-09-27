@@ -23,14 +23,30 @@ namespace Rhythm
             }
         }
 
+        public struct IntroAudioData
+        {
+            public AudioClip IntroClip;
+            public AudioClip MainClip;
+            public bool IsLoop;
+
+            public IntroAudioData(AudioClip introClip, AudioClip mainClip, bool isLoop)
+            {
+                IntroClip = introClip;
+                MainClip = mainClip;
+                IsLoop = isLoop;
+            }
+        }
+
         private readonly AudioSource _audioSource;
         private readonly AudioClip _audioClip;
         private readonly IDictionary<string, AudioClipData> _soundData;
+        private readonly IDictionary<string, IntroAudioData> _introData;
 
         private readonly AudioSource _seSource;
         private readonly AudioSource _noteSeSource;
         private readonly IDictionary<string, IList<AudioSource>> _seSources;
         private readonly IDictionary<string, IList<Tweener>> _seFadeOutTweener;
+        private readonly IDictionary<string, IntroSoundPlayer> _introSoundPlayers;
 
         private float _bgmVolume;
         public float BgmVolume
@@ -62,6 +78,11 @@ namespace Rhythm
                         }
                     }
                 }
+
+                foreach (var data in _introData)
+                {
+                    _introSoundPlayers[data.Key].Volume = _seVolume;
+                }
             }
         }
 
@@ -87,11 +108,12 @@ namespace Rhythm
             }
         }
 
-        public SoundPlayer(AudioSource source, AudioSource seSource, AudioClip clip, IDictionary<string, AudioClipData> soundData)
+        public SoundPlayer(AudioSource source, AudioSource seSource, IntroSoundPlayer introSoundPlayer, AudioClip clip, IDictionary<string, AudioClipData> soundData, IDictionary<string, IntroAudioData> introData)
         {
             _audioSource = source;
             _audioClip = clip;
             _soundData = soundData;
+            _introData = introData;
             
             _audioSource.clip = _audioClip;
 
@@ -99,6 +121,7 @@ namespace Rhythm
             _noteSeSource = Object.Instantiate(seSource, _audioSource.transform);
             _seSources = new Dictionary<string, IList<AudioSource>>();
             _seFadeOutTweener = new Dictionary<string, IList<Tweener>>();
+            _introSoundPlayers = new Dictionary<string, IntroSoundPlayer>();
 
             foreach (var data in _soundData)
             {
@@ -116,6 +139,17 @@ namespace Rhythm
                         _seFadeOutTweener[data.Key].Add(null);
                     }
                 }
+            }
+
+            foreach (var data in _introData)
+            {
+                var player = Object.Instantiate(introSoundPlayer, _audioSource.transform);
+
+                player.IntroSource.clip = data.Value.IntroClip;
+                player.MainSource.clip = data.Value.MainClip;
+                player.MainSource.loop = data.Value.IsLoop;
+
+                _introSoundPlayers.Add(data.Key, player);
             }
 
             BgmVolume = 1f;
@@ -233,6 +267,40 @@ namespace Rhythm
                         _seSources[id][index].volume = data.IsNoteSe ? _noteSeVolume : _seVolume;
                     });
                 }
+            }
+        }
+
+        public void PlayIntroSE(string id, float delay = 0f)
+        {
+            if (_introSoundPlayers.TryGetValue(id, out var player))
+            {
+                if (delay > 0)
+                {
+                    DOVirtual.DelayedCall(delay, () =>
+                    {
+                        player.Play();
+                    });
+                }
+                else
+                {
+                    player.Play();
+                }
+            }
+        }
+
+        public void StopIntroSE(string id)
+        {
+            if (_introSoundPlayers.TryGetValue(id, out var player))
+            {
+                player.Stop();
+            }
+        }
+
+        public void FadeOutIntroSE(string id, float duration)
+        {
+            if (_introSoundPlayers.TryGetValue(id, out var player))
+            {
+                player.FadeOut(duration);
             }
         }
     }

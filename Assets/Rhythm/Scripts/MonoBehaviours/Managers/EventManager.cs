@@ -28,6 +28,7 @@ namespace Rhythm
         private float[] _pauseMenuY;
 
         private readonly int _pauseMenuCount = 2;
+        private readonly float _victoryFadeOut = 0.3f;
 
         public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
         {
@@ -47,6 +48,7 @@ namespace Rhythm
             try
             {
                 _battleNextButton.interactable = false;
+                _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
                 SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
             }
             catch
@@ -61,6 +63,7 @@ namespace Rhythm
             try
             {
                 _rhythmNextButton.interactable = false;
+                _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
                 SceneTransitionManager.TransitionToMusicSelection();
             }
             catch

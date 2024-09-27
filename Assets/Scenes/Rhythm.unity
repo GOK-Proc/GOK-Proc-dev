@@ -9780,6 +9780,7 @@ MonoBehaviour:
   _playerInput: {fileID: 732199901}
   _audioSource: {fileID: 1078892033}
   _seSource: {fileID: 1096648017161074464, guid: 5212d1b1be0a7a8458167bced6c1f076, type: 3}
+  _introSoundPlayer: {fileID: 2363287263897925446, guid: 01c200b29b0583049b6a29d993a55e11, type: 3}
   _sounds:
   - Id: Red
     Clip: {fileID: 8300000, guid: 191c942c58ab66843910f8c863dcc4da, type: 3}
@@ -9846,6 +9847,16 @@ MonoBehaviour:
     IsNoteSe: 0
     SourceCount: 0
     IsLoop: 0
+  - Id: Lose
+    Clip: {fileID: 8300000, guid: 2b7d136f92bc4c74681cecaf25a9b00f, type: 3}
+    IsNoteSe: 0
+    SourceCount: 0
+    IsLoop: 0
+  _introSounds:
+  - Id: Victory
+    IntroClip: {fileID: 8300000, guid: 94372b4dc1a514149a4e2c68c48dcec9, type: 3}
+    MainClip: {fileID: 8300000, guid: 604bda58653420a42908fa0f32778f81, type: 3}
+    IsLoop: 1
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _overrideSettings: 0
   _defaultId: MainTheme
