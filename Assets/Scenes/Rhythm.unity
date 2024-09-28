@@ -9011,6 +9011,9 @@ MonoBehaviour:
   _rhythmNextButton: {fileID: 1694350137}
   _pauseResumeButton: {fileID: 787985555}
   _pauseQuitButton: {fileID: 2112360159}
+  _bgmVolumeSlider: {fileID: 1716110838}
+  _seVolumeSlider: {fileID: 1616381032}
+  _noteSeVolumeSlider: {fileID: 1972492945}
 --- !u!1 &1548177267
 GameObject:
   m_ObjectHideFlags: 0
@@ -9786,10 +9789,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnSeVolumeChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1617232290
 GameObject:
   m_ObjectHideFlags: 0
@@ -10935,10 +10950,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnBgmVolumeChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1724496501
 GameObject:
   m_ObjectHideFlags: 0
@@ -12980,10 +13007,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnNoteSeVolumeChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2001606467
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Transition;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace Rhythm
 {
@@ -12,6 +13,7 @@ namespace Rhythm
         private bool _isVs;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
+        private ISoundVolumeAdjustable _soundVolumeAdjustable;
         private IColorInputProvider _colorInputProvider;
         private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
@@ -23,14 +25,18 @@ namespace Rhythm
 
         [SerializeField] private CustomButton _pauseResumeButton;
         [SerializeField] private CustomButton _pauseQuitButton;
+        [SerializeField] private Slider _bgmVolumeSlider;
+        [SerializeField] private Slider _seVolumeSlider;
+        [SerializeField] private Slider _noteSeVolumeSlider;
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
+        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
         {
             _isVs = isVs;
             _battleMode = battleMode;
             _soundPlayable = soundPlayable;
+            _soundVolumeAdjustable = soundVolumeAdjustable;
             _colorInputProvider = colorInputProvider;
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
@@ -69,6 +75,9 @@ namespace Rhythm
         {
             _pauseResumeButton.interactable = false;
             _pauseQuitButton.interactable = false;
+            _bgmVolumeSlider.interactable = false;
+            _seVolumeSlider.interactable = false;
+            _noteSeVolumeSlider.interactable = false;
 
             _pauseScreenDrawable.ErasePauseScreen().OnComplete(() =>
             {
@@ -96,6 +105,9 @@ namespace Rhythm
             {
                 _pauseResumeButton.interactable = false;
                 _pauseQuitButton.interactable = false;
+                _bgmVolumeSlider.interactable = false;
+                _seVolumeSlider.interactable = false;
+                _noteSeVolumeSlider.interactable = false;
 
                 Time.timeScale = 1;
 
@@ -111,7 +123,6 @@ namespace Rhythm
             catch
             {
                 Time.timeScale = 0;
-                _pauseResumeButton.interactable = true;
             }
         }
 
@@ -137,6 +148,9 @@ namespace Rhythm
 
                 _pauseResumeButton.interactable = true;
                 _pauseQuitButton.interactable = true;
+                _bgmVolumeSlider.interactable = true;
+                _seVolumeSlider.interactable = true;
+                _noteSeVolumeSlider.interactable = true;
 
                 _pauseResumeButton.Select();
 
@@ -150,6 +164,21 @@ namespace Rhythm
             {
                 OnPauseResumeButtonClick();
             }
+        }
+
+        public void OnBgmVolumeChanged(float value)
+        {
+            _soundVolumeAdjustable.BgmVolume = value;
+        }
+
+        public void OnSeVolumeChanged(float value)
+        {
+            _soundVolumeAdjustable.SeVolume = value;
+        }
+
+        public void OnNoteSeVolumeChanged(float value)
+        {
+            _soundVolumeAdjustable.NoteSeVolume = value;
         }
     }
 }

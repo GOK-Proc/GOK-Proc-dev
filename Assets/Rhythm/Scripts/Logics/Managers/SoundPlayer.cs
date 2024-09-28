@@ -5,7 +5,7 @@ using DG.Tweening;
 
 namespace Rhythm
 {
-    public class SoundPlayer : ITimeProvider, ISoundPlayable
+    public class SoundPlayer : ITimeProvider, ISoundPlayable, ISoundVolumeAdjustable
     {
         public struct AudioClipData
         {

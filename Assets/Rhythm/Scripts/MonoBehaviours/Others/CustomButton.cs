@@ -34,13 +34,10 @@ public class CustomButton : Selectable, ISubmitHandler
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (interactable)
+        PressButtonSequence.OnComplete(() =>
         {
-            PressButtonSequence.OnComplete(() =>
-            {
-                _onSubmit?.Invoke();
-                ReleaseButtonSequence.Play().SetUpdate(true);
-            }).Play().SetUpdate(true);
-        }
+            _onSubmit?.Invoke();
+            ReleaseButtonSequence.Play().SetUpdate(true);
+        }).Play().SetUpdate(true);
     }
 }
