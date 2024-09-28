@@ -24,10 +24,6 @@ namespace Rhythm
         [SerializeField] private CustomButton _pauseResumeButton;
         [SerializeField] private CustomButton _pauseQuitButton;
 
-        private int _pauseCursorIndex;
-        private float[] _pauseMenuY;
-
-        private readonly int _pauseMenuCount = 2;
         private readonly float _victoryFadeOut = 0.3f;
 
         public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
@@ -38,9 +34,6 @@ namespace Rhythm
             _colorInputProvider = colorInputProvider;
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
-
-            _pauseCursorIndex = 0;
-            _pauseMenuY = new float[] { _pauseResumeButton.transform.position.y, _pauseQuitButton.transform.position.y };
         }
 
         public void OnBattleNextButtonClick()
@@ -122,37 +115,15 @@ namespace Rhythm
             }
         }
 
-        public void OnNext(InputAction.CallbackContext context)
+        public void SelectNextButton()
         {
             if (_isVs)
             {
-                switch (context.phase)
-                {
-                    case InputActionPhase.Started:
-                        _battleNextButton.PointerDown();
-                        break;
-                    case InputActionPhase.Performed:
-                        _battleNextButton.Click();
-                        break;
-                    case InputActionPhase.Canceled:
-                        _battleNextButton.PointerUp();
-                        break;
-                }
+                _battleNextButton.Select();
             }
             else
             {
-                switch (context.phase)
-                {
-                    case InputActionPhase.Started:
-                        _rhythmNextButton.PointerDown();
-                        break;
-                    case InputActionPhase.Performed:
-                        _rhythmNextButton.Click();
-                        break;
-                    case InputActionPhase.Canceled:
-                        _rhythmNextButton.PointerUp();
-                        break;
-                }
+                _rhythmNextButton.Select();
             }
         }
 
@@ -164,11 +135,10 @@ namespace Rhythm
                 _soundPlayable.PauseMusic();
                 Time.timeScale = 0;
 
-                _pauseCursorIndex = 0;
-                _pauseScreenDrawable.SetPauseCursorPositionY(_pauseMenuY[_pauseCursorIndex]);
-
                 _pauseResumeButton.interactable = true;
                 _pauseQuitButton.interactable = true;
+
+                _pauseResumeButton.Select();
 
                 _pauseScreenDrawable.DrawPauseScreen();
             }
@@ -180,64 +150,6 @@ namespace Rhythm
             {
                 OnPauseResumeButtonClick();
             }
-        }
-
-        public void OnUp(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _pauseCursorIndex--;
-
-                if (_pauseCursorIndex < 0) _pauseCursorIndex = 0;
-                _pauseScreenDrawable.SetPauseCursorPositionY(_pauseMenuY[_pauseCursorIndex]);
-            }
-        }
-
-        public void OnDown(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _pauseCursorIndex++;
-
-                if (_pauseCursorIndex >= _pauseMenuCount) _pauseCursorIndex = _pauseMenuCount - 1;
-                _pauseScreenDrawable.SetPauseCursorPositionY(_pauseMenuY[_pauseCursorIndex]);
-            }
-        }
-
-        public void OnEnter(InputAction.CallbackContext context)
-        {
-            switch (_pauseCursorIndex)
-            {
-                case 0:
-                    switch (context.phase)
-                    {
-                        case InputActionPhase.Started:
-                            _pauseResumeButton.PointerDown();
-                            break;
-                        case InputActionPhase.Performed:
-                            _pauseResumeButton.Click();
-                            break;
-                        case InputActionPhase.Canceled:
-                            _pauseResumeButton.PointerUp();
-                            break;
-                    }
-                    break;
-                case 1:
-                    switch (context.phase)
-                    {
-                        case InputActionPhase.Started:
-                            _pauseQuitButton.PointerDown();
-                            break;
-                        case InputActionPhase.Performed:
-                            _pauseQuitButton.Click();
-                            break;
-                        case InputActionPhase.Canceled:
-                            _pauseQuitButton.PointerUp();
-                            break;
-                    }
-                    break;
-            }
-            
         }
     }
 }

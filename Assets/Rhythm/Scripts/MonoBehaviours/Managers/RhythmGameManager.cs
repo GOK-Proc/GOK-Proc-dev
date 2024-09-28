@@ -255,6 +255,7 @@ namespace Rhythm
                     yield return new WaitForSeconds(2f);
                 }
 
+                _eventManager.SelectNextButton();
                 _scoreManager.DisplayResult(_headerInformation);
                 _scoreManager.SaveRecordData();
 
