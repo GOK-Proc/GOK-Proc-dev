@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 namespace Rhythm
 {
@@ -168,10 +169,14 @@ namespace Rhythm
                                     }
                                 }
 
-                                if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint, () =>
+                                if (enemyDamage > 0)
                                 {
-                                    if (overkill) _soundPlayable.PlaySE("Overkill");
-                                });
+                                    _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
+                                    {
+                                        _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint);
+                                        if (overkill) _soundPlayable.PlaySE("Overkill");
+                                    });
+                                }
 
                                 break;
 
@@ -202,10 +207,14 @@ namespace Rhythm
                         }
                     }
 
-                    if (enemyDamage > 0) _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint, () =>
+                    if (enemyDamage > 0)
                     {
-                        if (overkill) _soundPlayable.PlaySE("Overkill");
-                    });
+                        _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
+                        {
+                            _gaugeDrawable.DamageEnemy(_enemyHitPoint, _enemyMaxHitPoint);
+                            if (overkill) _soundPlayable.PlaySE("Overkill");
+                        });
+                    }
 
                     break;
 
@@ -227,11 +236,16 @@ namespace Rhythm
                         _wasAlerted = false;
                     }
 
-                    if (playerDamage > 0) _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerMaxHitPoint, () => { 
-                        _soundPlayable.PlaySE("PlayerDamage"); 
-                        IsKnockoutAfterEffect = IsKnockout;
-                        if (alert) _soundPlayable.PlaySE("Alert");
-                    });
+                    if (playerDamage > 0)
+                    {
+                        _gaugeDrawable.DelayDefenseDuration().OnComplete(() =>
+                        {
+                            _gaugeDrawable.DamagePlayer(_playerHitPoint, _playerMaxHitPoint);
+                            _soundPlayable.PlaySE("PlayerDamage");
+                            IsKnockoutAfterEffect = IsKnockout;
+                            if (alert) _soundPlayable.PlaySE("Alert");
+                        });
+                    }
 
                     break;
             }

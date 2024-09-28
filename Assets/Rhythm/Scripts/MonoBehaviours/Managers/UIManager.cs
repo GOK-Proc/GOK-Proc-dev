@@ -264,59 +264,50 @@ namespace Rhythm
             gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
         }
 
-        public void DamagePlayer(float hitPoint, float maxHitPoint, Action callback = null)
-        {
-            void Draw()
-            {
-                var value = hitPoint / maxHitPoint;
-
-                DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
-                SetBattleGaugeColor(_playerGaugeRenderer, value);
-
-                if (_playerShakeTween != null)
-                {
-                    _playerShakeTween.Kill();
-                    _player.position = _playerPosition;
-                }
-
-                _playerShakeTween = _player.DOShakePosition(_shakeDuration);
-            }
-
-            DOVirtual.DelayedCall(_attackEffectDuration, () => { callback?.Invoke(); Draw(); }, false);
-        }
-
-        public void DamageEnemy(float hitPoint, float maxHitPoint, Action callback = null)
-        {
-            void Draw()
-            {
-                var value = hitPoint / maxHitPoint;
-
-                DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
-                SetBattleGaugeColor(_enemyGaugeRenderer, value);
-
-                if (_enemyShakeTween != null)
-                {
-                    _enemyShakeTween.Kill();
-                    _enemy.position = _enemyPosition;
-                }
-
-                _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
-            }
-
-            DOVirtual.DelayedCall(_defenseEffectDuration, () => { callback?.Invoke(); Draw(); }, false);
-        }
-
-        public void HealPlayer(float hitPoint, float maxHitPoint, Action callback = null)
+        public Sequence DelayAttackDuration() => DOTween.Sequence().AppendInterval(_attackEffectDuration);
+        
+        public void DamagePlayer(float hitPoint, float maxHitPoint)
         {
             var value = hitPoint / maxHitPoint;
 
             DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
             SetBattleGaugeColor(_playerGaugeRenderer, value);
 
-            callback?.Invoke();
+            if (_playerShakeTween != null)
+            {
+                _playerShakeTween.Kill();
+                _player.position = _playerPosition;
+            }
+
+            _playerShakeTween = _player.DOShakePosition(_shakeDuration);
+        }
+
+        public Sequence DelayDefenseDuration() => DOTween.Sequence().AppendInterval(_defenseEffectDuration);
+
+        public void DamageEnemy(float hitPoint, float maxHitPoint)
+        {
+            var value = hitPoint / maxHitPoint;
+
+            DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
+            SetBattleGaugeColor(_enemyGaugeRenderer, value);
+
+            if (_enemyShakeTween != null)
+            {
+                _enemyShakeTween.Kill();
+                _enemy.position = _enemyPosition;
+            }
+
+            _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
+        }
+
+        public void HealPlayer(float hitPoint, float maxHitPoint)
+        {
+            var value = hitPoint / maxHitPoint;
+
+            DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
+            SetBattleGaugeColor(_playerGaugeRenderer, value);
 
             // ToDo: Effect
-
         }
 
         public void DrawJudgeEffect(Vector3 position, Judgement judgement)
