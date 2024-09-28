@@ -206,7 +206,7 @@ namespace Rhythm
                             {
                                 _seSource.PlayOneShot(data.Clip);
                             }
-                        });
+                        }, false);
                     }
                     else
                     {
@@ -279,7 +279,7 @@ namespace Rhythm
                     DOVirtual.DelayedCall(delay, () =>
                     {
                         player.Play();
-                    });
+                    }, false);
                 }
                 else
                 {

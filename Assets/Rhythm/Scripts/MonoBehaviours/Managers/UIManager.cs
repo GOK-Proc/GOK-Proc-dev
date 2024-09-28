@@ -282,7 +282,7 @@ namespace Rhythm
                 _playerShakeTween = _player.DOShakePosition(_shakeDuration);
             }
 
-            DOVirtual.DelayedCall(_attackEffectDuration, () => { callback?.Invoke(); Draw(); });
+            DOVirtual.DelayedCall(_attackEffectDuration, () => { callback?.Invoke(); Draw(); }, false);
         }
 
         public void DamageEnemy(float hitPoint, float maxHitPoint, Action callback = null)
@@ -303,7 +303,7 @@ namespace Rhythm
                 _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
             }
 
-            DOVirtual.DelayedCall(_defenseEffectDuration, () => { callback?.Invoke(); Draw(); });
+            DOVirtual.DelayedCall(_defenseEffectDuration, () => { callback?.Invoke(); Draw(); }, false);
         }
 
         public void HealPlayer(float hitPoint, float maxHitPoint, Action callback = null)
