@@ -180,5 +180,16 @@ namespace Rhythm
         {
             _soundVolumeAdjustable.NoteSeVolume = value;
         }
+
+        public void SetSoundVolume(RhythmVolumeOption volumeOption)
+        {
+            _bgmVolumeSlider.value = volumeOption.Track;
+            _seVolumeSlider.value = volumeOption.Se;
+            _noteSeVolumeSlider.value = volumeOption.NoteSe;
+
+            _soundVolumeAdjustable.BgmVolume = volumeOption.Track;
+            _soundVolumeAdjustable.SeVolume = volumeOption.Se;
+            _soundVolumeAdjustable.NoteSeVolume = volumeOption.NoteSe;
+        }
     }
 }

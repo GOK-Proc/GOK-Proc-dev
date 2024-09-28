@@ -11758,9 +11758,9 @@ MonoBehaviour:
     _offset: 0
     _judgeOffset: 0
     _volumeOption:
-      _track: 0
-      _se: 0
-      _noteSe: 0
+      _track: 1
+      _se: 1
+      _noteSe: 1
   _recordList: {fileID: 11400000, guid: e00e481882f388c419b380ce48e3d8b8, type: 2}
 --- !u!4 &1770842084
 Transform:
