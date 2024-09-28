@@ -540,6 +540,17 @@
             "bindings": [
                 {
                     "name": "",
+                    "id": "1b8de757-c27d-4b5c-87ff-bf537e0b4dd4",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Resume",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "eb915be5-2b35-40aa-83a3-1af406a91d03",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
