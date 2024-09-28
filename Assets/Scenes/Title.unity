@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 278113521}
   - component: {fileID: 278113520}
   - component: {fileID: 278113522}
+  - component: {fileID: 278113523}
   m_Layer: 0
   m_Name: EventTrigger
   m_TagString: Untagged
@@ -200,6 +201,20 @@ MonoBehaviour:
   _submit: 1
   _cancel: 0
   _deselect: 0
+--- !u!114 &278113523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278113519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d78658ebae395b4ca71d38cba270873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 1
+  _cancel: 0
 --- !u!1 &468771849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,16 +1070,16 @@ MonoBehaviour:
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: 0}
   m_SubmitAction: {fileID: 392368643174621059, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0

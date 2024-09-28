@@ -56,6 +56,7 @@ namespace MusicSelection
         {
             if (_rhythmId == RhythmId.None) return;
 
+            StopCoroutine(_bgmSwitchCor);
             SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current);
         }
 
