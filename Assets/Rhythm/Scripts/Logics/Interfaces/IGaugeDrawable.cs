@@ -6,10 +6,12 @@ namespace Rhythm
     public interface IGaugeDrawable
     {
         Sequence DelayAttackDuration();
-        void DamagePlayer(float hitPoint, float hitPointMax);
+        void DrawPlayerGauge(float hitPoint, float hitPointMax);
+        void DrawPlayerDamageEffect();
         Sequence DelayDefenseDuration();
-        void DamageEnemy(float hitPoint, float hitPointMax);
-        void HealPlayer(float hitPoint, float maxHitPoint);
+        void DrawEnemyGauge(float hitPoint, float hitPointMax);
+        void DrawEnemyDamageEffect();
+        void DrawPlayerHealEffect();
         void DrawClearGauge(float maxGugePoint, float gaugePoint, float clearGaugePoint);
     }
 }
