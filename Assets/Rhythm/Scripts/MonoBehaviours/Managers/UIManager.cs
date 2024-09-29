@@ -36,6 +36,8 @@ namespace Rhythm
         [SerializeField] private float _shakeDuration;
 
         [Space(20)]
+        [SerializeField] private Transform _battleUI;
+        [SerializeField] private Transform _hitPointTextTransform;
         [SerializeField] private SpriteRenderer _backgroundRenderer;
         [SerializeField] private SpriteRenderer _enemyRenderer;
 
@@ -694,8 +696,8 @@ namespace Rhythm
 
         public void SwitchUI(bool isVs)
         {
-            _player.gameObject.SetActive(isVs);
-            _enemy.gameObject.SetActive(isVs);
+            _battleUI.gameObject.SetActive(isVs);
+            _hitPointTextTransform.gameObject.SetActive(isVs);
             _score.gameObject.SetActive(!isVs);
         }
 
