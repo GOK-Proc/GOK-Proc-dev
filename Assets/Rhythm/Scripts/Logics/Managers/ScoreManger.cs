@@ -200,6 +200,7 @@ namespace Rhythm
                                 }
                                 break;
                         }
+                        break;
                     }
                 }
             }
