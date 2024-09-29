@@ -5,26 +5,21 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using DG.Tweening;
 
-public class CustomButton : Selectable, IPointerClickHandler
+public class CustomButton : Selectable, ISubmitHandler
 {
     [Space(20)]
     [SerializeField] private Image _image;
 
     [Header("Events")]
-    [SerializeField] private UnityEvent _onClick;
-
-    [Header("On Click")]
-    [SerializeField] private float _onClickScale;
-    [SerializeField] private float _onClickDuration;
-    [SerializeField] private Color _onClickColor;
-
-    [Header("On Pointer Over")]
-    [SerializeField] private float _onPointerOverScale;
-    [SerializeField] private float _onPointerOverDuration;
-    [SerializeField] private Color _onPointerOverColor;
+    [SerializeField] private UnityEvent _onSubmit;
 
     private float _defaultScale;
     private Color _defaultColor;
+
+    private readonly float _onClickScale = 0.8f;
+    private readonly float _onClickDuration = 0.1f;
+
+    private readonly Color _onClickColor = new Color32(214, 77, 42, 255);
 
     protected override void Awake()
     {
@@ -33,47 +28,16 @@ public class CustomButton : Selectable, IPointerClickHandler
         _defaultColor = _image.color;
     }
 
-    private void AnimateButton(float endScale, Color endColor, float duration)
+    private Sequence GetAnimationSequence(float endScale, Color endColor, float duration) => DOTween.Sequence().Append(transform.DOScale(endScale, duration)).Join(_image.DOColor(endColor, duration));
+    private Sequence PressButtonSequence => GetAnimationSequence(_onClickScale, _onClickColor, _onClickDuration);
+    private Sequence ReleaseButtonSequence => GetAnimationSequence(_defaultScale, _defaultColor, _onClickDuration);
+
+    public void OnSubmit(BaseEventData eventData)
     {
-        var sequence = DOTween.Sequence();
-        sequence.Append(transform.DOScale(endScale, duration));
-        sequence.Join(_image.DOColor(endColor, duration));
-        sequence.Play().SetUpdate(true);
+        PressButtonSequence.OnComplete(() =>
+        {
+            _onSubmit?.Invoke();
+            ReleaseButtonSequence.Play().SetUpdate(true);
+        }).Play().SetUpdate(true);
     }
-
-    public void Click()
-    {
-        if (interactable) _onClick?.Invoke();
-    }
-
-    public void PointerDown()
-    {
-        if (interactable) AnimateButton(_onClickScale, _onClickColor, _onClickDuration);
-    }
-
-    public void PointerUp()
-    {
-        AnimateButton(_defaultScale, _defaultColor, _onClickDuration);
-    }
-
-    public void PointerEnter()
-    {
-        if (interactable) AnimateButton(_onPointerOverScale, _onPointerOverColor, _onPointerOverDuration);
-    }
-
-    public void PointerExit()
-    {
-        AnimateButton(_defaultScale, _defaultColor, _onPointerOverDuration);
-    }
-
-
-    public void OnPointerClick(PointerEventData eventData) => Click();
-
-    public override void OnPointerDown(PointerEventData eventData) => PointerDown();
-
-    public override void OnPointerUp(PointerEventData eventData) => PointerUp();
-
-    public override void OnPointerEnter(PointerEventData eventData) => PointerEnter();
-
-    public override void OnPointerExit(PointerEventData eventData) => PointerExit();
 }

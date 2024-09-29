@@ -72,11 +72,22 @@ namespace Rhythm
             public bool IsLoop;
         }
 
+        [System.Serializable]
+        private struct IntroSound
+        {
+            public string Id;
+            public AudioClip IntroClip;
+            public AudioClip MainClip;
+            public bool IsLoop;
+        }
+
         [Space(20)]
         [Header("Sounds")]
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _seSource;
+        [SerializeField] private IntroSoundPlayer _introSoundPlayer;
         [SerializeField] private Sound[] _sounds;
+        [SerializeField] private IntroSound[] _introSounds;
 
         [Space(20)]
         [Header("Beatmap")]
@@ -155,19 +166,21 @@ namespace Rhythm
             _inputManager = new InputManager(attackActions, defenseActions, moveActions);
 
             var sounds = _sounds.ToDictionary(x => x.Id, x => new SoundPlayer.AudioClipData(x.Clip, x.IsNoteSe, x.SourceCount, x.IsLoop));
+            var introSounds = _introSounds.ToDictionary(x => x.Id, x => new SoundPlayer.IntroAudioData(x.IntroClip, x.MainClip, x.IsLoop));
 
-            _soundPlayer = new SoundPlayer(_audioSource, _seSource, beatmapInfo.Sound, sounds);
+            _soundPlayer = new SoundPlayer(_audioSource, _seSource, _introSoundPlayer, beatmapInfo.Sound, sounds, introSounds);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
-            _scoreManager = new ScoreManger(isVs, id, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _soundPlayer, _uiManager, _uiManager, _recordList);
+            _scoreManager = new ScoreManger(isVs, id, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _recordList);
 
             _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _option.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _soundPlayer, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _soundPlayer, _uiManager);
 
-            _eventManager.Initialize(isVs, _scoreManager, _soundPlayer, _inputManager, _inputManager, _uiManager);
+            _eventManager.Initialize(isVs, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager);
+            _eventManager.SetSoundVolume(_option.VolumeOption);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);
@@ -225,6 +238,17 @@ namespace Rhythm
                     yield return null;
                 }
 
+                _playerInput.SwitchCurrentActionMap("Result");
+
+                if (_scoreManager.IsWin || _scoreManager.IsClear)
+                {
+                    _soundPlayer.PlayIntroSE("Victory", 0.7f);
+                }
+                else
+                {
+                    _soundPlayer.PlaySE("Lose", 0.7f);
+                }
+
                 if (!complete)
                 {
                     _uiManager.DrawKnockout();
@@ -232,7 +256,7 @@ namespace Rhythm
                     yield return new WaitForSeconds(2f);
                 }
 
-                _playerInput.SwitchCurrentActionMap("Result");
+                _eventManager.SelectNextButton();
                 _scoreManager.DisplayResult(_headerInformation);
                 _scoreManager.SaveRecordData();
 

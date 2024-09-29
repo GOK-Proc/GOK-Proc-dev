@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Transition;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace Rhythm
 {
@@ -12,6 +13,7 @@ namespace Rhythm
         private bool _isVs;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
+        private ISoundVolumeAdjustable _soundVolumeAdjustable;
         private IColorInputProvider _colorInputProvider;
         private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
@@ -23,23 +25,21 @@ namespace Rhythm
 
         [SerializeField] private CustomButton _pauseResumeButton;
         [SerializeField] private CustomButton _pauseQuitButton;
+        [SerializeField] private Slider _bgmVolumeSlider;
+        [SerializeField] private Slider _seVolumeSlider;
+        [SerializeField] private Slider _noteSeVolumeSlider;
 
-        private int _pauseCursorIndex;
-        private float[] _pauseMenuY;
+        private readonly float _victoryFadeOut = 0.3f;
 
-        private readonly int _pauseMenuCount = 2;
-
-        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
+        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
         {
             _isVs = isVs;
             _battleMode = battleMode;
             _soundPlayable = soundPlayable;
+            _soundVolumeAdjustable = soundVolumeAdjustable;
             _colorInputProvider = colorInputProvider;
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
-
-            _pauseCursorIndex = 0;
-            _pauseMenuY = new float[] { _pauseResumeButton.transform.position.y, _pauseQuitButton.transform.position.y };
         }
 
         public void OnBattleNextButtonClick()
@@ -47,6 +47,7 @@ namespace Rhythm
             try
             {
                 _battleNextButton.interactable = false;
+                _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
                 SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
             }
             catch
@@ -61,6 +62,7 @@ namespace Rhythm
             try
             {
                 _rhythmNextButton.interactable = false;
+                _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
                 SceneTransitionManager.TransitionToMusicSelection();
             }
             catch
@@ -73,6 +75,9 @@ namespace Rhythm
         {
             _pauseResumeButton.interactable = false;
             _pauseQuitButton.interactable = false;
+            _bgmVolumeSlider.interactable = false;
+            _seVolumeSlider.interactable = false;
+            _noteSeVolumeSlider.interactable = false;
 
             _pauseScreenDrawable.ErasePauseScreen().OnComplete(() =>
             {
@@ -100,6 +105,9 @@ namespace Rhythm
             {
                 _pauseResumeButton.interactable = false;
                 _pauseQuitButton.interactable = false;
+                _bgmVolumeSlider.interactable = false;
+                _seVolumeSlider.interactable = false;
+                _noteSeVolumeSlider.interactable = false;
 
                 Time.timeScale = 1;
 
@@ -115,41 +123,18 @@ namespace Rhythm
             catch
             {
                 Time.timeScale = 0;
-                _pauseResumeButton.interactable = true;
             }
         }
 
-        public void OnNext(InputAction.CallbackContext context)
+        public void SelectNextButton()
         {
             if (_isVs)
             {
-                switch (context.phase)
-                {
-                    case InputActionPhase.Started:
-                        _battleNextButton.PointerDown();
-                        break;
-                    case InputActionPhase.Performed:
-                        _battleNextButton.Click();
-                        break;
-                    case InputActionPhase.Canceled:
-                        _battleNextButton.PointerUp();
-                        break;
-                }
+                _battleNextButton.Select();
             }
             else
             {
-                switch (context.phase)
-                {
-                    case InputActionPhase.Started:
-                        _rhythmNextButton.PointerDown();
-                        break;
-                    case InputActionPhase.Performed:
-                        _rhythmNextButton.Click();
-                        break;
-                    case InputActionPhase.Canceled:
-                        _rhythmNextButton.PointerUp();
-                        break;
-                }
+                _rhythmNextButton.Select();
             }
         }
 
@@ -161,11 +146,13 @@ namespace Rhythm
                 _soundPlayable.PauseMusic();
                 Time.timeScale = 0;
 
-                _pauseCursorIndex = 0;
-                _pauseScreenDrawable.SetPauseCursorPositionY(_pauseMenuY[_pauseCursorIndex]);
-
                 _pauseResumeButton.interactable = true;
                 _pauseQuitButton.interactable = true;
+                _bgmVolumeSlider.interactable = true;
+                _seVolumeSlider.interactable = true;
+                _noteSeVolumeSlider.interactable = true;
+
+                _pauseResumeButton.Select();
 
                 _pauseScreenDrawable.DrawPauseScreen();
             }
@@ -179,62 +166,30 @@ namespace Rhythm
             }
         }
 
-        public void OnUp(InputAction.CallbackContext context)
+        public void OnBgmVolumeChanged(float value)
         {
-            if (context.performed)
-            {
-                _pauseCursorIndex--;
-
-                if (_pauseCursorIndex < 0) _pauseCursorIndex = 0;
-                _pauseScreenDrawable.SetPauseCursorPositionY(_pauseMenuY[_pauseCursorIndex]);
-            }
+            _soundVolumeAdjustable.BgmVolume = value;
         }
 
-        public void OnDown(InputAction.CallbackContext context)
+        public void OnSeVolumeChanged(float value)
         {
-            if (context.performed)
-            {
-                _pauseCursorIndex++;
-
-                if (_pauseCursorIndex >= _pauseMenuCount) _pauseCursorIndex = _pauseMenuCount - 1;
-                _pauseScreenDrawable.SetPauseCursorPositionY(_pauseMenuY[_pauseCursorIndex]);
-            }
+            _soundVolumeAdjustable.SeVolume = value;
         }
 
-        public void OnEnter(InputAction.CallbackContext context)
+        public void OnNoteSeVolumeChanged(float value)
         {
-            switch (_pauseCursorIndex)
-            {
-                case 0:
-                    switch (context.phase)
-                    {
-                        case InputActionPhase.Started:
-                            _pauseResumeButton.PointerDown();
-                            break;
-                        case InputActionPhase.Performed:
-                            _pauseResumeButton.Click();
-                            break;
-                        case InputActionPhase.Canceled:
-                            _pauseResumeButton.PointerUp();
-                            break;
-                    }
-                    break;
-                case 1:
-                    switch (context.phase)
-                    {
-                        case InputActionPhase.Started:
-                            _pauseQuitButton.PointerDown();
-                            break;
-                        case InputActionPhase.Performed:
-                            _pauseQuitButton.Click();
-                            break;
-                        case InputActionPhase.Canceled:
-                            _pauseQuitButton.PointerUp();
-                            break;
-                    }
-                    break;
-            }
-            
+            _soundVolumeAdjustable.NoteSeVolume = value;
+        }
+
+        public void SetSoundVolume(RhythmVolumeOption volumeOption)
+        {
+            _bgmVolumeSlider.value = volumeOption.Track;
+            _seVolumeSlider.value = volumeOption.Se;
+            _noteSeVolumeSlider.value = volumeOption.NoteSe;
+
+            _soundVolumeAdjustable.BgmVolume = volumeOption.Track;
+            _soundVolumeAdjustable.SeVolume = volumeOption.Se;
+            _soundVolumeAdjustable.NoteSeVolume = volumeOption.NoteSe;
         }
     }
 }
