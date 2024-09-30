@@ -7,6 +7,6 @@ namespace Novel
 {
     public class ScenarioData : ScriptableObject
     {
-        public List<List<OperationData>> ScenarioLines { get; set; } = new List<List<OperationData>>();
+        public List<List<IOperationData>> ScenarioLines { get; set; } = new List<List<IOperationData>>();
     }
 }

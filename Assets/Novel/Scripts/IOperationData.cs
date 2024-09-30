@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 
 namespace Novel
 {
-    public interface OperationData
+    public interface IOperationData
     {
         public void ExecuteOperation();
     }
 
-    public class DialogueData : OperationData
+    public class DialogueData : IOperationData
     {
         public string Name { get; }
         public string Dialogue { get; }
@@ -28,7 +28,7 @@ namespace Novel
         }
     }
 
-    public class CharacterLayoutData : OperationData
+    public class CharacterLayoutData : IOperationData
     {
         public List<string> Layout { get; }
         public List<string> Motion { get; }
@@ -53,7 +53,7 @@ namespace Novel
         }
     }
 
-    public class BackgroundData : OperationData
+    public class BackgroundData : IOperationData
     {
         public string Background { get; }
         public string Motion { get; }
@@ -80,7 +80,7 @@ namespace Novel
         }
     }
 
-    public class SoundData : OperationData
+    public class SoundData : IOperationData
     {
         public string Sound { get; }
         public string Motion { get; }
@@ -106,7 +106,7 @@ namespace Novel
         }
     }
 
-    public class OtherData : OperationData
+    public class OtherData : IOperationData
     {
         // 現在は使っていないので、何の情報も保持していない(演出の拡張用)
 

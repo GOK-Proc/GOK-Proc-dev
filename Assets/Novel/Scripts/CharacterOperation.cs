@@ -16,6 +16,7 @@ namespace Novel
         [SerializeField] private RectTransform _mainCanvasTransform;
         [SerializeField] private float _margin;
         private float _width;
+        private float _shortDuration = 0.4f;
 
         private Dictionary<string, CharacterState> _preCharacter = new Dictionary<string, CharacterState>();
 
@@ -40,12 +41,26 @@ namespace Novel
 
             for (int i = 0; i < characterLayoutData.Layout.Count; i++)
             {
-                string character = characterLayoutData.Layout[i];
-
                 // Noneの場合はなにもしない(_preCharacterにも追加されない)
-                if (character == "None")
+                if (characterLayoutData.Layout[i] == "None")
                 {
                     continue;
+                }
+
+                string[] arguments = characterLayoutData.Layout[i].Split('.');
+                string character = arguments[0];
+                string difference;
+
+                CharacterMatarial characterMatarial = CharacterMaterialDict[character];
+
+                // 差分を指定
+                if (arguments.Length == 2)
+                {
+                    difference = arguments[1];
+                }
+                else
+                {
+                    difference = CharacterMaterialDict[character].Default.name;
                 }
 
                 // キャラクターの移動処理(配置が変化していないキャラも処理の対象)
@@ -57,10 +72,35 @@ namespace Novel
                     switch (characterLayoutData.Motion[0])
                     {
                         case "Cut":
+                            // 差分の変更
+                            if (characterState.Difference != difference)
+                            {
+                                GameObject differenceObject = Instantiate(characterMatarial.CharacterDifferenceDict[difference], characterState.Parent.transform);
+                                characterState.ChangeDifference(difference, differenceObject);
+                            }
+
+                            // 移動
                             characterState.Parent.transform.localPosition = new Vector2(-_width / 2 + _margin + (i + 1) * space, 0);
                             break;
 
                         default:
+                            // 差分の変更
+                            if (characterState.Difference != difference)
+                            {
+                                // 新たな差分のインスタンス化とフェードイン
+                                GameObject differenceObject = Instantiate(characterMatarial.CharacterDifferenceDict[difference], characterState.Parent.transform);
+                                Image characterImage = differenceObject.GetComponent<Image>();
+                                SetTransparent(characterImage);
+                                sequence.Join(characterImage.DOFade(1f, _shortDuration));
+
+                                // 前の差分のフェードアウト
+                                sequence.Join(characterState.CharacterObject.GetComponent<Image>().DOFade(0f, _shortDuration).OnComplete(() =>
+                                {
+                                    characterState.ChangeDifference(difference, differenceObject);
+                                }));
+                            }
+
+                            // 移動
                             sequence.Join(characterState.Parent.transform.DOLocalMove(new Vector2(-_width / 2 + _margin + (i + 1) * space, 0), NovelManager.Instance.Duration).SetEase(Ease.InOutQuad));
                             break;
                     }
@@ -69,7 +109,8 @@ namespace Novel
                 else
                 {
                     CharacterState characterState = new CharacterState(character, _characterParent);
-                    characterState.ChangeDifference(CharacterMaterialDict[character].Default.name, Instantiate(CharacterMaterialDict[character].Default, characterState.Parent.transform));
+                    GameObject differenceObject = Instantiate(characterMatarial.CharacterDifferenceDict[difference], characterState.Parent.transform);
+                    characterState.ChangeDifference(difference, differenceObject);
                     currentCharacter[character] = characterState;
                     switch (characterLayoutData.Motion[0])
                     {
@@ -104,12 +145,10 @@ namespace Novel
                 }
             }
 
-            List<GameObject> exitCharacter = new List<GameObject>();
-
             // キャラクターの退場処理
             foreach (string character in _preCharacter.Keys)
             {
-                if (!characterLayoutData.Layout.Contains(character))
+                if (!currentCharacter.ContainsKey(character))
                 {
                     CharacterState characterState = _preCharacter[character];
 
@@ -141,7 +180,6 @@ namespace Novel
                             sequence.Join(characterState.CharacterObject.GetComponent<Image>().DOFade(0f, NovelManager.Instance.Duration).OnComplete(() =>
                             {
                                 characterState.DestroyCharacter();
-                                Debug.Log("end");
                             }));
                             break;
                     }
@@ -184,7 +222,7 @@ namespace Novel
                 if (CharacterObject != null)
                 {
                     DestroyCharacterChildren();
-                    Destroy(CharacterObject);
+                    Destroy(CharacterObject, 5f);
                 }
 
                 CharacterObject = characterObject;
@@ -202,7 +240,7 @@ namespace Novel
             {
                 foreach (Transform child in CharacterObject.transform)
                 {
-                    Destroy(child.gameObject);
+                    Destroy(child.gameObject, 5f);
                 }
             }
         }
