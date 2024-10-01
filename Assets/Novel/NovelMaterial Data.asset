@@ -16,13 +16,19 @@ MonoBehaviour:
   - _name: Hero
     _default: {fileID: 2286995298420433717, guid: 51606bddb971c1847b3802a18e556fc5, type: 3}
     _characterDifferences:
-    - {fileID: 7961131946050326322, guid: e924bc38ef5dba04c9b58b09018b677d, type: 3}
-  - _name: Urura
-    _default: {fileID: 5972782281776397193, guid: 637f05f71d5dbea419e8f9aea4d55311, type: 3}
-    _characterDifferences: []
+    - {fileID: 8258319550622103988, guid: 2cf3c0d4b07aa9448981e8d7e7909a76, type: 3}
+    - {fileID: 2223039611914463982, guid: 125927c3430aeca49b4c12430ccd8043, type: 3}
+    - {fileID: 2147373818694231385, guid: aca466b5ea4e4a3488bdc3a16aedf181, type: 3}
+  - _name: Hero_stick
+    _default: {fileID: 2114099429756566637, guid: 9c5c117b3a2f4dc4cb2c47206f505831, type: 3}
+    _characterDifferences:
+    - {fileID: 1420352047405250186, guid: 7cc30a22bb090254b9325437024a1ee0, type: 3}
+    - {fileID: 228890613793695131, guid: 2fe6638ab1a716f4c9cdcd60fd4dab3b, type: 3}
+    - {fileID: 723325534500880680, guid: 8c1509443ea699a419c1391f7dbc77d5, type: 3}
   - _name: Libelta
     _default: {fileID: 6532444791575691359, guid: 840f27c7c9db7db4c9afe04f6cf93826, type: 3}
-    _characterDifferences: []
+    _characterDifferences:
+    - {fileID: 4727264462351100731, guid: 2abfff32a6085a844bcf8b32eeccac19, type: 3}
   - _name: Coworker
     _default: {fileID: 618201589054293405, guid: 3898526cf6ed2194caed40107c30721f, type: 3}
     _characterDifferences: []
@@ -35,18 +41,22 @@ MonoBehaviour:
   - _name: MobC
     _default: {fileID: 7243294335463189136, guid: aea7d3f4ee92cf64aa52f8dc89c7bc7e, type: 3}
     _characterDifferences: []
-  - _name: Villager_blue_happy
+  - _name: Villager_blue1
     _default: {fileID: 9188927887095765375, guid: 387e4bb48bde197468ffd8683d3dde2c, type: 3}
-    _characterDifferences: []
-  - _name: Villager_blue_fear
-    _default: {fileID: 1672589173168313610, guid: 947ad29b6e7d0b147bd1393ba675949d, type: 3}
-    _characterDifferences: []
-  - _name: Villager_green_happy
+    _characterDifferences:
+    - {fileID: 1672589173168313610, guid: 947ad29b6e7d0b147bd1393ba675949d, type: 3}
+  - _name: Villager_blue2
+    _default: {fileID: 9188927887095765375, guid: 387e4bb48bde197468ffd8683d3dde2c, type: 3}
+    _characterDifferences:
+    - {fileID: 1672589173168313610, guid: 947ad29b6e7d0b147bd1393ba675949d, type: 3}
+  - _name: Villager_green1
     _default: {fileID: 7668222286354816790, guid: 16e80c679f4b13744b02f30b9df68016, type: 3}
-    _characterDifferences: []
-  - _name: Villager_green_fear
-    _default: {fileID: 852095377352495529, guid: c2865f2a2f040904fa04cd71a78fee2a, type: 3}
-    _characterDifferences: []
+    _characterDifferences:
+    - {fileID: 852095377352495529, guid: c2865f2a2f040904fa04cd71a78fee2a, type: 3}
+  - _name: Villager_green2
+    _default: {fileID: 7668222286354816790, guid: 16e80c679f4b13744b02f30b9df68016, type: 3}
+    _characterDifferences:
+    - {fileID: 852095377352495529, guid: c2865f2a2f040904fa04cd71a78fee2a, type: 3}
   - _name: GatekeeperA
     _default: {fileID: 5265124079928218263, guid: 2624c884cc6b54e40a50daa573ba543d, type: 3}
     _characterDifferences: []

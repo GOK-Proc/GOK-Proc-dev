@@ -13,6 +13,8 @@ namespace Novel
         public Dictionary<string, GameObject> BackgroundImageDict { get; set; }
 
         [SerializeField] private Transform _backgroundParent;
+        [SerializeField] private GameObject _namePanel;
+        [SerializeField] private GameObject _dialoguePanel;
 
         private GameObject _preBackground;
 
@@ -38,6 +40,10 @@ namespace Novel
                         if (backgroundData.Background == "Blackout")
                         {
                             sequence.Join(_preBackground.GetComponent<Image>().DOFade(0f, NovelManager.Instance.Duration).SetEase(Ease.Linear));
+
+                            // 枠を非表示にする
+                            _namePanel.SetActive(false);
+                            _dialoguePanel.SetActive(false);
                         }
                         else
                         {
@@ -48,9 +54,7 @@ namespace Novel
 
                             backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background], _backgroundParent);
                             Image backgroundImage = backgroundObject.GetComponent<Image>();
-                            Color color = backgroundImage.color;
-                            color.a = 0f;
-                            backgroundImage.color = color;
+                            SetTransparent(backgroundImage);
 
                             sequence.Join(backgroundImage.DOFade(1f, NovelManager.Instance.Duration).SetEase(Ease.Linear));
                         }
@@ -62,11 +66,14 @@ namespace Novel
                         {
                             backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background], _backgroundParent);
                             Image backgroundImage = backgroundObject.GetComponent<Image>();
-                            Color color = backgroundImage.color;
-                            color.a = 0f;
-                            backgroundImage.color = color;
+                            SetTransparent(backgroundImage);
 
-                            sequence.Join(backgroundImage.DOFade(1f, NovelManager.Instance.Duration).SetEase(Ease.Linear));
+                            sequence.Join(backgroundImage.DOFade(1f, NovelManager.Instance.Duration).SetEase(Ease.Linear).OnComplete(() =>
+                            {
+                                // 枠を表示する
+                                _namePanel.SetActive(true);
+                                _dialoguePanel.SetActive(true);
+                            }));
                         }
                     }
                     break;
@@ -75,7 +82,19 @@ namespace Novel
                     if (backgroundData.Background != "Blackout")
                     {
                         Destroy(_preBackground);
-                        backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background]);
+                        backgroundObject = Instantiate(BackgroundImageDict[backgroundData.Background], _backgroundParent);
+
+                        // 枠を表示する
+                        _namePanel.SetActive(true);
+                        _dialoguePanel.SetActive(true);
+                    }
+                    else
+                    {
+                        Destroy(_preBackground);
+
+                        // 枠を非表示にする
+                        _namePanel.SetActive(false);
+                        _dialoguePanel.SetActive(false);
                     }
                     break;
 
@@ -89,6 +108,13 @@ namespace Novel
             {
                 NovelManager.Instance.IsProcessingBackground = false;
             });
+        }
+
+        private void SetTransparent(Image image)
+        {
+            Color color = image.color;
+            color.a = 0f;
+            image.color = color;
         }
     }
 }

@@ -12,11 +12,12 @@ namespace Novel
         {
             {"Bgm_village", "Town" },
             {"Bgm_forest", "Forest" },
-            {"Se_warning", "Novel_SE_temp/Se_temp" },
-            {"Se_footstep", "Novel_SE_temp/Se_temp" },
-            {"Se_sword", "Novel_SE_temp/Se_temp" },
+            {"Se_warning", "Novel_SE_temp/SN1" },
+            {"Se_footstep", "Novel_SE_temp/SN2" },
+            {"Se_sword", "Novel_SE_temp/SN3" },
             {"Se_magic", "Novel_SE_temp/Se_temp" },
-            {"Se_break", "Novel_SE_temp/Se_temp" }
+            {"Se_break", "Novel_SE_temp/SN5" },
+            {"Se_power", "Novel_SE_temp/SN6" }
         };
 
         public void UpdateSound(SoundData SoundData)
@@ -54,7 +55,23 @@ namespace Novel
             {
                 // SEは再生が終わるまで待機
                 NovelManager.Instance.IsProcessingSound = true;
-                BGMManager.Instance.Play("BGM/" + _soundDict[SoundData.Sound], isLoop: false, allowsDuplicate: true, callback: () => NovelManager.Instance.IsProcessingSound = false);
+                SEManager.Instance.Play("SE/" + _soundDict[SoundData.Sound], isLoop: false, callback: () => NovelManager.Instance.IsProcessingSound = false);
+            }
+            else if (prefix == "Stop")
+            {
+                switch (SoundData.Motion)
+                {
+                    case "Fade":
+                        BGMManager.Instance.FadeOut(NovelManager.Instance.Duration);
+                        break;
+
+                    case "Cut":
+                        BGMManager.Instance.Stop();
+                        break;
+
+                    default:
+                        throw new Exception("BGMの変化方法が正しく指定されていません。");
+                }
             }
             else
             {

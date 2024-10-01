@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5814223602251897884
+--- !u!1 &8258319550622103988
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7336206564837398783}
-  - component: {fileID: 3083618077799957876}
-  - component: {fileID: 5216410552979608145}
+  - component: {fileID: 5619355569756481890}
+  - component: {fileID: 1175382109556552617}
+  - component: {fileID: 697774127141612593}
   m_Layer: 5
-  m_Name: Gate
+  m_Name: angry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &7336206564837398783
+--- !u!224 &5619355569756481890
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5814223602251897884}
+  m_GameObject: {fileID: 8258319550622103988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 1373, y: 2878.1003}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3083618077799957876
+--- !u!222 &1175382109556552617
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5814223602251897884}
+  m_GameObject: {fileID: 8258319550622103988}
   m_CullTransparentMesh: 1
---- !u!114 &5216410552979608145
+--- !u!114 &697774127141612593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5814223602251897884}
+  m_GameObject: {fileID: 8258319550622103988}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 024754ae699c85d46b3634087ce5c4cf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

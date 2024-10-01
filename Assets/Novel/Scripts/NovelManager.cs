@@ -79,9 +79,9 @@ namespace Novel
 
             Duration = _defaultDuration;
 
-            List<OperationData> lineOperationList = _scenarioData.ScenarioLines[_currentLine];
+            List<IOperationData> lineOperationList = _scenarioData.ScenarioLines[_currentLine];
 
-            foreach (OperationData lineOperation in lineOperationList)
+            foreach (IOperationData lineOperation in lineOperationList)
             {
                 lineOperation.ExecuteOperation();
             }

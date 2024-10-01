@@ -13,7 +13,6 @@ public static class BGMPath{
 	public const string MAP_LOOP            = "BGM/Map_Loop";
 	public const string MODE_INTRO          = "BGM/Mode_Intro";
 	public const string MODE_LOOP           = "BGM/Mode_Loop";
-	public const string SE_TEMP             = "BGM/Novel_SE_temp/Se_temp";
 	public const string SETTING             = "BGM/Setting";
 	public const string TENTION             = "BGM/Tention";
 	public const string TOWN                = "BGM/Town";
