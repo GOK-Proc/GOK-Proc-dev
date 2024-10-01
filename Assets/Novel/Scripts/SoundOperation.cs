@@ -12,12 +12,12 @@ namespace Novel
         {
             {"Bgm_village", "Town" },
             {"Bgm_forest", "Forest" },
-            {"Se_warning", "Novel_SE_temp/SN1_Grandioso" },
-            {"Se_footstep", "Novel_SE_temp/SN2_Grandioso" },
-            {"Se_sword", "Novel_SE_temp/SN3_Grandioso" },
+            {"Se_warning", "Novel_SE_temp/SN1" },
+            {"Se_footstep", "Novel_SE_temp/SN2" },
+            {"Se_sword", "Novel_SE_temp/SN3" },
             {"Se_magic", "Novel_SE_temp/Se_temp" },
-            {"Se_break", "Novel_SE_temp/SN5_Grandioso" },
-            {"Se_power", "Novel_SE_temp/SN6_Grandioso" }
+            {"Se_break", "Novel_SE_temp/SN5" },
+            {"Se_power", "Novel_SE_temp/SN6" }
         };
 
         public void UpdateSound(SoundData SoundData)
