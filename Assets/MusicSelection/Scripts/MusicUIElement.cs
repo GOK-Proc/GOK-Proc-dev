@@ -1,16 +1,19 @@
 ﻿using System;
-using TMPro;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 using Gallery;
-using KanKikuchi.AudioManager;
 using Transition;
+using KanKikuchi.AudioManager;
 
 namespace MusicSelection
 {
-    public class MusicUIElement : MonoBehaviour
+    public class MusicUIElement : MonoBehaviour, ISubmitHandler, ICancelHandler, ISelectHandler,
+        IDeselectHandler
     {
-        private bool _isInited = false;
+        private bool _isInitialized = false;
 
         private RhythmId _rhythmId;
         private TextMeshProUGUI _text;
@@ -18,14 +21,19 @@ namespace MusicSelection
         private Scrollbar _scrollbar;
         private ThumbnailBase _thumbnailBase;
 
+        private Coroutine _bgmSwitchCor;
+
         private const int NormalFontSize = 48;
         private const int FontSizeWhenSelected = 60;
 
         public void Init(TrackInformation info, Scrollbar scrollbar, ThumbnailBase thumbnailBase)
         {
-            if (_isInited)
+            if (_isInitialized)
+            {
                 throw new InvalidOperationException("This instance has already been initialized.");
-            _isInited = true;
+            }
+
+            _isInitialized = true;
 
             _trackInfo = info;
             _rhythmId = info.HasBeatmap switch
@@ -44,32 +52,47 @@ namespace MusicSelection
 
         // ギャラリーでは必要ない．
         // InputSystemUIInputModuleのインスペクターでSubmitをNoneにすることで解決
-        public void OnSubmit()
+        public void OnSubmit(BaseEventData _)
         {
             if (_rhythmId == RhythmId.None) return;
 
-            SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current,
-                false);
+            StopCoroutine(_bgmSwitchCor);
+            SceneTransitionManager.TransitionToRhythm(_rhythmId, DifficultySelection.Current);
         }
 
-        public void OnCancel()
+        public void OnCancel(BaseEventData _)
         {
             SceneTransitionManager.TransitionToModeSelection();
         }
 
-        public void OnSelect()
+        public void OnSelect(BaseEventData _)
         {
             _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
             _thumbnailBase.Set(_trackInfo);
 
-            BGMManager.Instance.Play(_trackInfo.Intro, _trackInfo.Sound);
+            _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
         }
 
-        public void OnDeselect()
+        public void OnDeselect(BaseEventData _)
         {
             _text.fontSize = NormalFontSize;
-            // TODO: ここで対応する楽曲を停止
+
+            StopCoroutine(_bgmSwitchCor);
+        }
+
+        private IEnumerator SwitchBGMIfNeeded()
+        {
+            // この曲が選択されてから，一定時間以上選択されたままになっているか？
+            // Yes -> 曲を切り替える
+            // No  -> 「通り道」で選択されただけとみなして曲はそのまま
+
+            // InputSystemUIInputModule.MoveRepeatDelayに合わせて0.5秒待つ
+            yield return new WaitForSeconds(0.5f);
+
+            BGMManager.Instance.FadeOut(0.3f);
+            BGMManager.Instance.Play(_trackInfo.Intro, _trackInfo.Sound,
+                delay: 0.5f, allowsDuplicate: true);
         }
     }
 }

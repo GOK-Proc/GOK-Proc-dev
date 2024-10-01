@@ -81,7 +81,7 @@ namespace Rhythm
             }
         }
 
-        protected void Destroy()
+        protected virtual void Destroy()
         {
             IsAlive = false;
 

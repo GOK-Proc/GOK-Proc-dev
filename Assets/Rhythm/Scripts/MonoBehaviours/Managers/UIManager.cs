@@ -30,6 +30,7 @@ namespace Rhythm
         [SerializeField] private Vector3 _judgeFontDelta;
         [SerializeField] private float _laneFlashDuration;
         [SerializeField] private float _laneFlashFadeDuration;
+        [SerializeField] private float _knockoutFadeDuration;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -39,7 +40,9 @@ namespace Rhythm
         [SerializeField] private SpriteRenderer _enemyRenderer;
 
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
+        [SerializeField] private TextMeshProUGUI _playerHitPointText;
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
+        [SerializeField] private TextMeshProUGUI _enemyHitPointText;
 
         [System.Serializable]
         private struct EffectPrefab
@@ -55,6 +58,7 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _judgeFontPrefabs;
         [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private Transform _effectParent;
+        [SerializeField] private CanvasGroup _knockout;
 
         [SerializeField] private TextMeshProUGUI _titleText;
         [SerializeField] private TextMeshProUGUI _composerText;
@@ -134,7 +138,9 @@ namespace Rhythm
         [SerializeField] private TextMeshProUGUI _battleResultMaxComboCount;
         [SerializeField] private TextMeshProUGUI[] _battleResultComboLabel;
         [SerializeField] private Image _battleResultPlayerGaugeImage;
+        [SerializeField] private TextMeshProUGUI _battleResultPlayerHitPointText;
         [SerializeField] private Image _battleResultEnemyGaugeImage;
+        [SerializeField] private TextMeshProUGUI _battleResultEnemyHitPointText;
 
         [Space(20)]
         [SerializeField] private RectTransform _rhythmResultBox;
@@ -155,7 +161,6 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private RectTransform _pauseBox;
         [SerializeField] private TextMeshProUGUI _countDownNumber;
-        [SerializeField] private RectTransform _pauseMenuCursor;
  
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
@@ -262,71 +267,58 @@ namespace Rhythm
             gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
         }
 
-        public void DamagePlayer(float hitPoint, float maxHitPoint)
+        private void SetHitPointText(TextMeshProUGUI text, float hitPoint, float maxHitPoint)
         {
-            void Draw()
-            {
-                var value = hitPoint / maxHitPoint;
-
-                DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
-                SetBattleGaugeColor(_playerGaugeRenderer, value);
-
-                if (_playerShakeTween != null)
-                {
-                    _playerShakeTween.Kill();
-                    _player.position = _playerPosition;
-                }
-
-                _playerShakeTween = _player.DOShakePosition(_shakeDuration);
-            }
-
-            IEnumerator DelayedDraw()
-            {
-                yield return new WaitForSeconds(_attackEffectDuration);
-
-                Draw();
-            }
-
-            StartCoroutine(DelayedDraw());
+            text.SetText("{0} <size=-6>/{1}", Mathf.CeilToInt(hitPoint), Mathf.CeilToInt(maxHitPoint));
         }
 
-        public void DamageEnemy(float hitPoint, float maxHitPoint)
-        {
-            void Draw()
-            {
-                var value = hitPoint / maxHitPoint;
-
-                DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
-                SetBattleGaugeColor(_enemyGaugeRenderer, value);
-
-                if (_enemyShakeTween != null)
-                {
-                    _enemyShakeTween.Kill();
-                    _enemy.position = _enemyPosition;
-                }
-
-                _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
-            }
-
-            IEnumerator DelayedDraw()
-            {
-                yield return new WaitForSeconds(_defenseEffectDuration);
-
-                Draw();
-            }
-
-            StartCoroutine(DelayedDraw());
-        }
-
-        public void HealPlayer(float hitPoint, float maxHitPoint)
+        public void DrawPlayerGauge(float hitPoint, float maxHitPoint)
         {
             var value = hitPoint / maxHitPoint;
 
             DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
             SetBattleGaugeColor(_playerGaugeRenderer, value);
+            SetHitPointText(_playerHitPointText, hitPoint, maxHitPoint);
+        }
 
+        public void DrawEnemyGauge(float hitPoint, float maxHitPoint)
+        {
+            var value = hitPoint / maxHitPoint;
+
+            DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
+            SetBattleGaugeColor(_enemyGaugeRenderer, value);
+            SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint);
+        }
+
+        public Sequence DelayAttackDuration() => DOTween.Sequence().AppendInterval(_attackEffectDuration);
+        
+        public void DrawPlayerDamageEffect()
+        {
+            if (_playerShakeTween != null)
+            {
+                _playerShakeTween.Kill();
+                _player.position = _playerPosition;
+            }
+
+            _playerShakeTween = _player.DOShakePosition(_shakeDuration);
+        }
+
+        public Sequence DelayDefenseDuration() => DOTween.Sequence().AppendInterval(_defenseEffectDuration);
+
+        public void DrawEnemyDamageEffect()
+        {
+            if (_enemyShakeTween != null)
+            {
+                _enemyShakeTween.Kill();
+                _enemy.position = _enemyPosition;
+            }
+
+            _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
+        }
+
+        public void DrawPlayerHealEffect()
+        {
             // ToDo: Effect
-
         }
 
         public void DrawJudgeEffect(Vector3 position, Judgement judgement)
@@ -604,10 +596,12 @@ namespace Rhythm
             var playerValue = playerHitPoint / playerMaxHitPoint;
             DrawGauge(_battleResultPlayerGauge, _battleResultPlayerGaugePosition, _battleResultPlayerGaugeSizeDelta, playerValue);
             SetBattleGaugeColor(_battleResultPlayerGaugeImage, playerValue);
+            SetHitPointText(_battleResultPlayerHitPointText, playerHitPoint, playerMaxHitPoint);
 
             var enemyValue = enemyHitPoint / enemyMaxHitPoint;
             DrawGauge(_battleResultEnemyGauge, _battleResultEnemyGaugePosition, _battleResultEnemyGaugeSizeDelta, enemyValue);
             SetBattleGaugeColor(_battleResultEnemyGaugeImage, enemyValue);
+            SetHitPointText(_battleResultEnemyHitPointText, enemyHitPoint, enemyMaxHitPoint);
 
             var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
 
@@ -738,7 +732,6 @@ namespace Rhythm
         public Tweener DrawPauseScreen()
         {
             _pauseBoxCanvasGroup.alpha = 0f;
-            _pauseMenuCursor.gameObject.SetActive(true);
             _pauseBox.gameObject.SetActive(true);
 
             return _pauseBoxCanvasGroup.DOFade(1f, _pauseBoxDuration).SetUpdate(true);
@@ -746,8 +739,6 @@ namespace Rhythm
 
         public Tweener ErasePauseScreen()
         {
-            _pauseMenuCursor.gameObject.SetActive(false);
-
             return _pauseBoxCanvasGroup.DOFade(0f, _pauseBoxDuration).SetUpdate(true).OnComplete(() =>
             {
                 _pauseBox.gameObject.SetActive(false);
@@ -769,11 +760,12 @@ namespace Rhythm
             return sequence;
         }
 
-        public void SetPauseCursorPositionY(float y)
+        public void DrawKnockout()
         {
-            var pos = _pauseMenuCursor.transform.position;
-            pos.y = y;
-            _pauseMenuCursor.transform.position = pos;
+            _knockout.alpha = 0f;
+            _knockout.gameObject.SetActive(true);
+
+            _knockout.DOFade(1f, _knockoutFadeDuration);
         }
 
     }

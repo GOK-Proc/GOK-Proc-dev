@@ -356,6 +356,8 @@ GameObject:
   - component: {fileID: 649728881019620247}
   - component: {fileID: 9056070086468347527}
   - component: {fileID: 1812604396169786994}
+  - component: {fileID: 7598661210168325736}
+  - component: {fileID: 6992643706804556998}
   m_Layer: 5
   m_Name: EpisodeBox
   m_TagString: Untagged
@@ -479,3 +481,32 @@ MonoBehaviour:
   _episodeNumberText: {fileID: 7257399409865045128}
   _titleText: {fileID: 7733522467447737108}
   _vsIcon: {fileID: 7706141938822488905}
+--- !u!114 &7598661210168325736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840880467909540305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb28c71f8f7ac744a9388824a38e66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 1
+  _cancel: 1
+  _deselect: 1
+--- !u!114 &6992643706804556998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840880467909540305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d78658ebae395b4ca71d38cba270873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 1
+  _cancel: 0

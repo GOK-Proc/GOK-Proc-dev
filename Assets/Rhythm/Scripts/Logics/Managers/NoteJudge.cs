@@ -12,9 +12,10 @@ namespace Rhythm
         private readonly IJudgeCountable _judgeCountable;
         private readonly IBattleMode _battle;
         private readonly IRhythmMode _rhythm;
+        private readonly ISoundPlayable _soundPlayable;
         private readonly IEffectDrawable _effectDrawable;
 
-        public NoteJudge(bool isVs, in NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattleMode battle, IRhythmMode rhythm, IEffectDrawable effectDrawable)
+        public NoteJudge(bool isVs, in NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattleMode battle, IRhythmMode rhythm, ISoundPlayable soundPlayable, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
             _layout = layout;
@@ -22,6 +23,7 @@ namespace Rhythm
             _judgeCountable = judgeCountable;
             _battle = battle;
             _rhythm = rhythm;
+            _soundPlayable = soundPlayable;
             _effectDrawable = effectDrawable;
         }
 
@@ -36,6 +38,7 @@ namespace Rhythm
                     if (judge != Judgement.Undefined)
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
+                        _soundPlayable.PlaySE($"Hit{note.Color.ToStringQuickly()}{(note.IsLarge ? "L" : "")}");
                         _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         _effectDrawable.DrawJudgeFontEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         if (_isVs)

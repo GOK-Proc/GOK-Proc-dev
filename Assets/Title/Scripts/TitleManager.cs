@@ -1,5 +1,4 @@
 using UnityEngine;
-using KanKikuchi.AudioManager;
 using Transition;
 
 namespace Title

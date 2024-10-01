@@ -40,7 +40,7 @@ namespace Map
 					break;
 				case EpisodeType.Rhythm:
 					//TODO: Difficultyは暫定 設定を参照する
-					SceneTransitionManager.TransitionToRhythm(_info.RhythmId, Difficulty.Expert, true);
+					SceneTransitionManager.TransitionToRhythm(_info.RhythmId, Difficulty.Hard, true);
 					break;
 			}
 		}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using KanKikuchi.AudioManager;
 using Rhythm;
 
 namespace MusicSelection
@@ -37,6 +38,9 @@ namespace MusicSelection
 
         public void SelectNextHarder()
         {
+            if (IsHardest) return;
+
+            SystemSoundEffect.PlaySelect();
             Current = Current switch
             {
                 Difficulty.Easy => Difficulty.Hard,
@@ -48,6 +52,9 @@ namespace MusicSelection
 
         public void SelectNextEasier()
         {
+            if (IsEasiest) return;
+
+            SystemSoundEffect.PlaySelect();
             Current = Current switch
             {
                 Difficulty.Easy => Difficulty.Easy,

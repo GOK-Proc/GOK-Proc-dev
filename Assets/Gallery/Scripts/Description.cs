@@ -1,6 +1,7 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+using KanKikuchi.AudioManager;
 
 namespace Gallery
 {
@@ -46,6 +47,7 @@ namespace Gallery
             var pageIsLast = _text.pageToDisplay >= _text.textInfo.pageCount;
             if (pageIsLast) return;
 
+            SystemSoundEffect.PlaySelect();
             _text.pageToDisplay++;
             _dotIndicator.Indicate(_text.pageToDisplay);
         }
@@ -56,6 +58,7 @@ namespace Gallery
             var pageIsFirst = _text.pageToDisplay <= 1;
             if (pageIsFirst) return;
 
+            SystemSoundEffect.PlaySelect();
             _text.pageToDisplay--;
             _dotIndicator.Indicate(_text.pageToDisplay);
         }

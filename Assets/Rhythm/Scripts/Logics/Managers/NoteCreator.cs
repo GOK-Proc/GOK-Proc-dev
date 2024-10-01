@@ -40,7 +40,7 @@ namespace Rhythm
         private int _noteCount;
 
 
-        public NoteCreator(bool isVs, IList<NoteData> noteData, IList<LineData> lineData, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, RhythmGameObject linePrefab, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, IEffectDrawable effectDrawable)
+        public NoteCreator(bool isVs, IList<NoteData> noteData, IList<LineData> lineData, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, RhythmGameObject linePrefab, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, ISoundPlayable soundPlayable, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
             _noteData = noteData;
@@ -52,7 +52,7 @@ namespace Rhythm
 
             _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
             _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
-            _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(timeProvider, colorInputProvider)));
+            _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(timeProvider, colorInputProvider, soundPlayable)));
             _linePool = new ObjectPool<RhythmGameObject>(linePrefab, parent);
             _holdMasks = holdMasks;
             _timeProvider = timeProvider;

@@ -740,8 +740,8 @@ MonoBehaviour:
   _sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   _size: 16
   _interval: 36
-  _activeColor: {r: 0, g: 0, b: 0, a: 1}
-  _inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _activeColor: {r: 0.22352941, g: 0.22352941, b: 0.22352941, a: 1}
+  _inactiveColor: {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
 --- !u!1 &1114070502
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,17 +793,17 @@ MonoBehaviour:
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
+  m_PointAction: {fileID: 0}
   m_MoveAction: {fileID: -8784545083839296357, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_SubmitAction: {fileID: 0}
   m_CancelAction: {fileID: 7727032971491509709, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!114 &1114070507
