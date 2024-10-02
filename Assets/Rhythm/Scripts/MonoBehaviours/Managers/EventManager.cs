@@ -11,12 +11,14 @@ namespace Rhythm
     public class EventManager : MonoBehaviour
     {
         private bool _isVs;
+        private bool _isTutorial;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
         private ISoundVolumeAdjustable _soundVolumeAdjustable;
         private IColorInputProvider _colorInputProvider;
         private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
+        private ITutorialDrawable _tutorialDrawable;
 
         [SerializeField] private PlayerInput _playerInput;
 
@@ -31,15 +33,17 @@ namespace Rhythm
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable)
+        public void Initialize(bool isVs, bool isTutorial, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable)
         {
             _isVs = isVs;
+            _isTutorial = isTutorial;
             _battleMode = battleMode;
             _soundPlayable = soundPlayable;
             _soundVolumeAdjustable = soundVolumeAdjustable;
             _colorInputProvider = colorInputProvider;
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
+            _tutorialDrawable = tutorialDrawable;
         }
 
         public void OnBattleNextButtonClick()
@@ -48,7 +52,15 @@ namespace Rhythm
             {
                 _battleNextButton.interactable = false;
                 _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
-                SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
+                if (_isTutorial)
+                {
+                    SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
+                }
+                else
+                {
+                    SceneTransitionManager.CurrentIsTutorial = false;
+                    SceneTransitionManager.TransitionToRhythm(SceneTransitionManager.CurrentRhythmId, SceneTransitionManager.CurrentDifficulty, true);
+                }
             }
             catch
             {
@@ -79,7 +91,7 @@ namespace Rhythm
             _seVolumeSlider.interactable = false;
             _noteSeVolumeSlider.interactable = false;
 
-            _pauseScreenDrawable.ErasePauseScreen().OnComplete(() =>
+            _pauseScreenDrawable.ErasePauseScreen().onComplete += () =>
             {
                 _colorInputProvider.IsColorInputValid = false;
                 _moveInputProvider.IsMoveInputValid = false;
@@ -96,7 +108,7 @@ namespace Rhythm
                 });
 
                 sequence.Play();
-            });
+            };
         }
 
         public void OnPauseQuitButtonClick()
@@ -163,6 +175,19 @@ namespace Rhythm
             if (context.performed)
             {
                 OnPauseResumeButtonClick();
+            }
+        }
+
+        public void OnTutorialResume(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                _tutorialDrawable.EraseTutorial().onComplete += () =>
+                {
+                    _playerInput.SwitchCurrentActionMap("Rhythm");
+                    _soundPlayable.UnPauseMusic();
+                    Time.timeScale = 1;
+                };
             }
         }
 

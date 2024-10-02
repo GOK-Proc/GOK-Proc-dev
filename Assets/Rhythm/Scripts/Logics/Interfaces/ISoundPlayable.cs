@@ -2,6 +2,7 @@
 {
     public interface ISoundPlayable
     {
+        bool IsPlayingMusic { get; }
         void PlayMusic();
         void StopMusic();
         void PauseMusic();

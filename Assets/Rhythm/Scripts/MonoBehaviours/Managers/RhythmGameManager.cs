@@ -96,6 +96,7 @@ namespace Rhythm
         [SerializeField] private string _defaultId;
         [SerializeField] private Difficulty _defaultDifficulty;
         [SerializeField] private bool _defaultIsVs;
+        [SerializeField] private bool _isTutorial;
 
         [Space(20)]
         [Header("Options")]
@@ -105,6 +106,12 @@ namespace Rhythm
         [Header("Record")]
         [SerializeField] private RecordList _recordList;
 
+        [Space(20)]
+        [Header("Tutorial")]
+        [SerializeField] private float _tutorialSpeed;
+        [SerializeField] private TutorialData _tutorialData;
+
+
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
         private TimeManager _timeManager;
@@ -113,6 +120,7 @@ namespace Rhythm
         private CursorController _cursorController;
         private SoundPlayer _soundPlayer;
         private LaneEffectManager _laneEffectManager;
+        private TutorialManager _tutorialManager;
 
         private HeaderInformation _headerInformation;
         private double _endTime;
@@ -122,6 +130,7 @@ namespace Rhythm
             var id = SceneTransitionManager.CurrentRhythmId.ToString();
             var difficulty = SceneTransitionManager.CurrentDifficulty;
             var isVs = SceneTransitionManager.CurrentIsVs;
+            var isTutorial = SceneTransitionManager.CurrentIsTutorial;
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
@@ -134,14 +143,18 @@ namespace Rhythm
                 if (!_overrideSettings) Debug.LogWarning("The specified ID does not exist. Using the default ID.");
             }
 
-            var beatmapInfo = dictionary[id];
+            if (!_isTutorial || !isVs) isTutorial = false;
+
+            if (isTutorial) difficulty = Difficulty.Easy;
+
+            var beatmapInfo = isTutorial ? _tutorialData.Beatmap : dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, _option.ScrollSpeed);
+            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, isTutorial ? _tutorialSpeed : _option.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
-            _uiManager.DrawHeader(_headerInformation);
+            _uiManager.DrawHeader(_headerInformation, isTutorial);
 
             var notePrefabs = _notePrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
@@ -172,14 +185,16 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
-            _scoreManager = new ScoreManger(isVs, id, difficulty, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _recordList);
+            _scoreManager = new ScoreManger(isVs, id, difficulty, isTutorial, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _recordList);
 
             _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _option.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _soundPlayer, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _soundPlayer, _uiManager);
 
-            _eventManager.Initialize(isVs, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager);
+            _tutorialManager = new TutorialManager(isTutorial, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
+
+            _eventManager.Initialize(isVs, isTutorial, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
             _eventManager.SetSoundVolume(_option.VolumeOption);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
@@ -197,6 +212,7 @@ namespace Rhythm
             {
                 void Update()
                 {
+                    _tutorialManager.Update();
                     _noteCreator.Create();
                     _inputManager.Update();
                     _cursorController.Move();
@@ -219,12 +235,15 @@ namespace Rhythm
 
                 while (_timeManager.Time < _endTime)
                 {
-                    var difference = _soundPlayer.Time - _timeManager.Time;
-
-                    if (Mathf.Abs((float)difference) >= _adjustThreshold)
+                    if (_soundPlayer.IsPlayingMusic)
                     {
-                        _noteCreator.AdjustPosition(difference);
-                        _timeManager.Time = _soundPlayer.Time;
+                        var difference = _soundPlayer.Time - _timeManager.Time;
+
+                        if (Mathf.Abs((float)difference) >= _adjustThreshold)
+                        {
+                            _noteCreator.AdjustPosition(difference);
+                            _timeManager.Time = _soundPlayer.Time;
+                        }
                     }
 
                     Update();

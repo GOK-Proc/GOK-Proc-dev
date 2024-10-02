@@ -16,6 +16,7 @@ namespace Transition
 		public static RhythmId CurrentRhythmId { get; private set; }
 		public static Difficulty CurrentDifficulty { get; private set; }
 		public static bool CurrentIsVs { get; private set; }
+		public static bool CurrentIsTutorial { get; set; } = true;
 		public static SceneName RecentSceneName { get; private set; }
 
 		private static CanvasGroup _overlay;

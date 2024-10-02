@@ -11,6 +11,7 @@ namespace Rhythm
         private readonly bool _isVs;
         private readonly Difficulty _difficulty;
         private readonly string _id;
+        private readonly bool _isTutorial;
 
         private readonly int[] _judgeCount;
 
@@ -75,11 +76,12 @@ namespace Rhythm
 
         public JudgeCount JudgeCount => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]);
 
-        public ScoreManger(bool isVs, string id, Difficulty difficulty, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDataHandler<RecordData[]> recordDataHandler)
+        public ScoreManger(bool isVs, string id, Difficulty difficulty, bool isTutorial, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDataHandler<RecordData[]> recordDataHandler)
         {
             _isVs = isVs;
             _difficulty = difficulty;
             _id = id;
+            _isTutorial = isTutorial;
 
             _judgeCount = new int[System.Enum.GetValues(typeof(Judgement)).Length - 1];
             _judgeRates = judgeRates;
@@ -262,7 +264,7 @@ namespace Rhythm
                             _gaugeDrawable.DrawPlayerGauge(hitPoint, maxHitPoint);
                             _gaugeDrawable.DrawPlayerDamageEffect();
                             _soundPlayable.PlaySE("PlayerDamage");
-                            IsKnockoutAfterEffect = hitPoint == 0;
+                            IsKnockoutAfterEffect = hitPoint == 0 && !_isTutorial;
                             if (alert) _soundPlayable.PlaySE("Alert");
                         });
                     }
@@ -292,7 +294,7 @@ namespace Rhythm
         {
             if (_isVs)
             {
-                _uiDrawable.DrawBattleResult(header, IsWin, _playerHitPoint, _playerMaxHitPoint, _enemyHitPoint, _enemyMaxHitPoint, JudgeCount, MaxCombo);
+                _uiDrawable.DrawBattleResult(header, IsWin, _playerHitPoint, _playerMaxHitPoint, _enemyHitPoint, _enemyMaxHitPoint, JudgeCount, MaxCombo, _isTutorial);
             }
             else
             {

@@ -10,7 +10,7 @@ using TMPro;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable
+    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable, ITutorialDrawable
     {
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
@@ -108,6 +108,7 @@ namespace Rhythm
         private Vector3 _enemyGaugeScale;
 
         [SerializeField] private Color[] _difficultyColor;
+        [SerializeField] private Color _tutorialColor;
 
         [Space(20)]
         [SerializeField] private RectTransform _score;
@@ -163,7 +164,11 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private RectTransform _pauseBox;
         [SerializeField] private TextMeshProUGUI _countDownNumber;
- 
+
+        [Space(20)]
+        [SerializeField] private CanvasGroup _tutorial;
+        [SerializeField] private RectTransform[] _tutorialRectTransform;
+
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
         private RectTransform _battleResultPlayerGauge;
@@ -181,6 +186,8 @@ namespace Rhythm
         [SerializeField] private float _resultBoxDuration;
         [SerializeField] private float _resultContentsDuration;
         [SerializeField] private float _pauseBoxDuration;
+        [SerializeField] private float _tutorialBoxDuration;
+
 
         private void Awake()
         {
@@ -535,17 +542,28 @@ namespace Rhythm
 
         public double GetTimeToCreateEnemyAttackEffect(double justTime) => justTime + _defenseEffectDuration - _hitTimeRatio * _enemyAttackEffectDuration;
 
-        public void DrawHeader(in HeaderInformation header)
+        public void DrawHeader(in HeaderInformation header, bool isTutorial)
         {
             _titleText.SetText(header.Title);
             _composerText.SetText(header.Composer);
-            _difficultyText.SetText(header.Difficulty switch {
-                Difficulty.Easy => "EASY",
-                Difficulty.Hard => "HARD",
-                Difficulty.Expert => "EXPERT",
-                _ => throw new InvalidEnumArgumentException()
-            });
-            _difficultyText.color = _difficultyColor[(int)header.Difficulty];
+
+            if (isTutorial)
+            {
+                _difficultyText.SetText("TUTORIAL");
+                _difficultyText.color = _tutorialColor;
+            }
+            else
+            {
+                _difficultyText.SetText(header.Difficulty switch
+                {
+                    Difficulty.Easy => "EASY",
+                    Difficulty.Hard => "HARD",
+                    Difficulty.Expert => "EXPERT",
+                    _ => throw new InvalidEnumArgumentException()
+                });
+                _difficultyText.color = _difficultyColor[(int)header.Difficulty];
+            }
+            
             _levelText.SetText("Lv. {0}", header.Level);
         }
 
@@ -572,7 +590,7 @@ namespace Rhythm
             }
         }
 
-        public void DrawBattleResult(in HeaderInformation header, bool isWin, float playerHitPoint, float playerMaxHitPoint, float enemyHitPoint, float enemyMaxHitPoint, JudgeCount judgeCount, int maxCombo)
+        public void DrawBattleResult(in HeaderInformation header, bool isWin, float playerHitPoint, float playerMaxHitPoint, float enemyHitPoint, float enemyMaxHitPoint, JudgeCount judgeCount, int maxCombo, bool isTutorial)
         {
             _battleResultBoxCanvasGroup.alpha = 0f;
             _battleResultContentsCanvasGroup.alpha = 0f;
@@ -584,14 +602,24 @@ namespace Rhythm
 
             _battleResultTitle.SetText(header.Title);
             _battleResultComposer.SetText(header.Composer);
-            _battleResultDifficulty.SetText(header.Difficulty switch
+
+            if (isTutorial)
             {
-                Difficulty.Easy => "EASY",
-                Difficulty.Hard => "HARD",
-                Difficulty.Expert => "EXPERT",
-                _ => throw new InvalidEnumArgumentException()
-            });
-            _battleResultDifficulty.color = _difficultyColor[(int)header.Difficulty];
+                _battleResultDifficulty.SetText("TUTORIAL");
+                _battleResultDifficulty.color = _tutorialColor;
+            }
+            else
+            {
+                _battleResultDifficulty.SetText(header.Difficulty switch
+                {
+                    Difficulty.Easy => "EASY",
+                    Difficulty.Hard => "HARD",
+                    Difficulty.Expert => "EXPERT",
+                    _ => throw new InvalidEnumArgumentException()
+                });
+                _battleResultDifficulty.color = _difficultyColor[(int)header.Difficulty];
+            }
+
             _battleResultLevel.SetText("Lv. {0}", header.Level);
 
 
@@ -739,14 +767,11 @@ namespace Rhythm
             return _pauseBoxCanvasGroup.DOFade(1f, _pauseBoxDuration).SetUpdate(true);
         }
 
-        public Tweener ErasePauseScreen()
+        public Tweener ErasePauseScreen() => _pauseBoxCanvasGroup.DOFade(0f, _pauseBoxDuration).SetUpdate(true).OnComplete(() =>
         {
-            return _pauseBoxCanvasGroup.DOFade(0f, _pauseBoxDuration).SetUpdate(true).OnComplete(() =>
-            {
-                _pauseBox.gameObject.SetActive(false);
-                _pauseBoxCanvasGroup.alpha = 1f;
-            });
-        }
+            _pauseBox.gameObject.SetActive(false);
+            _pauseBoxCanvasGroup.alpha = 1f;
+        });
 
         public Sequence DrawCountDownScreen()
         {
@@ -769,6 +794,30 @@ namespace Rhythm
 
             _knockout.DOFade(1f, _knockoutFadeDuration);
         }
+
+        public Tweener DrawTutorial(int index)
+        {
+            if (index < _tutorialRectTransform.Length)
+            {
+                for (int i = 0; i < _tutorialRectTransform.Length; i++)
+                {
+                    _tutorialRectTransform[i].gameObject.SetActive(i == index);
+                }
+                
+                _tutorial.alpha = 0f;
+                _tutorial.gameObject.SetActive(true);
+
+                return _tutorial.DOFade(1f, _tutorialBoxDuration).SetUpdate(true);
+            }
+
+            return default;
+        }
+
+        public Tweener EraseTutorial() => _tutorial.DOFade(0f, _tutorialBoxDuration).SetUpdate(true).OnComplete(() =>
+        {
+            _tutorial.gameObject.SetActive(false);
+            _tutorial.alpha = 1f;
+        });
 
     }
 }

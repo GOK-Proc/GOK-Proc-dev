@@ -108,6 +108,8 @@ namespace Rhythm
             }
         }
 
+        public bool IsPlayingMusic => _audioSource.isPlaying;
+
         public SoundPlayer(AudioSource source, AudioSource seSource, IntroSoundPlayer introSoundPlayer, AudioClip clip, IDictionary<string, AudioClipData> soundData, IDictionary<string, IntroAudioData> introData)
         {
             _audioSource = source;
