@@ -60,7 +60,6 @@ namespace Rhythm
                 }
                 else
                 {
-                    SceneTransitionManager.CurrentIsTutorial = false;
                     SceneTransitionManager.TransitionToRhythm(SceneTransitionManager.CurrentRhythmId, SceneTransitionManager.CurrentDifficulty, true);
                 }
             }

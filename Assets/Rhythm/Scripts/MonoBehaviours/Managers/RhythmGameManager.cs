@@ -140,11 +140,12 @@ namespace Rhythm
                 id = _defaultId;
                 difficulty = _defaultDifficulty;
                 isVs = _defaultIsVs;
+                isTutorial = _isTutorial;
 
                 if (!_overrideSettings) Debug.LogWarning("The specified ID does not exist. Using the default ID.");
             }
 
-            if (!_isTutorial || !isVs) isTutorial = false;
+            if (!isVs) isTutorial = false;
 
             if (isTutorial) difficulty = Difficulty.Easy;
 
