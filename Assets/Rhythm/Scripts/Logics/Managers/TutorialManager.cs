@@ -36,7 +36,7 @@ namespace Rhythm
                 {
                     if (_timeProvider.Time >= _data.Times[_next] + _data.Beatmap.Offset)
                     {
-                        _playerInput.SwitchCurrentActionMap("Tutorial");
+                        _playerInput.SwitchCurrentActionMap("None");
                         _soundPlayable.PauseMusic();
                         Time.timeScale = 0;
 

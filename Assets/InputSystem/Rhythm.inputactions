@@ -518,12 +518,6 @@
             ]
         },
         {
-            "name": "Result",
-            "id": "0ab48dc6-83a0-460b-b563-d5073539c375",
-            "actions": [],
-            "bindings": []
-        },
-        {
             "name": "Pause",
             "id": "f982c3f4-45bf-45b7-87fe-8de48903af56",
             "actions": [
@@ -600,6 +594,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "None",
+            "id": "0ab48dc6-83a0-460b-b563-d5073539c375",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []

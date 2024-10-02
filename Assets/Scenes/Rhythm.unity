@@ -3623,14 +3623,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6e9656b4b6c24aa9f24d695552937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 732199901}
   _instruction: {fileID: 878365314}
   _pages:
   - {fileID: 142343627}
   - {fileID: 2125008829}
   _instructionDuration: 0.5
   _instructionMinValue: 0.3
-  _pageDuration: 5
+  _pageDuration: 2
   _pageFadeDuration: 0.5
+  _inputDelay: 5
 --- !u!114 &245436257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5637,14 +5639,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6e9656b4b6c24aa9f24d695552937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 732199901}
   _instruction: {fileID: 1898936092}
   _pages:
   - {fileID: 65128178}
   - {fileID: 998967021}
   _instructionDuration: 0.5
   _instructionMinValue: 0.3
-  _pageDuration: 5
+  _pageDuration: 2
   _pageFadeDuration: 0.5
+  _inputDelay: 5
 --- !u!114 &349616555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27299,14 +27303,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6e9656b4b6c24aa9f24d695552937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 732199901}
   _instruction: {fileID: 437531181}
   _pages:
   - {fileID: 194212332}
   - {fileID: 1420357166}
   _instructionDuration: 0.5
   _instructionMinValue: 0.3
-  _pageDuration: 5
+  _pageDuration: 2
   _pageFadeDuration: 0.5
+  _inputDelay: 5
 --- !u!1 &1680547753
 GameObject:
   m_ObjectHideFlags: 0
@@ -27499,14 +27505,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6e9656b4b6c24aa9f24d695552937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 732199901}
   _instruction: {fileID: 710950874}
   _pages:
   - {fileID: 1924376151}
   - {fileID: 1612007311}
   _instructionDuration: 0.5
   _instructionMinValue: 0.3
-  _pageDuration: 5
+  _pageDuration: 2
   _pageFadeDuration: 0.5
+  _inputDelay: 5
 --- !u!114 &1682236610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30313,7 +30321,7 @@ MonoBehaviour:
     - 29.3333
     - 40
     - 50.6666
-    - 70.6666
+    - 61.3333
 --- !u!4 &1770842084
 Transform:
   m_ObjectHideFlags: 0
@@ -32354,14 +32362,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6e9656b4b6c24aa9f24d695552937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 732199901}
   _instruction: {fileID: 665701011}
   _pages:
   - {fileID: 1668955527}
   - {fileID: 2043201812}
   _instructionDuration: 0.5
   _instructionMinValue: 0.3
-  _pageDuration: 5
+  _pageDuration: 2
   _pageFadeDuration: 0.5
+  _inputDelay: 5
 --- !u!114 &1934431426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33187,14 +33197,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6e9656b4b6c24aa9f24d695552937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 732199901}
   _instruction: {fileID: 398646946}
   _pages:
   - {fileID: 1566361894}
   - {fileID: 279418754}
   _instructionDuration: 0.5
   _instructionMinValue: 0.3
-  _pageDuration: 5
+  _pageDuration: 2
   _pageFadeDuration: 0.5
+  _inputDelay: 5
 --- !u!114 &2011557389
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -257,7 +257,7 @@ namespace Rhythm
                     yield return null;
                 }
 
-                _playerInput.SwitchCurrentActionMap("Result");
+                _playerInput.SwitchCurrentActionMap("None");
 
                 if (_scoreManager.IsWin || _scoreManager.IsClear)
                 {

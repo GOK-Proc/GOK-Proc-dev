@@ -52,7 +52,7 @@ namespace Rhythm
             {
                 _battleNextButton.interactable = false;
                 _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
-                if (_isTutorial)
+                if (!_isTutorial)
                 {
                     SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
                 }

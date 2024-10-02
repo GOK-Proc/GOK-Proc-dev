@@ -5,11 +5,13 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 namespace Rhythm
 {
     public class TutorialController : MonoBehaviour
     {
+        [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private CanvasGroup _instruction;
         [SerializeField] private CanvasGroup[] _pages;
 
@@ -18,6 +20,8 @@ namespace Rhythm
 
         [SerializeField] float _pageDuration;
         [SerializeField] float _pageFadeDuration;
+
+        [SerializeField] float _inputDelay;
 
         private Tweener _blinkTweener;
         private Sequence _pageSequence;
@@ -48,6 +52,14 @@ namespace Rhythm
             }
 
             _pageSequence.SetLoops(-1).SetUpdate(true).Play();
+
+            _instruction.gameObject.SetActive(false);
+
+            DOVirtual.DelayedCall(_inputDelay, () =>
+            {
+                _instruction.gameObject.SetActive(true);
+                _playerInput.SwitchCurrentActionMap("Tutorial");
+            });
         }
 
         private void OnDisable()
