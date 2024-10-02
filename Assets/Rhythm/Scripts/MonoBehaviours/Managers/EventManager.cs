@@ -12,6 +12,7 @@ namespace Rhythm
     {
         private bool _isVs;
         private bool _isTutorial;
+        private KeyConfig _keyConfig;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
         private ISoundVolumeAdjustable _soundVolumeAdjustable;
@@ -33,10 +34,11 @@ namespace Rhythm
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, bool isTutorial, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable)
+        public void Initialize(bool isVs, bool isTutorial, KeyConfig keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable)
         {
             _isVs = isVs;
             _isTutorial = isTutorial;
+            _keyConfig = keyConfig;
             _battleMode = battleMode;
             _soundPlayable = soundPlayable;
             _soundVolumeAdjustable = soundVolumeAdjustable;
@@ -95,7 +97,7 @@ namespace Rhythm
             {
                 _colorInputProvider.IsColorInputValid = false;
                 _moveInputProvider.IsMoveInputValid = false;
-                _playerInput.SwitchCurrentActionMap("Rhythm");
+                _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
 
                 var sequence = _pauseScreenDrawable.DrawCountDownScreen();
                 sequence.OnComplete(() =>
@@ -184,7 +186,7 @@ namespace Rhythm
             {
                 _tutorialDrawable.EraseTutorial().onComplete += () =>
                 {
-                    _playerInput.SwitchCurrentActionMap("Rhythm");
+                    _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
                     _soundPlayable.UnPauseMusic();
                     Time.timeScale = 1;
                 };

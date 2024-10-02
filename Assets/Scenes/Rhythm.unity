@@ -11380,9 +11380,49 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0102e781-b4bf-4b17-ae34-efa1a90e79eb
     m_ActionName: Tutorial/Resume[/Keyboard/anyKey,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7a38563a-edda-45b8-a8a2-d4c13e38cdb9
+    m_ActionName: Type2/Attack1[/XInputControllerWindows/buttonSouth,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 76bd85fb-0834-411c-8ef3-c5b76a80a625
+    m_ActionName: Type2/Attack2[/XInputControllerWindows/dpad/down,/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 649cee28-2e2d-4a2c-b62b-619715f65bfc
+    m_ActionName: Type2/Attack3[/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dc556f60-2f28-4b13-9452-9540b4c94d9e
+    m_ActionName: Type2/Defense1[/XInputControllerWindows/buttonNorth,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 885dc956-d3ea-4032-86cf-43180182ad72
+    m_ActionName: Type2/Defense2[/XInputControllerWindows/dpad/up,/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6c1bc1e-d597-4401-b4ca-0556f6456f83
+    m_ActionName: Type2/Defense3[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 585967aa-b8db-4448-9ab7-2da20cb88b3a
+    m_ActionName: Type2/Move1[/XInputControllerWindows/leftStick,/XInputControllerWindows/rightStick,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: deac7935-dff8-4e2d-8030-b69afbd93485
+    m_ActionName: Type2/Move2[/XInputControllerWindows/buttonWest,/XInputControllerWindows/buttonEast,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right,/Keyboard/h,/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2b962646-6405-4ae3-b915-f04d832cf55e
+    m_ActionName: Type2/Move3[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aa8a5bdf-9623-4c12-834b-7c469cd6bf89
+    m_ActionName: Type2/Pause[/XInputControllerWindows/select,/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Rhythm
+  m_DefaultActionMap: Type1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &733570890
@@ -30201,6 +30241,7 @@ MonoBehaviour:
   _cursorPrefab: {fileID: 5363066825430250750, guid: 266cabebdc3a26b4894458b552f4242f, type: 3}
   _holdMaskPrefab: {fileID: 3401838677374369432, guid: 873ebd032ec88584c90f572accb43e18, type: 3}
   _playerInput: {fileID: 732199901}
+  _keyConfig: 0
   _audioSource: {fileID: 1078892033}
   _seSource: {fileID: 1096648017161074464, guid: 5212d1b1be0a7a8458167bced6c1f076, type: 3}
   _introSoundPlayer: {fileID: 2363287263897925446, guid: 01c200b29b0583049b6a29d993a55e11, type: 3}
@@ -30283,9 +30324,9 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _overrideSettings: 0
   _defaultId: MainTheme
-  _defaultDifficulty: 2
+  _defaultDifficulty: 0
   _defaultIsVs: 1
-  _isTutorial: 1
+  _isTutorial: 0
   _option:
     _scrollSpeed: 10
     _offset: 0

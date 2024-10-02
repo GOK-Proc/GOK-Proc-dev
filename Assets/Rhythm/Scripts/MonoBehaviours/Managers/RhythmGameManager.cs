@@ -61,6 +61,7 @@ namespace Rhythm
         [Space(20)]
         [Header("Inputs")]
         [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private KeyConfig _keyConfig;
 
         [System.Serializable]
         private struct Sound
@@ -171,7 +172,7 @@ namespace Rhythm
 
             _timeManager = new TimeManager();
 
-            _playerInput.SwitchCurrentActionMap("Rhythm");
+            _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
             var attackActions = new InputAction[] { _playerInput.actions["Attack1"], _playerInput.actions["Attack2"], _playerInput.actions["Attack3"] };
             var defenseActions = new InputAction[] { _playerInput.actions["Defense1"], _playerInput.actions["Defense2"], _playerInput.actions["Defense3"] };
             var moveActions = new InputAction[] { _playerInput.actions["Move1"], _playerInput.actions["Move2"], _playerInput.actions["Move3"] };
@@ -194,7 +195,7 @@ namespace Rhythm
 
             _tutorialManager = new TutorialManager(isTutorial, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
 
-            _eventManager.Initialize(isVs, isTutorial, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
+            _eventManager.Initialize(isVs, isTutorial, _keyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
             _eventManager.SetSoundVolume(_option.VolumeOption);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
