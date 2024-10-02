@@ -43,7 +43,7 @@ namespace Rhythm
                         _effectDrawable.DrawJudgeFontEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         if (_isVs)
                         {
-                            _battle.Hit(note.Color, note.IsLarge, judge);
+                            _battle.Hit(note.Color, note is TapNote && note.IsLarge, judge);
                             _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge, note.Id);
                         }
                         else

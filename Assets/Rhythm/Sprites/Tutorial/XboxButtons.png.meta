@@ -1,0 +1,331 @@
+fileFormatVersion: 2
+guid: 2f067f5882f2f0f44bf52c5c16cd0bf5
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: XboxButtons_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 126, y: -34}
+        - {x: 135, y: 41}
+        - {x: 227, y: 135}
+        - {x: 297, y: 138}
+        - {x: 297, y: -34}
+      - - {x: -130, y: -111}
+        - {x: -114, y: -49}
+        - {x: -79, y: -49}
+        - {x: -79, y: -14}
+        - {x: -32, y: 3}
+        - {x: -30, y: -111}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9080822c885da145afff4148dea7502
+      internalID: 738387929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 49, y: 41}
+        - {x: 85, y: 148}
+        - {x: 171, y: 211}
+        - {x: 248, y: 152}
+        - {x: 133, y: 35}
+      - - {x: -164, y: -51}
+        - {x: -164, y: 32}
+        - {x: -77, y: 32}
+        - {x: -77, y: -14}
+        - {x: -114, y: -14}
+        - {x: -114, y: -52}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cedf93f519b58b942bd819513e206503
+      internalID: 825599542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -309, y: 199}
+        - {x: -309, y: 320}
+        - {x: 288, y: 320}
+        - {x: 288, y: 199}
+      - - {x: -255, y: 33}
+        - {x: -255, y: 178}
+        - {x: -115, y: 178}
+        - {x: -115, y: 33}
+      - - {x: 2, y: -88}
+        - {x: 2, y: 28}
+        - {x: 123, y: 28}
+        - {x: 123, y: -88}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 657d9c435b8b9db408b136ed8eb248c9
+      internalID: 2145671677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -117, y: -86}
+        - {x: -117, y: -50}
+        - {x: -75, y: -50}
+        - {x: -75, y: -86}
+      - - {x: 135, y: -22}
+        - {x: 135, y: 52}
+        - {x: 217, y: 52}
+        - {x: 217, y: -22}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87c18e0c39c8c4141973c4f7b97cba1f
+      internalID: 1318935523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -124, y: -13}
+        - {x: -124, y: 33}
+        - {x: -69, y: 34}
+        - {x: -69, y: -12}
+      - - {x: 138, y: 106}
+        - {x: 138, y: 186}
+        - {x: 214, y: 186}
+        - {x: 214, y: 106}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46261260314a3b647ac27e9e09dc9f74
+      internalID: 1196424675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -295, y: 198}
+        - {x: -295, y: 300}
+        - {x: 305, y: 300}
+        - {x: 305, y: 198}
+      - - {x: -254, y: 35}
+        - {x: -254, y: 174}
+        - {x: -108, y: 174}
+        - {x: -108, y: 35}
+      - - {x: 4, y: -89}
+        - {x: 4, y: 26}
+        - {x: 127, y: 26}
+        - {x: 127, y: -89}
+      - - {x: 73, y: 43}
+        - {x: 73, y: 119}
+        - {x: 150, y: 119}
+        - {x: 150, y: 43}
+      - - {x: 203, y: 43}
+        - {x: 203, y: 118}
+        - {x: 280, y: 118}
+        - {x: 280, y: 43}
+      - - {x: -78, y: -59}
+        - {x: -78, y: -6}
+        - {x: -37, y: -6}
+        - {x: -37, y: -59}
+      - - {x: -155, y: -58}
+        - {x: -155, y: -5}
+        - {x: -114, y: -5}
+        - {x: -114, y: -58}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e0a92894581e1449ff5205cd57c94b
+      internalID: 567352433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      XboxButtons_0: 738387929
+      XboxButtons_1: 825599542
+      XboxButtons_10: -202957389
+      XboxButtons_11: -755548368
+      XboxButtons_12: -1791063222
+      XboxButtons_2: 2145671677
+      XboxButtons_3: 1318935523
+      XboxButtons_4: 1196424675
+      XboxButtons_5: 567352433
+      XboxButtons_6: -291098929
+      XboxButtons_7: -335938756
+      XboxButtons_8: 1359949415
+      XboxButtons_9: -1231995088
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

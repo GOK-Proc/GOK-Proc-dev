@@ -332,11 +332,11 @@ namespace Rhythm
 
                         while (time < endTime)
                         {
-                            Add(note.Color, note.IsLarge ? largeRate : 1);
+                            Add(note.Color, 1);
                             time += deltaTime;
                         }
 
-                        Add(note.Color, note.IsLarge ? largeRate : 1);
+                        Add(note.Color, 1);
                     }
                 }
             }
