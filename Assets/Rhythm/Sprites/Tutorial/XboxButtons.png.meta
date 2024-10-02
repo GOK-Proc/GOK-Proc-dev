@@ -193,6 +193,113 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: XboxButtons_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -117, y: -86}
+        - {x: -117, y: -50}
+        - {x: -75, y: -50}
+        - {x: -75, y: -86}
+      - - {x: 135, y: -22}
+        - {x: 135, y: 52}
+        - {x: 217, y: 52}
+        - {x: 217, y: -22}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87c18e0c39c8c4141973c4f7b97cba1f
+      internalID: 1318935523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -124, y: -13}
+        - {x: -124, y: 33}
+        - {x: -69, y: 34}
+        - {x: -69, y: -12}
+      - - {x: 138, y: 106}
+        - {x: 138, y: 186}
+        - {x: 214, y: 186}
+        - {x: 214, y: 106}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46261260314a3b647ac27e9e09dc9f74
+      internalID: 1196424675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -295, y: 198}
+        - {x: -295, y: 300}
+        - {x: 305, y: 300}
+        - {x: 305, y: 198}
+      - - {x: -254, y: 35}
+        - {x: -254, y: 174}
+        - {x: -108, y: 174}
+        - {x: -108, y: 35}
+      - - {x: 4, y: -89}
+        - {x: 4, y: 26}
+        - {x: 127, y: 26}
+        - {x: 127, y: -89}
+      - - {x: 73, y: 43}
+        - {x: 73, y: 119}
+        - {x: 150, y: 119}
+        - {x: 150, y: 43}
+      - - {x: 203, y: 43}
+        - {x: 203, y: 118}
+        - {x: 280, y: 118}
+        - {x: 280, y: 43}
+      - - {x: -78, y: -59}
+        - {x: -78, y: -6}
+        - {x: -37, y: -6}
+        - {x: -37, y: -59}
+      - - {x: -155, y: -58}
+        - {x: -155, y: -5}
+        - {x: -114, y: -5}
+        - {x: -114, y: -58}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e0a92894581e1449ff5205cd57c94b
+      internalID: 567352433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

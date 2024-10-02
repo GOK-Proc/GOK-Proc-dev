@@ -169,6 +169,17 @@ namespace Rhythm
         [SerializeField] private CanvasGroup _tutorial;
         [SerializeField] private RectTransform[] _tutorialRectTransform;
 
+        [System.Serializable]
+        private struct TutorialKeyConfig
+        {
+            public KeyConfig KeyConfig;
+            public RectTransform[] RectTransforms;
+        }
+
+        [SerializeField] private TutorialKeyConfig[] _tutorialKeyConfigs;
+
+        private Dictionary<KeyConfig, RectTransform[]> _tutorialKeyConfigDictionary;
+
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
         private RectTransform _battleResultPlayerGauge;
@@ -231,6 +242,8 @@ namespace Rhythm
             _rhythmResultBoxCanvasGroup = _rhythmResultBox.GetComponent<CanvasGroup>();
             _rhythmResultContentsCanvasGroup = _rhythmResultContents.GetComponent<CanvasGroup>();
             _pauseBoxCanvasGroup = _pauseBox.GetComponent<CanvasGroup>();
+
+            _tutorialKeyConfigDictionary = _tutorialKeyConfigs.ToDictionary(x => x.KeyConfig, x => x.RectTransforms);
         }
 
         private void DrawGauge(Transform gauge, Vector3 position, Vector3 scale, float value)
@@ -795,13 +808,18 @@ namespace Rhythm
             _knockout.DOFade(1f, _knockoutFadeDuration);
         }
 
-        public Tweener DrawTutorial(int index)
+        public Tweener DrawTutorial(int index, KeyConfig keyConfig)
         {
             if (index < _tutorialRectTransform.Length)
             {
                 for (int i = 0; i < _tutorialRectTransform.Length; i++)
                 {
                     _tutorialRectTransform[i].gameObject.SetActive(i == index);
+                }
+
+                foreach (var i in _tutorialKeyConfigDictionary)
+                {
+                    i.Value[index].gameObject.SetActive(i.Key == keyConfig);
                 }
                 
                 _tutorial.alpha = 0f;

@@ -7,7 +7,7 @@ namespace Rhythm
 {
     public interface ITutorialDrawable
     {
-        Tweener DrawTutorial(int index);
+        Tweener DrawTutorial(int index, KeyConfig keyConfig);
         Tweener EraseTutorial();
     }
 }

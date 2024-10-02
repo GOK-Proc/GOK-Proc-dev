@@ -193,7 +193,7 @@ namespace Rhythm
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _soundPlayer, _uiManager);
 
-            _tutorialManager = new TutorialManager(isTutorial, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
+            _tutorialManager = new TutorialManager(isTutorial, _keyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
 
             _eventManager.Initialize(isVs, isTutorial, _keyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
             _eventManager.SetSoundVolume(_option.VolumeOption);

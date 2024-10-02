@@ -8,6 +8,7 @@ namespace Rhythm
     public class TutorialManager
     {
         private readonly bool _isTutorial;
+        private readonly KeyConfig _keyConfig;
         private readonly TutorialData _data;
         private readonly PlayerInput _playerInput;
         private readonly ISoundPlayable _soundPlayable;
@@ -16,9 +17,10 @@ namespace Rhythm
 
         private int _next;
 
-        public TutorialManager(bool isTutorial, TutorialData data, PlayerInput playerInput, ISoundPlayable soundPlayable, ITimeProvider timeProvider, ITutorialDrawable tutorialDrawable)
+        public TutorialManager(bool isTutorial, KeyConfig keyConfig, TutorialData data, PlayerInput playerInput, ISoundPlayable soundPlayable, ITimeProvider timeProvider, ITutorialDrawable tutorialDrawable)
         {
             _isTutorial = isTutorial;
+            _keyConfig = keyConfig;
             _data = data;
             _playerInput = playerInput;
             _soundPlayable = soundPlayable;
@@ -40,7 +42,7 @@ namespace Rhythm
                         _soundPlayable.PauseMusic();
                         Time.timeScale = 0;
 
-                        _tutorialDrawable.DrawTutorial(_next);
+                        _tutorialDrawable.DrawTutorial(_next, _keyConfig);
                         _next++;
                     }
                 }
