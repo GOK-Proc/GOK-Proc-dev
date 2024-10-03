@@ -14,6 +14,9 @@ namespace Rhythm
         [SerializeField] private double _judgeOffset;
         public double JudgeOffset { readonly get => _judgeOffset; set => _judgeOffset = value; }
 
+        [SerializeField] private KeyConfig _keyConfig;
+        public KeyConfig KeyConfig { readonly get => _keyConfig; set => _keyConfig = value; }
+
         [SerializeField] private RhythmVolumeSetting _volumeSetting;
         public RhythmVolumeSetting VolumeSetting { readonly get => _volumeSetting; set => _volumeSetting = value; }
     }
