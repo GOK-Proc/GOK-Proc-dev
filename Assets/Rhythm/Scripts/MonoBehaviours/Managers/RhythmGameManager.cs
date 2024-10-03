@@ -175,7 +175,7 @@ namespace Rhythm
             _playerInput.SwitchCurrentActionMap(_setting.KeyConfig.ToStringQuickly());
             var attackActions = new InputAction[] { _playerInput.actions["Attack1"], _playerInput.actions["Attack2"], _playerInput.actions["Attack3"] };
             var defenseActions = new InputAction[] { _playerInput.actions["Defense1"], _playerInput.actions["Defense2"], _playerInput.actions["Defense3"] };
-            var moveActions = new InputAction[] { _playerInput.actions["Move1"], _playerInput.actions["Move2"], _playerInput.actions["Move3"] };
+            var moveActions = new InputAction[] { _playerInput.actions["Move1"], _playerInput.actions["Move2"], _playerInput.actions["Move3"], _playerInput.actions["Move4"], _playerInput.actions["Move5"] };
 
             _inputManager = new InputManager(attackActions, defenseActions, moveActions);
 
