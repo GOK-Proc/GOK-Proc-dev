@@ -33723,15 +33723,7 @@ MonoBehaviour:
   _defaultDifficulty: 0
   _defaultIsVs: 1
   _isTutorial: 0
-  _setting:
-    _scrollSpeed: 10
-    _offset: 0
-    _judgeOffset: 0
-    _keyConfig: 0
-    _volumeSetting:
-      _track: 1
-      _se: 1
-      _noteSe: 1
+  _setting: {fileID: 11400000, guid: 18810f76c94114640adec37275e0eb18, type: 2}
   _recordList: {fileID: 11400000, guid: e00e481882f388c419b380ce48e3d8b8, type: 2}
   _tutorialSpeed: 2
   _tutorialData:

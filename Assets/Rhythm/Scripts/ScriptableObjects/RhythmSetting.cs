@@ -2,23 +2,23 @@
 
 namespace Rhythm
 {
-    [System.Serializable]
-    public struct RhythmSetting
+    [CreateAssetMenu]
+    public class RhythmSetting : ScriptableObject
     {
         [SerializeField] private float _scrollSpeed;
-        public float ScrollSpeed { readonly get => _scrollSpeed; set => _scrollSpeed = value; }
+        public float ScrollSpeed { get => _scrollSpeed; set => _scrollSpeed = value; }
 
         [SerializeField] private double _offset;
-        public double Offset { readonly get => _offset; set => _offset = value; }
+        public double Offset { get => _offset; set => _offset = value; }
 
         [SerializeField] private double _judgeOffset;
-        public double JudgeOffset { readonly get => _judgeOffset; set => _judgeOffset = value; }
+        public double JudgeOffset { get => _judgeOffset; set => _judgeOffset = value; }
 
         [SerializeField] private KeyConfig _keyConfig;
-        public KeyConfig KeyConfig { readonly get => _keyConfig; set => _keyConfig = value; }
+        public KeyConfig KeyConfig { get => _keyConfig; set => _keyConfig = value; }
 
         [SerializeField] private RhythmVolumeSetting _volumeSetting;
-        public RhythmVolumeSetting VolumeSetting { readonly get => _volumeSetting; set => _volumeSetting = value; }
+        public RhythmVolumeSetting VolumeSetting { get => _volumeSetting; set => _volumeSetting = value; }
     }
 
     [System.Serializable]
