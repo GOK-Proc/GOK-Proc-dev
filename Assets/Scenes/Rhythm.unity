@@ -33638,7 +33638,6 @@ MonoBehaviour:
   _cursorPrefab: {fileID: 5363066825430250750, guid: 266cabebdc3a26b4894458b552f4242f, type: 3}
   _holdMaskPrefab: {fileID: 3401838677374369432, guid: 873ebd032ec88584c90f572accb43e18, type: 3}
   _playerInput: {fileID: 732199901}
-  _keyConfig: 0
   _audioSource: {fileID: 1078892033}
   _seSource: {fileID: 1096648017161074464, guid: 5212d1b1be0a7a8458167bced6c1f076, type: 3}
   _introSoundPlayer: {fileID: 2363287263897925446, guid: 01c200b29b0583049b6a29d993a55e11, type: 3}
@@ -33724,14 +33723,7 @@ MonoBehaviour:
   _defaultDifficulty: 0
   _defaultIsVs: 1
   _isTutorial: 0
-  _option:
-    _scrollSpeed: 10
-    _offset: 0
-    _judgeOffset: 0
-    _volumeOption:
-      _track: 1
-      _se: 1
-      _noteSe: 1
+  _setting: {fileID: 11400000, guid: 18810f76c94114640adec37275e0eb18, type: 2}
   _recordList: {fileID: 11400000, guid: e00e481882f388c419b380ce48e3d8b8, type: 2}
   _tutorialSpeed: 2
   _tutorialData:
