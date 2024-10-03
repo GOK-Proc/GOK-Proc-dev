@@ -3,7 +3,7 @@
 namespace Rhythm
 {
     [System.Serializable]
-    public struct RhythmOption
+    public struct RhythmSetting
     {
         [SerializeField] private float _scrollSpeed;
         public float ScrollSpeed { readonly get => _scrollSpeed; set => _scrollSpeed = value; }
@@ -14,12 +14,12 @@ namespace Rhythm
         [SerializeField] private double _judgeOffset;
         public double JudgeOffset { readonly get => _judgeOffset; set => _judgeOffset = value; }
 
-        [SerializeField] private RhythmVolumeOption _volumeOption;
-        public RhythmVolumeOption VolumeOption { readonly get => _volumeOption; set => _volumeOption = value; }
+        [SerializeField] private RhythmVolumeSetting _volumeSetting;
+        public RhythmVolumeSetting VolumeSetting { readonly get => _volumeSetting; set => _volumeSetting = value; }
     }
 
     [System.Serializable]
-    public struct RhythmVolumeOption
+    public struct RhythmVolumeSetting
     {
         [SerializeField, Range(0f, 1f)] private float _track;
         public float Track { readonly get => _track; set => _track = Mathf.Clamp01(value); }

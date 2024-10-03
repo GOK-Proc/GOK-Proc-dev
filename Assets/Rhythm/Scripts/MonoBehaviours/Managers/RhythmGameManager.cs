@@ -100,8 +100,8 @@ namespace Rhythm
         [SerializeField] private bool _isTutorial;
 
         [Space(20)]
-        [Header("Options")]
-        [SerializeField] private RhythmOption _option;
+        [Header("Rhythm Game Settings")]
+        [SerializeField] private RhythmSetting _setting;
 
         [Space(20)]
         [Header("Record")]
@@ -152,7 +152,7 @@ namespace Rhythm
             var beatmapInfo = isTutorial ? _tutorialData.Beatmap : dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _option.Offset, isTutorial ? _tutorialSpeed : _option.ScrollSpeed);
+            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _setting.Offset, isTutorial ? _tutorialSpeed : _setting.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
@@ -189,7 +189,7 @@ namespace Rhythm
 
             _scoreManager = new ScoreManger(isVs, id, difficulty, isTutorial, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _recordList);
 
-            _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _option.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
+            _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _setting.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, holdMasks, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _soundPlayer, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _soundPlayer, _uiManager);
@@ -197,7 +197,7 @@ namespace Rhythm
             _tutorialManager = new TutorialManager(isTutorial, _keyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
 
             _eventManager.Initialize(isVs, isTutorial, _keyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
-            _eventManager.SetSoundVolume(_option.VolumeOption);
+            _eventManager.SetSoundVolume(_setting.VolumeSetting);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);

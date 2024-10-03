@@ -33724,11 +33724,11 @@ MonoBehaviour:
   _defaultDifficulty: 0
   _defaultIsVs: 1
   _isTutorial: 0
-  _option:
+  _setting:
     _scrollSpeed: 10
     _offset: 0
     _judgeOffset: 0
-    _volumeOption:
+    _volumeSetting:
       _track: 1
       _se: 1
       _noteSe: 1
