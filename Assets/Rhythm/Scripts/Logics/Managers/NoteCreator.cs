@@ -170,6 +170,14 @@ namespace Rhythm
                 }
             }
         }
+        
+        public void MarkAsJudged()
+        {
+            foreach (var note in _notes)
+            {
+                note.MarkAsJudged();
+            }
+        }
 
         public void AdjustPosition(double difference)
         {

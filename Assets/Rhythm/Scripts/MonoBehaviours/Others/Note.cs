@@ -42,6 +42,11 @@ namespace Rhythm
             return default;
         }
 
+        public void MarkAsJudged()
+        {
+            IsJudged = true;
+        }
+
         protected override void Update()
         {
             if (IsAlive)

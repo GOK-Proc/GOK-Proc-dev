@@ -251,6 +251,7 @@ namespace Rhythm
 
                     if (_scoreManager.IsKnockoutAfterEffect)
                     {
+                        _noteCreator.MarkAsJudged();
                         complete = false;
                         break;
                     }
