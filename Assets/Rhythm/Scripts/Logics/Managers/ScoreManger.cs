@@ -123,7 +123,7 @@ namespace Rhythm
             IsKnockoutAfterEffect = false;
 
             _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
-            _gaugeDrawable.DrawEnemyGauge(_enemyHitPoint, _enemyMaxHitPoint);
+            _gaugeDrawable.DrawEnemyGauges(_enemyHitPoint, _enemyMaxHitPoint, _playerMaxHitPoint);
         }
 
         public void CountUpJudgeCounter(Judgement judgement)
@@ -182,7 +182,7 @@ namespace Rhythm
                                     var maxHitPoint = _enemyMaxHitPoint;
                                     _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                                     {
-                                        _gaugeDrawable.DrawEnemyGauge(hitPoint, maxHitPoint);
+                                        _gaugeDrawable.DrawEnemyGauges(hitPoint, maxHitPoint, _playerMaxHitPoint);
                                         _gaugeDrawable.DrawEnemyDamageEffect();
                                         if (overkill) _soundPlayable.PlaySE("Overkill");
                                     });
@@ -229,7 +229,7 @@ namespace Rhythm
                         var maxHitPoint = _enemyMaxHitPoint;
                         _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                         {
-                            _gaugeDrawable.DrawEnemyGauge(hitPoint, maxHitPoint);
+                            _gaugeDrawable.DrawEnemyGauges(hitPoint, maxHitPoint, _playerMaxHitPoint);
                             _gaugeDrawable.DrawEnemyDamageEffect();
                             if (overkill) _soundPlayable.PlaySE("Overkill");
                         });

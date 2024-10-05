@@ -44,6 +44,7 @@ namespace Rhythm
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
         [SerializeField] private TextMeshProUGUI _playerHitPointText;
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
+        [SerializeField] private Transform[] _enemyGauges;
         [SerializeField] private TextMeshProUGUI _enemyHitPointText;
 
         [System.Serializable]
@@ -143,6 +144,7 @@ namespace Rhythm
         [SerializeField] private Image _battleResultPlayerGaugeImage;
         [SerializeField] private TextMeshProUGUI _battleResultPlayerHitPointText;
         [SerializeField] private Image _battleResultEnemyGaugeImage;
+        [SerializeField] private RectTransform[] _battleResultEnemyGauges;
         [SerializeField] private TextMeshProUGUI _battleResultEnemyHitPointText;
 
         [Space(20)]
@@ -309,6 +311,23 @@ namespace Rhythm
 
             DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
             SetBattleGaugeColor(_enemyGaugeRenderer, value);
+            SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint);
+        }
+
+        public void DrawEnemyGauges(float hitPoint, float maxHitPoint, float maxGauge)
+        {
+            var value = hitPoint > 0 && hitPoint % maxGauge == 0f ? 1f : hitPoint % maxGauge / maxGauge;
+            var gaugeCount = (int)(hitPoint / maxGauge) + (hitPoint > 0 && hitPoint % maxGauge == 0f ? 0 : 1);
+
+            DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
+
+            for (int i = 0; i < _enemyGauges.Length; i++)
+            {
+                _enemyGauges[i].gameObject.SetActive(i < gaugeCount);
+            }
+
+            SetBattleGaugeColor(_enemyGaugeRenderer, hitPoint < maxGauge ? value : 1f);
+
             SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint);
         }
 
@@ -641,9 +660,16 @@ namespace Rhythm
             SetBattleGaugeColor(_battleResultPlayerGaugeImage, playerValue);
             SetHitPointText(_battleResultPlayerHitPointText, playerHitPoint, playerMaxHitPoint);
 
-            var enemyValue = enemyHitPoint / enemyMaxHitPoint;
+            var enemyValue = enemyHitPoint > 0 && enemyHitPoint % playerMaxHitPoint == 0f ? 1f : enemyHitPoint % playerMaxHitPoint / playerMaxHitPoint;
+            var enemyGaugeCount = (int)(enemyHitPoint / playerMaxHitPoint) + (enemyHitPoint > 0 && enemyHitPoint % playerMaxHitPoint == 0f ? 0 : 1);
             DrawGauge(_battleResultEnemyGauge, _battleResultEnemyGaugePosition, _battleResultEnemyGaugeSizeDelta, enemyValue);
-            SetBattleGaugeColor(_battleResultEnemyGaugeImage, enemyValue);
+
+            for (int i = 0; i < _battleResultEnemyGauges.Length; i++)
+            {
+                _battleResultEnemyGauges[i].gameObject.SetActive(i < enemyGaugeCount);
+            }
+
+            SetBattleGaugeColor(_battleResultEnemyGaugeImage, enemyHitPoint < playerMaxHitPoint ? enemyValue : 1f);
             SetHitPointText(_battleResultEnemyHitPointText, enemyHitPoint, enemyMaxHitPoint);
 
             var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
