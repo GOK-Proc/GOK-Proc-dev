@@ -28,6 +28,25 @@ namespace Novel
         }
     }
 
+    public class HighlightData : IOperationData
+    {
+        public List<string> Highlight { get; }
+        public bool Wait { get; }
+        public bool AllHighlight { get; }
+
+        public HighlightData(string highlight, bool wait, bool allHighlight)
+        {
+            Highlight = new List<string>(highlight.Split(" "));
+            Wait = wait;
+            AllHighlight = allHighlight;
+        }
+
+        public void ExecuteOperation()
+        {
+            NovelManager.Instance.CharacterOperation.UpdateCharacterHighlight(this);
+        }
+    }
+
     public class CharacterLayoutData : IOperationData
     {
         public List<string> Layout { get; }

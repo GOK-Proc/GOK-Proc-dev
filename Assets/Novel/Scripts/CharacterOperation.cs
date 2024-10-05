@@ -20,6 +20,8 @@ namespace Novel
 
         private Dictionary<string, CharacterState> _preCharacter = new Dictionary<string, CharacterState>();
 
+        private bool _stopHighlight = false;
+
         private void Start()
         {
             _width = _mainCanvasTransform.sizeDelta.x;
@@ -90,6 +92,13 @@ namespace Novel
                                 // 新たな差分のインスタンス化とフェードイン
                                 GameObject differenceObject = Instantiate(characterMatarial.CharacterDifferenceDict[difference], characterState.Parent.transform);
                                 Image characterImage = differenceObject.GetComponent<Image>();
+
+                                // ハイライト中でないなら、変更後の差分も非ハイライト状態で登場させる
+                                if (!characterState.IsHighlighted)
+                                {
+                                    characterImage.color = Color.gray;
+                                }
+
                                 SetTransparent(characterImage);
                                 sequence.Join(characterImage.DOFade(1f, _shortDuration));
 
@@ -191,6 +200,7 @@ namespace Novel
 
             sequence.Play().OnComplete(() =>
             {
+                _stopHighlight = false;
                 NovelManager.Instance.IsProcessingCharacter = false;
             });
         }
@@ -202,11 +212,40 @@ namespace Novel
             image.color = color;
         }
 
+        public void UpdateCharacterHighlight(HighlightData highlightData)
+        {
+            _stopHighlight = highlightData.Wait;
+
+            StartCoroutine(HighlightCoroutine(highlightData.Highlight, highlightData.AllHighlight));
+        }
+
+        private IEnumerator HighlightCoroutine(List<string> highlight, bool allHighlight)
+        {
+            yield return new WaitWhile(() => _stopHighlight);
+
+            // ハイライトするキャラクターが指定されている場合
+            if (highlight[0] != "")
+            {
+                foreach (string character in _preCharacter.Keys)
+                {
+                    _preCharacter[character].SetHighlight(highlight.Contains(character));
+                }
+            }
+            else
+            {
+                foreach (string character in _preCharacter.Keys)
+                {
+                    _preCharacter[character].SetHighlight(allHighlight);
+                }
+            }
+        }
+
         private class CharacterState
         {
             public GameObject Parent { get; private set; }
             public string Difference { get; private set; }
             public GameObject CharacterObject { get; private set; }
+            public bool IsHighlighted { get; private set;  } = true;
 
             public CharacterState(string name, Transform characterParent)
             {
@@ -241,6 +280,22 @@ namespace Novel
                 foreach (Transform child in CharacterObject.transform)
                 {
                     Destroy(child.gameObject, 5f);
+                }
+            }
+
+            public void SetHighlight(bool isHighlight)
+            {
+                if (IsHighlighted && !isHighlight)
+                {
+                    Image characterImage = CharacterObject.GetComponent<Image>();
+                    characterImage.color = Color.gray;
+                    IsHighlighted = false;
+                }
+                else if (!IsHighlighted && isHighlight)
+                {
+                    Image characterImage = CharacterObject.GetComponent<Image>();
+                    characterImage.color = Color.white;
+                    IsHighlighted = true;
                 }
             }
         }
