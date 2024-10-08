@@ -1,0 +1,45 @@
+{
+    "name": "Novel",
+    "maps": [
+        {
+            "name": "Novel",
+            "id": "5d495fd1-9c88-446c-a1c0-e430d5c0cf9b",
+            "actions": [
+                {
+                    "name": "Next",
+                    "type": "Button",
+                    "id": "66ff5b9c-68ef-4007-81dd-4725e6fb20c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "17901b16-25f3-4f99-993a-40ea4dab3198",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03bc655f-60a0-4d64-9e40-09741ef9fbc3",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

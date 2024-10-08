@@ -238,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128341943}
   - component: {fileID: 128341942}
+  - component: {fileID: 128341944}
   m_Layer: 0
   m_Name: NovelManager
   m_TagString: Untagged
@@ -257,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c6520da14e18c4aa9bb43a867ab48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 128341944}
   _defaultDuration: 0.75
   _novelId: 1
   _novelData: {fileID: 11400000, guid: 587bff0387dccb94a971efba913d094d, type: 2}
@@ -268,7 +270,6 @@ MonoBehaviour:
   <SoundOperation>k__BackingField: {fileID: 1649501994}
   <OtherOperation>k__BackingField: {fileID: 1649501993}
   _currentLine: 0
-  <IsProcessingSound>k__BackingField: 0
 --- !u!4 &128341943
 Transform:
   m_ObjectHideFlags: 0
@@ -284,6 +285,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128341944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128341941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: e4269a0a12bd58b4a9ac22ddead693f6, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 66ff5b9c-68ef-4007-81dd-4725e6fb20c6
+    m_ActionName: Novel/Next[/Keyboard/enter]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Novel
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &718274284
 GameObject:
   m_ObjectHideFlags: 0

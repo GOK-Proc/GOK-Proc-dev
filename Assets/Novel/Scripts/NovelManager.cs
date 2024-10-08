@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Novel
 {
     public class NovelManager : SingletonMonoBehaviour<NovelManager>
     {
+        [SerializeField] private PlayerInput _playerInput;
+        private InputAction _nextAction;
+
         [SerializeField] private float _defaultDuration = 0.75f;
         [SerializeField] private NovelId _novelId;
         [SerializeField] private NovelData _novelData;
@@ -39,6 +43,8 @@ namespace Novel
 
         private void Start()
         {
+            _nextAction = _playerInput.actions["Next"];
+
             Initialize();
         }
 
@@ -65,7 +71,7 @@ namespace Novel
                     {
                         _nextMark.SetActive(true);
 
-                        if (Input.GetKeyDown(KeyCode.Return))
+                        if (_nextAction.IsPressed())
                         {
                             CallLineOperation();
                         }
