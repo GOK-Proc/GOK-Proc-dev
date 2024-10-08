@@ -287,7 +287,8 @@ public class AudioPlayer {
     _fadeTo       = to;
     _fadeCallback = callback;
 
-    if (_currentState == State.Playing) {
+    // Delay中の場合もフェードアウトの対象になるように変更しました(by 白井黒子)
+    if (_currentState == State.Playing || _currentState == State.Delay) {
       _currentState = State.Fading;
     }
     if (_currentState == State.Fading) {
