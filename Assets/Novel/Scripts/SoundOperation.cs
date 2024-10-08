@@ -12,6 +12,7 @@ namespace Novel
         {
             {"Bgm_village", "Town" },
             {"Bgm_forest", "Forest" },
+            {"BGM_tense", "Tention" },
             {"Se_warning", "Novel_SE_temp/SN1" },
             {"Se_footstep", "Novel_SE_temp/SN2" },
             {"Se_sword", "Novel_SE_temp/SN3" },

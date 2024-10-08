@@ -12,6 +12,8 @@ namespace Novel
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _dialogueText;
 
+        private float _interval = 0.05f;
+
         private ReplaceDictionary _replaceDictionary;
 
         private void Start()
@@ -22,7 +24,8 @@ namespace Novel
         public void UpdateDialogue(DialogueData dialogueData)
         {
             NovelManager.Instance.StopDialogue = true;
-
+            NovelManager.Instance.IsProcessingDialogue = true;
+            
             string name = dialogueData.Name;
             string dialogue = dialogueData.Dialogue;
 
@@ -30,7 +33,21 @@ namespace Novel
             dialogue = ReplaceParamater(dialogue);
 
             _nameText.text = name;
-            _dialogueText.text = dialogue;
+            
+            StartCoroutine(DialogueOrder(dialogue));
+        }
+
+        private IEnumerator DialogueOrder(string dialogue)
+        {
+            _dialogueText.text = "";
+
+            foreach (char c in dialogue)
+            {
+                _dialogueText.text += c;
+                yield return new WaitForSeconds(_interval);
+            }
+
+            NovelManager.Instance.IsProcessingDialogue = false;
         }
 
         private string ReplaceParamater(string sentence)

@@ -25,25 +25,27 @@ namespace Novel
 
                 if (items[0] != "")
                 {
-                    lineOperationList.Add(new DialogueData(items[0], items[1]));
+                    lineOperationList.Add(new DialogueData(items[0], items[2]));
                 }
 
-                if (items[2] != "") 
-                {
-                    lineOperationList.Add(new CharacterLayoutData(items[2], items[3]));
-                }
+                lineOperationList.Add(new HighlightData(items[1], items[3] != "", items[0] == ""));
 
-                if (items[4] != "")
+                if (items[3] != "") 
                 {
-                    lineOperationList.Add(new BackgroundData(items[4]));
+                    lineOperationList.Add(new CharacterLayoutData(items[3], items[4]));
                 }
 
                 if (items[5] != "")
                 {
-                    lineOperationList.Add(new SoundData(items[5]));
+                    lineOperationList.Add(new BackgroundData(items[5]));
                 }
 
                 if (items[6] != "")
+                {
+                    lineOperationList.Add(new SoundData(items[6]));
+                }
+
+                if (items[7] != "")
                 {
                     lineOperationList.Add(new OtherData());
                 }

@@ -14,6 +14,8 @@ namespace Novel
         [SerializeField] private NovelData _novelData;
         [SerializeField] private NovelMaterialData _novelMaterialData;
 
+        [SerializeField] private GameObject _nextMark;
+
         [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
         [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
         [field: SerializeField] public BackgroundOperation BackgroundOperation { get; set; }
@@ -30,9 +32,10 @@ namespace Novel
         private bool _notFirstLine = false;
 
         public bool StopDialogue { get; set; } = false;      // 前の行で会話文が更新されたか
+        public bool IsProcessingDialogue { get; set; } = false;
         public bool IsProcessingCharacter { get; set; } = false;
         public bool IsProcessingBackground { get; set; } = false;
-        [field: SerializeField] public bool IsProcessingSound { get; set; } = false;
+        public bool IsProcessingSound { get; set; } = false;
 
         private void Start()
         {
@@ -60,6 +63,8 @@ namespace Novel
                     // 前の行で会話文が更新されていた場合(入力待ち)
                     if (StopDialogue)
                     {
+                        _nextMark.SetActive(true);
+
                         if (Input.GetKeyDown(KeyCode.Return))
                         {
                             CallLineOperation();
@@ -75,6 +80,8 @@ namespace Novel
 
         private void CallLineOperation()
         {
+            _nextMark.SetActive(false);
+
             StopDialogue = false;
 
             Duration = _defaultDuration;
@@ -106,7 +113,7 @@ namespace Novel
 
         private bool IsFinishedOperation()
         {
-            return !IsProcessingCharacter && !IsProcessingBackground && !IsProcessingSound;
+            return !IsProcessingDialogue && !IsProcessingCharacter && !IsProcessingBackground && !IsProcessingSound;
         }
     }
 }
