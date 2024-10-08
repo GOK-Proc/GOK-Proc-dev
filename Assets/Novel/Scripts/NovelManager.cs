@@ -32,9 +32,10 @@ namespace Novel
         private bool _notFirstLine = false;
 
         public bool StopDialogue { get; set; } = false;      // 前の行で会話文が更新されたか
+        public bool IsProcessingDialogue { get; set; } = false;
         public bool IsProcessingCharacter { get; set; } = false;
         public bool IsProcessingBackground { get; set; } = false;
-        [field: SerializeField] public bool IsProcessingSound { get; set; } = false;
+        public bool IsProcessingSound { get; set; } = false;
 
         private void Start()
         {
@@ -112,7 +113,7 @@ namespace Novel
 
         private bool IsFinishedOperation()
         {
-            return !IsProcessingCharacter && !IsProcessingBackground && !IsProcessingSound;
+            return !IsProcessingDialogue && !IsProcessingCharacter && !IsProcessingBackground && !IsProcessingSound;
         }
     }
 }
