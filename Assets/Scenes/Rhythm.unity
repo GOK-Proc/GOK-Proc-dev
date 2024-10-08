@@ -3312,14 +3312,16 @@ MonoBehaviour:
     Prefab: {fileID: -1449873334319268275, guid: bea6159a675a58542b8bea9107762f1f, type: 3}
   - Color: 2
     IsLarge: 0
-    Prefab: {fileID: 5696479486536050988, guid: eed01fccde76d364298590bcf5e5c958, type: 3}
+    Prefab: {fileID: -1449873334319268275, guid: 256a4a812ebab6740a043e4932f5562f, type: 3}
   - Color: 1
     IsLarge: 1
     Prefab: {fileID: -3877121931642812341, guid: bcccd821edd5b164799472de16676b4d, type: 3}
   - Color: 2
     IsLarge: 1
-    Prefab: {fileID: 8157917599750033308, guid: 6933431dfbb014548a21141583bd7f77, type: 3}
-  _enemyAttackEffectPrefab: {fileID: 1286597372785483457, guid: 1d0c7ea554e64714586bb4704ba85ae7, type: 3}
+    Prefab: {fileID: -3877121931642812341, guid: 7904bb8c409e4ca4594dad085cd4d7a5, type: 3}
+  _enemyAttackEffectPrefabs:
+  - {fileID: 1286597372785483457, guid: 1d0c7ea554e64714586bb4704ba85ae7, type: 3}
+  - {fileID: 1286597372785483457, guid: 91dde085ca3411544a84b58daf8bfe04, type: 3}
   _judgeFontPrefabs:
   - {fileID: 3114196519367107314, guid: f7af3463af87ec848ada8d8d35fec9ee, type: 3}
   - {fileID: 2361069125775815967, guid: 59b903543719c7845b34ac0d70a4b9ff, type: 3}
@@ -3330,6 +3332,9 @@ MonoBehaviour:
   _swordEffectPrefabs:
   - {fileID: 487436677879129817, guid: dc190f14266326a4fb5bbaf736ff76f8, type: 3}
   - {fileID: 7197725948637051677, guid: d648dd57e26d082418207c9e04cf43e8, type: 3}
+  _shieldEffectPrefabs:
+  - {fileID: 5696479486536050988, guid: eed01fccde76d364298590bcf5e5c958, type: 3}
+  - {fileID: 5696479486536050988, guid: 8a306ffded5b1af4f980dcc02cea3656, type: 3}
   _effectParent: {fileID: 1644396144}
   _knockout: {fileID: 422962497}
   _titleText: {fileID: 1690732409}

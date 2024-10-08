@@ -57,10 +57,11 @@ namespace Rhythm
 
         [SerializeField] private EffectObject[] _judgeEffectPrefabs;
         [SerializeField] private EffectPrefab[] _battleEffectPrefabs;
-        [SerializeField] private EffectObject _enemyAttackEffectPrefab;
+        [SerializeField] private EffectObject[] _enemyAttackEffectPrefabs;
         [SerializeField] private EffectObject[] _judgeFontPrefabs;
         [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private EffectObject[] _swordEffectPrefabs;
+        [SerializeField] private EffectObject[] _shieldEffectPrefabs;
         [SerializeField] private Transform _effectParent;
         [SerializeField] private CanvasGroup _knockout;
 
@@ -88,10 +89,11 @@ namespace Rhythm
 
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
-        private ObjectPool<EffectObject> _enemyAttackEffectPool;
+        private ObjectPool<EffectObject>[] _enemyAttackEffectPools;
         private ObjectPool<EffectObject>[] _judgeFontPools;
         private ObjectPool<EffectObject>[] _laneFlashPools;
         private ObjectPool<EffectObject>[] _swordEffectPools;
+        private ObjectPool<EffectObject>[] _shieldEffectPools;
 
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
@@ -220,10 +222,11 @@ namespace Rhythm
 
             _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
-            _enemyAttackEffectPool = new ObjectPool<EffectObject>(_enemyAttackEffectPrefab, _effectParent);
+            _enemyAttackEffectPools = _enemyAttackEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _judgeFontPools = _judgeFontPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _laneFlashPools = _laneFlashPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _swordEffectPools = _swordEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
+            _shieldEffectPools = _shieldEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
 
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
 
@@ -493,6 +496,9 @@ namespace Rhythm
                                 {
                                     t.DOLocalMove(_playerGuardPosition, _defenseEffectDuration).OnComplete(() =>
                                     {
+                                        IDisposable disposable = _shieldEffectPools[Convert.ToInt32(isLarge)].Create(out var obj, out var _);
+                                        obj.Create(disposable);
+                                        obj.PlayAnimation(_playerGuardPosition);
                                         if (_enemyAttackEffects.TryGetValue(id, out var attack))
                                         {
                                             attack.Stop((t, s, d) =>
@@ -507,20 +513,21 @@ namespace Rhythm
                                 },
                                 (t, s, d) =>
                                 {
+                                    var scale = t.localScale;
                                     var color = s.color;
                                     var sequence = DOTween.Sequence();
                                     sequence.Append(t.DOScale(_battleEffectFadeScale, _battleEffectFadeDuration));
                                     sequence.Join(s.DOFade(0f, _battleEffectFadeDuration));
                                     sequence.Play().OnComplete(() =>
                                     {
-                                        t.localScale = Vector3.one;
+                                        t.localScale = scale;
                                         s.color = color;
                                         d?.Invoke();
                                     });
                                 },
                                 disposable);
 
-                            obj.Play(position);
+                            obj.PlayAnimation(position, _playerGuardPosition, isKeep: true);
 
                             break;
                     }
@@ -529,10 +536,10 @@ namespace Rhythm
             }
         }
 
-        public void DrawEnemyAttackEffect(float delay, int id)
+        public void DrawEnemyAttackEffect(bool isLarge, float delay, int id)
         {
 
-            IDisposable disposable = _enemyAttackEffectPool.Create(out var obj, out var _);
+            IDisposable disposable = _enemyAttackEffectPools[Convert.ToInt32(isLarge)].Create(out var obj, out var _);
             obj.Create((t, s, d) =>
             {
                 t.DOLocalMove(_playerPosition, 1f).OnComplete(() =>
@@ -559,7 +566,7 @@ namespace Rhythm
 
             void Draw()
             {
-                obj.Play(_enemyPosition);
+                obj.PlayAnimation(_enemyPosition, true, true);
             }
 
             if (delay > 0)

@@ -65,12 +65,12 @@ namespace Rhythm
 
         public void Create()
         {
-            (T obj, bool isNew) CreateNote<T>(NoteData note, ObjectPool<T> pool, Vector3 pos, double time) where T : Note
+            (T obj, bool isNew) CreateNote<T>(NoteData note, ObjectPool<T> pool, Vector3 pos, double time, bool isLarge = false) where T : Note
             {
                 IDisposable disposable = pool.Create(out var obj, out var isNew);
                 var id = _noteCount++;
                 obj.Create(pos, new Vector3(0f, -note.Speed), _survivalRect, note.Lane, time, id, disposable);
-                if (_isVs && note.Color == NoteColor.Blue) _effectDrawable.DrawEnemyAttackEffect((float)(_effectDrawable.GetTimeToCreateEnemyAttackEffect(time) - _timeProvider.Time), id);
+                if (_isVs && note.Color == NoteColor.Blue) _effectDrawable.DrawEnemyAttackEffect(isLarge, (float)(_effectDrawable.GetTimeToCreateEnemyAttackEffect(time) - _timeProvider.Time), id);
                 return (obj, isNew);
             }
 
@@ -119,7 +119,7 @@ namespace Rhythm
                     {
                         if (_notePools.ContainsKey((note.Color, note.IsLarge)))
                         {
-                            Add(CreateNote(note, _notePools[(note.Color, note.IsLarge)], firstPosition, note.JustTime));
+                            Add(CreateNote(note, _notePools[(note.Color, note.IsLarge)], firstPosition, note.JustTime, note.IsLarge));
                             _isNoteCreated[i] = true;
                         }
 
