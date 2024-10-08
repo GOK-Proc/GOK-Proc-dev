@@ -43,10 +43,10 @@ MonoBehaviour:
       _file: {fileID: 4900000, guid: b5378326c8f48214b99c44109da81366, type: 3}
     - _level: 0
       _notesDesigner: 
-      _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
+      _file: {fileID: 4900000, guid: f6fe2ba841d4add428d82c0b296b4a51, type: 3}
     - _level: 0
       _notesDesigner: 
-      _file: {fileID: 4900000, guid: f6fe2ba841d4add428d82c0b296b4a51, type: 3}
+      _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
   - _id: Chapter2_2
     _title: Monster (Swarm of Goblins) - tentative
     _sound: {fileID: 0}
