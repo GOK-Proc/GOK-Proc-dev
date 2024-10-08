@@ -14,6 +14,8 @@ namespace Novel
         [SerializeField] private NovelData _novelData;
         [SerializeField] private NovelMaterialData _novelMaterialData;
 
+        [SerializeField] private GameObject _nextMark;
+
         [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
         [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
         [field: SerializeField] public BackgroundOperation BackgroundOperation { get; set; }
@@ -60,6 +62,8 @@ namespace Novel
                     // 前の行で会話文が更新されていた場合(入力待ち)
                     if (StopDialogue)
                     {
+                        _nextMark.SetActive(true);
+
                         if (Input.GetKeyDown(KeyCode.Return))
                         {
                             CallLineOperation();
@@ -75,6 +79,8 @@ namespace Novel
 
         private void CallLineOperation()
         {
+            _nextMark.SetActive(false);
+
             StopDialogue = false;
 
             Duration = _defaultDuration;
