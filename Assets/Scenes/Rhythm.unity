@@ -3273,8 +3273,8 @@ MonoBehaviour:
   _screenLowerRight: {x: 9.6, y: -5.4}
   _player: {fileID: 347990377}
   _enemy: {fileID: 454082186}
-  _attackEffectDuration: 0.5
-  _defenseEffectDuration: 0.5
+  _attackEffectDuration: 0.48
+  _defenseEffectDuration: 0.48
   _battleEffectFadeDuration: 0.3
   _battleEffectFadeScale: 1.5
   _enemyAttackEffectDuration: 1
@@ -3319,7 +3319,7 @@ MonoBehaviour:
   - Color: 2
     IsLarge: 1
     Prefab: {fileID: 8157917599750033308, guid: 6933431dfbb014548a21141583bd7f77, type: 3}
-  _enemyAttackEffectPrefabs: {fileID: 1286597372785483457, guid: 1d0c7ea554e64714586bb4704ba85ae7, type: 3}
+  _enemyAttackEffectPrefab: {fileID: 1286597372785483457, guid: 1d0c7ea554e64714586bb4704ba85ae7, type: 3}
   _judgeFontPrefabs:
   - {fileID: 3114196519367107314, guid: f7af3463af87ec848ada8d8d35fec9ee, type: 3}
   - {fileID: 2361069125775815967, guid: 59b903543719c7845b34ac0d70a4b9ff, type: 3}
@@ -3327,6 +3327,9 @@ MonoBehaviour:
   _laneFlashPrefabs:
   - {fileID: -3549549560560496001, guid: 3ef942142ebea6248897f701346f0f0f, type: 3}
   - {fileID: 4470924126722884707, guid: cc33d94fa4b9e5447b47502b007a82a1, type: 3}
+  _swordEffectPrefabs:
+  - {fileID: 487436677879129817, guid: dc190f14266326a4fb5bbaf736ff76f8, type: 3}
+  - {fileID: 7197725948637051677, guid: d648dd57e26d082418207c9e04cf43e8, type: 3}
   _effectParent: {fileID: 1644396144}
   _knockout: {fileID: 422962497}
   _titleText: {fileID: 1690732409}

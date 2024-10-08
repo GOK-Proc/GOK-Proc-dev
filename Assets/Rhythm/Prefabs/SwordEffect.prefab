@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2017378105510726470
+--- !u!1 &4309064587038553695
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5429113995877955873}
-  - component: {fileID: 4836915499291429405}
-  - component: {fileID: -3877121931642812341}
+  - component: {fileID: 77126760283046544}
+  - component: {fileID: 6968095316546658434}
+  - component: {fileID: 487436677879129817}
   m_Layer: 0
-  m_Name: EffectAttackL
+  m_Name: SwordEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5429113995877955873
+--- !u!4 &77126760283046544
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017378105510726470}
+  m_GameObject: {fileID: 4309064587038553695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4836915499291429405
+--- !u!212 &6968095316546658434
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017378105510726470}
+  m_GameObject: {fileID: 4309064587038553695}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -73,37 +73,38 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 579556617
   m_SortingLayer: 8
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -951524112, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 389091239, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 38.53, y: 38.53}
+  m_Size: {x: 2.4, y: 2.4046876}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3877121931642812341
+--- !u!114 &487436677879129817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017378105510726470}
+  m_GameObject: {fileID: 4309064587038553695}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c917b62d645a4848926772439e0328f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _sprites:
-  - {fileID: 1633635426, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: -1743318420, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: 1386730652, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: -634126725, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: -951524112, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: -1748290290, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: 1318112876, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  - {fileID: 144417684, guid: c83541f6d1c37b34caa2e4a9b6652bca, type: 3}
-  _frameTime: 0.0625
+  - {fileID: -547824869, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: -1485625727, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: 958292021, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: 389091239, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: 531235329, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: -1534442458, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: -2121222913, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: -1982941571, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  - {fileID: 1989753998, guid: 223d1a3cd5c51a4468719cb3ce6b14dc, type: 3}
+  _frameTime: 0.033
