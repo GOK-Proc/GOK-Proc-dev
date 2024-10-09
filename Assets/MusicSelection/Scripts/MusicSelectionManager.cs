@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Rhythm;
+using Transition;
 
 namespace MusicSelection
 {
@@ -21,7 +22,7 @@ namespace MusicSelection
 
             TrackDict = _trackData.TrackDictionary.Where(x => x.Value.HasBeatmap)
                 .ToDictionary(x => x.Key, x => x.Value);
-            _difficultySelection = new DifficultySelection(_firstSelectedDifficulty);
+            _difficultySelection = new DifficultySelection(SceneTransitionManager.CurrentDifficulty);
         }
 
         protected override void Start()

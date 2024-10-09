@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Gallery;
+using Transition;
 
 namespace MusicSelection
 {
@@ -34,7 +35,6 @@ namespace MusicSelection
 
         private void GenerateUIElements()
         {
-            var isFirst = true;
             var posY = 0f;
             var height = _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
 
@@ -51,9 +51,14 @@ namespace MusicSelection
 
                 posY -= height;
 
-                if (!isFirst) continue;
-                _eventSystem.firstSelectedGameObject = element.gameObject;
-                isFirst = false;
+                // OPTIMIZE:
+                // Enum.ToString()の実装速度が比較的遅いためボトルネックになっている可能性あり．
+                // 現状気になるほどの遅延は見られないのでこの実装でいく．
+                if (_eventSystem.firstSelectedGameObject == null || 
+                    trackInformation.Id == SceneTransitionManager.CurrentRhythmId.ToString())
+                {
+                    _eventSystem.firstSelectedGameObject = element.gameObject;
+                }
             }
         }
 
