@@ -1,34 +1,29 @@
-﻿話者,会話文,キャラ配置,キャラモーション,背景,BGM,その他,0
-,,,,forest cut,Se_magic,,0
-,,Hero_stick Urura,,,Bgm_forest,,0
-${name},「ハァ……ハァ……――！」,,,,,,0
-ウルラ,「なんとか倒したようだな」,,,,,,0
-,,Clear,Cut,,,,0
-親分,「…………」,,,,,,0
-ウルラ,「先ほどの魔物……もしかして魔王が直接仕向けたものだったのか……？」,Hero_stick Urura,Cut,,,,0
-${name},「そうなのか？」,,,,,,0
-ウルラ,「いや、まだ分からないことが多く、断定はできないが……っ！　おい、${name}！　後ろに魔物が！」,,,,,,0
-,,Monster,Cut,,Se_magic,,0
-,,Hero_stick Urura,,,,,0
-${name},「――ッ！」,,,,,,0
-ウルラ,「無事か！？」,,,,,,0
-${name},「ああ……なんとかな。ギリギリでこちらの攻撃が間に合ったみたいだ」,,,,,,0
-ウルラ,「……そうか、流石に連戦で疲れただろう。この道を進むともう少しで街がある。今日はそこで休もう」,,,,,,0
-${name},「そうだな……」,,,,Se_footstep,,0
-,……,Clear,,,,,0
-,…………,,,,,,0
-,………………,,,,,,0
-,,,,Blackout,,,0
-,,Liberta,,forest,,,0
-？？？,「……」,,,,Se_footstep,,0
-？？？,「なるほど……あの子が……」,,,,,,0
-,,Clear,,Blackout,,,0
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+﻿話者,ハイライト,会話文,キャラ配置,キャラモーション,背景,BGM,その他,0
+,,,,,Forest,Se_magic,,0
+,,,Hero_stick.angry Urura,,,Bgm_forest,,0
+${name},Hero_stick,ハァ……ハァ……――！,,,,,,0
+ウルラ,Urura,なんとか倒したようだな,,,,,,0
+,,,Clear,Cut,,,,0
+魔物の親分,Boss_middle,――――…………,Boss_middle,Cut,,,,0
+,,,Clear,,,,,0
+ウルラ,Urura,先ほどの魔物……もしかして魔王が直接仕向けたものだったのか……？,Hero_stick.sad Urura,Cut,,,,0
+${name},Hero_stick,そうなのか？,,,,,,0
+ウルラ,Urura,いや、まだ分からないことが多く、断定はできないが……,,,,,,0
+ウルラ,Urura,！　おい、${name}！　後ろに魔物が！,,,,,BGMを緊迫へ,0
+,,,Monster,Cut,,,,0
+,,,Clear,,,Se_magic,,0
+,,,Hero_stick.angry Urura,Cut,,,,0
+${name},Hero_stick,――ッ！,,,,,,0
+ウルラ,Urura,無事か！？,,,,,,0
+${name},Hero_stick,ああ……なんとかな。ギリギリでこちらの攻撃が間に合ったみたいだ,Hero_stick Urura,Cut,,Bgm_forest,,0
+ウルラ,Urura,……そうか、流石に連戦で疲れただろう。この道を進むともう少しで街がある。今日はそこで休もう,,,,,,0
+${name},Hero_stick,そうだな……,,,,,,0
+ ,,……,None,,,Se_footstep,,0
+ ,,…………,None,,,,,0
+ ,,………………,None,,,,,0
+,,,,,Blackout,,,0
+,,,,,Forest,,,0
+？？？,Liberta,……,Liberta,,,Se_footstep,,0
+？？？,Liberta,なるほど……あの子が……,Liberta.smile,Cut,,,,0
+,,,Clear,,,,,0
+,,,,,Blackout,,,0
