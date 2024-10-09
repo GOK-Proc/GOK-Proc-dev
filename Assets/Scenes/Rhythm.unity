@@ -3271,8 +3271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screenUpperLeft: {x: -9.6, y: 5.4}
   _screenLowerRight: {x: 9.6, y: -5.4}
-  _player: {fileID: 347990377}
-  _enemy: {fileID: 454082186}
   _attackEffectDuration: 0.48
   _defenseEffectDuration: 0.48
   _battleEffectFadeDuration: 0.3
@@ -3291,6 +3289,7 @@ MonoBehaviour:
   _battleUI: {fileID: 585174666}
   _hitPointTextTransform: {fileID: 434970745}
   _backgroundRenderer: {fileID: 572167381}
+  _playerRenderer: {fileID: 347990378}
   _enemyRenderer: {fileID: 454082187}
   _playerGaugeRenderer: {fileID: 1304861305}
   _playerHitPointText: {fileID: 1684617243}
@@ -3335,6 +3334,9 @@ MonoBehaviour:
   _shieldEffectPrefabs:
   - {fileID: 5696479486536050988, guid: eed01fccde76d364298590bcf5e5c958, type: 3}
   - {fileID: 5696479486536050988, guid: 8a306ffded5b1af4f980dcc02cea3656, type: 3}
+  _burstEffectPrefabs:
+  - {fileID: 4108352639725719294, guid: ae2b6bf34bcb87645b6f573a4cb717b3, type: 3}
+  - {fileID: 4108352639725719294, guid: 08b2c9c364cc18d46bb4a5d8fa51cc58, type: 3}
   _effectParent: {fileID: 1644396144}
   _knockout: {fileID: 422962497}
   _titleText: {fileID: 1690732409}
@@ -3348,6 +3350,7 @@ MonoBehaviour:
     Normal: {r: 0, g: 0.78431374, b: 0, a: 1}
     Damaged: {r: 1, g: 1, b: 0, a: 1}
     Pinch: {r: 1, g: 0, b: 0, a: 1}
+  _damageColor: {r: 1, g: 0.5019608, b: 0.5019608, a: 1}
   _difficultyColor:
   - {r: 0.73, g: 1, b: 0.78, a: 1}
   - {r: 1, g: 0.73, b: 0.73, a: 1}
@@ -36049,7 +36052,7 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _overrideSettings: 0
   _defaultId: MainTheme
-  _defaultDifficulty: 2
+  _defaultDifficulty: 0
   _defaultIsVs: 1
   _isTutorial: 0
   _setting: {fileID: 11400000, guid: 18810f76c94114640adec37275e0eb18, type: 2}

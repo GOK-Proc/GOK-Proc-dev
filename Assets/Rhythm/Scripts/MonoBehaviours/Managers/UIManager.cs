@@ -15,9 +15,6 @@ namespace Rhythm
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
 
-        [SerializeField] private Transform _player;
-        [SerializeField] private Transform _enemy;
-
         [SerializeField] private float _attackEffectDuration;
         [SerializeField] private float _defenseEffectDuration;
         [SerializeField] private float _battleEffectFadeDuration;
@@ -39,6 +36,7 @@ namespace Rhythm
         [SerializeField] private Transform _battleUI;
         [SerializeField] private Transform _hitPointTextTransform;
         [SerializeField] private SpriteRenderer _backgroundRenderer;
+        [SerializeField] private SpriteRenderer _playerRenderer;
         [SerializeField] private SpriteRenderer _enemyRenderer;
 
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
@@ -62,6 +60,7 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _laneFlashPrefabs;
         [SerializeField] private EffectObject[] _swordEffectPrefabs;
         [SerializeField] private EffectObject[] _shieldEffectPrefabs;
+        [SerializeField] private EffectObject[] _burstEffectPrefabs;
         [SerializeField] private Transform _effectParent;
         [SerializeField] private CanvasGroup _knockout;
 
@@ -74,6 +73,8 @@ namespace Rhythm
         [SerializeField] private float _comboPopupScale;
         [SerializeField] private float _comboPopupDuration;
 
+        private Transform _player;
+        private Transform _enemy;
 
         private Transform _playerGauge;
         private Transform _enemyGauge;
@@ -82,8 +83,8 @@ namespace Rhythm
         private Vector3 _enemyPosition;
         private Vector3 _playerGuardPosition;
 
-        private Tweener _playerShakeTween;
-        private Tweener _enemyShakeTween;
+        private Sequence _playerDamageTween;
+        private Sequence _enemyDamageTween;
 
         private Tweener _comboTween;
 
@@ -94,6 +95,7 @@ namespace Rhythm
         private ObjectPool<EffectObject>[] _laneFlashPools;
         private ObjectPool<EffectObject>[] _swordEffectPools;
         private ObjectPool<EffectObject>[] _shieldEffectPools;
+        private ObjectPool<EffectObject>[] _burstEffectPools;
 
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
@@ -111,6 +113,8 @@ namespace Rhythm
         private Vector3 _enemyGaugePosition;
         private Vector3 _playerGaugeScale;
         private Vector3 _enemyGaugeScale;
+
+        [SerializeField] private Color _damageColor;
 
         [SerializeField] private Color[] _difficultyColor;
         [SerializeField] private Color _tutorialColor;
@@ -208,6 +212,8 @@ namespace Rhythm
 
         private void Awake()
         {
+            _player = _playerRenderer.transform;
+            _enemy = _enemyRenderer.transform;
             _playerPosition = _player.position;
             _enemyPosition = _enemy.position;
             _playerGuardPosition = new Vector3(Mathf.Lerp(_enemyPosition.x, _playerPosition.x, _hitTimeRatio), _playerPosition.y, _playerPosition.z);
@@ -227,11 +233,12 @@ namespace Rhythm
             _laneFlashPools = _laneFlashPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _swordEffectPools = _swordEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _shieldEffectPools = _shieldEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
+            _burstEffectPools = _burstEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray(); 
 
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
 
-            _playerShakeTween = null;
-            _enemyShakeTween = null;
+            _playerDamageTween = null;
+            _enemyDamageTween = null;
 
             _clearGaugeUpper = _clearGaugeUpperImage.rectTransform;
             _clearGaugePosition = _clearGaugeLower.anchoredPosition;
@@ -341,26 +348,42 @@ namespace Rhythm
         
         public void DrawPlayerDamageEffect()
         {
-            if (_playerShakeTween != null)
+            if (_playerDamageTween != null)
             {
-                _playerShakeTween.Kill();
+                _playerDamageTween.Kill();
                 _player.position = _playerPosition;
+                _playerRenderer.color = Color.white;
             }
 
-            _playerShakeTween = _player.DOShakePosition(_shakeDuration);
+            _playerDamageTween = DOTween.Sequence()
+                .Append(_player.DOShakePosition(_shakeDuration))
+                .Join(_playerRenderer.DOColor(_damageColor, _shakeDuration / 2).OnComplete(() =>
+                {
+                    _playerRenderer.DOColor(Color.white, _shakeDuration / 2);
+                }));
+
+            _playerDamageTween.Play();
         }
 
         public Sequence DelayDefenseDuration() => DOTween.Sequence().AppendInterval(_defenseEffectDuration);
 
         public void DrawEnemyDamageEffect()
         {
-            if (_enemyShakeTween != null)
+            if (_enemyDamageTween != null)
             {
-                _enemyShakeTween.Kill();
+                _enemyDamageTween.Kill();
                 _enemy.position = _enemyPosition;
+                _enemyRenderer.color = Color.white;
             }
 
-            _enemyShakeTween = _enemy.DOShakePosition(_shakeDuration);
+            _enemyDamageTween = DOTween.Sequence()
+                .Append(_enemy.DOShakePosition(_shakeDuration))
+                .Join(_enemyRenderer.DOColor(_damageColor, _shakeDuration / 2).OnComplete(() =>
+                {
+                    _enemyRenderer.DOColor(Color.white, _shakeDuration / 2);
+                }));
+
+            _enemyDamageTween.Play();
         }
 
         public void DrawPlayerHealEffect()
@@ -544,6 +567,9 @@ namespace Rhythm
             {
                 t.DOLocalMove(_playerPosition, 1f).OnComplete(() =>
                 {
+                    IDisposable disposable = _burstEffectPools[Convert.ToInt32(isLarge)].Create(out var obj, out var _);
+                    obj.Create(disposable);
+                    obj.PlayAnimation(_playerPosition + (Vector3)UnityEngine.Random.insideUnitCircle * 0.5f);
                     d?.Invoke();
                 }).SetEase(Ease.Linear);
             },
