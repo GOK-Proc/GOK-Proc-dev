@@ -25,7 +25,7 @@ MonoBehaviour:
     - {fileID: 1420352047405250186, guid: 7cc30a22bb090254b9325437024a1ee0, type: 3}
     - {fileID: 228890613793695131, guid: 2fe6638ab1a716f4c9cdcd60fd4dab3b, type: 3}
     - {fileID: 723325534500880680, guid: 8c1509443ea699a419c1391f7dbc77d5, type: 3}
-  - _name: Libelta
+  - _name: Liberta
     _default: {fileID: 6532444791575691359, guid: 840f27c7c9db7db4c9afe04f6cf93826, type: 3}
     _characterDifferences:
     - {fileID: 4727264462351100731, guid: 2abfff32a6085a844bcf8b32eeccac19, type: 3}
