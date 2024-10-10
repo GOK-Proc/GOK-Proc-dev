@@ -12,6 +12,7 @@ namespace Rhythm
     {
         private bool _isVs;
         private bool _isTutorial;
+        private bool _isPause;
         private KeyConfig _keyConfig;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
@@ -46,6 +47,8 @@ namespace Rhythm
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
             _tutorialDrawable = tutorialDrawable;
+
+            _isPause = false;
         }
 
         public void OnBattleNextButtonClick()
@@ -106,6 +109,7 @@ namespace Rhythm
 
                     _soundPlayable.UnPauseMusic();
                     Time.timeScale = 1;
+                    _isPause = false;
                 });
 
                 sequence.Play();
@@ -153,11 +157,12 @@ namespace Rhythm
 
         public void OnPause(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.performed && !_isPause)
             {
                 _playerInput.SwitchCurrentActionMap("Pause");
                 _soundPlayable.PauseMusic();
                 Time.timeScale = 0;
+                _isPause = true;
 
                 _pauseResumeButton.interactable = true;
                 _pauseQuitButton.interactable = true;
