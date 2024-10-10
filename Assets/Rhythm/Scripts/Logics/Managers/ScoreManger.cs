@@ -34,6 +34,7 @@ namespace Rhythm
         private readonly ISoundPlayable _soundPlayable;
         private readonly IGaugeDrawable _gaugeDrawable;
         private readonly IUIDrawable _uiDrawable;
+        private readonly IDamageDrawable _damageDrawable;
         private readonly IDataHandler<RecordData[]> _recordDataHandler;
 
         private float _playerHitPoint;
@@ -49,7 +50,7 @@ namespace Rhythm
 
         public int Combo { get; private set; }
         public int MaxCombo { get; private set; }
-        public bool IsWin => _isVs && Mathf.CeilToInt(_playerHitPoint) >= Mathf.CeilToInt(_enemyHitPoint);
+        public bool IsWin => _isVs && Mathf.CeilToInt(_playerHitPoint) >= Mathf.CeilToInt(_enemyHitPoint) && _playerHitPoint > 0;
         public bool IsOverkill => _isVs && _enemyHitPoint == 0;
         public bool IsKnockout => _isVs && _playerHitPoint == 0;
         public bool IsKnockoutAfterEffect { get; private set; }
@@ -76,7 +77,7 @@ namespace Rhythm
 
         public JudgeCount JudgeCount => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]);
 
-        public ScoreManger(bool isVs, string id, Difficulty difficulty, bool isTutorial, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDataHandler<RecordData[]> recordDataHandler)
+        public ScoreManger(bool isVs, string id, Difficulty difficulty, bool isTutorial, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDamageDrawable damageDrawable, IDataHandler<RecordData[]> recordDataHandler)
         {
             _isVs = isVs;
             _difficulty = difficulty;
@@ -113,6 +114,7 @@ namespace Rhythm
             _soundPlayable = soundPlayable;
             _gaugeDrawable = gaugeDrawable;
             _uiDrawable = uiDrawable;
+            _damageDrawable = damageDrawable;
             _recordDataHandler = recordDataHandler;
 
             _wasAlerted = false;
@@ -194,11 +196,27 @@ namespace Rhythm
                                 var playerHealing = i.Value;
                                 _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
 
+                                var stopAlert = false;
+                                if (_playerHitPoint / _playerMaxHitPoint > _alertRate)
+                                {
+                                    if (_wasAlerted)
+                                    {
+                                        stopAlert = true;
+                                        _wasAlerted = false;
+                                    }
+                                }
+                                else
+                                {
+                                    _wasAlerted = true;
+                                }
+
                                 if (playerHealing > 0)
                                 {
                                     _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
                                     _gaugeDrawable.DrawPlayerHealEffect();
                                     _soundPlayable.PlaySE("PlayerHeal");
+
+                                    if (stopAlert) _damageDrawable.StopWarningLayer();
                                 }
                                 break;
                         }
@@ -241,12 +259,12 @@ namespace Rhythm
                     var playerDamage = _playerBasicDamage * (isLarge ? _largeRate : 1) * _judgeRates[(int)judgement - 1].Defense;
                     _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, -playerDamage);
 
-                    var alert = false;
+                    var startAlert = false;
                     if (_playerHitPoint / _playerMaxHitPoint <= _alertRate)
                     {
                         if (!_wasAlerted)
                         {
-                            alert = true;
+                            startAlert = true;
                             _wasAlerted = true;
                         }
                     }
@@ -265,7 +283,11 @@ namespace Rhythm
                             _gaugeDrawable.DrawPlayerDamageEffect();
                             _soundPlayable.PlaySE("PlayerDamage");
                             IsKnockoutAfterEffect = hitPoint == 0 && !_isTutorial;
-                            if (alert) _soundPlayable.PlaySE("Alert");
+                            if (startAlert)
+                            {
+                                _soundPlayable.PlaySE("Alert");
+                                _damageDrawable.StartWarningLayer();
+                            }
                         });
                     }
 

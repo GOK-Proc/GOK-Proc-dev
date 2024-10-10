@@ -10,7 +10,7 @@ using TMPro;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable, ITutorialDrawable
+    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable, ITutorialDrawable, IDamageDrawable
     {
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
@@ -28,6 +28,8 @@ namespace Rhythm
         [SerializeField] private float _laneFlashDuration;
         [SerializeField] private float _laneFlashFadeDuration;
         [SerializeField] private float _knockoutFadeDuration;
+        [SerializeField] private float _warningPeriod;
+        [SerializeField] private float _warningMaxAlpha;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -73,6 +75,8 @@ namespace Rhythm
         [SerializeField] private float _comboPopupScale;
         [SerializeField] private float _comboPopupDuration;
 
+        [SerializeField] private Image _warningLayer;
+
         private Transform _player;
         private Transform _enemy;
 
@@ -87,6 +91,8 @@ namespace Rhythm
         private Sequence _enemyDamageTween;
 
         private Tweener _comboTween;
+
+        private Sequence _warningTween;
 
         private ObjectPool<EffectObject>[] _judgeEffectPools;
         private Dictionary<(NoteColor, bool), ObjectPool<EffectObject>> _battleEffectPools;
@@ -239,6 +245,9 @@ namespace Rhythm
 
             _playerDamageTween = null;
             _enemyDamageTween = null;
+
+            _comboTween = null;
+            _warningTween = null;
 
             _clearGaugeUpper = _clearGaugeUpperImage.rectTransform;
             _clearGaugePosition = _clearGaugeLower.anchoredPosition;
@@ -902,6 +911,31 @@ namespace Rhythm
             _tutorial.gameObject.SetActive(false);
             _tutorial.alpha = 1f;
         });
+
+        public void StartWarningLayer()
+        {
+            float alpha = _warningLayer.color.a;
+
+            StopWarningLayer();
+
+            _warningTween = DOTween.Sequence()
+                .Append(_warningLayer.DOFade(_warningMaxAlpha, _warningPeriod / 2))
+                .Append(_warningLayer.DOFade(alpha, _warningPeriod / 2))
+                .SetLoops(-1);
+
+            _warningLayer.gameObject.SetActive(true);
+        }
+
+        public void StopWarningLayer()
+        {
+            if (_warningTween != null)
+            {
+                _warningTween.Kill();
+                _warningTween = null;
+            }
+
+            _warningLayer.gameObject.SetActive(false);
+        }
 
     }
 }
