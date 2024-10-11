@@ -29,7 +29,7 @@ namespace MusicSelection
         {
             base.Start();
 
-            UpdateDifficultyRelatedUI();
+            _difficultyDisplay.Set();
         }
 
         public void OnNavigateHorizontal(InputValue inputValue)
