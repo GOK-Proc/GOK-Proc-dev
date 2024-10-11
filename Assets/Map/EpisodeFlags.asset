@@ -20,11 +20,11 @@ MonoBehaviour:
   - _episodeNumber:
       _chapter: 1
       _section: 2
-    _value: 0
+    _value: 1
   - _episodeNumber:
       _chapter: 1
       _section: 3
-    _value: 0
+    _value: 1
   - _episodeNumber:
       _chapter: 2
       _section: 1

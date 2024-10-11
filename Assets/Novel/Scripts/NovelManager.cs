@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using Transition;
 
 namespace Novel
 {
@@ -30,6 +31,7 @@ namespace Novel
 
         private bool _completeInitialize = false;
         private bool _notFirstLine = false;
+        private bool _isTransitioning = false;
 
         public bool StopDialogue { get; set; } = false;      // 前の行で会話文が更新されたか
         public bool IsProcessingDialogue { get; set; } = false;
@@ -39,6 +41,8 @@ namespace Novel
 
         private void Start()
         {
+            _novelId = SceneTransitionManager.CurrentNovelId;
+
             Initialize();
         }
 
@@ -57,22 +61,35 @@ namespace Novel
             }
             else
             {
-                // すべての処理が完了しており、かつ最後の行に達していない場合
-                if (IsFinishedOperation() && _scenarioData.ScenarioLines.Count > _currentLine)
+                // すべての処理が完了している場合
+                if (IsFinishedOperation())
                 {
-                    // 前の行で会話文が更新されていた場合(入力待ち)
-                    if (StopDialogue)
+                    // 最後の行に達していない場合
+                    if (_scenarioData.ScenarioLines.Count > _currentLine)
                     {
-                        _nextMark.SetActive(true);
+                        // 前の行で会話文が更新されていた場合(入力待ち)
+                        if (StopDialogue)
+                        {
+                            _nextMark.SetActive(true);
 
-                        if (Input.GetKeyDown(KeyCode.Return))
+                            if (Input.GetKeyDown(KeyCode.Return))
+                            {
+                                CallLineOperation();
+                            }
+                        }
+                        else
                         {
                             CallLineOperation();
                         }
+
                     }
                     else
                     {
-                        CallLineOperation();
+                        if (!_isTransitioning)
+                        {
+                            SceneTransitionManager.TransitionToMap(true);
+                            _isTransitioning = true;
+                        }
                     }
                 }
             }
