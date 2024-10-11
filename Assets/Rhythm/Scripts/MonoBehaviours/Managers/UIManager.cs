@@ -106,14 +106,15 @@ namespace Rhythm
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
         [System.Serializable]
-        private struct BattleGaugeColor
+        private struct BattleDamageDifference<T>
         {
-            public Color Normal;
-            public Color Damaged;
-            public Color Pinch;
+            public T Normal;
+            public T Damaged;
+            public T Pinch;
         }
 
-        [SerializeField] private BattleGaugeColor _battleGaugeColor;
+        [SerializeField] private BattleDamageDifference<Color> _battleGaugeColor;
+        [SerializeField] private BattleDamageDifference<Sprite> _playerSprites;
 
         private Vector3 _playerGaugePosition;
         private Vector3 _enemyGaugePosition;
@@ -935,6 +936,21 @@ namespace Rhythm
             }
 
             _warningLayer.gameObject.SetActive(false);
+        }
+
+        public void SetPlayerSprite(float hitPoint, float maxHitPoint)
+        {
+            var newSprite = (hitPoint / maxHitPoint) switch
+            {
+                <= 0.2f => _playerSprites.Pinch,
+                <= 0.5f => _playerSprites.Damaged,
+                _ => _playerSprites.Normal,
+            };
+
+            if (_playerRenderer.sprite != newSprite)
+            {
+                _playerRenderer.sprite = newSprite;
+            }
         }
 
     }

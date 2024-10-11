@@ -214,6 +214,7 @@ namespace Rhythm
                                 {
                                     _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
                                     _gaugeDrawable.DrawPlayerHealEffect();
+                                    _damageDrawable.SetPlayerSprite(_playerHitPoint, _playerMaxHitPoint);
                                     _soundPlayable.PlaySE("PlayerHeal");
 
                                     if (stopAlert) _damageDrawable.StopWarningLayer();
@@ -281,6 +282,7 @@ namespace Rhythm
                         {
                             _gaugeDrawable.DrawPlayerGauge(hitPoint, maxHitPoint);
                             _gaugeDrawable.DrawPlayerDamageEffect();
+                            _damageDrawable.SetPlayerSprite(hitPoint, maxHitPoint);
                             _soundPlayable.PlaySE("PlayerDamage");
                             IsKnockoutAfterEffect = hitPoint == 0 && !_isTutorial;
                             if (startAlert)

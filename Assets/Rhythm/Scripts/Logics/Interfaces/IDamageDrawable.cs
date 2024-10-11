@@ -4,5 +4,6 @@
     {
         void StartWarningLayer();
         void StopWarningLayer();
+        void SetPlayerSprite(float hitPoint, float maxHitPoint);
     }
 }
