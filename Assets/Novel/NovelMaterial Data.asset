@@ -32,7 +32,7 @@ MonoBehaviour:
     - {fileID: 2723363294900062958, guid: 9195b41ecb2dafa45ba3cdbdaeb2d839, type: 3}
     - {fileID: 2193277232876072240, guid: 4e1e6e70251d8d248bad0a8664eb5194, type: 3}
     - {fileID: 6529340688581842978, guid: bda8b669dcf300e459429ac7b248375d, type: 3}
-  - _name: Libelta
+  - _name: Liberta
     _default: {fileID: 6532444791575691359, guid: 840f27c7c9db7db4c9afe04f6cf93826, type: 3}
     _characterDifferences:
     - {fileID: 4727264462351100731, guid: 2abfff32a6085a844bcf8b32eeccac19, type: 3}

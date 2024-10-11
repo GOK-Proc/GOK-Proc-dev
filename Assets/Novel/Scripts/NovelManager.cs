@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Transition;
 
 namespace Novel
 {
@@ -21,7 +22,7 @@ namespace Novel
         [SerializeField] private GameObject _nextMark;
 
         [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
-        [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
+        [field: SerializeField] public CharacterOperation CharacterOperation { get; set; }
         [field: SerializeField] public BackgroundOperation BackgroundOperation { get; set; }
         [field: SerializeField] public SoundOperation SoundOperation { get; set; }
         [field: SerializeField] public OtherOperation OtherOperation { get; set; }
@@ -34,6 +35,7 @@ namespace Novel
 
         private bool _completeInitialize = false;
         private bool _notFirstLine = false;
+        private bool _isTransitioning = false;
 
         public bool StopDialogue { get; set; } = false;      // 前の行で会話文が更新されたか
         public bool IsProcessingDialogue { get; set; } = false;
@@ -44,6 +46,8 @@ namespace Novel
         private void Start()
         {
             _nextAction = _playerInput.actions["Next"];
+
+            _novelId = SceneTransitionManager.CurrentNovelId;
 
             Initialize();
         }
@@ -63,22 +67,46 @@ namespace Novel
             }
             else
             {
-                // すべての処理が完了しており、かつ最後の行に達していない場合
-                if (IsFinishedOperation() && _scenarioData.ScenarioLines.Count > _currentLine)
+                // すべての処理が完了している場合
+                if (IsFinishedOperation())
                 {
-                    // 前の行で会話文が更新されていた場合(入力待ち)
-                    if (StopDialogue)
+                    // 最後の行に達していない場合
+                    if (_scenarioData.ScenarioLines.Count > _currentLine)
                     {
-                        _nextMark.SetActive(true);
+                        // 前の行で会話文が更新されていた場合(入力待ち)
+                        if (StopDialogue)
+                        {
+                            _nextMark.SetActive(true);
 
-                        if (_nextAction.IsPressed())
+                            if (_nextAction.IsPressed())
+                            {
+                                CallLineOperation();
+                            }
+                        }
+                        else
                         {
                             CallLineOperation();
                         }
                     }
                     else
                     {
-                        CallLineOperation();
+                        if (!_isTransitioning)
+                        {
+                            // 前の行で会話文が更新されていた場合
+                            if (StopDialogue)
+                            {
+                                if (_nextAction.IsPressed())
+                                {
+                                    SceneTransitionManager.TransitionToMap(true);
+                                    _isTransitioning = true;
+                                }
+                            }
+                            else
+                            {
+                                SceneTransitionManager.TransitionToMap(true);
+                                _isTransitioning = true;
+                            }
+                        }
                     }
                 }
             }

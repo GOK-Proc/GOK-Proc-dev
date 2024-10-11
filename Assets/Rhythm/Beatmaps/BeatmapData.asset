@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beatmaps:
   - _id: MainTheme
-    _title: Main Theme - tentative
+    _title: "\u30E1\u30A4\u30F3\u30C6\u30FC\u30DE"
     _sound: {fileID: 8300000, guid: 0f0f43d3fcac62547a74711e079b18d6, type: 3}
     _offset: 1.2
-    _composer: See Scrapbox.
+    _composer: "\u5965\u91CE\u7950\u751F"
     _backgroundSprite: {fileID: 21300000, guid: 5dd2b93433282ef40a1dae03839d8a6d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
     _notes:
@@ -43,39 +43,48 @@ MonoBehaviour:
       _file: {fileID: 4900000, guid: b5378326c8f48214b99c44109da81366, type: 3}
     - _level: 0
       _notesDesigner: 
-      _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
+      _file: {fileID: 4900000, guid: f6fe2ba841d4add428d82c0b296b4a51, type: 3}
     - _level: 0
       _notesDesigner: 
-      _file: {fileID: 4900000, guid: f6fe2ba841d4add428d82c0b296b4a51, type: 3}
+      _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
   - _id: Chapter2_2
-    _title: Monster (Swarm of Goblins) - tentative
+    _title: "\u8A66\u594F\u301C\u9B54\u7269\u9054\u306E\u5C0F\u54C1\u301C"
     _sound: {fileID: 0}
     _offset: 0
-    _composer: See Scrapbox.
+    _composer: "\u7532\u6590\u5927\u6210"
     _backgroundSprite: {fileID: 0}
     _enemySprite: {fileID: 0}
     _notes: []
   - _id: Chapter2_4
-    _title: Monster (Boss of the Swarm) - tentative
+    _title: "\u8972\u6F14\u301C\u4E3B\u306E\u72EC\u594F\u301C"
     _sound: {fileID: 0}
     _offset: 0
-    _composer: See Scrapbox.
+    _composer: "\u3068\u308A\u3068\u308A"
     _backgroundSprite: {fileID: 0}
     _enemySprite: {fileID: 0}
     _notes: []
   - _id: Chapter1
-    _title: Chapter1 village - tentative
-    _sound: {fileID: 0}
+    _title: "\u30BD\u30CC\u30B9\u30EB\u30D7\u30B9\u8857"
+    _sound: {fileID: 8300000, guid: ecdf4e8d3125a8b4e98f3c2c50bf6ce5, type: 3}
     _offset: 0
-    _composer: See Scrapbox.
+    _composer: "\u5965\u91CE\u7950\u751F"
     _backgroundSprite: {fileID: 0}
     _enemySprite: {fileID: 0}
-    _notes: []
+    _notes:
+    - _level: 0
+      _notesDesigner: 
+      _file: {fileID: 4900000, guid: 98401f284ac61c64f820025d81b392d4, type: 3}
+    - _level: 0
+      _notesDesigner: 
+      _file: {fileID: 4900000, guid: e8b01502d937bf649ab0bd5c5f75939b, type: 3}
+    - _level: 0
+      _notesDesigner: 
+      _file: {fileID: 4900000, guid: be73c18d3fc7a53459ecc7b05b13f72f, type: 3}
   - _id: Chapter2
-    _title: Chapter2 forest - tentative
+    _title: "\u30EA\u30FC\u30C8\u306E\u68EE"
     _sound: {fileID: 0}
     _offset: 0
-    _composer: See Scrapbox.
+    _composer: "\u7AF9\u4E0B\u5B9F\u7A42"
     _backgroundSprite: {fileID: 0}
     _enemySprite: {fileID: 0}
     _notes: []

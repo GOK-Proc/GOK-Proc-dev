@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 128341944}
   _defaultDuration: 0.75
-  _novelId: 1
+  _novelId: 0
   _novelData: {fileID: 11400000, guid: 587bff0387dccb94a971efba913d094d, type: 2}
   _novelMaterialData: {fileID: 11400000, guid: f57550eb0a36b774c9a1f120f772d443, type: 2}
   _nextMark: {fileID: 938255270}

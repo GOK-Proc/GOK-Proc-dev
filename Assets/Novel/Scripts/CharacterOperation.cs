@@ -261,7 +261,7 @@ namespace Novel
                 if (CharacterObject != null)
                 {
                     DestroyCharacterChildren();
-                    Destroy(CharacterObject, 5f);
+                    Destroy(CharacterObject);
                 }
 
                 CharacterObject = characterObject;
@@ -279,7 +279,7 @@ namespace Novel
             {
                 foreach (Transform child in CharacterObject.transform)
                 {
-                    Destroy(child.gameObject, 5f);
+                    Destroy(child.gameObject);
                 }
             }
 
