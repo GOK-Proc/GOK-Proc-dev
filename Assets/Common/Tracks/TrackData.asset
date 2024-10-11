@@ -16,7 +16,7 @@ MonoBehaviour:
   - _id: MainTheme
     _title: "\u30E1\u30A4\u30F3\u30C6\u30FC\u30DE"
     _intro: {fileID: 0}
-    _sound: {fileID: 0}
+    _sound: {fileID: 8300000, guid: 02fd6e120122f504b8ebf5e870bcef0b, type: 3}
     _hasBeatmap: 1
     _composer: "\u5965\u91CE\u7950\u751F"
     _description: 
