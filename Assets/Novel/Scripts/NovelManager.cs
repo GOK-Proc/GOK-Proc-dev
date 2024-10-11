@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Transition;
 
 namespace Novel
 {
     public class NovelManager : SingletonMonoBehaviour<NovelManager>
     {
+        [SerializeField] private PlayerInput _playerInput;
+        private InputAction _nextAction;
+
         [SerializeField] private float _defaultDuration = 0.75f;
         [SerializeField] private NovelId _novelId;
         [SerializeField] private NovelData _novelData;
@@ -18,7 +22,7 @@ namespace Novel
         [SerializeField] private GameObject _nextMark;
 
         [field: SerializeField] public DialogueOperation DialogueOperation { get; set; }
-        [field: SerializeField] public CharacterOperation CharacterOperation { get; set;  }
+        [field: SerializeField] public CharacterOperation CharacterOperation { get; set; }
         [field: SerializeField] public BackgroundOperation BackgroundOperation { get; set; }
         [field: SerializeField] public SoundOperation SoundOperation { get; set; }
         [field: SerializeField] public OtherOperation OtherOperation { get; set; }
@@ -41,6 +45,8 @@ namespace Novel
 
         private void Start()
         {
+            _nextAction = _playerInput.actions["Next"];
+
             _novelId = SceneTransitionManager.CurrentNovelId;
 
             Initialize();
@@ -72,7 +78,7 @@ namespace Novel
                         {
                             _nextMark.SetActive(true);
 
-                            if (Input.GetKeyDown(KeyCode.Return))
+                            if (_nextAction.IsPressed())
                             {
                                 CallLineOperation();
                             }
@@ -81,14 +87,25 @@ namespace Novel
                         {
                             CallLineOperation();
                         }
-
                     }
                     else
                     {
                         if (!_isTransitioning)
                         {
-                            SceneTransitionManager.TransitionToMap(true);
-                            _isTransitioning = true;
+                            // 前の行で会話文が更新されていた場合
+                            if (StopDialogue)
+                            {
+                                if (_nextAction.IsPressed())
+                                {
+                                    SceneTransitionManager.TransitionToMap(true);
+                                    _isTransitioning = true;
+                                }
+                            }
+                            else
+                            {
+                                SceneTransitionManager.TransitionToMap(true);
+                                _isTransitioning = true;
+                            }
                         }
                     }
                 }
