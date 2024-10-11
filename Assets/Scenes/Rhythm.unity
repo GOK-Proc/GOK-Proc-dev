@@ -3286,6 +3286,8 @@ MonoBehaviour:
   _knockoutFadeDuration: 0.5
   _warningPeriod: 1
   _warningMaxAlpha: 0.9
+  _healEffectRelativePosition: {x: -1, y: 1.3, z: 0}
+  _comboPosition: {x: 0, y: 3.8, z: 0}
   _hitTimeRatio: 0.85
   _shakeDuration: 0.5
   _battleUI: {fileID: 585174666}
@@ -3339,6 +3341,8 @@ MonoBehaviour:
   _burstEffectPrefabs:
   - {fileID: 4108352639725719294, guid: ae2b6bf34bcb87645b6f573a4cb717b3, type: 3}
   - {fileID: 4108352639725719294, guid: 08b2c9c364cc18d46bb4a5d8fa51cc58, type: 3}
+  _healEffectPrefab: {fileID: 1866597289823465088, guid: fe695c4ae37e5d946956fe024547b524, type: 3}
+  _comboAttackEffectPrefab: {fileID: 128538335560314773, guid: 8006fe2c6a13fa1478e33d240f4657f5, type: 3}
   _effectParent: {fileID: 1644396144}
   _knockout: {fileID: 422962497}
   _titleText: {fileID: 1690732409}

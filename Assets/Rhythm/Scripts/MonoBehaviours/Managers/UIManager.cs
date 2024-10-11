@@ -30,6 +30,8 @@ namespace Rhythm
         [SerializeField] private float _knockoutFadeDuration;
         [SerializeField] private float _warningPeriod;
         [SerializeField] private float _warningMaxAlpha;
+        [SerializeField] private Vector3 _healEffectRelativePosition;
+        [SerializeField] private Vector3 _comboPosition;
 
         [SerializeField] private float _hitTimeRatio;
         [SerializeField] private float _shakeDuration;
@@ -63,6 +65,8 @@ namespace Rhythm
         [SerializeField] private EffectObject[] _swordEffectPrefabs;
         [SerializeField] private EffectObject[] _shieldEffectPrefabs;
         [SerializeField] private EffectObject[] _burstEffectPrefabs;
+        [SerializeField] private EffectObject _healEffectPrefab;
+        [SerializeField] private EffectObject _comboAttackEffectPrefab;
         [SerializeField] private Transform _effectParent;
         [SerializeField] private CanvasGroup _knockout;
 
@@ -105,6 +109,8 @@ namespace Rhythm
         private ObjectPool<EffectObject>[] _swordEffectPools;
         private ObjectPool<EffectObject>[] _shieldEffectPools;
         private ObjectPool<EffectObject>[] _burstEffectPools;
+        private ObjectPool<EffectObject> _healEffectPool;
+        private ObjectPool<EffectObject> _comboAttackEffectPool;
 
         private Dictionary<int, EffectObject> _enemyAttackEffects;
 
@@ -244,6 +250,8 @@ namespace Rhythm
             _swordEffectPools = _swordEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _shieldEffectPools = _shieldEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _burstEffectPools = _burstEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray(); 
+            _healEffectPool = new ObjectPool<EffectObject>(_healEffectPrefab, _effectParent);
+            _comboAttackEffectPool = new ObjectPool<EffectObject>(_comboAttackEffectPrefab, _effectParent);
 
             _enemyAttackEffects = new Dictionary<int, EffectObject>();
 
@@ -404,7 +412,9 @@ namespace Rhythm
 
         public void DrawPlayerHealEffect()
         {
-            // ToDo: Effect
+            IDisposable disposable = _healEffectPool.Create(out var obj, out var _);
+            obj.Create(disposable);
+            obj.PlayAnimation(_playerPosition + _healEffectRelativePosition);
         }
 
         public void DrawJudgeEffect(Vector3 position, Judgement judgement)
@@ -629,6 +639,37 @@ namespace Rhythm
         }
 
         public double GetTimeToCreateEnemyAttackEffect(double justTime) => justTime + _defenseEffectDuration - _hitTimeRatio * _enemyAttackEffectDuration;
+
+        public void DrawComboAttackEffect()
+        {
+            IDisposable disposable = _comboAttackEffectPool.Create(out var obj, out var _);
+
+            obj.Create(
+                (t, s, d) =>
+                {
+                    t.DOLocalMove(_enemyPosition, _attackEffectDuration).OnComplete(() =>
+                    {
+                        d?.Invoke();
+                    });
+                },
+                (t, s, d) =>
+                {
+                    var scale = t.localScale;
+                    var color = s.color;
+                    var sequence = DOTween.Sequence();
+                    sequence.Append(t.DOScale(_battleEffectFadeScale, _battleEffectFadeDuration));
+                    sequence.Join(s.DOFade(0f, _battleEffectFadeDuration));
+                    sequence.Play().OnComplete(() =>
+                    {
+                        t.localScale = scale;
+                        s.color = color;
+                        d?.Invoke();
+                    });
+                },
+            disposable);
+
+            obj.PlayAnimation(_comboPosition, _enemyPosition, isKeep: true);
+        }
 
         public void DrawHeader(in HeaderInformation header, bool isTutorial)
         {

@@ -61,11 +61,11 @@ TagManager:
   - name: Rhythm_Band
     uniqueID: 1405916171
     locked: 0
-  - name: Rhythm_Combo
-    uniqueID: 610373681
-    locked: 0
   - name: Rhythm_BattleEffect
     uniqueID: 579556617
+    locked: 0
+  - name: Rhythm_Combo
+    uniqueID: 610373681
     locked: 0
   - name: Rhythm_Cursor
     uniqueID: 305087205

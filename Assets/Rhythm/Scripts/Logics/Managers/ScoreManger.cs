@@ -55,7 +55,9 @@ namespace Rhythm
         public bool IsKnockout => _isVs && _playerHitPoint == 0;
         public bool IsGameOver { get; private set; }
         public bool IsClear => !_isVs && _gaugePoint >= _clearGaugePoint;
-        public int Score { get
+        public int Score
+        {
+            get
             {
                 float s = 0;
                 for (int i = 0; i < System.Enum.GetValues(typeof(Judgement)).Length - 1; i++)
@@ -63,9 +65,12 @@ namespace Rhythm
                     s += _scoreRates[i] * _judgeCount[i];
                 }
                 return (int)(s * _maxScore / _noteCount);
-            } }
+            }
+        }
 
-        public ScoreRank ScoreRank { get
+        public ScoreRank ScoreRank
+        { 
+            get
             {
                 int rankCount = System.Enum.GetValues(typeof(ScoreRank)).Length;
                 for (int i = 0; i < rankCount - 1; i++)
@@ -73,9 +78,28 @@ namespace Rhythm
                     if (Score >= _scoreRankBorders[i]) return (ScoreRank)i;
                 }
                 return (ScoreRank)(rankCount - 1);
-            } }
+            }
+        }
 
         public JudgeCount JudgeCount => new JudgeCount(_judgeCount[0], _judgeCount[1], _judgeCount[2]);
+
+        public bool IsAttackBonus
+        {
+            get
+            {
+                if (Combo > 0)
+                {
+                    foreach (var i in _comboBonus)
+                    {
+                        if (Combo % i.Combo == 0 && i.Type == BonusType.Attack)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
 
         public ScoreManger(bool isVs, string id, Difficulty difficulty, bool isTutorial, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDamageDrawable damageDrawable, IDataHandler<RecordData[]> recordDataHandler)
         {
@@ -184,6 +208,8 @@ namespace Rhythm
                                     var maxHitPoint = _enemyMaxHitPoint;
                                     _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                                     {
+                                        _soundPlayable.PlaySE("PlayerDamage");
+
                                         if (overkill)
                                         {
                                             _soundPlayable.PlaySE("Overkill");

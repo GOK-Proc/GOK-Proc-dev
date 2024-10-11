@@ -10,5 +10,6 @@ namespace Rhythm
         void DrawBattleEffect(Vector3 position, NoteColor color, bool isLarge, Judgement judgement, int id);
         void DrawEnemyAttackEffect(bool isLarge, float delay, int id);
         double GetTimeToCreateEnemyAttackEffect(double justTime);
+        void DrawComboAttackEffect();
     }
 }
