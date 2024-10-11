@@ -90,6 +90,9 @@ namespace Rhythm
         private Sequence _playerDamageTween;
         private Sequence _enemyDamageTween;
 
+        private Color _playerColor;
+        private Color _enemyColor;
+
         private Tweener _comboTween;
 
         private Sequence _warningTween;
@@ -247,6 +250,9 @@ namespace Rhythm
             _playerDamageTween = null;
             _enemyDamageTween = null;
 
+            _playerColor = _playerRenderer.color;
+            _enemyColor = _enemyRenderer.color;
+
             _comboTween = null;
             _warningTween = null;
 
@@ -362,14 +368,14 @@ namespace Rhythm
             {
                 _playerDamageTween.Kill();
                 _player.position = _playerPosition;
-                _playerRenderer.color = Color.white;
+                _playerRenderer.color = _playerColor;
             }
 
             _playerDamageTween = DOTween.Sequence()
                 .Append(_player.DOShakePosition(_shakeDuration))
                 .Join(_playerRenderer.DOColor(_damageColor, _shakeDuration / 2).OnComplete(() =>
                 {
-                    _playerRenderer.DOColor(Color.white, _shakeDuration / 2);
+                    _playerRenderer.DOColor(_playerColor, _shakeDuration / 2);
                 }));
 
             _playerDamageTween.Play();
@@ -383,14 +389,14 @@ namespace Rhythm
             {
                 _enemyDamageTween.Kill();
                 _enemy.position = _enemyPosition;
-                _enemyRenderer.color = Color.white;
+                _enemyRenderer.color = _enemyColor;
             }
 
             _enemyDamageTween = DOTween.Sequence()
                 .Append(_enemy.DOShakePosition(_shakeDuration))
                 .Join(_enemyRenderer.DOColor(_damageColor, _shakeDuration / 2).OnComplete(() =>
                 {
-                    _enemyRenderer.DOColor(Color.white, _shakeDuration / 2);
+                    _enemyRenderer.DOColor(_enemyColor, _shakeDuration / 2);
                 }));
 
             _enemyDamageTween.Play();
@@ -951,6 +957,30 @@ namespace Rhythm
             {
                 _playerRenderer.sprite = newSprite;
             }
+        }
+
+        public void DefeatPlayer()
+        {
+            if (_playerDamageTween != null)
+            {
+                _playerDamageTween.Kill();
+                _player.position = _playerPosition;
+            }
+
+            _playerColor = new Color(0.5f, 0.5f, 0.5f);
+            _playerRenderer.color = _playerColor;
+        }
+
+        public void DefeatEnemy()
+        {
+            if (_enemyDamageTween != null)
+            {
+                _enemyDamageTween.Kill();
+                _enemy.position = _enemyPosition;
+            }
+
+            _enemyColor = new Color(0.5f, 0.5f, 0.5f);
+            _enemyRenderer.color = _enemyColor;
         }
 
     }

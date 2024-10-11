@@ -249,7 +249,7 @@ namespace Rhythm
 
                     Update();
 
-                    if (_scoreManager.IsKnockoutAfterEffect)
+                    if (_scoreManager.IsGameOver)
                     {
                         _noteCreator.MarkAsJudged();
                         complete = false;

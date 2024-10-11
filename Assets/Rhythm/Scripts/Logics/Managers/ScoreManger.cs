@@ -53,7 +53,7 @@ namespace Rhythm
         public bool IsWin => _isVs && Mathf.CeilToInt(_playerHitPoint) >= Mathf.CeilToInt(_enemyHitPoint) && _playerHitPoint > 0;
         public bool IsOverkill => _isVs && _enemyHitPoint == 0;
         public bool IsKnockout => _isVs && _playerHitPoint == 0;
-        public bool IsKnockoutAfterEffect { get; private set; }
+        public bool IsGameOver { get; private set; }
         public bool IsClear => !_isVs && _gaugePoint >= _clearGaugePoint;
         public int Score { get
             {
@@ -122,7 +122,7 @@ namespace Rhythm
 
             Combo = 0;
             MaxCombo = 0;
-            IsKnockoutAfterEffect = false;
+            IsGameOver = false;
 
             _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
             _gaugeDrawable.DrawEnemyGauges(_enemyHitPoint, _enemyMaxHitPoint, _playerMaxHitPoint);
@@ -184,9 +184,14 @@ namespace Rhythm
                                     var maxHitPoint = _enemyMaxHitPoint;
                                     _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                                     {
+                                        if (overkill)
+                                        {
+                                            _soundPlayable.PlaySE("Overkill");
+                                            _damageDrawable.DefeatEnemy();
+                                        }
+
                                         _gaugeDrawable.DrawEnemyGauges(hitPoint, maxHitPoint, _playerMaxHitPoint);
                                         _gaugeDrawable.DrawEnemyDamageEffect();
-                                        if (overkill) _soundPlayable.PlaySE("Overkill");
                                     });
                                 }
 
@@ -212,11 +217,12 @@ namespace Rhythm
 
                                 if (playerHealing > 0)
                                 {
+                                    _soundPlayable.PlaySE("PlayerHeal");
+
                                     _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
                                     _gaugeDrawable.DrawPlayerHealEffect();
                                     _damageDrawable.SetPlayerSprite(_playerHitPoint, _playerMaxHitPoint);
-                                    _soundPlayable.PlaySE("PlayerHeal");
-
+                                    
                                     if (stopAlert) _damageDrawable.StopWarningLayer();
                                 }
                                 break;
@@ -248,9 +254,14 @@ namespace Rhythm
                         var maxHitPoint = _enemyMaxHitPoint;
                         _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                         {
+                            if (overkill)
+                            {
+                                _soundPlayable.PlaySE("Overkill");
+                                _damageDrawable.DefeatEnemy();
+                            }
+
                             _gaugeDrawable.DrawEnemyGauges(hitPoint, maxHitPoint, _playerMaxHitPoint);
                             _gaugeDrawable.DrawEnemyDamageEffect();
-                            if (overkill) _soundPlayable.PlaySE("Overkill");
                         });
                     }
 
@@ -280,11 +291,15 @@ namespace Rhythm
                         var maxHitPoint = _playerMaxHitPoint;
                         _gaugeDrawable.DelayDefenseDuration().OnComplete(() =>
                         {
+                            if (hitPoint == 0) _damageDrawable.DefeatPlayer();
+
                             _gaugeDrawable.DrawPlayerGauge(hitPoint, maxHitPoint);
                             _gaugeDrawable.DrawPlayerDamageEffect();
                             _damageDrawable.SetPlayerSprite(hitPoint, maxHitPoint);
+
                             _soundPlayable.PlaySE("PlayerDamage");
-                            IsKnockoutAfterEffect = hitPoint == 0 && !_isTutorial;
+                            IsGameOver = hitPoint == 0 && !_isTutorial;
+
                             if (startAlert)
                             {
                                 _soundPlayable.PlaySE("Alert");
