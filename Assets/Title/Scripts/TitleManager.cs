@@ -1,5 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Transition;
+using KanKikuchi.AudioManager;
 
 namespace Title
 {
@@ -7,8 +8,7 @@ namespace Title
     {
         private void Start()
         {
-            // TODO: BGM再生
-            // BGMManager.Instance.Play("titleBGMPath");
+            BGMManager.Instance.Play(BGMPath.MAIN_THEME);
         }
 
         public void ToModeSelection()
