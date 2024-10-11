@@ -9,6 +9,7 @@ public static class BGMPath{
 	public const string BATTLE_GOBLIN_BOSS  = "BGM/Battle_Goblin_boss";
 	public const string BATTLE_GOBLIN_GROUP = "BGM/Battle_Goblin_group";
 	public const string FOREST              = "BGM/Forest";
+	public const string FOREST_FADEOUT      = "BGM/Forest_Fadeout";
 	public const string MAP_INTRO           = "BGM/Map_Intro";
 	public const string MAP_LOOP            = "BGM/Map_Loop";
 	public const string MODE_INTRO          = "BGM/Mode_Intro";
@@ -16,6 +17,7 @@ public static class BGMPath{
 	public const string SETTING             = "BGM/Setting";
 	public const string TENTION             = "BGM/Tention";
 	public const string TOWN                = "BGM/Town";
+	public const string TOWN_FADEOUT        = "BGM/Town_Fadeout";
 	public const string VICTORY_INTRO       = "BGM/Victory_Intro";
 	public const string VICTORY_LOOP        = "BGM/Victory_Loop";
 
