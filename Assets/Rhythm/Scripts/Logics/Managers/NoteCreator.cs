@@ -143,9 +143,9 @@ namespace Rhythm
 
                                 IDisposable disposable = _bandPools[(note.Color, note.IsLarge)].Create(out var obj, out var isNew);
 
-                                var bandPosition = (firstPosition + lastPosition) / 2;
-                                var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandPosition.y));
-                                obj.Create(bandPosition, new Vector3(0f, -note.Speed), rect, note.Lane, (lastPosition - firstPosition).y, note.JustTime, endTime, _holdMasks[note.Lane], disposable);
+                                var bandLength = lastPosition.y - firstPosition.y;
+                                var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandLength));
+                                obj.Create(firstPosition, new Vector3(0f, -note.Speed), rect, note.Lane, bandLength, note.JustTime, endTime, _holdMasks[note.Lane], disposable);
                                 if (isNew) _rhythmGameObjects.Add(obj);
                             }
                         }
