@@ -2039,37 +2039,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80157078}
   m_CullTransparentMesh: 1
---- !u!1 &82430259
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 82430260}
-  m_Layer: 0
-  m_Name: Masks
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &82430260
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82430259}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &82659714
 GameObject:
   m_ObjectHideFlags: 0
@@ -35938,7 +35907,6 @@ MonoBehaviour:
     _falseCoefficient: -2
   _noteParent: {fileID: 507627626}
   _cursorParent: {fileID: 1065029708}
-  _holdMaskParent: {fileID: 82430260}
   _notePrefabs:
   - Color: 1
     IsLarge: 0
@@ -35980,7 +35948,6 @@ MonoBehaviour:
     Prefab: {fileID: 4239273506915315414, guid: 489dce8a04286454daab0a0b69c16d3b, type: 3}
   _linePrefab: {fileID: 7541579685019163358, guid: 2dc77f0b44302b542b858f48e4a891aa, type: 3}
   _cursorPrefab: {fileID: 5363066825430250750, guid: 266cabebdc3a26b4894458b552f4242f, type: 3}
-  _holdMaskPrefab: {fileID: 3401838677374369432, guid: 873ebd032ec88584c90f572accb43e18, type: 3}
   _playerInput: {fileID: 732199901}
   _audioSource: {fileID: 1078892033}
   _seSource: {fileID: 1096648017161074464, guid: 5212d1b1be0a7a8458167bced6c1f076, type: 3}
@@ -42511,7 +42478,6 @@ SceneRoots:
   - {fileID: 1078892034}
   - {fileID: 507627626}
   - {fileID: 1644396144}
-  - {fileID: 82430260}
   - {fileID: 1065029708}
   - {fileID: 308768058}
   - {fileID: 712121215}
