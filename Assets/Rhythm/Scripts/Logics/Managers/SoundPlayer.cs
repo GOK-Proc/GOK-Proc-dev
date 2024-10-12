@@ -263,10 +263,13 @@ namespace Rhythm
                 if (data.SourceCount > 0 && index >= 0 && index < data.SourceCount)
                 {
                     _seFadeOutTweener[id][index]?.Kill();
-                    _seFadeOutTweener[id][index] = _seSources[id][index].DOFade(0f, duration).SetEase(Ease.Linear).OnComplete(() =>
+                    _seFadeOutTweener[id][index] = _seSources[id][index].DOFade(0f, duration).SetEase(Ease.Linear).OnKill(() =>
                     {
-                        _seSources[id][index].Stop();
-                        _seSources[id][index].volume = data.IsNoteSe ? _noteSeVolume : _seVolume;
+                        if (_seSources[id][index] != null)
+                        {
+                            _seSources[id][index].Stop();
+                            _seSources[id][index].volume = data.IsNoteSe ? _noteSeVolume : _seVolume;
+                        }
                     });
                 }
             }
