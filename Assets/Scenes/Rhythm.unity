@@ -35959,27 +35959,27 @@ MonoBehaviour:
     SourceCount: 0
     IsLoop: 0
   - Id: Blue
-    Clip: {fileID: 8300000, guid: 9333acf8e636a014baa1286f470aac55, type: 3}
+    Clip: {fileID: 8300000, guid: a598cf2813fcf994f92746c2ddd56e23, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
   - Id: HitRed
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: e10db1a5b41ffcf4c9fe98e6d65decca, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
   - Id: HitBlue
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 7b60957dc3415f748bc17115c59e03c8, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
   - Id: HitRedL
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: b546c3fc0da17a144a24129e433643b6, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
   - Id: HitBlueL
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 2f822fe79891cdb43a8b7089faaf8dbe, type: 3}
     IsNoteSe: 1
     SourceCount: 0
     IsLoop: 0
@@ -36009,12 +36009,12 @@ MonoBehaviour:
     SourceCount: 0
     IsLoop: 0
   - Id: Overkill
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 3db677a20805c8f4ea9b7c80d0dd3865, type: 3}
     IsNoteSe: 0
     SourceCount: 0
     IsLoop: 0
   - Id: Move
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 19d05bfbd3432eb47bb317081915c6aa, type: 3}
     IsNoteSe: 0
     SourceCount: 0
     IsLoop: 0

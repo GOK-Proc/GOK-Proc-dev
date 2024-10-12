@@ -40,7 +40,7 @@ namespace Rhythm
                     if (judge != Judgement.Undefined)
                     {
                         _judgeCountable.CountUpJudgeCounter(judge);
-                        _soundPlayable.PlaySE($"Hit{note.Color.ToStringQuickly()}{(note.IsLarge ? "L" : "")}");
+                        if (judge != Judgement.False) _soundPlayable.PlaySE($"Hit{note.Color.ToStringQuickly()}{(note.IsLarge ? "L" : "")}");
                         _effectDrawable.DrawJudgeEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         _effectDrawable.DrawJudgeFontEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         if (_isVs)
