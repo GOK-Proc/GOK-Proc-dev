@@ -94,7 +94,7 @@ namespace Rhythm
         [SerializeField] private string _defaultId;
         [SerializeField] private Difficulty _defaultDifficulty;
         [SerializeField] private bool _defaultIsVs;
-        [SerializeField] private bool _isTutorial;
+        [SerializeField] private TutorialId _tutorialId;
 
         [Space(20)]
         [Header("Rhythm Game Settings")]
@@ -128,32 +128,32 @@ namespace Rhythm
             var id = SceneTransitionManager.CurrentRhythmId.ToString();
             var difficulty = SceneTransitionManager.CurrentDifficulty;
             var isVs = SceneTransitionManager.CurrentIsVs;
-            var isTutorial = SceneTransitionManager.CurrentIsTutorial;
+            var tutorialId = SceneTransitionManager.CurrentTutorialId;
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
-            if (_overrideSettings || !dictionary.ContainsKey(id))
+            if (_overrideSettings)
             {
                 id = _defaultId;
                 difficulty = _defaultDifficulty;
                 isVs = _defaultIsVs;
-                isTutorial = _isTutorial;
+                tutorialId = _tutorialId;
 
-                if (!_overrideSettings) Debug.LogWarning("The specified ID does not exist. Using the default ID.");
+                Debug.Log("The settings were overridden.");
             }
 
-            if (!isVs) isTutorial = false;
+            if (!isVs) tutorialId = TutorialId.None;
 
-            if (isTutorial) difficulty = Difficulty.Easy;
+            if (tutorialId != TutorialId.None) difficulty = Difficulty.Easy;
 
-            var beatmapInfo = isTutorial ? _tutorialData.Beatmap : dictionary[id];
+            var beatmapInfo = tutorialId != TutorialId.None ? _tutorialData.Beatmap : dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _setting.Offset, isTutorial ? _tutorialSpeed : _setting.ScrollSpeed);
+            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _setting.Offset, tutorialId != TutorialId.None ? _tutorialSpeed : _setting.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
-            _uiManager.DrawHeader(_headerInformation, isTutorial);
+            _uiManager.DrawHeader(_headerInformation, tutorialId != TutorialId.None);
 
             var notePrefabs = _notePrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
             var holdPrefabs = _holdPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => x.Prefab);
@@ -175,16 +175,16 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
-            _scoreManager = new ScoreManger(isVs, id, difficulty, isTutorial, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _uiManager, _recordList);
+            _scoreManager = new ScoreManger(isVs, id, difficulty, tutorialId != TutorialId.None, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _uiManager, _recordList);
 
             _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _setting.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _scoreManager, _soundPlayer, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _soundPlayer, _uiManager);
 
-            _tutorialManager = new TutorialManager(isTutorial, _setting.KeyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
+            _tutorialManager = new TutorialManager(tutorialId != TutorialId.None, _setting.KeyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
 
-            _eventManager.Initialize(isVs, isTutorial, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
+            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
             _eventManager.SetSoundVolume(_setting.VolumeSetting);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);

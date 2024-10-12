@@ -16,7 +16,7 @@ namespace Transition
 		public static RhythmId CurrentRhythmId { get; private set; }
 		public static Difficulty CurrentDifficulty { get; private set; }
 		public static bool CurrentIsVs { get; private set; }
-		public static bool CurrentIsTutorial { get; private set; }
+		public static TutorialId CurrentTutorialId { get; private set; }
 		public static SceneName RecentSceneName { get; private set; }
 
 		private static CanvasGroup _overlay;
@@ -89,7 +89,7 @@ namespace Transition
 			CurrentRhythmId = rhythmId;
 			CurrentDifficulty = difficulty;
 			CurrentIsVs = isVs;
-			CurrentIsTutorial = false;
+			CurrentTutorialId = TutorialId.None;
 
 			TransitionToScene(SceneName.Rhythm);
 		}
@@ -102,7 +102,16 @@ namespace Transition
             CurrentRhythmId = rhythmId;
             CurrentDifficulty = difficulty;
             CurrentIsVs = true;
-			CurrentIsTutorial = true;
+			CurrentTutorialId = TutorialId.Battle;
+
+            TransitionToScene(SceneName.Rhythm);
+        }
+
+        public static void TransitionToTutorial()
+        {
+            CurrentEpisodeType = EpisodeType.Rhythm;
+            CurrentIsVs = true;
+            CurrentTutorialId = TutorialId.Rhythm;
 
             TransitionToScene(SceneName.Rhythm);
         }
