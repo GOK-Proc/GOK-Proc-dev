@@ -22,13 +22,13 @@ MonoBehaviour:
     _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
     _notes:
     - _level: 0
-      _notesDesigner: 
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: b530efdbc063ea1409f3576851dfc0eb, type: 3}
     - _level: 0
-      _notesDesigner: 
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: e39dd3340c7485d41a3d14b03d5da9c2, type: 3}
     - _level: 0
-      _notesDesigner: 
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: df90fc89d73796d4398e214a060b2101, type: 3}
   - _id: Chapter1_2
     _title: "\u521D\u6F14\u301C\u6C7A\u610F\u306E\u697D\u7AE0\u301C"
