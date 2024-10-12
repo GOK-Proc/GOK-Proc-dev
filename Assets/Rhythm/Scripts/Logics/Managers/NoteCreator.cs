@@ -131,7 +131,7 @@ namespace Rhythm
                                 var time = note.JustTime + deltaTime;
                                 var endTime = note.JustTime + note.Length;
 
-                                while (time < endTime)
+                                while (time < endTime && !Mathf.Approximately((float)time, (float)endTime))
                                 {
                                     var position = new Vector3(firstPosition.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - time));
                                     Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], position, time));

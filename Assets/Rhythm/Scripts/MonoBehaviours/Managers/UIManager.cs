@@ -450,7 +450,7 @@ namespace Rhythm
                             {
                                 s.color = color;
                                 d?.Invoke();
-                            });
+                            }).SetLink(gameObject);
                         },
                         (t, s, d) =>
                         {
@@ -488,7 +488,7 @@ namespace Rhythm
                     {
                         s.color = color;
                         d?.Invoke();
-                    });
+                    }).SetLink(gameObject);
 
                 },
                 disposable);
@@ -517,7 +517,7 @@ namespace Rhythm
                                         obj.Create(disposable);
                                         obj.PlayAnimation(_enemyPosition + (Vector3)UnityEngine.Random.insideUnitCircle * 0.5f);
                                         d?.Invoke();
-                                    });
+                                    }).SetLink(gameObject);
                                 },
                                 (t, s, d) =>
                                 {
@@ -531,7 +531,7 @@ namespace Rhythm
                                         t.localScale = scale;
                                         s.color = color;
                                         d?.Invoke();
-                                    });
+                                    }).SetLink(gameObject);
                                 }, 
                                 disposable);
 
@@ -558,7 +558,7 @@ namespace Rhythm
                                             });
                                         }
                                         d?.Invoke();
-                                    });
+                                    }).SetLink(gameObject);
                                 },
                                 (t, s, d) =>
                                 {
@@ -572,7 +572,7 @@ namespace Rhythm
                                         t.localScale = scale;
                                         s.color = color;
                                         d?.Invoke();
-                                    });
+                                    }).SetLink(gameObject);
                                 },
                                 disposable);
 
@@ -597,7 +597,7 @@ namespace Rhythm
                     obj.Create(disposable);
                     obj.PlayAnimation(_playerPosition + (Vector3)UnityEngine.Random.insideUnitCircle * 0.5f);
                     d?.Invoke();
-                }).SetEase(Ease.Linear);
+                }).SetEase(Ease.Linear).SetLink(gameObject);
             },
             (t, s, d) =>
             {
@@ -610,7 +610,7 @@ namespace Rhythm
                     t.localScale = Vector3.one;
                     s.color = color;
                     d?.Invoke();
-                });
+                }).SetLink(gameObject);
             },
             disposable);
 
@@ -664,7 +664,7 @@ namespace Rhythm
                         t.localScale = scale;
                         s.color = color;
                         d?.Invoke();
-                    });
+                    }).SetLink(gameObject);
                 },
             disposable);
 
