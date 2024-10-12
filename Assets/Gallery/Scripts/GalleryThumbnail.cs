@@ -1,6 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using MusicSelection;
 using UnityEngine;
-using MusicSelection;
 
 namespace Gallery
 {
@@ -15,9 +14,7 @@ namespace Gallery
             _titleText.text = track.Title;
             _composerText.text = track.Composer;
 
-            // Unicodeエスケープシーケンスに挟まった\nを改行文字に変換
-            var unescapedDescription = Regex.Unescape(track.Description);
-            _description.Set(unescapedDescription);
+            _description.Set(track.Description);
         }
     }
 }
