@@ -10,17 +10,19 @@ namespace Rhythm
         private readonly NoteLayout _layout;
         private readonly INoteProvider _noteProvider;
         private readonly IJudgeCountable _judgeCountable;
+        private readonly IComboCountable _comboCountable;
         private readonly IBattleMode _battle;
         private readonly IRhythmMode _rhythm;
         private readonly ISoundPlayable _soundPlayable;
         private readonly IEffectDrawable _effectDrawable;
 
-        public NoteJudge(bool isVs, in NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IBattleMode battle, IRhythmMode rhythm, ISoundPlayable soundPlayable, IEffectDrawable effectDrawable)
+        public NoteJudge(bool isVs, in NoteLayout layout, INoteProvider noteProvider, IJudgeCountable judgeCountable, IComboCountable comboCountable, IBattleMode battle, IRhythmMode rhythm, ISoundPlayable soundPlayable, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
             _layout = layout;
             _noteProvider = noteProvider;
             _judgeCountable = judgeCountable;
+            _comboCountable = comboCountable;
             _battle = battle;
             _rhythm = rhythm;
             _soundPlayable = soundPlayable;
@@ -43,8 +45,10 @@ namespace Rhythm
                         _effectDrawable.DrawJudgeFontEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), judge);
                         if (_isVs)
                         {
-                            _battle.Hit(note.Color, note is TapNote && note.IsLarge, judge);
-                            _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, note.IsLarge, judge, note.Id);
+                            var isLarge = note is TapNote && note.IsLarge;
+                            _battle.Hit(note.Color, isLarge, judge);
+                            _effectDrawable.DrawBattleEffect(new Vector3(_layout.FirstLaneX + _layout.LaneDistanceX * note.Lane, _layout.JudgeLineY, 0f), note.Color, isLarge, judge, note.Id);
+                            if (_comboCountable.IsAttackBonus) _effectDrawable.DrawComboAttackEffect();
                         }
                         else
                         {

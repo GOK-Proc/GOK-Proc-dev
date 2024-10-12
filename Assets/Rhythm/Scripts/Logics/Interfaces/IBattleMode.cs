@@ -5,7 +5,6 @@
         bool IsWin { get; }
         bool IsOverkill { get; }
         bool IsKnockout { get; }
-        bool IsKnockoutAfterEffect { get; }
         void Hit(NoteColor color, bool isLarge, Judgement judgement);
     }
 }

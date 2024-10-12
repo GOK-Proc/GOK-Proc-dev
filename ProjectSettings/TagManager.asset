@@ -43,3 +43,39 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Rhythm_BackGround
+    uniqueID: 2584832405
+    locked: 0
+  - name: Rhythm_Character
+    uniqueID: 643778409
+    locked: 0
+  - name: Rhythm_EnemyAttack
+    uniqueID: 722149369
+    locked: 0
+  - name: Rhythm_Lane
+    uniqueID: 3581927327
+    locked: 0
+  - name: Rhythm_Line
+    uniqueID: 1356604627
+    locked: 0
+  - name: Rhythm_Band
+    uniqueID: 1405916171
+    locked: 0
+  - name: Rhythm_BattleEffect
+    uniqueID: 579556617
+    locked: 0
+  - name: Rhythm_Combo
+    uniqueID: 610373681
+    locked: 0
+  - name: Rhythm_Cursor
+    uniqueID: 305087205
+    locked: 0
+  - name: Rhythm_Note
+    uniqueID: 4092268077
+    locked: 0
+  - name: Rhythm_Effect
+    uniqueID: 629736627
+    locked: 0
+  - name: Rhythm_Gauge
+    uniqueID: 3795470785
+    locked: 0

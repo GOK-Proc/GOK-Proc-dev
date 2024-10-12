@@ -55,7 +55,7 @@ namespace Rhythm
             }
         }
 
-        public void PlayAnimation(Vector3 position, bool isLoop = false, Action<Transform, SpriteRenderer, Action> onPlay = null)
+        public void PlayAnimation(Vector3 position, bool isLoop = false, bool isKeep = false, Action<Transform, SpriteRenderer, Action> onPlay = null)
         {
             IEnumerator Effect()
             {
@@ -67,11 +67,43 @@ namespace Rhythm
                         yield return new WaitForSeconds(_frameTime);
                     }
                 } while (isLoop);
-                Stop();
+                if (!isKeep) Stop();
             }
 
             transform.localPosition = position;
             if (_spriteRenderer != null) _spriteRenderer.sprite = _sprites.FirstOrDefault();
+            gameObject.SetActive(true);
+
+            if (onPlay is not null)
+            {
+                onPlay.Invoke(transform, _spriteRenderer, () => Stop());
+            }
+            else
+            {
+                _onPlay?.Invoke(transform, _spriteRenderer, () => Stop());
+            }
+
+            StartCoroutine(Effect());
+        }
+
+        public void PlayAnimation(Vector3 position, Vector3 direction, bool isLoop = false, bool isKeep = false, Action<Transform, SpriteRenderer, Action> onPlay = null)
+        {
+            IEnumerator Effect()
+            {
+                do
+                {
+                    foreach (var sprite in _sprites)
+                    {
+                        if (_spriteRenderer != null) _spriteRenderer.sprite = sprite;
+                        yield return new WaitForSeconds(_frameTime);
+                    }
+                } while (isLoop);
+                if (!isKeep) Stop();
+            }
+
+            transform.localPosition = position;
+            transform.rotation = Quaternion.FromToRotation(Vector3.up, direction - position);
+            if (_spriteRenderer != null) _spriteRenderer.sprite = _sprites.FirstOrDefault();                         
             gameObject.SetActive(true);
 
             if (onPlay is not null)

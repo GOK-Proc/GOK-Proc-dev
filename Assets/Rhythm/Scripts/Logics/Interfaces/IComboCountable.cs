@@ -4,5 +4,6 @@
     {
         int Combo { get; }
         int MaxCombo { get; }
+        bool IsAttackBonus { get; }
     }
 }
