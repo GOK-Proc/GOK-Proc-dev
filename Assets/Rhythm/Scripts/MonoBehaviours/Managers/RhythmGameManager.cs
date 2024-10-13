@@ -132,7 +132,7 @@ namespace Rhythm
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
-            if (_overrideSettings)
+            if (_overrideSettings || id == "None")
             {
                 id = _defaultId;
                 difficulty = _defaultDifficulty;
@@ -140,6 +140,13 @@ namespace Rhythm
                 tutorialId = _tutorialId;
 
                 Debug.Log("The settings were overridden.");
+            }
+            else
+            {
+                if (!dictionary.ContainsKey(id))
+                {
+                    throw new System.Exception("The specified ID does not exist. If debugging, please enable Override Settings.");
+                }
             }
 
             if (!isVs) tutorialId = TutorialId.None;
