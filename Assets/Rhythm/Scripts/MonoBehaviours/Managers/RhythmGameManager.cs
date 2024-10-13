@@ -132,7 +132,7 @@ namespace Rhythm
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
-            if (_overrideSettings || id == "None")
+            if (_overrideSettings || (id == "None" && tutorialId == TutorialId.None))
             {
                 id = _defaultId;
                 difficulty = _defaultDifficulty;

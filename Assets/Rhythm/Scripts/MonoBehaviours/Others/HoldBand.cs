@@ -24,6 +24,7 @@ namespace Rhythm
         private ISoundPlayable _soundPlayable;
 
         private Vector3 _defaultScale;
+        private Vector3 _currentScale;
         private bool _isSePlayed;
 
         private readonly float _fadeOutDuration = 0.3f;
@@ -48,6 +49,7 @@ namespace Rhythm
         public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, float length, double beginTime, double endTime, IDisposable disposable)
         {
             _defaultScale = new Vector3 (transform.localScale.x, length, transform.localScale.z);
+            _currentScale = _defaultScale;
             transform.localScale = _defaultScale;
             _beginTime = beginTime;
             _endTime = endTime;
@@ -82,7 +84,8 @@ namespace Rhythm
             {
                 if (_colorInputProvider.IsColorPressed(_color))
                 {
-                    transform.localScale = new Vector3(_defaultScale.x, (float)(_endTime - time) * -_velocity.y, _defaultScale.z);
+                    _currentScale.y = (float)(_endTime - time) * -_velocity.y;
+                    transform.localScale = _currentScale;
                     transform.position = _holdPosition;
                     _renderer.color = _pressedColor;
 
