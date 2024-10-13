@@ -26,7 +26,7 @@ namespace MusicSelection
             _track = track;
             _image.sprite = track.Thumbnail;
             _titleText.text = track.Title;
-            _composerText.text = track.Composer;
+            _composerText.text = $"作曲：{track.Composer}";
 
             _notes = _beatmapData.BeatmapDictionary[track.Id].Notes;
 
@@ -48,7 +48,7 @@ namespace MusicSelection
                 Achievement.FullCombo => true, _ => false
             });
 
-            _notesDesignerText.text = _notes[(int)difficulty].NotesDesigner;
+            _notesDesignerText.text = $"譜面：{_notes[(int)difficulty].NotesDesigner}";
         }
     }
 }

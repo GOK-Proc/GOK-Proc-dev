@@ -12,7 +12,7 @@ namespace Gallery
             _image.sprite = track.Thumbnail;
 
             _titleText.text = track.Title;
-            _composerText.text = track.Composer;
+            _composerText.text = $"作曲：{track.Composer}";
 
             _description.Set(track.Description);
         }
