@@ -90,7 +90,6 @@ namespace Rhythm
         [Space(20)]
         [Header("Beatmap")]
         [SerializeField] private BeatmapData _beatmapData;
-        [SerializeField] private bool _overrideSettings;
         [SerializeField] private string _defaultId;
         [SerializeField] private Difficulty _defaultDifficulty;
         [SerializeField] private bool _defaultIsVs;
@@ -132,7 +131,7 @@ namespace Rhythm
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
-            if (_overrideSettings || (id == "None" && tutorialId == TutorialId.None))
+            if (id == "None" && tutorialId == TutorialId.None)
             {
                 id = _defaultId;
                 difficulty = _defaultDifficulty;
@@ -145,7 +144,7 @@ namespace Rhythm
             {
                 if (!dictionary.ContainsKey(id))
                 {
-                    throw new System.Exception("The specified ID does not exist. If debugging, please enable Override Settings.");
+                    throw new System.Exception("The specified ID does not exist.");
                 }
             }
 
