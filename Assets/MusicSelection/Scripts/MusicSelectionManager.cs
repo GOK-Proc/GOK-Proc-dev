@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Gallery;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Rhythm;
@@ -13,6 +14,8 @@ namespace MusicSelection
     {
         private DifficultySelection _difficultySelection;
 
+        [SerializeField] private TrackInformation _tutorialTrackInformation;
+
         [Header("難易度選択関連")] [SerializeField] private Difficulty _firstSelectedDifficulty;
         [SerializeField] private DifficultyDisplay _difficultyDisplay;
 
@@ -20,9 +23,12 @@ namespace MusicSelection
         {
             base.Awake();
 
-            TrackDict = _trackData.TrackDictionary.Where(x => x.Value.HasBeatmap)
+            _trackDict = _trackData.TrackDictionary.Where(x => x.Value.HasBeatmap)
                 .ToDictionary(x => x.Key, x => x.Value);
-            _difficultySelection = new DifficultySelection(SceneTransitionManager.CurrentDifficulty);
+            _trackDict.Add(_tutorialTrackInformation.Id, _tutorialTrackInformation);
+
+            _difficultySelection =
+                new DifficultySelection(SceneTransitionManager.CurrentDifficulty);
         }
 
         protected override void Start()
