@@ -15,18 +15,19 @@ namespace MusicSelection
     {
         private bool _isInitialized = false;
 
-        private RhythmId _rhythmId;
+        protected RhythmId _rhythmId;
         private TextMeshProUGUI _text;
         private TrackInformation _trackInfo;
         private Scrollbar _scrollbar;
         private ThumbnailBase _thumbnailBase;
 
-        private Coroutine _bgmSwitchCor;
+        protected Coroutine _bgmSwitchCor;
 
         private const int NormalFontSize = 48;
         private const int FontSizeWhenSelected = 60;
 
-        public void Init(TrackInformation info, Scrollbar scrollbar, ThumbnailBase thumbnailBase)
+        public virtual void Init(TrackInformation info, Scrollbar scrollbar,
+            ThumbnailBase thumbnailBase)
         {
             if (_isInitialized)
             {
@@ -52,7 +53,7 @@ namespace MusicSelection
 
         // ギャラリーでは必要ない．
         // InputSystemUIInputModuleのインスペクターでSubmitをNoneにすることで解決
-        public void OnSubmit(BaseEventData _)
+        public virtual void OnSubmit(BaseEventData _)
         {
             if (_rhythmId == RhythmId.None) return;
 
@@ -65,7 +66,7 @@ namespace MusicSelection
             SceneTransitionManager.TransitionToModeSelection();
         }
 
-        public void OnSelect(BaseEventData _)
+        public virtual void OnSelect(BaseEventData _)
         {
             _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
@@ -74,7 +75,7 @@ namespace MusicSelection
             _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
         }
 
-        public void OnDeselect(BaseEventData _)
+        public virtual void OnDeselect(BaseEventData _)
         {
             _text.fontSize = NormalFontSize;
 

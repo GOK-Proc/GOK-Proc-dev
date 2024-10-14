@@ -1290,8 +1290,18 @@ MonoBehaviour:
   _trackData: {fileID: 11400000, guid: 0bc08e45255eccc4ebaf04c197a1173e, type: 2}
   _uiElementParent: {fileID: 2054128551}
   _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _tutorialUIElementPrefab: {fileID: 795186544321588213, guid: 75aa3578dc4e42e4d83b929fdbe5fd50, type: 3}
   _scrollbar: {fileID: 1782718322}
   _thumbnailBase: {fileID: 1671466897}
+  _tutorialTrackInformation:
+    _id: Tutorial
+    _title: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
+    _intro: {fileID: 0}
+    _sound: {fileID: 8300000, guid: 6ce53a97984d80949b429a9943d551da, type: 3}
+    _hasBeatmap: 0
+    _composer: 
+    _description: "\u30EA\u30BA\u30E0\u30B2\u30FC\u30E0\u306E\u904A\u3073\u65B9\u3092\u5B9F\u6226\u306E\u306A\u304B\u3067\u5B66\u3076"
+    _thumbnail: {fileID: 21300000, guid: fe5eae025459c4449a03cb4080571688, type: 3}
   _firstSelectedDifficulty: 0
   _difficultyDisplay: {fileID: 983387257}
 --- !u!1 &1123369938

@@ -110,6 +110,7 @@ namespace Transition
         public static void TransitionToTutorial()
         {
             CurrentEpisodeType = EpisodeType.Rhythm;
+            CurrentRhythmId = RhythmId.Chapter1_2;
             CurrentIsVs = true;
             CurrentTutorialId = TutorialId.Rhythm;
 

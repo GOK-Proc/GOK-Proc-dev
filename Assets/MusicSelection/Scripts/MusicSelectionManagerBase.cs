@@ -11,11 +11,12 @@ namespace MusicSelection
         MusicSelectionManagerBase : SingletonMonoBehaviour<MusicSelectionManagerBase>
     {
         private EventSystem _eventSystem;
-        protected Dictionary<string, TrackInformation> TrackDict;
+        protected Dictionary<string, TrackInformation> _trackDict;
 
         [Header("参照")] [SerializeField] protected TrackData _trackData;
         [SerializeField] private GameObject _uiElementParent;
         [SerializeField] private GameObject _musicUIElementPrefab;
+        [SerializeField] private GameObject _tutorialUIElementPrefab;
         [SerializeField] private Scrollbar _scrollbar;
         [SerializeField] protected ThumbnailBase _thumbnailBase;
 
@@ -23,7 +24,7 @@ namespace MusicSelection
         {
             base.Awake();
 
-            TrackDict = _trackData.TrackDictionary;
+            _trackDict = _trackData.TrackDictionary;
             _eventSystem = GetComponent<EventSystem>();
         }
 
@@ -38,10 +39,15 @@ namespace MusicSelection
             var posY = 0f;
             var height = _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
 
-            foreach (var trackInformation in TrackDict.Values)
+            foreach (var trackInformation in _trackDict.Values)
             {
-                var element = Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
-                    .GetComponent<MusicUIElement>();
+                var element = trackInformation.Id switch
+                {
+                    "Tutorial" => Instantiate(_tutorialUIElementPrefab, _uiElementParent.transform)
+                        .GetComponent<TutorialUIElement>(),
+                    _ => Instantiate(_musicUIElementPrefab, _uiElementParent.transform)
+                        .GetComponent<MusicUIElement>()
+                };
                 element.Init(trackInformation, _scrollbar, _thumbnailBase);
 
                 var rectTransform = element.gameObject.GetComponent<RectTransform>();
@@ -54,8 +60,10 @@ namespace MusicSelection
                 // OPTIMIZE:
                 // Enum.ToString()の実装速度が比較的遅いためボトルネックになっている可能性あり．
                 // 現状気になるほどの遅延は見られないのでこの実装でいく．
-                if (_eventSystem.firstSelectedGameObject == null || 
-                    trackInformation.Id == SceneTransitionManager.CurrentRhythmId.ToString())
+                if (_eventSystem.firstSelectedGameObject == null ||
+                    trackInformation.Id == SceneTransitionManager.CurrentRhythmId.ToString() ||
+                    (trackInformation.Id == "Tutorial" &&
+                     SceneTransitionManager.CurrentTutorialId == TutorialId.Rhythm))
                 {
                     _eventSystem.firstSelectedGameObject = element.gameObject;
                 }
@@ -67,7 +75,7 @@ namespace MusicSelection
         private void InitScrollbar()
         {
             // すべての楽曲数
-            var allMusicNum = (float)TrackDict.Count;
+            var allMusicNum = (float)_trackDict.Count;
             // 画面内に収まる楽曲の数（小数考慮）
             var musicInScreenNum = Screen.height /
                                    _musicUIElementPrefab.GetComponent<RectTransform>().rect.height;
