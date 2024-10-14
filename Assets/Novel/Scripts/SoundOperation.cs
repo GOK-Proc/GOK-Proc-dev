@@ -16,7 +16,7 @@ namespace Novel
             {"Se_warning", "Novel_SE_temp/SN1" },
             {"Se_footstep", "Novel_SE_temp/SN2" },
             {"Se_sword", "Novel_SE_temp/SN3" },
-            {"Se_magic", "Novel_SE_temp/Se_temp" },
+            {"Se_magic", "Novel_SE_temp/SN4" },
             {"Se_break", "Novel_SE_temp/SN5" },
             {"Se_power", "Novel_SE_temp/SN6" }
         };
