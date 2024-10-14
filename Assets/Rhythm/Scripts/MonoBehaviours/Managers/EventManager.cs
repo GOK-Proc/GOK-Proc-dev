@@ -11,7 +11,7 @@ namespace Rhythm
     public class EventManager : MonoBehaviour
     {
         private bool _isVs;
-        private bool _isTutorial;
+        private TutorialId _tutorialId;
         private bool _isPause;
         private KeyConfig _keyConfig;
         private IBattleMode _battleMode;
@@ -35,10 +35,10 @@ namespace Rhythm
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, bool isTutorial, KeyConfig keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable)
+        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfig keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable)
         {
             _isVs = isVs;
-            _isTutorial = isTutorial;
+            _tutorialId = tutorialId;
             _keyConfig = keyConfig;
             _battleMode = battleMode;
             _soundPlayable = soundPlayable;
@@ -57,13 +57,18 @@ namespace Rhythm
             {
                 _battleNextButton.interactable = false;
                 _soundPlayable.FadeOutIntroSE("Victory", _victoryFadeOut);
-                if (!_isTutorial)
+
+                switch (_tutorialId)
                 {
-                    SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
-                }
-                else
-                {
-                    SceneTransitionManager.TransitionToRhythm(SceneTransitionManager.CurrentRhythmId, SceneTransitionManager.CurrentDifficulty, true);
+                    case TutorialId.None:
+                        SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
+                        break;
+                    case TutorialId.Battle:
+                        SceneTransitionManager.TransitionToRhythm(SceneTransitionManager.CurrentRhythmId, SceneTransitionManager.CurrentDifficulty, true);
+                        break;
+                    case TutorialId.Rhythm:
+                        SceneTransitionManager.TransitionToMusicSelection();
+                        break;
                 }
             }
             catch

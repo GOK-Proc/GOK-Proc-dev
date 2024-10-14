@@ -286,7 +286,7 @@ namespace Rhythm
                         var time = note.JustTime + deltaTime;
                         var endTime = note.JustTime + note.Length;
 
-                        while (time < endTime)
+                        while (time < endTime && !Mathf.Approximately((float)time, (float)endTime))
                         {
                             count++;
                             time += deltaTime;
@@ -330,7 +330,7 @@ namespace Rhythm
                         var time = note.JustTime + deltaTime;
                         var endTime = note.JustTime + note.Length;
 
-                        while (time < endTime)
+                        while (time < endTime && !Mathf.Approximately((float)time, (float)endTime))
                         {
                             Add(note.Color, 1);
                             time += deltaTime;

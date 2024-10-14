@@ -30,7 +30,6 @@ namespace Rhythm
         private readonly IDictionary<(NoteColor, bool), ObjectPool<HoldNote>> _holdPools;
         private readonly IDictionary<(NoteColor, bool), ObjectPool<HoldBand>> _bandPools;
         private readonly ObjectPool<RhythmGameObject> _linePool;
-        private readonly IList<Transform> _holdMasks;
 
         private readonly ITimeProvider _timeProvider;
         private readonly IEffectDrawable _effectDrawable;
@@ -40,7 +39,7 @@ namespace Rhythm
         private int _noteCount;
 
 
-        public NoteCreator(bool isVs, IList<NoteData> noteData, IList<LineData> lineData, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, RhythmGameObject linePrefab, Transform parent, IList<Transform> holdMasks, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, ISoundPlayable soundPlayable, IEffectDrawable effectDrawable)
+        public NoteCreator(bool isVs, IList<NoteData> noteData, IList<LineData> lineData, in NoteLayout layout, JudgeRange judgeRange, double judgeOffset, IDictionary<(NoteColor, bool), TapNote> notePrefabs, IDictionary<(NoteColor, bool), HoldNote> holdPrefabs, IDictionary<(NoteColor, bool), HoldBand> bandPrefabs, RhythmGameObject linePrefab, Transform parent, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, IActiveLaneProvider activeLaneProvider, ISoundPlayable soundPlayable, IEffectDrawable effectDrawable)
         {
             _isVs = isVs;
             _noteData = noteData;
@@ -52,9 +51,8 @@ namespace Rhythm
 
             _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
             _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
-            _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(timeProvider, colorInputProvider, soundPlayable)));
+            _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(_layout.JudgeLineY, timeProvider, colorInputProvider, soundPlayable)));
             _linePool = new ObjectPool<RhythmGameObject>(linePrefab, parent);
-            _holdMasks = holdMasks;
             _timeProvider = timeProvider;
             _effectDrawable = effectDrawable;
 
@@ -131,7 +129,7 @@ namespace Rhythm
                                 var time = note.JustTime + deltaTime;
                                 var endTime = note.JustTime + note.Length;
 
-                                while (time < endTime)
+                                while (time < endTime && !Mathf.Approximately((float)time, (float)endTime))
                                 {
                                     var position = new Vector3(firstPosition.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - time));
                                     Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], position, time));
@@ -143,9 +141,9 @@ namespace Rhythm
 
                                 IDisposable disposable = _bandPools[(note.Color, note.IsLarge)].Create(out var obj, out var isNew);
 
-                                var bandPosition = (firstPosition + lastPosition) / 2;
-                                var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandPosition.y));
-                                obj.Create(bandPosition, new Vector3(0f, -note.Speed), rect, note.Lane, (lastPosition - firstPosition).y, note.JustTime, endTime, _holdMasks[note.Lane], disposable);
+                                var bandLength = lastPosition.y - firstPosition.y;
+                                var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandLength));
+                                obj.Create(firstPosition, new Vector3(0f, -note.Speed), rect, note.Lane, bandLength, note.JustTime, endTime, disposable);
                                 if (isNew) _rhythmGameObjects.Add(obj);
                             }
                         }
