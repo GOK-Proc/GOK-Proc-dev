@@ -133,7 +133,7 @@ namespace Rhythm
 
                 Time.timeScale = 1;
 
-                if (_isVs)
+                if (_isVs && _tutorialId != TutorialId.Rhythm)
                 {
                     SceneTransitionManager.TransitionToMap();
                 }
