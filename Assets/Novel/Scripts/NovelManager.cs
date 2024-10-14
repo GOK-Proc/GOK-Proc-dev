@@ -78,7 +78,7 @@ namespace Novel
                         {
                             _nextMark.SetActive(true);
 
-                            if (_nextAction.IsPressed())
+                            if (_nextAction.triggered)
                             {
                                 CallLineOperation();
                             }
@@ -95,7 +95,7 @@ namespace Novel
                             // 前の行で会話文が更新されていた場合
                             if (StopDialogue)
                             {
-                                if (_nextAction.IsPressed())
+                                if (_nextAction.triggered)
                                 {
                                     SceneTransitionManager.TransitionToMap(true);
                                     _isTransitioning = true;
@@ -106,6 +106,16 @@ namespace Novel
                                 SceneTransitionManager.TransitionToMap(true);
                                 _isTransitioning = true;
                             }
+                        }
+                    }
+                }
+                else
+                {
+                    if (IsProcessingDialogue)
+                    {
+                        if (_nextAction.triggered)
+                        {
+                            DialogueOperation.DisplayImmediately();
                         }
                     }
                 }
