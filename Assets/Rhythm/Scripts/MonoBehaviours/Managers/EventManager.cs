@@ -21,6 +21,7 @@ namespace Rhythm
         private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
         private ITutorialDrawable _tutorialDrawable;
+        private ISkipScreenDrawable _skipScreenDrawable;
 
         [SerializeField] private PlayerInput _playerInput;
 
@@ -33,9 +34,12 @@ namespace Rhythm
         [SerializeField] private Slider _seVolumeSlider;
         [SerializeField] private Slider _noteSeVolumeSlider;
 
+        [SerializeField] private CustomButton _skipYesButton;
+        [SerializeField] private CustomButton _skipNoButton;
+
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfig keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable)
+        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfig keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable, ISkipScreenDrawable skipScreenDrawable)
         {
             _isVs = isVs;
             _tutorialId = tutorialId;
@@ -47,6 +51,7 @@ namespace Rhythm
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
             _tutorialDrawable = tutorialDrawable;
+            _skipScreenDrawable = skipScreenDrawable;
 
             _isPause = false;
         }
@@ -148,6 +153,34 @@ namespace Rhythm
             }
         }
 
+        public void OnSkipYesButtonClick()
+        {
+            try
+            {
+                _skipYesButton.interactable = false;
+                _skipNoButton.interactable = false;
+
+                Time.timeScale = 1;
+                SceneTransitionManager.TransitionToRhythm(SceneTransitionManager.CurrentRhythmId, SceneTransitionManager.CurrentDifficulty, true);
+            }
+            catch
+            {
+                Time.timeScale = 0;
+            }
+        }
+
+        public void OnSkipNoButtonClick()
+        {
+            _skipYesButton.interactable = false;
+            _skipNoButton.interactable = false;
+
+            _skipScreenDrawable.EraseSkipScreen().onComplete += () =>
+            {
+                _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
+                Time.timeScale = 1;
+            };
+        }
+
         public void SelectNextButton()
         {
             if (_isVs)
@@ -158,6 +191,11 @@ namespace Rhythm
             {
                 _rhythmNextButton.Select();
             }
+        }
+
+        public void SelectSkipNoButton()
+        {
+            _skipNoButton.Select();
         }
 
         public void OnPause(InputAction.CallbackContext context)
