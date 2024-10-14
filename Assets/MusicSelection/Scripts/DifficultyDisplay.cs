@@ -18,6 +18,7 @@ namespace MusicSelection
         private void Awake()
         {
             _instanceGameObj = gameObject;
+            DifficultySelection.SetActive(true);
         }
 
         public static void Hide()
