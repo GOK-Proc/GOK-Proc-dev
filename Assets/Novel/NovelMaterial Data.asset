@@ -86,7 +86,7 @@ MonoBehaviour:
     _default: {fileID: 5479370899937538578, guid: 21b1b9c505413f649a70a7c5f5a7085b, type: 3}
     _characterDifferences: []
   - _name: Monster_pack
-    _default: {fileID: 4208710453778300129, guid: 584b1f82e3f1d194cbe7ae8b3afa07c8, type: 3}
+    _default: {fileID: 1875162558393510218, guid: 84c3ac50964728f4289d015f7a100b9f, type: 3}
     _characterDifferences: []
   - _name: Boss_middle
     _default: {fileID: 1112094429965770427, guid: 62c17913e9bc17042b0ca30288f11aa2, type: 3}
