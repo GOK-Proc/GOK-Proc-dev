@@ -43,7 +43,7 @@ namespace Map
 					//TODO: ハードコーディングは汚い気がする
 					if ((_info.Chapter, _info.Section) == (1, 2))
 					{
-						SceneTransitionManager.TransitionToRhythmTutorial(_info.RhythmId, Difficulty.Easy);
+						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, Difficulty.Easy);
 					}
 					else
 					{

@@ -21,7 +21,7 @@ namespace MusicSelection
 
             StopCoroutine(_bgmSwitchCor);
 
-            SceneTransitionManager.TransitionToTutorial();
+            SceneTransitionManager.TransitionToRhythmTutorial();
         }
 
         public override void OnSelect(BaseEventData _)
