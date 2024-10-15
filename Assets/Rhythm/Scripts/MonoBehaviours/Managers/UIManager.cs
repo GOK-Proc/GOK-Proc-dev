@@ -10,7 +10,7 @@ using TMPro;
 
 namespace Rhythm
 {
-    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable, ITutorialDrawable, IDamageDrawable
+    public class UIManager : MonoBehaviour, IGaugeDrawable, IEffectDrawable, IUIDrawable, IPauseScreenDrawable, ITutorialDrawable, IDamageDrawable, ISkipScreenDrawable
     {
         [SerializeField] private Vector2 _screenUpperLeft;
         [SerializeField] private Vector2 _screenLowerRight;
@@ -192,8 +192,8 @@ namespace Rhythm
         [SerializeField] private TextMeshProUGUI _countDownNumber;
 
         [Space(20)]
-        [SerializeField] private CanvasGroup _tutorial;
-        [SerializeField] private RectTransform[] _tutorialRectTransform;
+        [SerializeField] private RectTransform _tutorialBox;
+        [SerializeField] private RectTransform[] _tutorialContents;
 
         [System.Serializable]
         private struct TutorialKeyConfig
@@ -203,6 +203,9 @@ namespace Rhythm
         }
 
         [SerializeField] private TutorialKeyConfig[] _tutorialKeyConfigs;
+
+        [Space(20)]
+        [SerializeField] private CanvasGroup _skipBox;
 
         private Dictionary<KeyConfig, RectTransform[]> _tutorialKeyConfigDictionary;
 
@@ -218,12 +221,15 @@ namespace Rhythm
         private CanvasGroup _rhythmResultBoxCanvasGroup;
         private CanvasGroup _rhythmResultContentsCanvasGroup;
         private CanvasGroup _pauseBoxCanvasGroup;
+        private CanvasGroup _tutorialBoxCanvasGroup;
+        private CanvasGroup _skipBoxCanvasGroup;
 
         [Space(20)]
         [SerializeField] private float _resultBoxDuration;
         [SerializeField] private float _resultContentsDuration;
         [SerializeField] private float _pauseBoxDuration;
         [SerializeField] private float _tutorialBoxDuration;
+        [SerializeField] private float _skipBoxDuration;
 
 
         private void Awake()
@@ -281,6 +287,8 @@ namespace Rhythm
             _rhythmResultBoxCanvasGroup = _rhythmResultBox.GetComponent<CanvasGroup>();
             _rhythmResultContentsCanvasGroup = _rhythmResultContents.GetComponent<CanvasGroup>();
             _pauseBoxCanvasGroup = _pauseBox.GetComponent<CanvasGroup>();
+            _tutorialBoxCanvasGroup = _tutorialBox.GetComponent<CanvasGroup>();
+            _skipBoxCanvasGroup = _skipBox.GetComponent<CanvasGroup>();
 
             _tutorialKeyConfigDictionary = _tutorialKeyConfigs.ToDictionary(x => x.KeyConfig, x => x.RectTransforms);
         }
@@ -933,11 +941,11 @@ namespace Rhythm
 
         public Tweener DrawTutorial(int index, KeyConfig keyConfig)
         {
-            if (index < _tutorialRectTransform.Length)
+            if (index < _tutorialContents.Length)
             {
-                for (int i = 0; i < _tutorialRectTransform.Length; i++)
+                for (int i = 0; i < _tutorialContents.Length; i++)
                 {
-                    _tutorialRectTransform[i].gameObject.SetActive(i == index);
+                    _tutorialContents[i].gameObject.SetActive(i == index);
                 }
 
                 foreach (var i in _tutorialKeyConfigDictionary)
@@ -945,19 +953,33 @@ namespace Rhythm
                     i.Value[index].gameObject.SetActive(i.Key == keyConfig);
                 }
                 
-                _tutorial.alpha = 0f;
-                _tutorial.gameObject.SetActive(true);
+                _tutorialBoxCanvasGroup.alpha = 0f;
+                _tutorialBox.gameObject.SetActive(true);
 
-                return _tutorial.DOFade(1f, _tutorialBoxDuration).SetUpdate(true);
+                return _tutorialBoxCanvasGroup.DOFade(1f, _tutorialBoxDuration).SetUpdate(true);
             }
 
             return default;
         }
 
-        public Tweener EraseTutorial() => _tutorial.DOFade(0f, _tutorialBoxDuration).SetUpdate(true).OnComplete(() =>
+        public Tweener EraseTutorial() => _tutorialBoxCanvasGroup.DOFade(0f, _tutorialBoxDuration).SetUpdate(true).OnComplete(() =>
         {
-            _tutorial.gameObject.SetActive(false);
-            _tutorial.alpha = 1f;
+            _tutorialBox.gameObject.SetActive(false);
+            _tutorialBoxCanvasGroup.alpha = 1f;
+        });
+
+        public Tweener DrawSkipScreen()
+        {
+            _skipBoxCanvasGroup.alpha = 0f;
+            _skipBox.gameObject.SetActive(true);
+
+            return _skipBoxCanvasGroup.DOFade(1f, _skipBoxDuration).SetUpdate(true);
+        }
+
+        public Tweener EraseSkipScreen() => _skipBoxCanvasGroup.DOFade(0f, _skipBoxDuration).SetUpdate(true).OnComplete(() =>
+        {
+            _skipBox.gameObject.SetActive(false);
+            _skipBoxCanvasGroup.alpha = 1f;
         });
 
         public void StartWarningLayer()

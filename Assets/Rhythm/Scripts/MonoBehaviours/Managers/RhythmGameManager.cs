@@ -90,7 +90,6 @@ namespace Rhythm
         [Space(20)]
         [Header("Beatmap")]
         [SerializeField] private BeatmapData _beatmapData;
-        [SerializeField] private bool _overrideSettings;
         [SerializeField] private string _defaultId;
         [SerializeField] private Difficulty _defaultDifficulty;
         [SerializeField] private bool _defaultIsVs;
@@ -108,6 +107,7 @@ namespace Rhythm
         [Header("Tutorial")]
         [SerializeField] private float _tutorialSpeed;
         [SerializeField] private TutorialData _tutorialData;
+        [SerializeField] private float _skipDelay;
 
 
         private NoteCreator _noteCreator;
@@ -122,6 +122,7 @@ namespace Rhythm
 
         private HeaderInformation _headerInformation;
         private double _endTime;
+        private bool _canSkipTutorial;
 
         private void Awake()
         {
@@ -132,7 +133,7 @@ namespace Rhythm
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
-            if (_overrideSettings || (id == "None" && tutorialId == TutorialId.None))
+            if (id == "None" && tutorialId == TutorialId.None)
             {
                 id = _defaultId;
                 difficulty = _defaultDifficulty;
@@ -145,13 +146,15 @@ namespace Rhythm
             {
                 if (!dictionary.ContainsKey(id))
                 {
-                    throw new System.Exception("The specified ID does not exist. If debugging, please enable Override Settings.");
+                    throw new System.Exception("The specified ID does not exist.");
                 }
             }
 
             if (!isVs) tutorialId = TutorialId.None;
 
             if (tutorialId != TutorialId.None) difficulty = Difficulty.Easy;
+
+            _canSkipTutorial = tutorialId == TutorialId.Battle;
 
             var beatmapInfo = tutorialId != TutorialId.None ? _tutorialData.Beatmap : dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
@@ -191,7 +194,7 @@ namespace Rhythm
 
             _tutorialManager = new TutorialManager(tutorialId != TutorialId.None, _setting.KeyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
 
-            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
+            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager, _uiManager);
             _eventManager.SetSoundVolume(_setting.VolumeSetting);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
@@ -219,6 +222,20 @@ namespace Rhythm
                 }
 
                 _timeManager.StartTimer(-_startDelay);
+
+                while (_timeManager.Time < -_skipDelay)
+                {
+                    Update();
+                    yield return null;
+                }
+
+                if (_canSkipTutorial)
+                {
+                    Time.timeScale = 0;
+                    _playerInput.SwitchCurrentActionMap("None");
+                    _uiManager.DrawSkipScreen();
+                    _eventManager.SelectSkipNoButton();
+                }
 
                 while (_timeManager.Time < Time.deltaTime / 2)
                 {
@@ -277,7 +294,6 @@ namespace Rhythm
                 _eventManager.SelectNextButton();
                 _scoreManager.DisplayResult(_headerInformation);
                 _scoreManager.SaveRecordData();
-
             }
 
             StartCoroutine(RhythmGameUpdate());
