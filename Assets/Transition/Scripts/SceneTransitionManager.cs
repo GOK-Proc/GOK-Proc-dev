@@ -94,7 +94,7 @@ namespace Transition
 			TransitionToScene(SceneName.Rhythm);
 		}
 
-        public static void TransitionToRhythmTutorial(RhythmId rhythmId, Difficulty difficulty)
+        public static void TransitionToBattleTutorial(RhythmId rhythmId, Difficulty difficulty)
         {
             if (rhythmId == RhythmId.None) return;
 
@@ -107,9 +107,10 @@ namespace Transition
             TransitionToScene(SceneName.Rhythm);
         }
 
-        public static void TransitionToTutorial()
+        public static void TransitionToRhythmTutorial()
         {
             CurrentEpisodeType = EpisodeType.Rhythm;
+            CurrentRhythmId = RhythmId.Chapter1_2;
             CurrentIsVs = true;
             CurrentTutorialId = TutorialId.Rhythm;
 

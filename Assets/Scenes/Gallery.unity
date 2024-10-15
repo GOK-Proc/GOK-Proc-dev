@@ -723,7 +723,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: 72}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1081595339
 MonoBehaviour:
@@ -836,6 +836,7 @@ MonoBehaviour:
   _trackData: {fileID: 11400000, guid: 0bc08e45255eccc4ebaf04c197a1173e, type: 2}
   _uiElementParent: {fileID: 2054128551}
   _musicUIElementPrefab: {fileID: 795186544321588213, guid: 55c1feb9c4b67e74388650492b526abe, type: 3}
+  _tutorialUIElementPrefab: {fileID: 0}
   _scrollbar: {fileID: 1782718322}
   _thumbnailBase: {fileID: 1671466897}
 --- !u!1 &1123369938
@@ -977,8 +978,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 300, y: 104}
-  m_SizeDelta: {x: -700, y: -308}
+  m_AnchoredPosition: {x: 300, y: 109.5}
+  m_SizeDelta: {x: -700, y: -319}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1206258391
 MonoBehaviour:
@@ -1034,12 +1035,12 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 36
+  m_lineSpacing: 50
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using Gallery;
 using Rhythm;
@@ -28,13 +29,28 @@ namespace MusicSelection
             _titleText.text = track.Title;
             _composerText.text = $"作曲：{track.Composer}";
 
-            _notes = _beatmapData.BeatmapDictionary[track.Id].Notes;
-
-            Set(DifficultySelection.Current);
+            if (track.HasBeatmap)
+            {
+                _notes = _beatmapData.BeatmapDictionary[track.Id].Notes;
+                Set(DifficultySelection.Current);
+            }
+            else // チュートリアルの場合
+            {
+                _notes = Array.Empty<NotesInformation>();
+                _bestScoreText.text = "- pt";
+                _maxComboText.text = "- combo";
+                _allPerfectText.gameObject.SetActive(false);
+                _fullComboText.gameObject.SetActive(false);
+                // チュートリアルの説明を表示するために作曲者欄を借りる
+                _composerText.text = track.Description;
+                _notesDesignerText.text = "";
+            }
         }
 
         public void Set(Difficulty difficulty)
         {
+            if (!_track.HasBeatmap) return;
+
             var record = _recordList[_track.Id][(int)difficulty];
             _bestScoreText.text = $"{record.Score.ToString()} pt";
             _maxComboText.text = $"{record.MaxCombo.ToString()} combo";

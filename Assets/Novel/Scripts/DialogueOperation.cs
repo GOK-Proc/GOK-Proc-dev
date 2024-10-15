@@ -16,6 +16,8 @@ namespace Novel
 
         private ReplaceDictionary _replaceDictionary;
 
+        private bool _breakFlag = false;    // これがtrueになるとコルーチンのループを抜ける
+
         private void Start()
         {
             _replaceDictionary = new ReplaceDictionary();
@@ -25,7 +27,9 @@ namespace Novel
         {
             NovelManager.Instance.StopDialogue = true;
             NovelManager.Instance.IsProcessingDialogue = true;
-            
+            _breakFlag = false;
+
+
             string name = dialogueData.Name;
             string dialogue = dialogueData.Dialogue;
 
@@ -33,7 +37,7 @@ namespace Novel
             dialogue = ReplaceParamater(dialogue);
 
             _nameText.text = name;
-            
+
             StartCoroutine(DialogueOrder(dialogue));
         }
 
@@ -43,11 +47,23 @@ namespace Novel
 
             foreach (char c in dialogue)
             {
+                if (_breakFlag)
+                {
+                    break;
+                }
+
                 _dialogueText.text += c;
                 yield return new WaitForSeconds(_interval);
             }
 
+            _dialogueText.text = dialogue;
+
             NovelManager.Instance.IsProcessingDialogue = false;
+        }
+
+        public void DisplayImmediately()
+        {
+            _breakFlag = true;
         }
 
         private string ReplaceParamater(string sentence)
