@@ -19,7 +19,7 @@ namespace Map
 		[SerializeField] private EpisodeBox _episodeBox;
 
 		[SerializeField] private TextMeshProUGUI _labelText;
-		
+
 		[SerializeField] private GameObject _selectOff;
 		[SerializeField] private GameObject _selectOn;
 
@@ -45,14 +45,34 @@ namespace Map
 
 			_labelText.text = _label;
 
+			GameObject firstSelectedObj = null;
 			Selectable preSelectable = null;
 			foreach (var episode in _episodes)
 			{
 				if (flagDict.TryGetValue((episode.Chapter, episode.Section), out bool flag) && flag)
 				{
+					var info = dataDict[(episode.Chapter, episode.Section)];
 					var obj = Instantiate(_episodeBox, _episodeBoxArea.transform);
-					obj.SetInfo(dataDict[(episode.Chapter, episode.Section)]);
+					obj.SetInfo(info);
 					var selectable = obj.GetComponent<Selectable>();
+					if (info.EpisodeType == SceneTransitionManager.CurrentEpisodeType)
+					{
+						switch (info.EpisodeType)
+						{
+							case EpisodeType.Novel:
+								if (info.NovelId == SceneTransitionManager.CurrentNovelId)
+								{
+									firstSelectedObj = obj.gameObject;
+								}
+								break;
+							case EpisodeType.Rhythm:
+								if (info.RhythmId == SceneTransitionManager.CurrentRhythmId)
+								{
+									firstSelectedObj = obj.gameObject;
+								}
+								break;
+						}
+					}
 
 					if (preSelectable != null)
 					{
@@ -70,6 +90,18 @@ namespace Map
 			}
 
 			_camera = GameObject.FindWithTag("MainCamera");
+
+			if (firstSelectedObj != null)
+			{
+				var pos = new Vector3(Math.Max(transform.position.x, -4), transform.position.y, _camera.transform.position.z);
+				_camera.transform.position = pos;
+
+				_episodeBoxArea.alpha = 1;
+
+				CurrentMapSpot = gameObject;
+
+				EventSystem.current.SetSelectedGameObject(firstSelectedObj);
+			}
 		}
 
 		public void OnSelect(BaseEventData eventData)

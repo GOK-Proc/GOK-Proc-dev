@@ -2,6 +2,7 @@
 {
 	public enum EpisodeType
 	{
+		None,
 		Novel,
 		Rhythm
 	}
