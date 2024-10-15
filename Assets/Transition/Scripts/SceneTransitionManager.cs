@@ -55,6 +55,8 @@ namespace Transition
 					case EpisodeType.Rhythm:
 						episodeFlagManager.SetNextFlag(CurrentRhythmId);
 						break;
+					default:
+						return;
 				}
 			}
 
@@ -63,6 +65,10 @@ namespace Transition
 
 		public static void TransitionToModeSelection()
 		{
+			CurrentEpisodeType = EpisodeType.None;
+			CurrentNovelId = NovelId.None;
+			CurrentRhythmId = RhythmId.None;
+		
 			TransitionToScene(SceneName.ModeSelection);
 		}
 
