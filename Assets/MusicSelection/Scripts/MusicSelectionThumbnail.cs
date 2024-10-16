@@ -52,7 +52,7 @@ namespace MusicSelection
             if (!_track.HasBeatmap) return;
 
             var record = _recordList[_track.Id][(int)difficulty];
-            _bestScoreText.text = $"{record.Score.ToString()} pt";
+            _bestScoreText.text = $"{record.Score:N0} pt";
             _maxComboText.text = $"{record.MaxCombo.ToString()} combo";
 
             _allPerfectText.gameObject.SetActive(record.Achievement switch
