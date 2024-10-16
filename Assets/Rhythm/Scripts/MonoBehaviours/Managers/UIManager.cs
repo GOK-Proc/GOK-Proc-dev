@@ -453,7 +453,7 @@ namespace Rhythm
 
                             var sequence = DOTween.Sequence();
                             sequence.Append(t.DOLocalMove(position + _judgeFontDelta, _judgeFontDuration));
-                            sequence.Join(s.DOFade(0f, _judgeFontFadeDuration).SetDelay(_judgeFontDuration - _judgeFontFadeDuration));
+                            sequence.Append(s.DOFade(0f, _judgeFontFadeDuration));
                             sequence.Play().OnComplete(() =>
                             {
                                 s.color = color;
