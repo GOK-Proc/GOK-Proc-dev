@@ -52,17 +52,11 @@ namespace MusicSelection
             if (!_track.HasBeatmap) return;
 
             var record = _recordList[_track.Id][(int)difficulty];
-            _bestScoreText.text = $"{record.Score.ToString()} pt";
-            _maxComboText.text = $"{record.MaxCombo.ToString()} combo";
+            _bestScoreText.text = $"{record.Score:N0} pt";
+            _maxComboText.text = $"{record.MaxCombo} combo";
 
-            _allPerfectText.gameObject.SetActive(record.Achievement switch
-            {
-                Achievement.AllPerfect => true, _ => false
-            });
-            _fullComboText.gameObject.SetActive(record.Achievement switch
-            {
-                Achievement.FullCombo => true, _ => false
-            });
+            _allPerfectText.gameObject.SetActive(record.Achievement == Achievement.AllPerfect);
+            _fullComboText.gameObject.SetActive(record.Achievement == Achievement.FullCombo);
 
             _notesDesignerText.text = $"譜面：{_notes[(int)difficulty].NotesDesigner}";
         }
