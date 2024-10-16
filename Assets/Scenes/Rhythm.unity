@@ -3248,7 +3248,7 @@ MonoBehaviour:
   _enemyAttackEffectFadeDuration: 0.3
   _enemyAttackEffectFadeScale: 1.5
   _judgeFontDuration: 0.4
-  _judgeFontFadeDuration: 0.1
+  _judgeFontFadeDuration: 0.2
   _judgeFontDelta: {x: 0, y: 3, z: 0}
   _laneFlashDuration: 0.05
   _laneFlashFadeDuration: 0.2
