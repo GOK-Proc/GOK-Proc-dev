@@ -49,21 +49,21 @@ MonoBehaviour:
       _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
   - _id: Chapter2_2
     _title: "\u8A66\u594F\u301C\u9B54\u7269\u9054\u306E\u5C0F\u54C1\u301C"
-    _sound: {fileID: 0}
+    _sound: {fileID: 8300000, guid: b322ffea96389b049a73acdf1589c789, type: 3}
     _offset: 0
     _composer: "\u7532\u6590\u5927\u6210"
-    _backgroundSprite: {fileID: 0}
+    _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
     _enemySprite: {fileID: 0}
     _notes:
     - _level: 0
-      _notesDesigner: 
-      _file: {fileID: 0}
+      _notesDesigner: Yugo
+      _file: {fileID: 4900000, guid: db4eedcc649c8634cafbfe201b9084ca, type: 3}
     - _level: 0
-      _notesDesigner: 
-      _file: {fileID: 0}
+      _notesDesigner: Yugo
+      _file: {fileID: 4900000, guid: dabd00d00778c514a92cbb2be12ab83f, type: 3}
     - _level: 0
-      _notesDesigner: 
-      _file: {fileID: 0}
+      _notesDesigner: Yugo
+      _file: {fileID: 4900000, guid: a7812f68f863840408dd5f3a47a7cee0, type: 3}
   - _id: Chapter2_4
     _title: "\u8972\u6F14\u301C\u4E3B\u306E\u72EC\u594F\u301C"
     _sound: {fileID: 0}
