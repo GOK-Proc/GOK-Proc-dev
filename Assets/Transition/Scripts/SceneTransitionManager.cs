@@ -31,6 +31,15 @@ namespace Transition
 			_prevScene = SceneManager.GetSceneByName(SceneName.Title.ToString());
 		}
 
+		public static void TransitionToTitle()
+		{
+			CurrentEpisodeType = EpisodeType.None;
+			CurrentNovelId = NovelId.None;
+			CurrentRhythmId = RhythmId.None;
+
+			TransitionToScene(SceneName.Title);
+		}
+
 		public static void TransitionToGallery()
 		{
 			TransitionToScene(SceneName.Gallery);
@@ -122,6 +131,11 @@ namespace Transition
 
             TransitionToScene(SceneName.Rhythm);
         }
+
+		public static void TransitionToCredit()
+		{
+			TransitionToScene(SceneName.Credit);
+		}
 
         private static void TransitionToScene(SceneName sceneName)
 		{
