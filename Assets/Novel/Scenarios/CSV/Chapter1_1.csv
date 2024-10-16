@@ -2,7 +2,7 @@
 ,,,,,Town,Bgm_village,,0
 同僚,Villager_green1,よう！　${name}、今日はあっちの通りの見回りだとさ！,Hero Villager_green1,,,,,0
 ${name},Hero,わかった,,,,,,0
-同僚,Villager_green1,にしても、働き始めてもう3ヶ月かぁ。,,,,,,0
+同僚,Villager_green1,にしても、働き始めてもう3ヶ月かぁ,,,,,,0
 同僚,Villager_green1,お前は入ってから覚えが早くて助かってるって隊長が言ってたぞ,,,,,,0
 同僚,Villager_green1,もしかしたら、お前、そのうち王族の近衛兵にスカウトされるかもな！　もしくは魔物から国を守る戦士とかか？,,,,,,0
 ${name},Hero,いいから、さっさと行くぞ,,,,,,0
