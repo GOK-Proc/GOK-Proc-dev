@@ -17,9 +17,9 @@ namespace Gallery
             _text = gameObject.GetComponent<TextMeshProUGUI>();
         }
 
-        public void Set(string description)
+        public void Set(string descriptionText)
         {
-            _text.text = description;
+            _text.text = descriptionText;
             _text.pageToDisplay = 1;
 
             // ForceMeshUpdate()を挟むことでtextInfoが更新される
