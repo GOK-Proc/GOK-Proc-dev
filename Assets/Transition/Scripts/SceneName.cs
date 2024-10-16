@@ -2,6 +2,7 @@
 {
     public enum SceneName
     {
+        Credit,
         Gallery,
         Map,
         ModeSelection,
