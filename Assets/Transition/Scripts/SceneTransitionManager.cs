@@ -142,9 +142,9 @@ namespace Transition
 			AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName.ToString(), LoadSceneMode.Additive);
 			yield return new WaitUntil(() => loadOp.isDone);
 
-			yield return _overlay.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
-
 			_prevScene = SceneManager.GetSceneByName(sceneName.ToString());
+
+			yield return _overlay.DOFade(endValue: 0f, duration: 0.5f).WaitForCompletion();
 		}
 	}
 }
