@@ -43,6 +43,7 @@ namespace Rhythm
         private float _gaugePoint;
         private bool _wasAlerted;
         private bool _wasOverkilled;
+        private bool _wasKnockedout;
 
         private readonly int _maxScore = 1000000;
         private readonly float _maxGaugePoint = 10000;
@@ -53,7 +54,7 @@ namespace Rhythm
         public bool IsWin => _isVs && Mathf.CeilToInt(_playerHitPoint) >= Mathf.CeilToInt(_enemyHitPoint) && _playerHitPoint > 0;
         public bool IsOverkill => _isVs && _enemyHitPoint == 0;
         public bool IsKnockout => _isVs && _playerHitPoint == 0;
-        public bool IsGameOver { get; private set; }
+        public bool IsGameOver => IsKnockout && !_isTutorial;
         public bool IsClear => !_isVs && _gaugePoint >= _clearGaugePoint;
         public int Score
         {
@@ -143,10 +144,10 @@ namespace Rhythm
 
             _wasAlerted = false;
             _wasOverkilled = false;
+            _wasKnockedout = false;
 
             Combo = 0;
             MaxCombo = 0;
-            IsGameOver = false;
 
             _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
             _gaugeDrawable.DrawEnemyGauges(_enemyHitPoint, _enemyMaxHitPoint, _playerMaxHitPoint);
@@ -190,33 +191,23 @@ namespace Rhythm
                         {
                             case BonusType.Attack:
                                 var enemyDamage = i.Value;
-                                _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
-
-                                var overkill = false;
-                                if (IsOverkill)
-                                {
-                                    if (!_wasOverkilled)
-                                    {
-                                        overkill = true;
-                                        _wasOverkilled = true;
-                                    }
-                                }
 
                                 if (enemyDamage > 0)
                                 {
-                                    var hitPoint = _enemyHitPoint;
-                                    var maxHitPoint = _enemyMaxHitPoint;
                                     _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                                     {
+                                        _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
+
                                         _soundPlayable.PlaySE("PlayerDamage");
 
-                                        if (overkill)
+                                        if (!_wasOverkilled && IsOverkill)
                                         {
                                             _soundPlayable.PlaySE("Overkill");
                                             _damageDrawable.DefeatEnemy();
+                                            _wasOverkilled = true;
                                         }
 
-                                        _gaugeDrawable.DrawEnemyGauges(hitPoint, maxHitPoint, _playerMaxHitPoint);
+                                        _gaugeDrawable.DrawEnemyGauges(_enemyHitPoint, _enemyMaxHitPoint, _playerMaxHitPoint);
                                         _gaugeDrawable.DrawEnemyDamageEffect();
                                     });
                                 }
@@ -225,31 +216,29 @@ namespace Rhythm
 
                             case BonusType.Heal:
                                 var playerHealing = i.Value;
-                                _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
-
-                                var stopAlert = false;
-                                if (_playerHitPoint / _playerMaxHitPoint > _alertRate)
-                                {
-                                    if (_wasAlerted)
-                                    {
-                                        stopAlert = true;
-                                        _wasAlerted = false;
-                                    }
-                                }
-                                else
-                                {
-                                    _wasAlerted = true;
-                                }
-
+                                
                                 if (playerHealing > 0)
                                 {
+                                    _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, playerHealing);
+
+                                    if (_playerHitPoint / _playerMaxHitPoint > _alertRate)
+                                    {
+                                        if (_wasAlerted)
+                                        {
+                                            _damageDrawable.StopWarningLayer();
+                                            _wasAlerted = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        _wasAlerted = true;
+                                    }
+
                                     _soundPlayable.PlaySE("PlayerHeal");
 
                                     _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
                                     _gaugeDrawable.DrawPlayerHealEffect();
-                                    _damageDrawable.SetPlayerSprite(_playerHitPoint, _playerMaxHitPoint);
-                                    
-                                    if (stopAlert) _damageDrawable.StopWarningLayer();
+                                    _damageDrawable.SetPlayerSprite(_playerHitPoint, _playerMaxHitPoint);   
                                 }
                                 break;
                         }
@@ -262,31 +251,21 @@ namespace Rhythm
             {
                 case NoteColor.Red:
                     var enemyDamage = _enemyBasicDamage * (isLarge ? _largeRate : 1) * _judgeRates[(int)judgement - 1].Attack;
-                    _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
-
-                    var overkill = false;
-                    if (IsOverkill)
-                    {
-                        if (!_wasOverkilled)
-                        {
-                            overkill = true;
-                            _wasOverkilled = true;
-                        }
-                    }
 
                     if (enemyDamage > 0)
                     {
-                        var hitPoint = _enemyHitPoint;
-                        var maxHitPoint = _enemyMaxHitPoint;
                         _gaugeDrawable.DelayAttackDuration().OnComplete(() =>
                         {
-                            if (overkill)
+                            _enemyHitPoint = CalculateHitPoint(_enemyHitPoint, _enemyMaxHitPoint, -enemyDamage);
+
+                            if (!_wasOverkilled && IsOverkill)
                             {
                                 _soundPlayable.PlaySE("Overkill");
                                 _damageDrawable.DefeatEnemy();
+                                _wasOverkilled = true;
                             }
 
-                            _gaugeDrawable.DrawEnemyGauges(hitPoint, maxHitPoint, _playerMaxHitPoint);
+                            _gaugeDrawable.DrawEnemyGauges(_enemyHitPoint, _enemyMaxHitPoint, _playerMaxHitPoint);
                             _gaugeDrawable.DrawEnemyDamageEffect();
                         });
                     }
@@ -295,41 +274,37 @@ namespace Rhythm
 
                 case NoteColor.Blue:
                     var playerDamage = _playerBasicDamage * (isLarge ? _largeRate : 1) * _judgeRates[(int)judgement - 1].Defense;
-                    _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, -playerDamage);
-
-                    var startAlert = false;
-                    if (_playerHitPoint / _playerMaxHitPoint <= _alertRate)
-                    {
-                        if (!_wasAlerted)
-                        {
-                            startAlert = true;
-                            _wasAlerted = true;
-                        }
-                    }
-                    else
-                    {
-                        _wasAlerted = false;
-                    }
 
                     if (playerDamage > 0)
                     {
-                        var hitPoint = _playerHitPoint;
-                        var maxHitPoint = _playerMaxHitPoint;
                         _gaugeDrawable.DelayDefenseDuration().OnComplete(() =>
                         {
-                            if (hitPoint == 0) _damageDrawable.DefeatPlayer();
+                            _playerHitPoint = CalculateHitPoint(_playerHitPoint, _playerMaxHitPoint, -playerDamage);
 
-                            _gaugeDrawable.DrawPlayerGauge(hitPoint, maxHitPoint);
-                            _gaugeDrawable.DrawPlayerDamageEffect();
-                            _damageDrawable.SetPlayerSprite(hitPoint, maxHitPoint);
+                            if (!_wasKnockedout && IsKnockout)
+                            {
+                                _damageDrawable.DefeatPlayer();
+                                _wasKnockedout = true;
+                            }
 
                             _soundPlayable.PlaySE("PlayerDamage");
-                            IsGameOver = hitPoint == 0 && !_isTutorial;
 
-                            if (startAlert)
+                            _gaugeDrawable.DrawPlayerGauge(_playerHitPoint, _playerMaxHitPoint);
+                            _gaugeDrawable.DrawPlayerDamageEffect();
+                            _damageDrawable.SetPlayerSprite(_playerHitPoint, _playerMaxHitPoint);
+
+                            if (_playerHitPoint / _playerMaxHitPoint <= _alertRate)
                             {
-                                _soundPlayable.PlaySE("Alert");
-                                _damageDrawable.StartWarningLayer();
+                                if (!_wasAlerted)
+                                {
+                                    _soundPlayable.PlaySE("Alert");
+                                    _damageDrawable.StartWarningLayer();
+                                    _wasAlerted = true;
+                                }
+                            }
+                            else
+                            {
+                                _wasAlerted = false;
                             }
                         });
                     }
