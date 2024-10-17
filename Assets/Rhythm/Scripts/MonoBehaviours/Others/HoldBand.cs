@@ -17,6 +17,7 @@ namespace Rhythm
 
         private SpriteRenderer _renderer;
 
+        private JudgeRange _judgeRange;
         private float _judgeLineY;
         private Vector3 _holdPosition;
         private ITimeProvider _timeProvider;
@@ -26,11 +27,14 @@ namespace Rhythm
         private Vector3 _defaultScale;
         private Vector3 _currentScale;
         private bool _isSePlayed;
+        private bool _isFirstNoteJudged;
+        private bool _isLastNoteJudged;
 
         private readonly float _fadeOutDuration = 0.3f;
 
-        public void Initialize(float judgeLineY, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, ISoundPlayable soundPlayable)
+        public void Initialize(JudgeRange judgeRange, float judgeLineY, ITimeProvider timeProvider, IColorInputProvider colorInputProvider, ISoundPlayable soundPlayable)
         {
+            _judgeRange = judgeRange;
             _judgeLineY = judgeLineY;
             _timeProvider = timeProvider;
             _colorInputProvider = colorInputProvider;
@@ -67,6 +71,8 @@ namespace Rhythm
             }, disposable);
 
             _isSePlayed = false;
+            _isFirstNoteJudged = false;
+            _isLastNoteJudged = false;
         }
 
         public new void Destroy()
@@ -88,28 +94,51 @@ namespace Rhythm
                     transform.localScale = _currentScale;
                     transform.position = _holdPosition;
                     _renderer.color = _pressedColor;
+                    _isFirstNoteJudged = true;
 
                     if (!_isSePlayed)
                     {
                         _soundPlayable.PlaySE("Hold", _lane);
                         _isSePlayed = true;
                     }
+
+                    if (time >= _endTime - _judgeRange.Good)
+                    {
+                        _isLastNoteJudged = true;
+                    }
                 }
                 else
                 {
                     transform.localScale = _defaultScale;
-                    _renderer.color = _releasedColor;
 
+                    if (_isFirstNoteJudged || time > _beginTime + _judgeRange.Good)
+                    {
+                        _renderer.color = _releasedColor;
+                    }
+                    else
+                    {
+                        _renderer.color = _defaultColor;
+                    }
+                    
                     if (_isSePlayed)
                     {
                         _soundPlayable.FadeOutSE("Hold", _lane, _fadeOutDuration);
                         _isSePlayed = false;
                     }
+
+                    if (_isLastNoteJudged)
+                    {
+                        Destroy();
+                    }
                 }
             }
             else if (time > _endTime)
             {
-                if (transform.localScale != _defaultScale) gameObject.SetActive(false);
+                if (_isLastNoteJudged)
+                {
+                    Destroy();
+                }
+
                 if (_isSePlayed)
                 {
                     _soundPlayable.FadeOutSE("Hold", _lane, _fadeOutDuration);

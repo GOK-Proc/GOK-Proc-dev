@@ -51,7 +51,7 @@ namespace Rhythm
 
             _notePools = notePrefabs.ToDictionary(x => x.Key, x => new ObjectPool<TapNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
             _holdPools = holdPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldNote>(x.Value, parent, x => x.Initialize(judgeRange, judgeOffset, timeProvider, colorInputProvider, activeLaneProvider)));
-            _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(_layout.JudgeLineY, timeProvider, colorInputProvider, soundPlayable)));
+            _bandPools = bandPrefabs.ToDictionary(x => x.Key, x => new ObjectPool<HoldBand>(x.Value, parent, x => x.Initialize(judgeRange, _layout.JudgeLineY, timeProvider, colorInputProvider, soundPlayable)));
             _linePool = new ObjectPool<RhythmGameObject>(linePrefab, parent);
             _timeProvider = timeProvider;
             _effectDrawable = effectDrawable;
