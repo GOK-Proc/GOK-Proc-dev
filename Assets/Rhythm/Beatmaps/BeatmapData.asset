@@ -100,18 +100,18 @@ MonoBehaviour:
       _file: {fileID: 4900000, guid: be73c18d3fc7a53459ecc7b05b13f72f, type: 3}
   - _id: Chapter2
     _title: "\u30EA\u30FC\u30C8\u306E\u68EE"
-    _sound: {fileID: 0}
+    _sound: {fileID: 8300000, guid: f9191aae3c4e5944e848110e68c6f8ce, type: 3}
     _offset: 0
     _composer: "\u7AF9\u4E0B\u5B9F\u7A42"
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
     _enemySprite: {fileID: 0}
     _notes:
     - _level: 0
-      _notesDesigner: 
-      _file: {fileID: 0}
+      _notesDesigner: "\u30AB\u30E1\u5409"
+      _file: {fileID: 4900000, guid: 8c6740e7c1fb8ff4f988ce55f40a4127, type: 3}
     - _level: 0
-      _notesDesigner: 
-      _file: {fileID: 0}
+      _notesDesigner: "\u3042\u3063\u304D\uFF5E"
+      _file: {fileID: 4900000, guid: 3f54c0d3a0fa93a44a1fa5bd077318cd, type: 3}
     - _level: 0
-      _notesDesigner: 
-      _file: {fileID: 0}
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: f15d3db6fe9207c46b05ab261c0ab7c2, type: 3}
