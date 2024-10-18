@@ -97,14 +97,30 @@ namespace Novel
                             {
                                 if (_nextAction.triggered)
                                 {
-                                    SceneTransitionManager.TransitionToMap(true);
-                                    _isTransitioning = true;
+                                    if (_novelId == NovelId.Chapter2_5)
+                                    {
+                                        SceneTransitionManager.TransitionToCredit();
+                                        _isTransitioning = true;
+                                    }
+                                    else
+                                    {
+                                        SceneTransitionManager.TransitionToMap(true);
+                                        _isTransitioning = true;
+                                    }
                                 }
                             }
                             else
                             {
-                                SceneTransitionManager.TransitionToMap(true);
-                                _isTransitioning = true;
+                                if (_novelId == NovelId.Chapter2_5)
+                                {
+                                    SceneTransitionManager.TransitionToCredit();
+                                    _isTransitioning = true;
+                                }
+                                else
+                                {
+                                    SceneTransitionManager.TransitionToMap(true);
+                                    _isTransitioning = true;
+                                }
                             }
                         }
                     }
