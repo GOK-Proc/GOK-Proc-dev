@@ -9,10 +9,10 @@ ${name},Hero,いいから、さっさと行くぞ,,,,,,0
 同僚,Villager_green1,へいへい,,,,,,0
 ,,,Clear,,,Se_footstep,,0
 ,,,,,Town,,,0
-同僚,Villager_green1,それにしても、最近は盗っ人どころか魔物が現れる回数自体少なくなったよな,Hero Villager_green1,,,Se_footstep,,0
-${name},Hero,それで手を抜こうととかしないよな,,,,,,0
-同僚,Villager_green1,するわけないだろ。お前もそう思わないか？って思ってさ,,,,,,0
-${name},Hero,……確かに他の街での襲撃情報も減ったな,,,,,,0
+同僚,Villager_green1,それにしても、最近は盗っ人どころか魔物が現れる回数も少なくなったよな,Hero Villager_green1,,,Se_footstep,,0
+${name},Hero,それで手を抜く、なんてことはないだろうな,,,,,,0
+同僚,Villager_green1,あるわけないだろ？　ただ、お前もそう思わないか？って思ってさ,,,,,,0
+${name},Hero,……確かに、他の街での襲撃情報も減ったな,,,,,,0
 同僚,Villager_green1,だろ？　魔王対策に何かあったのかね,,,,,,0
 ,,,,,,Bgm_tense,,0
 ,,,,,,Se_warning,,0
@@ -52,12 +52,12 @@ ${name},Hero,――僕は門の方に行く。避難誘導はお前に頼む,,,,
 ,,,Hero.angry Urura,,,Se_footstep,,0
 守護獣,Urura,っ！　君は……,,,,,,0
 ${name},Hero,……っ、大丈夫か！？,,,,,,0
-守護獣,Urura,――ああ、助かった,,,,,,0
-${name},Hero,……怪我、してるのか？,Hero.sad Urura,Cut,,,,0
+守護獣,Urura,――ああ、助かった,Hero.sad Urura,Cut,,,,0
+${name},Hero,……怪我、してるのか？,,,,,,0
 守護獣,Urura,これくらい大した事はない。君は見回りの者か？　それならば住人の避難の方を……,,,,,,0
-${name},Hero,僕も戦う,,,,,,0
+${name},Hero,僕も戦う,Hero.angry Urura,Cut,,,,0
 守護獣,Urura,……何を言っているんだ、君は,,,,,,0
-${name},Hero,怪我をしているのなら、助けたい。ここで貴方を見捨てることはできない,,,,,,0
+${name},Hero,怪我をしているのなら、助けたい。ここで貴方を見捨てることはできない,Hero.sad Urura,Cut,,,,0
 守護獣,Urura,……わかった、だが無理のないように。危なければすぐ逃げることだ,,,,,,0
 ${name},Hero,……了解した,,,,,,0
 ,,,Clear,,Blackout,,,0
@@ -65,9 +65,9 @@ ${name},Hero,……了解した,,,,,,0
 守護獣,Urura,数が多いな……おい、大丈夫か！？,Hero.angry Urura,,,,,0
 ${name},Hero,……っ,,,,,,0
 守護獣,Urura,その状態ではもう戦えないだろう！　今すぐにでも救護班のところへ……,,,,,,0
-${name},Hero,……まだ、戦える,,,,,,0
+${name},Hero,まだ、戦える……！,,,,,,0
 守護獣,Urura,だが……！,,,,,,0
-${name},Hero,魔物から、人々を救いたいんだ,,,,,,0
+${name},Hero,魔物から、人々を救いたいんだ！,,,,,,0
 守護獣,Urura,……,,,,,,0
 守護獣,Urura,では……この世界をも救う覚悟はあるか？,,,,,,0
 ${name},Hero,世界……？,Hero.sad Urura,Cut,,,,0
@@ -78,12 +78,12 @@ ${name},Hero,今ここで、街の人々に傷ついてほしくない。みん�
 守護獣,Urura,……わかった,,,,,,0
 守護獣,Urura,それならば、君に力を与えよう。君の願いを叶えるための力を,,,,,,0
 ${name},Hero,力……？,Hero.sad Urura,Cut,,,,0
-,,,,,,,光っぽい描写だそうです,0
 守護獣,Urura,この杖を手に持ってくれ,,,,,,0
-${name},Hero,これは？,,,,,,0
+${nothing},Stick,,Stick,,,,,0
+${name},Hero,これは？,Hero.sad Urura,,,,,0
 守護獣,Urura,『調和の指揮棒（コンダクタ・ワンド）』だ。この杖の力を使えば強大な魔物でも倒すことができるだろう,,,,,,0
 ${name},Hero,わかった,,,,,,0
-,,,Clear,,,Se_power,,0
+,,,,,,Se_power,,0
 ,,,Hero_stick Urura,,,,,0
 ${name},Hero,……！！,,,,,,0
 守護獣,Urura,……大丈夫そうだな,,,,,,0
