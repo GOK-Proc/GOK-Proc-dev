@@ -21,13 +21,13 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: 5dd2b93433282ef40a1dae03839d8a6d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
     _notes:
-    - _level: 0
+    - _level: 4
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: b530efdbc063ea1409f3576851dfc0eb, type: 3}
-    - _level: 0
+    - _level: 9
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: e39dd3340c7485d41a3d14b03d5da9c2, type: 3}
-    - _level: 0
+    - _level: 12
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: df90fc89d73796d4398e214a060b2101, type: 3}
   - _id: Chapter1_2
@@ -38,13 +38,13 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: 5dd2b93433282ef40a1dae03839d8a6d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
     _notes:
-    - _level: 0
+    - _level: 2
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: b5378326c8f48214b99c44109da81366, type: 3}
-    - _level: 0
+    - _level: 7
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: f6fe2ba841d4add428d82c0b296b4a51, type: 3}
-    - _level: 0
+    - _level: 15
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
   - _id: Chapter2_2
@@ -55,13 +55,13 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
     _enemySprite: {fileID: 0}
     _notes:
-    - _level: 0
+    - _level: 3
       _notesDesigner: Yugo
       _file: {fileID: 4900000, guid: db4eedcc649c8634cafbfe201b9084ca, type: 3}
-    - _level: 0
+    - _level: 8
       _notesDesigner: Yugo
       _file: {fileID: 4900000, guid: dabd00d00778c514a92cbb2be12ab83f, type: 3}
-    - _level: 0
+    - _level: 13
       _notesDesigner: Yugo
       _file: {fileID: 4900000, guid: a7812f68f863840408dd5f3a47a7cee0, type: 3}
   - _id: Chapter2_4
@@ -72,13 +72,13 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
     _enemySprite: {fileID: 0}
     _notes:
-    - _level: 0
+    - _level: 2
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: f7d612a21f4d554419f2813103b1ab93, type: 3}
-    - _level: 0
+    - _level: 8
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: 314638035adfd224dbe880dafde45394, type: 3}
-    - _level: 0
+    - _level: 13
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: c7fae155b2dab2e49bc6910296ec0cef, type: 3}
   - _id: Chapter1
@@ -89,13 +89,13 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: 9b0c774f15ffcfb4990709a1491234ad, type: 3}
     _enemySprite: {fileID: 0}
     _notes:
-    - _level: 0
+    - _level: 1
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: 98401f284ac61c64f820025d81b392d4, type: 3}
-    - _level: 0
+    - _level: 7
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: e8b01502d937bf649ab0bd5c5f75939b, type: 3}
-    - _level: 0
+    - _level: 11
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: be73c18d3fc7a53459ecc7b05b13f72f, type: 3}
   - _id: Chapter2
@@ -106,12 +106,12 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
     _enemySprite: {fileID: 0}
     _notes:
-    - _level: 0
+    - _level: 2
       _notesDesigner: "\u30AB\u30E1\u5409"
       _file: {fileID: 4900000, guid: 8c6740e7c1fb8ff4f988ce55f40a4127, type: 3}
-    - _level: 0
+    - _level: 6
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: 3f54c0d3a0fa93a44a1fa5bd077318cd, type: 3}
-    - _level: 0
+    - _level: 10
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: f15d3db6fe9207c46b05ab261c0ab7c2, type: 3}
