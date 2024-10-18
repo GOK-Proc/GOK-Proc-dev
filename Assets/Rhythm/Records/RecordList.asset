@@ -12,30 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673b00aa7079f3f44a7c3d6063d82cbb, type: 3}
   m_Name: RecordList
   m_EditorClassIdentifier: 
-  _recordDataList:
-  - Id: MainTheme
-    Data:
-    - _score: 954415
-      _isCleared: 1
-      _maxCombo: 203
-      _achievement: 0
-      _judgeCount:
-        _perfect: 326
-        _good: 18
-        _false: 7
-    - _score: 0
-      _isCleared: 0
-      _maxCombo: 0
-      _achievement: 0
-      _judgeCount:
-        _perfect: 0
-        _good: 0
-        _false: 0
-    - _score: 0
-      _isCleared: 0
-      _maxCombo: 0
-      _achievement: 0
-      _judgeCount:
-        _perfect: 0
-        _good: 0
-        _false: 0
+  _recordDataList: []
