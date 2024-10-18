@@ -36556,7 +36556,6 @@ MonoBehaviour:
   _tutorialId: 0
   _setting: {fileID: 11400000, guid: 18810f76c94114640adec37275e0eb18, type: 2}
   _recordList: {fileID: 11400000, guid: e00e481882f388c419b380ce48e3d8b8, type: 2}
-  _tutorialSpeed: 2
   _tutorialData:
     _beatmap:
       _id: tutorial
