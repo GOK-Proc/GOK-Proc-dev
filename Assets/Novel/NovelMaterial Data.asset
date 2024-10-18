@@ -92,7 +92,7 @@ MonoBehaviour:
     _default: {fileID: 1875162558393510218, guid: 84c3ac50964728f4289d015f7a100b9f, type: 3}
     _characterDifferences: []
   - _name: Boss_middle
-    _default: {fileID: 1112094429965770427, guid: 62c17913e9bc17042b0ca30288f11aa2, type: 3}
+    _default: {fileID: 3854390589510768671, guid: c550fc3a6abd17b46831d58dc57cdef5, type: 3}
     _characterDifferences: []
   _backgroundMaterials:
   - {fileID: 3099518176223492770, guid: 4bd59591ee69a824fa73b23534c20235, type: 3}
