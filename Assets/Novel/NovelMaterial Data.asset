@@ -79,6 +79,9 @@ MonoBehaviour:
   - _name: Goblin_green_B
     _default: {fileID: 3136516189703036558, guid: cfc16fb948f8fce48b6c309f9a9ee134, type: 3}
     _characterDifferences: []
+  - _name: Stick
+    _default: {fileID: 2722227263292626932, guid: 31d4b02560847544cb5bfecff879bd65, type: 3}
+    _characterDifferences: []
   - _name: Goblin_blue_A
     _default: {fileID: 7961131946050326322, guid: e924bc38ef5dba04c9b58b09018b677d, type: 3}
     _characterDifferences: []
