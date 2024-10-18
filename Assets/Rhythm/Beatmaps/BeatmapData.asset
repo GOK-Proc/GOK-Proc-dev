@@ -67,7 +67,7 @@ MonoBehaviour:
   - _id: Chapter2_4
     _title: "\u8972\u6F14\u301C\u4E3B\u306E\u72EC\u594F\u301C"
     _sound: {fileID: 8300000, guid: d91388048d9dbe445a8b334ac7ee43a8, type: 3}
-    _offset: 0.1
+    _offset: 0.07
     _composer: "\u3068\u308A\u3068\u308A"
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 3a273b4473f68f04fa1a0fcd58939f3d, type: 3}
