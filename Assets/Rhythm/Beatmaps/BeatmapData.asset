@@ -53,7 +53,7 @@ MonoBehaviour:
     _offset: 0
     _composer: "\u7532\u6590\u5927\u6210"
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
-    _enemySprite: {fileID: 0}
+    _enemySprite: {fileID: 21300000, guid: c07ba4c2fe4842c418e6c4bd2f1a7e02, type: 3}
     _notes:
     - _level: 3
       _notesDesigner: Yugo
@@ -70,7 +70,7 @@ MonoBehaviour:
     _offset: 0.1
     _composer: "\u3068\u308A\u3068\u308A"
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
-    _enemySprite: {fileID: 0}
+    _enemySprite: {fileID: 21300000, guid: 3a273b4473f68f04fa1a0fcd58939f3d, type: 3}
     _notes:
     - _level: 2
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
