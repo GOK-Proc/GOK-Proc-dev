@@ -11505,7 +11505,7 @@ SpriteRenderer:
   m_SortingLayerID: -1710134891
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5dd2b93433282ef40a1dae03839d8a6d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -36550,7 +36550,7 @@ MonoBehaviour:
     MainClip: {fileID: 8300000, guid: 604bda58653420a42908fa0f32778f81, type: 3}
     IsLoop: 1
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
-  _defaultId: MainTheme
+  _defaultId: Chapter1_2
   _defaultDifficulty: 0
   _defaultIsVs: 1
   _tutorialId: 0
