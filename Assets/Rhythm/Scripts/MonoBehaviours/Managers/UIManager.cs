@@ -172,6 +172,8 @@ namespace Rhythm
         [SerializeField] private Image _battleResultEnemyGaugeImage;
         [SerializeField] private RectTransform[] _battleResultEnemyGauges;
         [SerializeField] private TextMeshProUGUI _battleResultEnemyHitPointText;
+        [SerializeField] private RectMask2D _battleResultEnemyGaugeMask;
+        [SerializeField] private RectMask2D _battleResultEnemyGaugeAdjusterMask;
 
         [Space(20)]
         [SerializeField] private RectTransform _rhythmResultBox;
@@ -219,6 +221,7 @@ namespace Rhythm
         private Vector2 _battleResultEnemyGaugePosition;
         private Vector2 _battleResultPlayerGaugeSizeDelta;
         private Vector2 _battleResultEnemyGaugeSizeDelta;
+        private Vector2 _battleResultEnemyGaugeMaskSizeDelta;
 
         private CanvasGroup _rhythmResultBoxCanvasGroup;
         private CanvasGroup _rhythmResultContentsCanvasGroup;
@@ -286,6 +289,7 @@ namespace Rhythm
             _battleResultEnemyGaugePosition = _battleResultEnemyGauge.anchoredPosition;
             _battleResultPlayerGaugeSizeDelta = _battleResultPlayerGauge.sizeDelta;
             _battleResultEnemyGaugeSizeDelta = _battleResultEnemyGauge.sizeDelta;
+            _battleResultEnemyGaugeMaskSizeDelta = _battleResultEnemyGaugeMask.rectTransform.sizeDelta;
 
             _rhythmResultBoxCanvasGroup = _rhythmResultBox.GetComponent<CanvasGroup>();
             _rhythmResultContentsCanvasGroup = _rhythmResultContents.GetComponent<CanvasGroup>();
@@ -371,7 +375,7 @@ namespace Rhythm
             var x = value == 1f ? _enemyGaugePosition.x : _enemyGaugePosition.x - (_enemyGaugeScale.x - width) / 2 - margin;
 
             _enemyGaugeMask.localPosition = new Vector3(x, _enemyGaugePosition.y, _enemyGaugePosition.z);
-            _enemyGaugeMask.localScale = new Vector3(width, _enemyGaugeScale.y, _enemyGaugeScale.z);
+            _enemyGaugeMask.localScale = new Vector3(width, _enemyGaugeMaskScale.y, _enemyGaugeMaskScale.z);
         }
 
         public void DrawEnemyGauges(float hitPoint, float maxHitPoint, float maxGauge)
@@ -805,6 +809,8 @@ namespace Rhythm
 
             var enemyValue = enemyHitPoint > 0 && enemyHitPoint % playerMaxHitPoint == 0f ? 1f : enemyHitPoint % playerMaxHitPoint / playerMaxHitPoint;
             var enemyGaugeCount = (int)(enemyHitPoint / playerMaxHitPoint) + (enemyHitPoint > 0 && enemyHitPoint % playerMaxHitPoint == 0f ? 0 : 1);
+            var enemyMaxGaugeCount = (int)(enemyMaxHitPoint / playerMaxHitPoint) + (enemyMaxHitPoint > 0 && enemyMaxHitPoint % playerMaxHitPoint == 0f ? 0 : 1);
+
             DrawGauge(_battleResultEnemyGauge, _battleResultEnemyGaugePosition, _battleResultEnemyGaugeSizeDelta, enemyValue);
 
             for (int i = 0; i < _battleResultEnemyGauges.Length; i++)
@@ -813,6 +819,30 @@ namespace Rhythm
             }
 
             SetBattleGaugeColor(_battleResultEnemyGaugeImage, enemyHitPoint < playerMaxHitPoint ? enemyValue : 1f);
+
+            if (enemyGaugeCount == enemyMaxGaugeCount)
+            {
+                var value = enemyMaxHitPoint > 0 && enemyMaxHitPoint % playerMaxHitPoint == 0f ? 1f : enemyMaxHitPoint % playerMaxHitPoint / playerMaxHitPoint;
+
+                var margin = (_battleResultEnemyGaugeMaskSizeDelta.x - _battleResultEnemyGaugeSizeDelta.x) / 2;
+                var paddingRight = value == 1f ? 0f : Mathf.Floor(_battleResultEnemyGaugeSizeDelta.x - value * _battleResultEnemyGaugeSizeDelta.x + margin - 1);
+
+                _battleResultEnemyGaugeMask.padding = new Vector4(0f, 0f, paddingRight, 0f);
+
+                var paddingLeft = value == 1f ? _battleResultEnemyGaugeMaskSizeDelta.x : Mathf.Floor(value * _battleResultEnemyGaugeSizeDelta.x + margin - 1);
+
+                _battleResultEnemyGaugeAdjusterMask.padding = new Vector4(paddingLeft, 0f, 0f, 0f);
+
+                _battleResultEnemyGaugeMask.gameObject.SetActive(true);
+                _battleResultEnemyGaugeAdjusterMask.gameObject.SetActive(true);
+            }
+            else
+            {
+                _battleResultEnemyGaugeMask.gameObject.SetActive(true);
+                _battleResultEnemyGaugeAdjusterMask.gameObject.SetActive(false);
+                _battleResultEnemyGaugeMask.padding = Vector4.zero;
+            }
+
             SetHitPointText(_battleResultEnemyHitPointText, enemyHitPoint, enemyMaxHitPoint);
 
             var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
