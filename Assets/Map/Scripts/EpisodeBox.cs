@@ -39,15 +39,14 @@ namespace Map
 					SceneTransitionManager.TransitionToNovel(_info.NovelId);
 					break;
 				case EpisodeType.Rhythm:
-					//TODO: Difficultyは暫定 設定を参照する
 					//TODO: ハードコーディングは汚い気がする
 					if ((_info.Chapter, _info.Section) == (1, 2))
 					{
-						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, Difficulty.Easy);
+						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, DifficultySelector.MapDifficulty);
 					}
 					else
 					{
-						SceneTransitionManager.TransitionToRhythm(_info.RhythmId, Difficulty.Easy, true);
+						SceneTransitionManager.TransitionToRhythm(_info.RhythmId, DifficultySelector.MapDifficulty, true);
 					}
 					break;
 			}
