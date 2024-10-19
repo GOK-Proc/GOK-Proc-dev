@@ -638,13 +638,14 @@ namespace Rhythm
             },
             (t, s, d) =>
             {
+                var scale = t.localScale;
                 var color = s.color;
                 var sequence = DOTween.Sequence();
                 sequence.Append(t.DOScale(_enemyAttackEffectFadeScale, _enemyAttackEffectFadeDuration));
                 sequence.Join(s.DOFade(0f, _enemyAttackEffectFadeDuration));
                 sequence.Play().OnComplete(() =>
                 {
-                    t.localScale = Vector3.one;
+                    t.localScale = scale;
                     s.color = color;
                     d?.Invoke();
                 }).SetLink(gameObject);
