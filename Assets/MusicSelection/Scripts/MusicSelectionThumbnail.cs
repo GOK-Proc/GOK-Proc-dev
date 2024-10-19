@@ -12,12 +12,15 @@ namespace MusicSelection
         private NotesInformation[] _notes;
 
         [SerializeField] private TextMeshProUGUI _notesDesignerText;
+        [SerializeField] private TextMeshProUGUI _levelText;
 
         [SerializeField] private TextMeshProUGUI _bestScoreText;
         [SerializeField] private TextMeshProUGUI _maxComboText;
 
         [SerializeField] private TextMeshProUGUI _allPerfectText;
         [SerializeField] private TextMeshProUGUI _fullComboText;
+
+        [SerializeField] private TextMeshProUGUI _clearText;
 
         [SerializeField] private RecordList _recordList;
         [SerializeField] private BeatmapData _beatmapData;
@@ -28,6 +31,11 @@ namespace MusicSelection
             _image.sprite = track.Thumbnail;
             _titleText.text = track.Title;
             _composerText.text = $"作曲：{track.Composer}";
+
+            const float margin = 60f;
+            _clearText.rectTransform.localPosition = _titleText.rectTransform.localPosition +
+                                                     _titleText.preferredWidth * Vector3.right +
+                                                     margin * Vector3.right ;
 
             if (track.HasBeatmap)
             {
@@ -54,11 +62,14 @@ namespace MusicSelection
             var record = _recordList[_track.Id][(int)difficulty];
             _bestScoreText.text = $"{record.Score:N0} pt";
             _maxComboText.text = $"{record.MaxCombo} combo";
-
             _allPerfectText.gameObject.SetActive(record.Achievement == Achievement.AllPerfect);
             _fullComboText.gameObject.SetActive(record.Achievement == Achievement.FullCombo);
+            _clearText.gameObject.SetActive(record.IsCleared);
 
-            _notesDesignerText.text = $"譜面：{_notes[(int)difficulty].NotesDesigner}";
+            var notes = _notes[(int)difficulty];
+            _notesDesignerText.text = $"譜面：{notes.NotesDesigner}";
+            var upperDifficulty = DifficultySelection.Current.ToString().ToUpper();
+            _levelText.text = $"{upperDifficulty} Lv. {notes.Level}";
         }
     }
 }

@@ -10,7 +10,8 @@ namespace MusicSelection
     {
         private static GameObject _instanceGameObj;
 
-        [SerializeField] private TextMeshProUGUI _text;
+        // テキストの更新はサムネイルに任せる．サムネイルは難易度から譜面レベルを知ることが出来るため．
+        // [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Image _image;
         [SerializeField] private GameObject _arrowLeft;
         [SerializeField] private GameObject _arrowRight;
@@ -33,17 +34,6 @@ namespace MusicSelection
 
         public void Set()
         {
-            // Enum.ToString()は実行速度が遅いため，あまりきれいではないがswitchによる記述．
-            // 以下の式と結果は同じはず
-            // _text.text = DifficultySelection.Current.ToString().ToUpper();
-            _text.text = DifficultySelection.Current switch
-            {
-                Difficulty.Easy => "EASY",
-                Difficulty.Hard => "HARD",
-                Difficulty.Expert => "EXPERT",
-                _ => throw new InvalidEnumArgumentException()
-            };
-
             _image.color = DifficultySelection.CurrentColor;
 
             if (DifficultySelection.IsEasiest)

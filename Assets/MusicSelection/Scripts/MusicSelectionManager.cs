@@ -60,8 +60,9 @@ namespace MusicSelection
 
         private void UpdateDifficultyRelatedUI()
         {
+            var msThumbnail = (MusicSelectionThumbnail)_thumbnailBase;
+            msThumbnail.Set(DifficultySelection.Current);
             _difficultyDisplay.Set();
-            ((MusicSelectionThumbnail)_thumbnailBase).Set(DifficultySelection.Current);
         }
     }
 }
