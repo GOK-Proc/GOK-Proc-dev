@@ -701,7 +701,14 @@ namespace Rhythm
                 _difficultyText.color = _difficultyColor[(int)header.Difficulty];
             }
             
-            _levelText.SetText("Lv. {0}", header.Level);
+            if (isTutorial)
+            {
+                _levelText.SetText(string.Empty);
+            }
+            else
+            {
+                _levelText.SetText("Lv. {0}", header.Level);
+            }
         }
 
         public void DrawCombo(int combo)
@@ -757,8 +764,14 @@ namespace Rhythm
                 _battleResultDifficulty.color = _difficultyColor[(int)header.Difficulty];
             }
 
-            _battleResultLevel.SetText("Lv. {0}", header.Level);
-
+            if (isTutorial)
+            {
+                _battleResultLevel.SetText(string.Empty);
+            }
+            else
+            {
+                _battleResultLevel.SetText("Lv. {0}", header.Level);
+            }
 
             var playerValue = playerHitPoint / playerMaxHitPoint;
             DrawGauge(_battleResultPlayerGauge, _battleResultPlayerGaugePosition, _battleResultPlayerGaugeSizeDelta, playerValue);

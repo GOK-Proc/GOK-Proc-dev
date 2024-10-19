@@ -105,7 +105,6 @@ namespace Rhythm
 
         [Space(20)]
         [Header("Tutorial")]
-        [SerializeField] private float _tutorialSpeed;
         [SerializeField] private TutorialData _tutorialData;
         [SerializeField] private float _skipDelay;
 
@@ -159,7 +158,7 @@ namespace Rhythm
             var beatmapInfo = tutorialId != TutorialId.None ? _tutorialData.Beatmap : dictionary[id];
             var notesData = beatmapInfo.Notes[(int)difficulty];
 
-            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _setting.Offset, tutorialId != TutorialId.None ? _tutorialSpeed : _setting.ScrollSpeed);
+            (var notes, var lines, var endTime) = BeatmapLoader.Parse(notesData.File, beatmapInfo.Offset + _setting.Offset, _setting.ScrollSpeed);
             _endTime = endTime;
 
             _headerInformation = new HeaderInformation(beatmapInfo, difficulty);
