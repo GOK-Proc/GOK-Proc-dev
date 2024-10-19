@@ -48,6 +48,7 @@ namespace Rhythm
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
         [SerializeField] private Transform[] _enemyGauges;
         [SerializeField] private TextMeshProUGUI _enemyHitPointText;
+        [SerializeField] private Transform _enemyGaugeMask;
 
         [System.Serializable]
         private struct EffectPrefab
@@ -129,6 +130,7 @@ namespace Rhythm
         private Vector3 _enemyGaugePosition;
         private Vector3 _playerGaugeScale;
         private Vector3 _enemyGaugeScale;
+        private Vector3 _enemyGaugeMaskScale;
 
         [SerializeField] private Color _damageColor;
 
@@ -247,6 +249,7 @@ namespace Rhythm
             _enemyGaugePosition = _enemyGauge.localPosition;
             _playerGaugeScale = _playerGauge.localScale;
             _enemyGaugeScale = _enemyGauge.localScale;
+            _enemyGaugeMaskScale = _enemyGaugeMask.localScale;
 
             _judgeEffectPools = _judgeEffectPrefabs.Select(x => new ObjectPool<EffectObject>(x, _effectParent)).ToArray();
             _battleEffectPools = _battleEffectPrefabs.ToDictionary(x => (x.Color, x.IsLarge), x => new ObjectPool<EffectObject>(x.Prefab, _effectParent));
@@ -359,16 +362,38 @@ namespace Rhythm
             SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint);
         }
 
+        private void SetEnemyGaugeMask(float hitPoint, float maxGauge)
+        {
+            var value = hitPoint > 0 && hitPoint % maxGauge == 0f ? 1f : hitPoint % maxGauge / maxGauge;
+
+            var margin = (_enemyGaugeMaskScale.x - _enemyGaugeScale.x) / 2;
+            var width = value == 1f ? _enemyGaugeMaskScale.x : value * _enemyGaugeScale.x + margin;
+            var x = value == 1f ? _enemyGaugePosition.x : _enemyGaugePosition.x - (_enemyGaugeScale.x - width) / 2 - margin;
+
+            _enemyGaugeMask.localPosition = new Vector3(x, _enemyGaugePosition.y, _enemyGaugePosition.z);
+            _enemyGaugeMask.localScale = new Vector3(width, _enemyGaugeScale.y, _enemyGaugeScale.z);
+        }
+
         public void DrawEnemyGauges(float hitPoint, float maxHitPoint, float maxGauge)
         {
             var value = hitPoint > 0 && hitPoint % maxGauge == 0f ? 1f : hitPoint % maxGauge / maxGauge;
             var gaugeCount = (int)(hitPoint / maxGauge) + (hitPoint > 0 && hitPoint % maxGauge == 0f ? 0 : 1);
+            var maxGaugeCount = (int)(maxHitPoint / maxGauge) + (maxHitPoint > 0 && maxHitPoint % maxGauge == 0f ? 0 : 1);
 
             DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
 
             for (int i = 0; i < _enemyGauges.Length; i++)
             {
                 _enemyGauges[i].gameObject.SetActive(i < gaugeCount);
+            }
+
+            if (gaugeCount == maxGaugeCount)
+            {
+                SetEnemyGaugeMask(maxHitPoint, maxGauge);
+            }
+            else
+            {
+                SetEnemyGaugeMask(maxGauge, maxGauge);
             }
 
             SetBattleGaugeColor(_enemyGaugeRenderer, hitPoint < maxGauge ? value : 1f);
