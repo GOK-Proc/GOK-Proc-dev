@@ -35,7 +35,7 @@ ${name},Hero_stick,結局『ムジカトール』って何なんだ？,Hero_stic
 守護獣,Urura,ムジカトールというのは、剣や弓ではなく音楽の力で戦う戦士のようなものだ,Hero_stick.sad Urura,Cut,,,,0
 ${name},Hero_stick,音楽の力……？　あの伝説の…………？,,,,,,0
 守護獣,Urura,そうだ、この世界で唯一魔物と対等に戦える者なんだ。この街で語り継がれている伝説の戦士というのもその一人だった,,,,,,0
-同僚,Villager_green1,まだお前には話したことがなかったかもな、何故魔物が俺たちを襲うかってこと,Villager_green1 Hero_stick.sad Urura,Cut,,,,0
+同僚,Villager_green1,まだお前には話したことがなかったかもな、何故魔物が俺たちを襲うかってこと,Villager_blue1 Hero_stick.sad Urura,Cut,,,,0
 同僚,Villager_green1,魔物たちはアンテルース城っていうところにいる魔王が作り出した奴らなんだ,,,,,,0
 ${name},Hero_stick,魔王？,,,,,,0
 同僚,Villager_green1,あぁ、そいつは大昔から世界征服をするために魔物を作っていたらしいんだが……実はこれを止めることはできてたんだ、少し前までは,,,,,,0
@@ -57,7 +57,7 @@ ${name},Hero_stick,僕は、ムジカトールとして魔王から調和の指�
 ${name},Hero_stick,ありがとうございます、守護獣様,,,,,,0
 ウルラ,Urura,あまり堅苦しくしないでくれ。私はウルラ・ポルティウム。ウルラで構わない,,,,,,0
 ${name},Hero_stick,わかった。よろしく、ウルラ,,,,,,0
-同僚,Villager_green1,街の安全は俺たちに任してください！,Villager_green1,Cut,,,,0
+同僚,Villager_green1,街の安全は俺たちに任してください！,Villager_blue1,Cut,,,,0
 村人A,Villager_green2,お前がいつ帰ってきても大丈夫なように、復興も頑張って進めておくからな！,Villager_blue1 Villager_green2 Villager_blue2,Cut,,,,0
 村人B,Villager_blue1,忘れものがないように旅支度はしっかりしておくんだぞ！,,,,,,0
 ウルラ,Urura,お前たち……ありがとう。私のいない間、街を頼んだぞ,Hero_stick Urura.joy,,,,,0

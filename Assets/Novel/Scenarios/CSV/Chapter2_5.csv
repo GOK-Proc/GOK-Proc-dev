@@ -9,7 +9,7 @@ ${name},Hero_stick,ハァ……ハァ……――！,,,,,,0
 ウルラ,Urura,先ほどの魔物……もしかして魔王が直接仕向けたものだったのか……？,Hero_stick.sad Urura,Cut,,,,0
 ${name},Hero_stick,そうなのか？,,,,,,0
 ウルラ,Urura,いや、まだ分からないことが多く、断定はできないが……,,,,,,0
-ウルラ,Urura,！　おい、${name}！　後ろに魔物が！,,,,,BGMを緊迫へ,0
+ウルラ,Urura,！　おい、${name}！　後ろに魔物が！,,,,Bgm_tense,,0
 ,,,Monster,Cut,,,,0
 ,,,Clear,,,Se_magic,,0
 ,,,Hero_stick.angry Urura,Cut,,,,0
@@ -18,9 +18,9 @@ ${name},Hero_stick,――ッ！,,,,,,0
 ${name},Hero_stick,ああ……なんとかな。ギリギリでこちらの攻撃が間に合ったみたいだ,Hero_stick Urura,Cut,,Bgm_forest,,0
 ウルラ,Urura,……そうか、流石に連戦で疲れただろう。この道を進むともう少しで街がある。今日はそこで休もう,,,,,,0
 ${name},Hero_stick,そうだな……,,,,,,0
- ,,……,None,,,Se_footstep,,0
- ,,…………,None,,,,,0
- ,,………………,None,,,,,0
+${nothing},,……,None,,,Se_footstep,,0
+${nothing},,…………,None,,,,,0
+${nothing},,………………,None,,,,,0
 ,,,,,Blackout,,,0
 ,,,,,Forest,,,0
 ？？？,Liberta,……,Liberta,,,Se_footstep,,0
