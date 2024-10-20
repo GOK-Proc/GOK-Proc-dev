@@ -10,7 +10,7 @@ ${name},Hero_stick,ハァ……ハァ……――！,,,,,,0
 ${name},Hero_stick,そうなのか？,,,,,,0
 ウルラ,Urura,いや、まだ分からないことが多く、断定はできないが……,,,,,,0
 ウルラ,Urura,！　おい、${name}！　後ろに魔物が！,,,,Bgm_tense,,0
-,,,Monster,Cut,,,,0
+,,,Goblin_green_A,Cut,,,,0
 ,,,Clear,,,Se_magic,,0
 ,,,Hero_stick.angry Urura,Cut,,,,0
 ${name},Hero_stick,――ッ！,,,,,,0
