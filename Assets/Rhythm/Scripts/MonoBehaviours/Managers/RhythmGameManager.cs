@@ -180,7 +180,7 @@ namespace Rhythm
             var sounds = _sounds.ToDictionary(x => x.Id, x => new SoundPlayer.AudioClipData(x.Clip, x.IsNoteSe, x.SourceCount, x.IsLoop));
             var introSounds = _introSounds.ToDictionary(x => x.Id, x => new SoundPlayer.IntroAudioData(x.IntroClip, x.MainClip, x.IsLoop));
 
-            _soundPlayer = new SoundPlayer(_audioSource, _seSource, _introSoundPlayer, beatmapInfo.Sound, sounds, introSounds);
+            _soundPlayer = new SoundPlayer(_audioSource, _seSource, _introSoundPlayer, beatmapInfo.Sound, sounds, introSounds, _setting.VolumeSetting);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
@@ -194,7 +194,7 @@ namespace Rhythm
             _tutorialManager = new TutorialManager(tutorialId != TutorialId.None, _setting.KeyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
 
             _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager, _uiManager);
-            _eventManager.SetSoundVolume(_setting.VolumeSetting);
+            _eventManager.SetSoundVolumeSlider(_setting.VolumeSetting);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);

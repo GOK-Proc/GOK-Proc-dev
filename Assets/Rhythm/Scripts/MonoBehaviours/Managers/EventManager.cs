@@ -255,7 +255,7 @@ namespace Rhythm
             _soundVolumeAdjustable.NoteSeVolume = value;
         }
 
-        public void SetSoundVolume(RhythmVolumeSetting volumeSetting)
+        public void SetSoundVolumeSlider(RhythmVolumeSetting volumeSetting)
         {
             _bgmVolumeSlider.value = volumeSetting.Track;
             _seVolumeSlider.value = volumeSetting.Se;
