@@ -48,25 +48,25 @@ namespace Rhythm
         private readonly IDictionary<string, IList<Tweener>> _seFadeOutTweener;
         private readonly IDictionary<string, IntroSoundPlayer> _introSoundPlayers;
 
-        private float _bgmVolume;
+        private readonly RhythmVolumeSetting _rhythmVolumeSetting;
+
         public float BgmVolume
         {
-            get => _bgmVolume;
+            get => _rhythmVolumeSetting.Track;
             set
             {
-                _bgmVolume = value;
-                _audioSource.volume = _bgmVolume;
+                _rhythmVolumeSetting.Track = value;
+                _audioSource.volume = _rhythmVolumeSetting.Track;
             }
         }
 
-        private float _seVolume;
         public float SeVolume
         {
-            get => _seVolume;
+            get => _rhythmVolumeSetting.Se;
             set
             {
-                _seVolume = value;
-                _seSource.volume = _seVolume;
+                _rhythmVolumeSetting.Se = value;
+                _seSource.volume = _rhythmVolumeSetting.Se;
 
                 foreach (var data in _soundData)
                 {
@@ -74,26 +74,25 @@ namespace Rhythm
                     {
                         foreach (var source in _seSources[data.Key])
                         {
-                            source.volume = _seVolume;
+                            source.volume = _rhythmVolumeSetting.Se;
                         }
                     }
                 }
 
                 foreach (var data in _introData)
                 {
-                    _introSoundPlayers[data.Key].Volume = _seVolume;
+                    _introSoundPlayers[data.Key].Volume = _rhythmVolumeSetting.Se;
                 }
             }
         }
 
-        private float _noteSeVolume;
         public float NoteSeVolume
         {
-            get => _noteSeVolume;
+            get => _rhythmVolumeSetting.NoteSe;
             set
             {
-                _noteSeVolume = value;
-                _noteSeSource.volume = _noteSeVolume;
+                _rhythmVolumeSetting.NoteSe = value;
+                _noteSeSource.volume = _rhythmVolumeSetting.NoteSe;
 
                 foreach (var data in _soundData)
                 {
@@ -101,7 +100,7 @@ namespace Rhythm
                     {
                         foreach (var source in _seSources[data.Key])
                         {
-                            source.volume = _noteSeVolume;
+                            source.volume = _rhythmVolumeSetting.NoteSe;
                         }
                     }
                 }
@@ -110,7 +109,7 @@ namespace Rhythm
 
         public bool IsPlayingMusic => _audioSource.isPlaying;
 
-        public SoundPlayer(AudioSource source, AudioSource seSource, IntroSoundPlayer introSoundPlayer, AudioClip clip, IDictionary<string, AudioClipData> soundData, IDictionary<string, IntroAudioData> introData)
+        public SoundPlayer(AudioSource source, AudioSource seSource, IntroSoundPlayer introSoundPlayer, AudioClip clip, IDictionary<string, AudioClipData> soundData, IDictionary<string, IntroAudioData> introData, RhythmVolumeSetting rhythmVolumeSetting)
         {
             _audioSource = source;
             _audioClip = clip;
@@ -154,9 +153,11 @@ namespace Rhythm
                 _introSoundPlayers.Add(data.Key, player);
             }
 
-            BgmVolume = 1f;
-            SeVolume = 1f;
-            NoteSeVolume = 1f;
+            _rhythmVolumeSetting = rhythmVolumeSetting;
+
+            BgmVolume = _rhythmVolumeSetting.Track;
+            SeVolume = _rhythmVolumeSetting.Se;
+            NoteSeVolume = _rhythmVolumeSetting.NoteSe;
         }
 
         public double Time { get => (double)_audioSource.timeSamples / _audioClip.frequency; set => _audioSource.timeSamples = (int)(value * _audioClip.frequency); }
@@ -186,7 +187,7 @@ namespace Rhythm
             _audioSource.DOFade(0f, duration).SetEase(Ease.Linear).OnComplete(() =>
             {
                 StopMusic();
-                _audioSource.volume = _bgmVolume;
+                _audioSource.volume = _rhythmVolumeSetting.Track;
             });
         }
 
@@ -268,7 +269,7 @@ namespace Rhythm
                         if (_seSources[id][index] != null)
                         {
                             _seSources[id][index].Stop();
-                            _seSources[id][index].volume = data.IsNoteSe ? _noteSeVolume : _seVolume;
+                            _seSources[id][index].volume = data.IsNoteSe ? _rhythmVolumeSetting.NoteSe : _rhythmVolumeSetting.Se;
                         }
                     });
                 }

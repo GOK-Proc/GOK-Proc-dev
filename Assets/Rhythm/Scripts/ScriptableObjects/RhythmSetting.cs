@@ -22,15 +22,15 @@ namespace Rhythm
     }
 
     [System.Serializable]
-    public struct RhythmVolumeSetting
+    public class RhythmVolumeSetting
     {
         [SerializeField, Range(0f, 1f)] private float _track;
-        public float Track { readonly get => _track; set => _track = Mathf.Clamp01(value); }
+        public float Track { get => _track; set => _track = Mathf.Clamp01(value); }
 
         [SerializeField, Range(0f, 1f)] private float _se;
-        public float Se { readonly get => _se; set => _se = Mathf.Clamp01(value); }
+        public float Se { get => _se; set => _se = Mathf.Clamp01(value); }
 
         [SerializeField, Range(0f, 1f)] private float _noteSe;
-        public float NoteSe { readonly get => _noteSe; set => _noteSe = Mathf.Clamp01(value); }
+        public float NoteSe { get => _noteSe; set => _noteSe = Mathf.Clamp01(value); }
     }
 }
