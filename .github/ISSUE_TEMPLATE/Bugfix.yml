@@ -26,7 +26,6 @@ body:
       value: |
         e.g.)
         ・曲のファイル名に日本語が含まれていると正しくロードできない
-      render: markdown
     validations:
       required: true
   - type: markdown
@@ -51,7 +50,5 @@ body:
       label: 再現方法
       description: |
         できるだけ詳しく記述してください
-        スクショなどあればGyazoにアップロードし、そのリンクを貼り付けてください
-      render: markdown
     validations:
       required: true

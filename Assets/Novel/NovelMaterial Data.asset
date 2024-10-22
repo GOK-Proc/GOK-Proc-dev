@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea46acab0d30c34ea57c36b9d2ef8ca, type: 3}
+  m_Name: NovelMaterial Data
+  m_EditorClassIdentifier: 
+  _characterMaterials:
+  - _name: Hero
+    _default: {fileID: 2286995298420433717, guid: 51606bddb971c1847b3802a18e556fc5, type: 3}
+    _characterDifferences:
+    - {fileID: 8258319550622103988, guid: 2cf3c0d4b07aa9448981e8d7e7909a76, type: 3}
+    - {fileID: 2223039611914463982, guid: 125927c3430aeca49b4c12430ccd8043, type: 3}
+    - {fileID: 2147373818694231385, guid: aca466b5ea4e4a3488bdc3a16aedf181, type: 3}
+  - _name: Hero_stick
+    _default: {fileID: 2114099429756566637, guid: 9c5c117b3a2f4dc4cb2c47206f505831, type: 3}
+    _characterDifferences:
+    - {fileID: 1420352047405250186, guid: 7cc30a22bb090254b9325437024a1ee0, type: 3}
+    - {fileID: 228890613793695131, guid: 2fe6638ab1a716f4c9cdcd60fd4dab3b, type: 3}
+    - {fileID: 723325534500880680, guid: 8c1509443ea699a419c1391f7dbc77d5, type: 3}
+  - _name: Urura
+    _default: {fileID: 1534166760641247290, guid: dad5f44f3d5b2a7479f26ba405e3ded9, type: 3}
+    _characterDifferences:
+    - {fileID: 1660879530430768312, guid: b0e16026506e3204daa63899a6846ad0, type: 3}
+    - {fileID: 2723363294900062958, guid: 9195b41ecb2dafa45ba3cdbdaeb2d839, type: 3}
+    - {fileID: 2193277232876072240, guid: 4e1e6e70251d8d248bad0a8664eb5194, type: 3}
+    - {fileID: 6529340688581842978, guid: bda8b669dcf300e459429ac7b248375d, type: 3}
+  - _name: Liberta
+    _default: {fileID: 6532444791575691359, guid: 840f27c7c9db7db4c9afe04f6cf93826, type: 3}
+    _characterDifferences:
+    - {fileID: 4727264462351100731, guid: 2abfff32a6085a844bcf8b32eeccac19, type: 3}
+  - _name: Coworker
+    _default: {fileID: 618201589054293405, guid: 3898526cf6ed2194caed40107c30721f, type: 3}
+    _characterDifferences: []
+  - _name: MobA
+    _default: {fileID: 1106847323092741173, guid: c9e6586eeb597704eb7cf4cb06581f60, type: 3}
+    _characterDifferences: []
+  - _name: MobB
+    _default: {fileID: 6892818501438804236, guid: 8be861417d569b647964c3912cd8bb77, type: 3}
+    _characterDifferences: []
+  - _name: MobC
+    _default: {fileID: 7243294335463189136, guid: aea7d3f4ee92cf64aa52f8dc89c7bc7e, type: 3}
+    _characterDifferences: []
+  - _name: Villager_blue1
+    _default: {fileID: 9188927887095765375, guid: 387e4bb48bde197468ffd8683d3dde2c, type: 3}
+    _characterDifferences:
+    - {fileID: 1672589173168313610, guid: 947ad29b6e7d0b147bd1393ba675949d, type: 3}
+  - _name: Villager_blue2
+    _default: {fileID: 9188927887095765375, guid: 387e4bb48bde197468ffd8683d3dde2c, type: 3}
+    _characterDifferences:
+    - {fileID: 1672589173168313610, guid: 947ad29b6e7d0b147bd1393ba675949d, type: 3}
+  - _name: Villager_green1
+    _default: {fileID: 7668222286354816790, guid: 16e80c679f4b13744b02f30b9df68016, type: 3}
+    _characterDifferences:
+    - {fileID: 852095377352495529, guid: c2865f2a2f040904fa04cd71a78fee2a, type: 3}
+  - _name: Villager_green2
+    _default: {fileID: 7668222286354816790, guid: 16e80c679f4b13744b02f30b9df68016, type: 3}
+    _characterDifferences:
+    - {fileID: 852095377352495529, guid: c2865f2a2f040904fa04cd71a78fee2a, type: 3}
+  - _name: GatekeeperA
+    _default: {fileID: 5265124079928218263, guid: 2624c884cc6b54e40a50daa573ba543d, type: 3}
+    _characterDifferences: []
+  - _name: GatekeeperB
+    _default: {fileID: 3362022310222043085, guid: 7ecf17eee0f9cb04da52f97f508c0aac, type: 3}
+    _characterDifferences: []
+  - _name: Monster
+    _default: {fileID: 8090005189443385508, guid: f7201aa53f0862841a9a44ec89cbf6b6, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_green_A
+    _default: {fileID: 4089880193371814978, guid: 740db5400a35c7147863ee78614ca463, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_green_B
+    _default: {fileID: 3136516189703036558, guid: cfc16fb948f8fce48b6c309f9a9ee134, type: 3}
+    _characterDifferences: []
+  - _name: Stick
+    _default: {fileID: 2722227263292626932, guid: 31d4b02560847544cb5bfecff879bd65, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_blue_A
+    _default: {fileID: 7961131946050326322, guid: e924bc38ef5dba04c9b58b09018b677d, type: 3}
+    _characterDifferences: []
+  - _name: Goblin_blue_B
+    _default: {fileID: 5479370899937538578, guid: 21b1b9c505413f649a70a7c5f5a7085b, type: 3}
+    _characterDifferences: []
+  - _name: Monster_pack
+    _default: {fileID: 1875162558393510218, guid: 84c3ac50964728f4289d015f7a100b9f, type: 3}
+    _characterDifferences: []
+  - _name: Boss_middle
+    _default: {fileID: 3854390589510768671, guid: c550fc3a6abd17b46831d58dc57cdef5, type: 3}
+    _characterDifferences: []
+  _backgroundMaterials:
+  - {fileID: 3099518176223492770, guid: 4bd59591ee69a824fa73b23534c20235, type: 3}
+  - {fileID: 4950980748823547378, guid: 03e4ced5c6f6a70489c3045a107fb07b, type: 3}
+  - {fileID: 5814223602251897884, guid: 35fd2a4f8f10c9947a96b4c546cb2e1b, type: 3}

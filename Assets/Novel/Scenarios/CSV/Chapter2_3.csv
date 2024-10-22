@@ -1,0 +1,26 @@
+﻿話者,ハイライト,会話文,キャラ配置,キャラモーション,背景,BGM,その他,0
+,,,,,Forest,Se_magic,,0
+,Goblin_blue_B,,Goblin_blue_B,Cut,,,,0
+魔物,Goblin_blue_B,――――…………！,,,,,,0
+,,,Clear,,,,,0
+,,,Hero_stick Urura.joy,,,Bgm_forest,,0
+ウルラ,Urura,なかなかやるではないか。……で、どうだ手応えは,,,,,,0
+${name},Hero_stick,敵を倒すにつれて、何となくはこの力の扱い方も掴めてきたと思う,,,,,,0
+ウルラ,Urura,そうか……しかし妙だな、ここには本来魔物の群れなんていないはずなのだが……,Hero_stick Urura,Cut,,,,0
+${name},Hero_stick,そうなのか？,,,,,,0
+ウルラ,Urura,ああ、我々のいたあの街の襲撃が今まで少なかったのは、此処らには元々人を襲う魔物がほぼいなかったからなのだが,,,,,,0
+ウルラ,Urura,先日の大規模な襲撃の件もある。……どうにも魔物たちの動きがきな臭いな,,,,,,0
+,,,Clear,Cut,,,,0
+,,,,,,Bgm_tense,,0
+,,,,,,Se_break,,0
+${name},Hero_stick,！！！,Hero_stick.angry Urura,Cut,,,,0
+${name},Hero_stick,何が起きた！？,,,,,,0
+ウルラ,Urura,まさか……この群れには親分がいるのか！?,,,,,,0
+${name},Hero_stick,親分？,,,,,,0
+ウルラ,Urura,魔物が群れで襲ってくる場合、時々その群れの親分が存在することがあるのだ,,,,,,0
+ウルラ,Urura,しかし、本来ならこの規模の群れには親分は現れないはずだが……一連の魔物の動きには何かがあるかもしれないな,,,,,,0
+親分,Boss_middle,――――――！！！,Boss_middle,Cut,,,,0
+${name},Hero_stick,まっすぐこっちに向かってくる……！,Hero_stick.sad Urura,Cut,,,,0
+ウルラ,Urura,今回の魔物は先ほどまでの有象無象とは違う。気を引き締めていくぞ！,,,,,,0
+${name},Hero_stick,ああ！！,Hero_stick.angry Urura,Cut,,,,0
+,,,Clear,,Blackout,,,0

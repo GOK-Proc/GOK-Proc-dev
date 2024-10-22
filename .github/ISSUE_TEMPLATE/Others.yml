@@ -1,0 +1,23 @@
+name: その他
+description: その他のIssueはここ
+projects: GOK-Proc/3
+body:
+  - type: checkboxes
+    id: check-update
+    attributes:
+      label: 最新の状況を確認しましたか？
+      options:
+        - label: 私は最新の状況を確認しました
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 概要
+      description: 機能の概要を記入してください
+      value: |
+        e.g.)
+        ・オフセットを調節できる機能
+        ・1ms単位で調節できる
+        ・設定画面とゲーム本体の両方に機能追加が必要
+    validations:
+      required: true

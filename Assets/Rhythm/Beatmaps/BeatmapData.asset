@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf8cda812aa2af489963d43d048d1a5, type: 3}
+  m_Name: BeatmapData
+  m_EditorClassIdentifier: 
+  _beatmaps:
+  - _id: MainTheme
+    _title: "\u30E1\u30A4\u30F3\u30C6\u30FC\u30DE"
+    _sound: {fileID: 8300000, guid: 02fd6e120122f504b8ebf5e870bcef0b, type: 3}
+    _offset: -0.98
+    _composer: "\u5965\u91CE\u7950\u751F"
+    _backgroundSprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
+    _enemySprite: {fileID: 0}
+    _notes:
+    - _level: 4
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: b530efdbc063ea1409f3576851dfc0eb, type: 3}
+    - _level: 9
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: e39dd3340c7485d41a3d14b03d5da9c2, type: 3}
+    - _level: 12
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: df90fc89d73796d4398e214a060b2101, type: 3}
+  - _id: Chapter1_2
+    _title: "\u521D\u6F14\u301C\u6C7A\u610F\u306E\u697D\u7AE0\u301C"
+    _sound: {fileID: 8300000, guid: 6ce53a97984d80949b429a9943d551da, type: 3}
+    _offset: 0.05
+    _composer: "\u5965\u91CE\u7950\u751F"
+    _backgroundSprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
+    _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
+    _notes:
+    - _level: 2
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: b5378326c8f48214b99c44109da81366, type: 3}
+    - _level: 7
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: f6fe2ba841d4add428d82c0b296b4a51, type: 3}
+    - _level: 15
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: 25d2cd560cc8bc44095ec238d8b6a3a8, type: 3}
+  - _id: Chapter2_2
+    _title: "\u8A66\u594F\u301C\u9B54\u7269\u9054\u306E\u5C0F\u54C1\u301C"
+    _sound: {fileID: 8300000, guid: b322ffea96389b049a73acdf1589c789, type: 3}
+    _offset: 0
+    _composer: "\u7532\u6590\u5927\u6210"
+    _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
+    _enemySprite: {fileID: 21300000, guid: c07ba4c2fe4842c418e6c4bd2f1a7e02, type: 3}
+    _notes:
+    - _level: 3
+      _notesDesigner: Yugo
+      _file: {fileID: 4900000, guid: db4eedcc649c8634cafbfe201b9084ca, type: 3}
+    - _level: 8
+      _notesDesigner: Yugo
+      _file: {fileID: 4900000, guid: dabd00d00778c514a92cbb2be12ab83f, type: 3}
+    - _level: 13
+      _notesDesigner: Yugo
+      _file: {fileID: 4900000, guid: a7812f68f863840408dd5f3a47a7cee0, type: 3}
+  - _id: Chapter2_4
+    _title: "\u8972\u6F14\u301C\u4E3B\u306E\u72EC\u594F\u301C"
+    _sound: {fileID: 8300000, guid: d91388048d9dbe445a8b334ac7ee43a8, type: 3}
+    _offset: 0.07
+    _composer: "\u3068\u308A\u3068\u308A"
+    _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
+    _enemySprite: {fileID: 21300000, guid: 3a273b4473f68f04fa1a0fcd58939f3d, type: 3}
+    _notes:
+    - _level: 2
+      _notesDesigner: "\u3042\u3063\u304D\uFF5E"
+      _file: {fileID: 4900000, guid: f7d612a21f4d554419f2813103b1ab93, type: 3}
+    - _level: 8
+      _notesDesigner: "\u3042\u3063\u304D\uFF5E"
+      _file: {fileID: 4900000, guid: 314638035adfd224dbe880dafde45394, type: 3}
+    - _level: 13
+      _notesDesigner: "\u3042\u3063\u304D\uFF5E"
+      _file: {fileID: 4900000, guid: c7fae155b2dab2e49bc6910296ec0cef, type: 3}
+  - _id: Chapter1
+    _title: "\u30BD\u30CC\u30B9\u30EB\u30D7\u30B9\u8857"
+    _sound: {fileID: 8300000, guid: d3e528d1f6819b8409b7f53242630864, type: 3}
+    _offset: 0
+    _composer: "\u5965\u91CE\u7950\u751F"
+    _backgroundSprite: {fileID: 21300000, guid: 9b0c774f15ffcfb4990709a1491234ad, type: 3}
+    _enemySprite: {fileID: 0}
+    _notes:
+    - _level: 1
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: 98401f284ac61c64f820025d81b392d4, type: 3}
+    - _level: 7
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: e8b01502d937bf649ab0bd5c5f75939b, type: 3}
+    - _level: 11
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: be73c18d3fc7a53459ecc7b05b13f72f, type: 3}
+  - _id: Chapter2
+    _title: "\u30EA\u30FC\u30C8\u306E\u68EE"
+    _sound: {fileID: 8300000, guid: f9191aae3c4e5944e848110e68c6f8ce, type: 3}
+    _offset: 0
+    _composer: "\u7AF9\u4E0B\u5B9F\u7A42"
+    _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
+    _enemySprite: {fileID: 0}
+    _notes:
+    - _level: 2
+      _notesDesigner: "\u30AB\u30E1\u5409"
+      _file: {fileID: 4900000, guid: 8c6740e7c1fb8ff4f988ce55f40a4127, type: 3}
+    - _level: 6
+      _notesDesigner: "\u3042\u3063\u304D\uFF5E"
+      _file: {fileID: 4900000, guid: 3f54c0d3a0fa93a44a1fa5bd077318cd, type: 3}
+    - _level: 10
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: f15d3db6fe9207c46b05ab261c0ab7c2, type: 3}
