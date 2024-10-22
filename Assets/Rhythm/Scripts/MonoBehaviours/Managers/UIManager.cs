@@ -38,16 +38,15 @@ namespace Rhythm
 
         [Space(20)]
         [SerializeField] private Transform _battleUI;
-        [SerializeField] private Transform _hitPointTextTransform;
         [SerializeField] private SpriteRenderer _backgroundRenderer;
         [SerializeField] private SpriteRenderer _playerRenderer;
         [SerializeField] private SpriteRenderer _enemyRenderer;
 
         [SerializeField] private SpriteRenderer _playerGaugeRenderer;
-        [SerializeField] private TextMeshProUGUI _playerHitPointText;
+        [SerializeField] private TextMeshPro _playerHitPointText;
         [SerializeField] private SpriteRenderer _enemyGaugeRenderer;
         [SerializeField] private Transform[] _enemyGauges;
-        [SerializeField] private TextMeshProUGUI _enemyHitPointText;
+        [SerializeField] private TextMeshPro _enemyHitPointText;
         [SerializeField] private Transform _enemyGaugeMask;
 
         [System.Serializable]
@@ -75,7 +74,8 @@ namespace Rhythm
         [SerializeField] private TextMeshProUGUI _composerText;
         [SerializeField] private TextMeshProUGUI _difficultyText;
         [SerializeField] private TextMeshProUGUI _levelText;
-        [SerializeField] private TextMeshProUGUI _comboText;
+
+        [SerializeField] private TextMeshPro _comboText;
 
         [SerializeField] private float _comboPopupScale;
         [SerializeField] private float _comboPopupDuration;
@@ -343,9 +343,9 @@ namespace Rhythm
             gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
         }
 
-        private void SetHitPointText(TextMeshProUGUI text, float hitPoint, float maxHitPoint)
+        private void SetHitPointText(TMP_Text text, float hitPoint, float maxHitPoint, float relativeMaxHitPointSize)
         {
-            text.SetText("{0} <size=-6>/{1}", Mathf.CeilToInt(hitPoint), Mathf.CeilToInt(maxHitPoint));
+            text.SetText("{0} <size={2}>/{1}", Mathf.CeilToInt(hitPoint), Mathf.CeilToInt(maxHitPoint), relativeMaxHitPointSize);
         }
 
         public void DrawPlayerGauge(float hitPoint, float maxHitPoint)
@@ -354,7 +354,7 @@ namespace Rhythm
 
             DrawGauge(_playerGauge, _playerGaugePosition, _playerGaugeScale, value);
             SetBattleGaugeColor(_playerGaugeRenderer, value);
-            SetHitPointText(_playerHitPointText, hitPoint, maxHitPoint);
+            SetHitPointText(_playerHitPointText, hitPoint, maxHitPoint, -0.6f);
         }
 
         public void DrawEnemyGauge(float hitPoint, float maxHitPoint)
@@ -363,7 +363,7 @@ namespace Rhythm
 
             DrawGauge(_enemyGauge, _enemyGaugePosition, _enemyGaugeScale, value);
             SetBattleGaugeColor(_enemyGaugeRenderer, value);
-            SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint);
+            SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint, -0.6f);
         }
 
         private void SetEnemyGaugeMask(float hitPoint, float maxGauge)
@@ -402,7 +402,7 @@ namespace Rhythm
 
             SetBattleGaugeColor(_enemyGaugeRenderer, hitPoint < maxGauge ? value : 1f);
 
-            SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint);
+            SetHitPointText(_enemyHitPointText, hitPoint, maxHitPoint, -0.6f);
         }
 
         public Sequence DelayAttackDuration() => DOTween.Sequence().AppendInterval(_attackEffectDuration);
@@ -806,7 +806,7 @@ namespace Rhythm
             var playerValue = playerHitPoint / playerMaxHitPoint;
             DrawGauge(_battleResultPlayerGauge, _battleResultPlayerGaugePosition, _battleResultPlayerGaugeSizeDelta, playerValue);
             SetBattleGaugeColor(_battleResultPlayerGaugeImage, playerValue);
-            SetHitPointText(_battleResultPlayerHitPointText, playerHitPoint, playerMaxHitPoint);
+            SetHitPointText(_battleResultPlayerHitPointText, playerHitPoint, playerMaxHitPoint, -6f);
 
             var enemyValue = enemyHitPoint > 0 && enemyHitPoint % playerMaxHitPoint == 0f ? 1f : enemyHitPoint % playerMaxHitPoint / playerMaxHitPoint;
             var enemyGaugeCount = (int)(enemyHitPoint / playerMaxHitPoint) + (enemyHitPoint > 0 && enemyHitPoint % playerMaxHitPoint == 0f ? 0 : 1);
@@ -844,7 +844,7 @@ namespace Rhythm
                 _battleResultEnemyGaugeMask.padding = Vector4.zero;
             }
 
-            SetHitPointText(_battleResultEnemyHitPointText, enemyHitPoint, enemyMaxHitPoint);
+            SetHitPointText(_battleResultEnemyHitPointText, enemyHitPoint, enemyMaxHitPoint, -6f);
 
             var judges = new int[] { judgeCount.Perfect, judgeCount.Good, judgeCount.False };
 
@@ -938,7 +938,6 @@ namespace Rhythm
         public void SwitchUI(bool isVs)
         {
             _battleUI.gameObject.SetActive(isVs);
-            _hitPointTextTransform.gameObject.SetActive(isVs);
             _score.gameObject.SetActive(!isVs);
         }
 
