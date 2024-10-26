@@ -88,21 +88,12 @@
                 },
                 {
                     "name": "Move4",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "464a9e81-0d26-47c4-9b46-87a5c96ba329",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Move5",
-                    "type": "Button",
-                    "id": "48407ea2-3cbf-48e6-bf2b-e3f1ddf82b05",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pause",
@@ -532,6 +523,61 @@
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "GamePad",
+                    "id": "f010a91b-0208-4924-8795-0ae0fbf2ca83",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "fb451054-e556-4500-a448-c0a385a6d2d1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "5f40be36-1f66-408e-b7ce-686b05d9584d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "744e9eb7-96a8-4472-92ad-dfcbbe76a61f",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "d965fadf-16a6-43f6-af92-b486af8cd016",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -622,6 +668,15 @@
                 },
                 {
                     "name": "Move4",
+                    "type": "Value",
+                    "id": "873f9b1f-72b2-4fd3-b449-1abe207c3189",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move5",
                     "type": "Button",
                     "id": "d5c0672d-8c5c-4fbf-84dd-180240e2ae91",
                     "expectedControlType": "Button",
@@ -630,7 +685,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move5",
+                    "name": "Move6",
                     "type": "Button",
                     "id": "0e23d70d-e724-4468-82b5-c9f6230ee3ad",
                     "expectedControlType": "Button",
@@ -1030,7 +1085,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move4",
+                    "action": "Move5",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -1041,7 +1096,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move4",
+                    "action": "Move5",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1052,7 +1107,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move4",
+                    "action": "Move5",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1063,7 +1118,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move4",
+                    "action": "Move5",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1074,7 +1129,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move4",
+                    "action": "Move5",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1085,7 +1140,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move5",
+                    "action": "Move6",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -1096,7 +1151,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move5",
+                    "action": "Move6",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1107,7 +1162,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move5",
+                    "action": "Move6",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1118,7 +1173,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move5",
+                    "action": "Move6",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1129,7 +1184,62 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move5",
+                    "action": "Move6",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "GamePad",
+                    "id": "99090f59-4436-4b41-8807-fac811922e97",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "cb305057-3d8e-4d20-9bd9-35dc14c694dd",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "0ece6aeb-237c-4177-a860-87a105161543",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "993522b2-40a5-4278-9424-1ab274f7ba59",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "ceffab4a-d816-401b-9345-a9bcc0445015",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move4",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
