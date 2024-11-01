@@ -23,5 +23,8 @@ namespace Map
 
 		[SerializeField] private RhythmId _rhythmId;
 		public RhythmId RhythmId { get { return _rhythmId; } }
+
+		[SerializeField] private bool _isTutorialNeeded;
+		public bool IsTutorialNeeded { get { return _isTutorialNeeded; } }
 	}
 }

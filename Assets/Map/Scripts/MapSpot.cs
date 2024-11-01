@@ -53,7 +53,14 @@ namespace Map
 				{
 					var info = dataDict[(episode.Chapter, episode.Section)];
 					var obj = Instantiate(_episodeBox, _episodeBoxArea.transform);
-					obj.SetInfo(info);
+
+					var index = _episodeFlags.FlagList.FindIndex(x => x.Key == (episode.Chapter, episode.Section));
+					if (index >= 0 && index < _episodeFlags.FlagList.Count - 1)
+					{
+						if (_episodeFlags.FlagList[index + 1].Value) obj.SetInfo(info);
+						else obj.SetInfo(info, true);
+					}
+
 					var selectable = obj.GetComponent<Selectable>();
 					if (info.EpisodeType == SceneTransitionManager.CurrentEpisodeType)
 					{

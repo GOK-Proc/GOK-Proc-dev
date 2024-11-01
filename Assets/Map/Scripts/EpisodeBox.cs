@@ -17,10 +17,12 @@ namespace Map
 		[SerializeField] private GameObject _vsIcon;
 
 		private EpisodeInfomation _info = new EpisodeInfomation();
+		private bool _isTutorialEnabled = false;
 
-		public void SetInfo(EpisodeInfomation info)
+		public void SetInfo(EpisodeInfomation info, bool isTutorialEnabled = false)
 		{
 			_info = info;
+			_isTutorialEnabled = isTutorialEnabled;
 
 			_episodeNumberText.text = $"Chapter {_info.Chapter}-{_info.Section}";
 			_titleText.text = _info.Title;
@@ -39,8 +41,9 @@ namespace Map
 					SceneTransitionManager.TransitionToNovel(_info.NovelId);
 					break;
 				case EpisodeType.Rhythm:
-					//TODO: ハードコーディングは汚い気がする
-					if ((_info.Chapter, _info.Section) == (1, 2))
+					Debug.Log(_isTutorialEnabled);
+					Debug.Log(_info.IsTutorialNeeded);
+					if (_info.IsTutorialNeeded && _isTutorialEnabled)
 					{
 						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, DifficultySelector.MapDifficulty);
 					}
