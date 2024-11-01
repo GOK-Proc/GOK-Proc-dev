@@ -55,10 +55,13 @@ namespace Map
 					var obj = Instantiate(_episodeBox, _episodeBoxArea.transform);
 
 					var index = _episodeFlags.FlagList.FindIndex(x => x.Key == (episode.Chapter, episode.Section));
-					if (index >= 0 && index < _episodeFlags.FlagList.Count - 1)
+					if (index >= 0 && index < _episodeFlags.FlagList.Count - 1 && !_episodeFlags.FlagList[index + 1].Value)
 					{
-						if (_episodeFlags.FlagList[index + 1].Value) obj.SetInfo(info);
-						else obj.SetInfo(info, true);
+						obj.SetInfo(info, true);
+					}
+					else
+					{
+						obj.SetInfo(info);
 					}
 
 					var selectable = obj.GetComponent<Selectable>();
