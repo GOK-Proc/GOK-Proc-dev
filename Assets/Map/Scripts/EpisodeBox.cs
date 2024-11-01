@@ -41,8 +41,6 @@ namespace Map
 					SceneTransitionManager.TransitionToNovel(_info.NovelId);
 					break;
 				case EpisodeType.Rhythm:
-					Debug.Log(_isTutorialEnabled);
-					Debug.Log(_info.IsTutorialNeeded);
 					if (_info.IsTutorialNeeded && _isTutorialEnabled)
 					{
 						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, DifficultySelector.MapDifficulty);
