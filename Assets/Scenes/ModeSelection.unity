@@ -436,6 +436,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 855528951}
+          m_TargetAssemblyTypeName: ModeSelection.ModeSelectionManager, Assembly-CSharp
+          m_MethodName: ToTitle
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &709731548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _submit: 1
-  _cancel: 0
+  _cancel: 1
   _deselect: 1
 --- !u!114 &709731551
 MonoBehaviour:
@@ -505,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _submit: 1
-  _cancel: 0
+  _cancel: 1
 --- !u!1 &767891200
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +560,7 @@ MonoBehaviour:
   m_PointAction: {fileID: 0}
   m_MoveAction: {fileID: -8784545083839296357, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_SubmitAction: {fileID: 392368643174621059, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
-  m_CancelAction: {fileID: 0}
+  m_CancelAction: {fileID: 7727032971491509709, guid: 988e5d6ec6a5ac94abc92f28d84eab96, type: 3}
   m_LeftClickAction: {fileID: 0}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
@@ -945,6 +961,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 855528951}
+          m_TargetAssemblyTypeName: ModeSelection.ModeSelectionManager, Assembly-CSharp
+          m_MethodName: ToTitle
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1551117322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,7 +1031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _submit: 1
-  _cancel: 0
+  _cancel: 1
   _deselect: 1
 --- !u!114 &1551117324
 MonoBehaviour:
@@ -1014,7 +1046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _submit: 1
-  _cancel: 0
+  _cancel: 1
 --- !u!1 &1966655476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,6 +1155,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 855528951}
+          m_TargetAssemblyTypeName: ModeSelection.ModeSelectionManager, Assembly-CSharp
+          m_MethodName: ToTitle
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1966655481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,7 +1225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _submit: 1
-  _cancel: 0
+  _cancel: 1
   _deselect: 1
 --- !u!114 &1966655483
 MonoBehaviour:
@@ -1192,7 +1240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _submit: 1
-  _cancel: 0
+  _cancel: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
