@@ -26,6 +26,11 @@ namespace ModeSelection
             BGMManager.Instance.Play(BGMPath.MODE_INTRO, BGMPath.MODE_LOOP);
         }
 
+        public void ToTitle()
+        {
+            SceneTransitionManager.TransitionToTitle();
+        }
+
         public void ToMap()
         {
             SceneTransitionManager.TransitionToMap();

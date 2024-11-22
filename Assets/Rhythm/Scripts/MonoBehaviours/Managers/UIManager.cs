@@ -140,12 +140,14 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private RectTransform _score;
         [SerializeField] private TextMeshProUGUI _scoreNumber;
-        [SerializeField] private RectTransform _clearGaugeLower;
-        [SerializeField] private Image _clearGaugeUpperImage;
+        [SerializeField] private Transform _clearGauge;
+        [SerializeField] private Transform _clearGaugeLower;
+        [SerializeField] private SpriteRenderer _clearGaugeUpperRenderer;
+        [SerializeField] private Transform _clearArrow;
 
-        private RectTransform _clearGaugeUpper;
-        private Vector2 _clearGaugePosition;
-        private Vector2 _clearGaugeSizeDelta;
+        private Transform _clearGaugeUpper;
+        private Vector3 _clearGaugePosition;
+        private Vector2 _clearGaugeScale;
 
         [System.Serializable]
         private struct ClearGaugeColor
@@ -276,9 +278,9 @@ namespace Rhythm
             _comboTween = null;
             _warningTween = null;
 
-            _clearGaugeUpper = _clearGaugeUpperImage.rectTransform;
-            _clearGaugePosition = _clearGaugeLower.anchoredPosition;
-            _clearGaugeSizeDelta = _clearGaugeLower.sizeDelta;
+            _clearGaugeUpper = _clearGaugeUpperRenderer.transform;
+            _clearGaugePosition = _clearGaugeLower.localPosition;
+            _clearGaugeScale = _clearGaugeLower.localScale;
 
             _battleResultBoxCanvasGroup = _battleResultBox.GetComponent<CanvasGroup>();
             _battleResultContentsCanvasGroup = _battleResultContents.GetComponent<CanvasGroup>();
@@ -338,9 +340,9 @@ namespace Rhythm
             };
         }
 
-        private void SetClearGaugeColor(Image gaugeImage, float value, float border)
+        private void SetClearGaugeColor(SpriteRenderer gaugeRenderer, float value, float border)
         {
-            gaugeImage.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
+            gaugeRenderer.color = value >= border ? _clearGaugeColor.Clear : _clearGaugeColor.Normal;
         }
 
         private void SetHitPointText(TMP_Text text, float hitPoint, float maxHitPoint, float relativeMaxHitPointSize)
@@ -939,17 +941,22 @@ namespace Rhythm
         {
             _battleUI.gameObject.SetActive(isVs);
             _score.gameObject.SetActive(!isVs);
+            _clearGauge.gameObject.SetActive(!isVs);
         }
 
         public void SetClearGaugeBorder(float border)
         {
-            var position = _clearGaugeLower.anchoredPosition;
-            var sizeDelta = _clearGaugeLower.sizeDelta;
+            var position = _clearGaugeLower.localPosition;
+            var scale = _clearGaugeLower.localScale;
 
-            _clearGaugeLower.sizeDelta *= new Vector2(1 - border, 1f);
+            var lowerScale = _clearGaugeLower.localScale;
+            lowerScale.x *= 1 - border;
 
-            var x = position.x + sizeDelta.x / 2 - _clearGaugeLower.sizeDelta.x / 2;
-            _clearGaugeLower.anchoredPosition = new Vector2(x, _clearGaugeLower.anchoredPosition.y);
+            _clearGaugeLower.localScale = lowerScale;
+
+            var x = position.x + scale.x / 2 - _clearGaugeLower.localScale.x / 2;
+            _clearGaugeLower.localPosition = new Vector3(x, _clearGaugeLower.localPosition.y, _clearGaugeLower.localPosition.z);
+            _clearArrow.localPosition = new Vector3(position.x + scale.x / 2 - _clearGaugeLower.localScale.x, _clearArrow.localPosition.y, _clearArrow.localPosition.z);
         }
 
         public void DrawClearGauge(float maxGugePoint, float gaugePoint, float clearGaugePoint)
@@ -957,8 +964,8 @@ namespace Rhythm
             var value = gaugePoint / maxGugePoint;
             var border = clearGaugePoint / maxGugePoint;
 
-            DrawGauge(_clearGaugeUpper, _clearGaugePosition, _clearGaugeSizeDelta, value);
-            SetClearGaugeColor(_clearGaugeUpperImage, value, border);
+            DrawGauge(_clearGaugeUpper, _clearGaugePosition, _clearGaugeScale, value);
+            SetClearGaugeColor(_clearGaugeUpperRenderer, value, border);
         }
 
         public void SetBackgroundSprite(Sprite sprite)
