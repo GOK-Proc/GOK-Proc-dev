@@ -51,6 +51,7 @@ namespace Map
 				if (GUILayout.Button("Save"))
 				{
 					_target.Save();
+					AssetDatabase.Refresh();
 				}
 
 				if (GUILayout.Button("Load"))
@@ -58,7 +59,6 @@ namespace Map
 					_target.Load();
 				}
 
-				AssetDatabase.Refresh();
 			}
 		}
 	}
