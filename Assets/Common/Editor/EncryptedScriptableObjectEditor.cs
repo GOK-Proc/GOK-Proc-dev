@@ -4,20 +4,20 @@ using UnityEngine;
 [CustomEditor(typeof(EncryptedScriptableObject), true)]
 public class EncryptedScriptableObjectEditor : Editor
 {
-    private EncryptedScriptableObject _encryptedScriptableObject;
+	private EncryptedScriptableObject _target;
 	private SerializedProperty _saveDirProperty;
 	private SerializedProperty _fileNameProperty;
 
 	private void OnEnable()
 	{
-		_encryptedScriptableObject = (EncryptedScriptableObject)target;
+		_target = (EncryptedScriptableObject)target;
 		_saveDirProperty = serializedObject.FindProperty("_saveDir");
 		_fileNameProperty = serializedObject.FindProperty("_fileName");
 	}
 
 	public override void OnInspectorGUI()
 	{
-		if(_encryptedScriptableObject != null)
+		if (_target != null)
 		{
 			serializedObject.Update();
 
@@ -36,15 +36,15 @@ public class EncryptedScriptableObjectEditor : Editor
 
 			if (GUILayout.Button("Save"))
 			{
-				_encryptedScriptableObject.Save();
+				_target.Save();
+				AssetDatabase.Refresh();
 			}
 
 			if (GUILayout.Button("Load"))
 			{
-				_encryptedScriptableObject.Load();
+				_target.Load();
 			}
 
-			AssetDatabase.Refresh();
 		}
 	}
 }
