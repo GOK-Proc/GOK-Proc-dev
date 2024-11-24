@@ -31,6 +31,8 @@ namespace Map
 
 				serializedObject.ApplyModifiedProperties();
 
+				GUILayout.Space(EditorGUIUtility.singleLineHeight);
+
 				EditorGUILayout.LabelField("Flags", EditorStyles.boldLabel);
 
 				if (_target.FlagList != null)
