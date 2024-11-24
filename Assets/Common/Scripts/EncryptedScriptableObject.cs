@@ -19,7 +19,7 @@ public abstract class EncryptedScriptableObject : ScriptableObject
 	{
 		get
 		{
-			if (String.IsNullOrWhiteSpace(_fileName))
+			if (string.IsNullOrWhiteSpace(_fileName))
 			{
 				throw new ArgumentException("fileName cannot be null, empty, or whitespace.", nameof(_fileName));
 			}
@@ -43,10 +43,8 @@ public abstract class EncryptedScriptableObject : ScriptableObject
 	{
 		var json = JsonUtility.ToJson(this);
 		var encrypted = AesEncrypt(json);
-		using (var writer = new StreamWriter(FilePath))
-		{
-			writer.Write(encrypted);
-		}
+		using var writer = new StreamWriter(FilePath);
+		writer.Write(encrypted);
 	}
 
 	public void Load()
@@ -57,50 +55,40 @@ public abstract class EncryptedScriptableObject : ScriptableObject
 			return;
 		}
 
-		using (var reader = new StreamReader(FilePath))
-		{
-			var encrypted = reader.ReadToEnd();
-			var json = AesDecrypt(encrypted);
-			JsonUtility.FromJsonOverwrite(json, this);
-		}
+		using var reader = new StreamReader(FilePath);
+		var encrypted = reader.ReadToEnd();
+		var json = AesDecrypt(encrypted);
+		JsonUtility.FromJsonOverwrite(json, this);
 	}
 
-	private static string AesEncrypt(string plain_text)
+	private static string AesEncrypt(string plainText)
 	{
-		string encrypted_str;
-
-		using (Aes aes = Aes.Create())
+		using Aes aes = Aes.Create();
+		using ICryptoTransform encryptor = aes.CreateEncryptor(Encoding.UTF8.GetBytes(_aesKey), Encoding.UTF8.GetBytes(_aesIv));
+		using MemoryStream outStream = new();
+		using (CryptoStream cs = new(outStream, encryptor, CryptoStreamMode.Write))
 		{
-			using ICryptoTransform encryptor = aes.CreateEncryptor(Encoding.UTF8.GetBytes(_aesKey), Encoding.UTF8.GetBytes(_aesIv));
-			using MemoryStream out_stream = new();
-			using (CryptoStream cs = new(out_stream, encryptor, CryptoStreamMode.Write))
-			{
-				using StreamWriter sw = new(cs);
-				sw.Write(plain_text);
-			}
-
-			byte[] result = out_stream.ToArray();
-			encrypted_str = Convert.ToBase64String(result);
+			using StreamWriter sw = new(cs);
+			sw.Write(plainText);
 		}
 
-		return encrypted_str;
+		byte[] result = outStream.ToArray();
+		var encryptedStr = Convert.ToBase64String(result);
+
+		return encryptedStr;
 	}
 
-	private static string AesDecrypt(string base64_text)
+	private static string AesDecrypt(string base64Text)
 	{
-		string plain_text;
+		byte[] cipher = Convert.FromBase64String(base64Text);
 
-		byte[] cipher = Convert.FromBase64String(base64_text);
-
-		using (Aes aes = Aes.Create())
-		{
-			using ICryptoTransform decryptor = aes.CreateDecryptor(Encoding.UTF8.GetBytes(_aesKey), Encoding.UTF8.GetBytes(_aesIv));
-			using MemoryStream in_stream = new(cipher);
-			using CryptoStream cs = new(in_stream, decryptor, CryptoStreamMode.Read);
-			using StreamReader sr = new(cs);
-			plain_text = sr.ReadToEnd();
-		}
-		return plain_text;
+		using Aes aes = Aes.Create();
+		using ICryptoTransform decryptor = aes.CreateDecryptor(Encoding.UTF8.GetBytes(_aesKey), Encoding.UTF8.GetBytes(_aesIv));
+		using MemoryStream inStream = new(cipher);
+		using CryptoStream cs = new(inStream, decryptor, CryptoStreamMode.Read);
+		using StreamReader sr = new(cs);
+		var plainText = sr.ReadToEnd();
+		return plainText;
 	}
 
 }
