@@ -17,8 +17,16 @@ namespace Settings
 		public int SoundEffectVolume { get => _soundEffectVolume; set => _soundEffectVolume = Math.Clamp(value, 0, 10); }
 
 		[Range(0, 10)]
+		[SerializeField] private int _novelEffectVolume = 5;
+		public int NovelEffectVolume { get => _novelEffectVolume; set => _novelEffectVolume = Math.Clamp(value, 0, 10); }
+
+		[Range(0, 10)]
 		[SerializeField] private int _musicVolume = 5;
 		public int MusicVolume { get => _musicVolume; set => _musicVolume = Math.Clamp(value, 0, 10); }
+
+		[Range(0, 10)]
+		[SerializeField] private int _battleEffectVolume = 5;
+		public int BattleEffectVolume { get => _battleEffectVolume; set => _battleEffectVolume = Math.Clamp(value, 0, 10); }
 
 		[Range(0, 10)]
 		[SerializeField] private int _rhythmEffectVolume = 5;
