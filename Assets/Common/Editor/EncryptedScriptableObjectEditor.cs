@@ -37,7 +37,6 @@ public class EncryptedScriptableObjectEditor : Editor
 			if (GUILayout.Button("Save"))
 			{
 				_target.Save();
-				AssetDatabase.Refresh();
 			}
 
 			if (GUILayout.Button("Load"))
