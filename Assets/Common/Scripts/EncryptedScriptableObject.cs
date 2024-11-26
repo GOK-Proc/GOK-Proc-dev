@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class EncryptedScriptableObject : ScriptableObject
@@ -14,7 +15,7 @@ public abstract class EncryptedScriptableObject : ScriptableObject
 
 	[Tooltip("保存されるファイル名")]
 	[SerializeField][HideInInspector] private string _fileName;
-	
+
 	private string FilePath
 	{
 		get
@@ -45,6 +46,10 @@ public abstract class EncryptedScriptableObject : ScriptableObject
 		var encrypted = AesEncrypt(json);
 		using var writer = new StreamWriter(FilePath);
 		writer.Write(encrypted);
+
+#if UNITY_EDITOR
+		AssetDatabase.Refresh();
+#endif
 	}
 
 	public void Load()
