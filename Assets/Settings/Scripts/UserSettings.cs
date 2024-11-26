@@ -37,6 +37,10 @@ namespace Settings
 		[SerializeField] private KeyConfigId _keyConfigId;
 		public KeyConfigId KeyConfigId { get => _keyConfigId; set => _keyConfigId = value; }
 
+		[Range(-1f, 1f)]
+		[SerializeField] private float _judgeOffset = 0f;
+		public float JudgeOffset { get => _judgeOffset; set => _judgeOffset = Math.Clamp(value, -1f, 1f); }
+
 		[Range(0.5f, 3.0f)]
 		[SerializeField] private float _highSpeed = 1f;
 		public float HighSpeed { get => _highSpeed; set => _highSpeed = Math.Clamp(value, 0.5f, 3.0f); }
