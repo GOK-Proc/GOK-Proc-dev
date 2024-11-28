@@ -6,14 +6,8 @@ using System.IO;
 namespace Rhythm
 {
     [CreateAssetMenu, System.Serializable]
-    public class RecordList : ScriptableObject, IDataHandler<RecordData[]>
+    public class RecordList : EncryptedScriptableObject, IDataHandler<RecordData[]>
     {
-#if UNITY_EDITOR
-        private readonly string _path = Path.Combine(Application.dataPath, "Rhythm/Records/RecordList.json");
-#else
-		private readonly string _path = Path.Combine(Application.persistentDataPath, "RecordList.json");
-#endif
-
         [System.Serializable]
         private struct RecordDataPair
         {
@@ -27,40 +21,7 @@ namespace Rhythm
             }
         }
 
-        [SerializeField] private List<RecordDataPair> _recordDataList;
-
-        private void OnEnable()
-        {
-            if (_recordDataList == null) _recordDataList = new List<RecordDataPair>();
-
-#if !UNITY_EDITOR
-            Load();
-#endif
-        }
-
-        private void OnDisable()
-        {
-#if !UNITY_EDITOR           
-            Save();
-#endif
-        }
-
-        private void Save()
-        {
-            var json = JsonUtility.ToJson(this);
-            using var writer = new StreamWriter(_path);
-            writer.Write(json);
-        }
-
-        private void Load()
-        {
-            if (!File.Exists(_path)) return;
-
-            using var reader = new StreamReader(_path);
-            var json = reader.ReadToEnd();
-            JsonUtility.FromJsonOverwrite(json, this);
-        }
-
+        [SerializeField] private List<RecordDataPair> _recordDataList = new List<RecordDataPair>();
 
         public RecordData[] this[string id]
         {
@@ -70,9 +31,7 @@ namespace Rhythm
                 _recordDataList.RemoveAll(x => x.Id == id);
                 _recordDataList.Add(new RecordDataPair(id, value));
 
-#if !UNITY_EDITOR
                 Save();
-#endif
             }
         }
     }
