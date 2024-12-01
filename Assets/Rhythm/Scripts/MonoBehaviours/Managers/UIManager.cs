@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using Settings;
 
 namespace Rhythm
 {
@@ -204,7 +205,7 @@ namespace Rhythm
         [System.Serializable]
         private struct TutorialKeyConfig
         {
-            public KeyConfig KeyConfig;
+            public KeyConfigId KeyConfig;
             public RectTransform[] RectTransforms;
         }
 
@@ -213,7 +214,7 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private CanvasGroup _skipBox;
 
-        private Dictionary<KeyConfig, RectTransform[]> _tutorialKeyConfigDictionary;
+        private Dictionary<KeyConfigId, RectTransform[]> _tutorialKeyConfigDictionary;
 
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
@@ -1014,7 +1015,7 @@ namespace Rhythm
             _knockout.DOFade(1f, _knockoutFadeDuration);
         }
 
-        public Tweener DrawTutorial(int index, KeyConfig keyConfig)
+        public Tweener DrawTutorial(int index, KeyConfigId keyConfig)
         {
             if (index < _tutorialContents.Length)
             {

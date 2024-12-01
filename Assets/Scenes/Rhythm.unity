@@ -3852,12 +3852,28 @@ MonoBehaviour:
     - {fileID: 508204193}
   - KeyConfig: 1
     RectTransforms:
-    - {fileID: 128555422}
-    - {fileID: 1794385831}
-    - {fileID: 1493521407}
-    - {fileID: 2138068500}
-    - {fileID: 1827338023}
-    - {fileID: 492958302}
+    - {fileID: 1789849469}
+    - {fileID: 144112324}
+    - {fileID: 1924376150}
+    - {fileID: 65128177}
+    - {fileID: 490778437}
+    - {fileID: 508204193}
+  - KeyConfig: 2
+    RectTransforms:
+    - {fileID: 1789849469}
+    - {fileID: 144112324}
+    - {fileID: 1924376150}
+    - {fileID: 65128177}
+    - {fileID: 490778437}
+    - {fileID: 508204193}
+  - KeyConfig: 3
+    RectTransforms:
+    - {fileID: 1789849469}
+    - {fileID: 144112324}
+    - {fileID: 1924376150}
+    - {fileID: 65128177}
+    - {fileID: 490778437}
+    - {fileID: 508204193}
   _skipBox: {fileID: 1968568092}
   _resultBoxDuration: 1
   _resultContentsDuration: 1
@@ -14756,9 +14772,157 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: aa8a5bdf-9623-4c12-834b-7c469cd6bf89
     m_ActionName: Type2/Pause[/XInputControllerWindows/select,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 464a9e81-0d26-47c4-9b46-87a5c96ba329
+    m_ActionName: Pattern1/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a05307c9-6c8d-45f2-8012-3e6cbf6bb8a7
+    m_ActionName: Pattern2/Attack1[/XInputControllerWindows/buttonNorth,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 62f8b29d-77cb-41af-8de3-a1dca25ae951
+    m_ActionName: Pattern2/Attack2[/XInputControllerWindows/buttonEast,/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 97fc2e55-719d-454c-9381-6cff0d802437
+    m_ActionName: Pattern2/Attack3[/XInputControllerWindows/dpad/right,/XInputControllerWindows/dpad/up,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9c2101a-abde-4c16-befe-37a282d22d8b
+    m_ActionName: Pattern2/Defense1[/XInputControllerWindows/buttonWest,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7344170c-ddb6-4ace-b8b5-1f651d99fdb1
+    m_ActionName: Pattern2/Defense2[/XInputControllerWindows/buttonSouth,/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 50ac77c8-d43e-471b-a175-b815cc4f8252
+    m_ActionName: Pattern2/Defense3[/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/down,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fbb50964-6b87-4410-bd0f-1d79b5ee7f14
+    m_ActionName: Pattern2/Move1[/XInputControllerWindows/leftStick,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5a05fcf3-e0b9-4e9c-aa5d-85fd0dede196
+    m_ActionName: Pattern2/Move2[/XInputControllerWindows/rightStick,/Keyboard/h,/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6ab580e9-d075-4dc0-a29f-b4510fec97c4
+    m_ActionName: Pattern2/Move3[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 869cb739-03b7-4b6b-a99c-41896cc308a6
+    m_ActionName: Pattern2/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: adb8b0ed-a8e2-4f4a-a123-9b3a3747cf76
+    m_ActionName: Pattern2/Pause[/XInputControllerWindows/select,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a777173d-5ff6-4bce-8cc5-e8fa9ddac2b5
+    m_ActionName: Pattern3/Attack1[/XInputControllerWindows/buttonSouth,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6e43eb89-59ef-4a6c-b5a6-1dc512c605ac
+    m_ActionName: Pattern3/Attack2[/XInputControllerWindows/buttonWest,/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 78fc7abc-0e44-4933-b231-ea009198f133
+    m_ActionName: Pattern3/Attack3[/XInputControllerWindows/dpad/right,/XInputControllerWindows/dpad/down,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d63326f9-253d-4ed0-8dc2-87de520f628a
+    m_ActionName: Pattern3/Defense1[/XInputControllerWindows/buttonEast,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c1b370fe-cf36-44eb-8a0a-5d0d1381ea97
+    m_ActionName: Pattern3/Defense2[/XInputControllerWindows/buttonNorth,/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1e9b097e-e735-4eb4-947f-eb09038163ea
+    m_ActionName: Pattern3/Defense3[/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/up,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0bc616e3-9873-4c60-b15c-7fbafb5560b9
+    m_ActionName: Pattern3/Move1[/XInputControllerWindows/leftStick,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 592cc812-ba47-4d77-8305-b7a9c01a221f
+    m_ActionName: Pattern3/Move2[/XInputControllerWindows/rightStick,/Keyboard/h,/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18828f25-c4fd-48e2-bd19-e3b4aa888e04
+    m_ActionName: Pattern3/Move3[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2474cfd0-4524-472f-b7ba-b404cc49748c
+    m_ActionName: Pattern3/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bbdd7495-fe63-4176-a302-8887ed6f3c5b
+    m_ActionName: Pattern3/Pause[/XInputControllerWindows/select,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3bb25b09-9eee-4056-95f5-c287328cb0ec
+    m_ActionName: Pattern4/Attack1[/XInputControllerWindows/buttonNorth,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5e567234-09ea-4fa2-9a2a-cf20c558c239
+    m_ActionName: Pattern4/Attack2[/XInputControllerWindows/buttonEast,/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 47da0a5c-f97e-4e4b-97e5-0a7b2ccd9360
+    m_ActionName: Pattern4/Attack3[/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/up,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3c9795df-e1a4-4e15-a8ee-833c6744883a
+    m_ActionName: Pattern4/Defense1[/XInputControllerWindows/buttonWest,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b7340868-e24f-467d-b663-6165af665d74
+    m_ActionName: Pattern4/Defense2[/XInputControllerWindows/buttonSouth,/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f3b56ef2-0b36-44ee-a727-6ba30bff4825
+    m_ActionName: Pattern4/Defense3[/XInputControllerWindows/dpad/right,/XInputControllerWindows/dpad/down,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9a6418ed-1b32-4af3-b415-8f2f05f6de07
+    m_ActionName: Pattern4/Move1[/XInputControllerWindows/leftStick,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8aae84b-1c8b-488b-b881-0d5363ef24a4
+    m_ActionName: Pattern4/Move2[/XInputControllerWindows/rightStick,/Keyboard/h,/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8a02db43-aef5-40fe-be8e-ed99b5c83e78
+    m_ActionName: Pattern4/Move3[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 81ff89cf-0678-48eb-9dd3-b92fcae83fd0
+    m_ActionName: Pattern4/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 87a25bff-f3f6-4a0b-bd6d-c9cdb43f2603
+    m_ActionName: Pattern4/Pause[/XInputControllerWindows/select,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 873f9b1f-72b2-4fd3-b449-1abe207c3189
+    m_ActionName: Pattern5/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d5c0672d-8c5c-4fbf-84dd-180240e2ae91
+    m_ActionName: Pattern5/Move5[/XInputControllerWindows/buttonWest,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0e23d70d-e724-4468-82b5-c9f6230ee3ad
+    m_ActionName: Pattern5/Move6[/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Type1
+  m_DefaultActionMap: Pattern1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &733570890
@@ -38518,9 +38682,18 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _defaultId: Chapter1_2
   _defaultDifficulty: 0
-  _defaultIsVs: 1
+  _defaultIsVs: 0
   _tutorialId: 0
-  _setting: {fileID: 11400000, guid: 18810f76c94114640adec37275e0eb18, type: 2}
+  _setting:
+    _scrollSpeed: 10
+    _offset: 0
+    _judgeOffset: 0
+    _keyConfig: 0
+    _volumeSetting:
+      _track: 0.5
+      _se: 0.5
+      _noteSe: 0.5
+  _userSettings: {fileID: 11400000, guid: e54a2569bc14bcd4fa1af24866c7dd98, type: 2}
   _recordList: {fileID: 11400000, guid: e00e481882f388c419b380ce48e3d8b8, type: 2}
   _tutorialData:
     _beatmap:

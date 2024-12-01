@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Transition;
+using Settings;
 
 namespace Rhythm
 {
@@ -98,6 +99,7 @@ namespace Rhythm
         [Space(20)]
         [Header("Rhythm Game Settings")]
         [SerializeField] private RhythmSetting _setting;
+        [SerializeField] private UserSettings _userSettings;
 
         [Space(20)]
         [Header("Record")]
@@ -118,7 +120,7 @@ namespace Rhythm
         private SoundPlayer _soundPlayer;
         private LaneEffectManager _laneEffectManager;
         private TutorialManager _tutorialManager;
-
+ 
         private HeaderInformation _headerInformation;
         private double _endTime;
         private bool _canSkipTutorial;
@@ -129,6 +131,13 @@ namespace Rhythm
             var difficulty = SceneTransitionManager.CurrentDifficulty;
             var isVs = SceneTransitionManager.CurrentIsVs;
             var tutorialId = SceneTransitionManager.CurrentTutorialId;
+
+            _setting.ScrollSpeed *= _userSettings.HighSpeed;
+            _setting.JudgeOffset = _userSettings.JudgeOffset;
+            _setting.KeyConfig = _userSettings.KeyConfigId;
+            _setting.VolumeSetting.Track = _userSettings.MusicVolume / 10f;
+            _setting.VolumeSetting.Se = _userSettings.BattleEffectVolume / 10f;
+            _setting.VolumeSetting.NoteSe = _userSettings.RhythmEffectVolume / 10f;
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
@@ -170,7 +179,7 @@ namespace Rhythm
 
             _timeManager = new TimeManager();
 
-            _playerInput.SwitchCurrentActionMap(_setting.KeyConfig.ToStringQuickly());
+            _playerInput.SwitchCurrentActionMap(_setting.KeyConfig.ToString());
             var attackActions = _playerInput.currentActionMap.actions.Where(x => x.name.StartsWith("Attack")).ToArray();
             var defenseActions = _playerInput.currentActionMap.actions.Where(x => x.name.StartsWith("Defense")).ToArray();
             var moveActions = _playerInput.currentActionMap.actions.Where(x => x.name.StartsWith("Move")).ToArray(); ;
@@ -296,6 +305,14 @@ namespace Rhythm
             }
 
             StartCoroutine(RhythmGameUpdate());
+        }
+
+        private void OnDestroy()
+        {
+            _userSettings.MusicVolume = (int)(_setting.VolumeSetting.Track * 10);
+            _userSettings.BattleEffectVolume = (int)(_setting.VolumeSetting.Se * 10);
+            _userSettings.RhythmEffectVolume = (int)(_setting.VolumeSetting.NoteSe * 10);
+            _userSettings.Save();
         }
     }
 }

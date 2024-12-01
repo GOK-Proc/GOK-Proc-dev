@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673b00aa7079f3f44a7c3d6063d82cbb, type: 3}
   m_Name: RecordList
   m_EditorClassIdentifier: 
+  _saveDir: Rhythm/Records
+  _fileName: RecordList
   _recordDataList: []

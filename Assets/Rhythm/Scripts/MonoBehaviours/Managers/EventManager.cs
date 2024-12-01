@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using Transition;
 using DG.Tweening;
 using UnityEngine.UI;
+using Settings;
 
 namespace Rhythm
 {
@@ -13,7 +14,7 @@ namespace Rhythm
         private bool _isVs;
         private TutorialId _tutorialId;
         private bool _isPause;
-        private KeyConfig _keyConfig;
+        private KeyConfigId _keyConfig;
         private IBattleMode _battleMode;
         private ISoundPlayable _soundPlayable;
         private ISoundVolumeAdjustable _soundVolumeAdjustable;
@@ -39,7 +40,7 @@ namespace Rhythm
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfig keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable, ISkipScreenDrawable skipScreenDrawable)
+        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfigId keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable, ISkipScreenDrawable skipScreenDrawable)
         {
             _isVs = isVs;
             _tutorialId = tutorialId;
@@ -109,7 +110,7 @@ namespace Rhythm
             {
                 _colorInputProvider.IsColorInputValid = false;
                 _moveInputProvider.IsMoveInputValid = false;
-                _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
+                _playerInput.SwitchCurrentActionMap(_keyConfig.ToString());
 
                 var sequence = _pauseScreenDrawable.DrawCountDownScreen();
                 sequence.OnComplete(() =>
@@ -176,7 +177,7 @@ namespace Rhythm
 
             _skipScreenDrawable.EraseSkipScreen().onComplete += () =>
             {
-                _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
+                _playerInput.SwitchCurrentActionMap(_keyConfig.ToString());
                 Time.timeScale = 1;
             };
         }
@@ -233,7 +234,7 @@ namespace Rhythm
             {
                 _tutorialDrawable.EraseTutorial().onComplete += () =>
                 {
-                    _playerInput.SwitchCurrentActionMap(_keyConfig.ToStringQuickly());
+                    _playerInput.SwitchCurrentActionMap(_keyConfig.ToString());
                     _soundPlayable.UnPauseMusic();
                     Time.timeScale = 1;
                 };
