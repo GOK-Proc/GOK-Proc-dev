@@ -16,9 +16,12 @@ MonoBehaviour:
   _fileName: UserSettings
   _bgmVolume: 5
   _soundEffectVolume: 5
+  _novelEffectVolume: 5
   _musicVolume: 5
+  _battleEffectVolume: 5
   _rhythmEffectVolume: 5
   _keyConfigId: 0
+  _judgeOffset: 0
   _highSpeed: 1
   _screenMode: 0
   _frameRate: 0

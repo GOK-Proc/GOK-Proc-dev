@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Settings;
 
 namespace Rhythm
 {
     public class TutorialManager
     {
         private readonly bool _isTutorial;
-        private readonly KeyConfig _keyConfig;
+        private readonly KeyConfigId _keyConfig;
         private readonly TutorialData _data;
         private readonly PlayerInput _playerInput;
         private readonly ISoundPlayable _soundPlayable;
@@ -17,7 +18,7 @@ namespace Rhythm
 
         private int _next;
 
-        public TutorialManager(bool isTutorial, KeyConfig keyConfig, TutorialData data, PlayerInput playerInput, ISoundPlayable soundPlayable, ITimeProvider timeProvider, ITutorialDrawable tutorialDrawable)
+        public TutorialManager(bool isTutorial, KeyConfigId keyConfig, TutorialData data, PlayerInput playerInput, ISoundPlayable soundPlayable, ITimeProvider timeProvider, ITutorialDrawable tutorialDrawable)
         {
             _isTutorial = isTutorial;
             _keyConfig = keyConfig;

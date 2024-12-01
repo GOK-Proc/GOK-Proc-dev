@@ -1,13 +1,11 @@
 ﻿using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Settings;
 
 namespace Rhythm
 {
     public interface ITutorialDrawable
     {
-        Tweener DrawTutorial(int index, KeyConfig keyConfig);
+        Tweener DrawTutorial(int index, KeyConfigId keyConfig);
         Tweener EraseTutorial();
     }
 }
