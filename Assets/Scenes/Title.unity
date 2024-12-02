@@ -667,6 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afaa35ee6cede834ca4e029a110da76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _userSettings: {fileID: 11400000, guid: e54a2569bc14bcd4fa1af24866c7dd98, type: 2}
   _terminateCanvasGroup: {fileID: 405372701}
   _yesButton: {fileID: 1515089271}
   _eventTrigger: {fileID: 278113520}
