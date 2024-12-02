@@ -4,17 +4,47 @@ using KanKikuchi.AudioManager;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using Settings;
 
 namespace Title
 {
 	public class TitleManager : MonoBehaviour
 	{
+		[SerializeField] private UserSettings _userSettings;
+
 		[SerializeField] private CanvasGroup _terminateCanvasGroup;
 		[SerializeField] private Selectable _yesButton;
 		[SerializeField] private EventTrigger _eventTrigger;
 
 		private void Start()
 		{
+			BGMManager.Instance.ChangeBaseVolume(_userSettings.BgmVolume / 10f);
+			SEManager.Instance.ChangeBaseVolume(_userSettings.SoundEffectVolume / 10f);
+			switch (_userSettings.ScreenMode)
+			{
+				case ScreenMode.Windowed:
+					Screen.SetResolution(Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, FullScreenMode.Windowed);
+					break;
+				case ScreenMode.FullScreen:
+					Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
+					break;
+			}
+			switch (_userSettings.FrameRate)
+			{
+				case FrameRate.VSync:
+					QualitySettings.vSyncCount = 1;
+					Application.targetFrameRate = -1;
+					break;
+				case FrameRate.Unlimited:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = -1;
+					break;
+				default:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = (int)_userSettings.FrameRate;
+					break;
+			}
+
 			BGMManager.Instance.Play(BGMPath.MAIN_THEME);
 		}
 
