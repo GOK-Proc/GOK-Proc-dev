@@ -21,10 +21,6 @@ namespace Map
 			{
 				OpenDifficultySelectDIalog();
 			}
-			else
-			{
-				EventSystem.current.SetSelectedGameObject(_firstMapSpot.gameObject);
-			}
 		}
 
 		public void OpenDifficultySelectDIalog()
