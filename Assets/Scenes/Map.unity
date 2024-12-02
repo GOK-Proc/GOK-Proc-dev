@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186b19779eb6ff24ba2cee08fef41b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: e54a2569bc14bcd4fa1af24866c7dd98, type: 2}
   _canvasGroup: {fileID: 129424401}
   _firstMapSpot: {fileID: 928953000}
   _firstDifficultyBox: {fileID: 856373815}
@@ -906,7 +907,7 @@ PrefabInstance:
       objectReference: {fileID: 233236440}
     - target: {fileID: 5461595380901784207, guid: 2cb6beb2d9884d34f95c2e811e3f8d1e, type: 3}
       propertyPath: _difficulty
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5461595380901784207, guid: 2cb6beb2d9884d34f95c2e811e3f8d1e, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -1174,7 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 856373811}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1319841359
@@ -1586,7 +1587,7 @@ PrefabInstance:
       objectReference: {fileID: 233236440}
     - target: {fileID: 5461595380901784207, guid: 2cb6beb2d9884d34f95c2e811e3f8d1e, type: 3}
       propertyPath: _difficulty
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5461595380901784207, guid: 2cb6beb2d9884d34f95c2e811e3f8d1e, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -1850,6 +1851,10 @@ PrefabInstance:
       propertyPath: _selector
       value: 
       objectReference: {fileID: 233236440}
+    - target: {fileID: 5461595380901784207, guid: 2cb6beb2d9884d34f95c2e811e3f8d1e, type: 3}
+      propertyPath: _difficulty
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5461595380901784207, guid: 2cb6beb2d9884d34f95c2e811e3f8d1e, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 

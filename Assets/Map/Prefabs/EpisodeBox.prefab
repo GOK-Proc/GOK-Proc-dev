@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777318cd90bb6524f935426fbe16d111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: e54a2569bc14bcd4fa1af24866c7dd98, type: 2}
   _episodeNumberText: {fileID: 7257399409865045128}
   _titleText: {fileID: 7733522467447737108}
   _vsIcon: {fileID: 7706141938822488905}

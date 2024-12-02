@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Rhythm;
+using Settings;
 using Transition;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,17 +9,21 @@ namespace Map
 {
 	class DifficultySelector : MonoBehaviour
 	{
+		[SerializeField] private UserSettings _settings;
+
 		[SerializeField] private CanvasGroup _canvasGroup;
 		[SerializeField] private MapSpot _firstMapSpot;
 		[SerializeField] private DifficultyBox _firstDifficultyBox;
 
-		static public Difficulty MapDifficulty { get; private set; }
-
 		private void Start()
 		{
-			if(SceneTransitionManager.CurrentEpisodeType ==EpisodeType.None)
+			if(_settings.ScenarioDifficulty == ScenarioDifficulty.None)
 			{
 				OpenDifficultySelectDIalog();
+			}
+			else
+			{
+				EventSystem.current.SetSelectedGameObject(_firstMapSpot.gameObject);
 			}
 		}
 
@@ -28,9 +33,11 @@ namespace Map
 			_canvasGroup.DOFade(1f, 0.5f);
 		}
 
-		public void SetMapDifficulty(Difficulty difficulty)
+		public void SetMapDifficulty(ScenarioDifficulty difficulty)
 		{
-			MapDifficulty = difficulty;
+			_settings.ScenarioDifficulty = difficulty;
+			_settings.Save();
+
 			_canvasGroup.DOFade(0f, 0.5f).OnComplete(() => EventSystem.current.SetSelectedGameObject(_firstMapSpot.gameObject));
 		}
 
