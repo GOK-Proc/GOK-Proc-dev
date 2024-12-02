@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TransitionOverlay
   - EpisodeFlagManager
+  - SettingsManager
   layers:
   - Default
   - TransparentFX
