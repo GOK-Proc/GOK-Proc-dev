@@ -1,4 +1,5 @@
 ﻿using Rhythm;
+using Settings;
 using Transition;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,7 +10,7 @@ namespace Map
 	class DifficultyBox : Selectable, ISubmitHandler, ICancelHandler
 	{
 		[SerializeField] private DifficultySelector _selector;
-		[SerializeField] private Difficulty _difficulty;
+		[SerializeField] private ScenarioDifficulty _difficulty;
 
 		public void OnSubmit(BaseEventData eventData)
 		{
