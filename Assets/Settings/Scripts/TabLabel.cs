@@ -4,9 +4,11 @@ using UnityEngine.EventSystems;
 
 namespace Settings
 {
-	public class TabLabel : MonoBehaviour, ISelectHandler, IDeselectHandler
+	public class TabLabel : MonoBehaviour, ISelectHandler
 	{
 		[SerializeField] private GameObject _tabArea;
+		[SerializeField] private TabLabel[] _otherTabLabels;
+		[SerializeField] private GameObject[] _otherTabAreas;
 
 		private Color32 _nomalColor = new Color32(r: 128, g: 128, b: 128, a: 255);
 		private Color32 _selectedColor = new Color32(r: 255, g: 243, b: 228, a: 255);
@@ -22,15 +24,9 @@ namespace Settings
 		{
 			_image.color = _selectedColor;
 			_tabArea.SetActive(true);
-		}
 
-		public void OnDeselect(BaseEventData eventData)
-		{
-			if (eventData.selectedObject.GetComponent<TabLabel>())
-			{
-				_image.color = _nomalColor;
-				_tabArea.SetActive(false);
-			}
+			foreach (var tabLabel in _otherTabLabels) tabLabel.GetComponent<Image>().color = _nomalColor;
+			foreach (var tabArea in _otherTabAreas) tabArea.SetActive(false);
 		}
 	}
 }
