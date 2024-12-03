@@ -35,13 +35,29 @@ namespace Title
 					QualitySettings.vSyncCount = 1;
 					Application.targetFrameRate = -1;
 					break;
+				case FrameRate.Fps30:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 30;
+					break;
+				case FrameRate.Fps60:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 60;
+					break;
+				case FrameRate.Fps120:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 120;
+					break;
+				case FrameRate.Fps144:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 144;
+					break;
+				case FrameRate.Fps240:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 240;
+					break;
 				case FrameRate.Unlimited:
 					QualitySettings.vSyncCount = 0;
 					Application.targetFrameRate = -1;
-					break;
-				default:
-					QualitySettings.vSyncCount = 0;
-					Application.targetFrameRate = (int)_userSettings.FrameRate;
 					break;
 			}
 
