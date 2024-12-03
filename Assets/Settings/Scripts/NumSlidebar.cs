@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using KanKikuchi.AudioManager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -91,10 +92,12 @@ namespace Settings
 				case NumericSettingItem.BgmVolume:
 					_settings.BgmVolume += (int)_step;
 					_settings.Save();
+					BGMManager.Instance.ChangeBaseVolume(_settings.BgmVolume / 10f);
 					break;
 				case NumericSettingItem.SoundEffectVolume:
 					_settings.SoundEffectVolume += (int)_step;
 					_settings.Save();
+					SEManager.Instance.ChangeBaseVolume(_settings.SoundEffectVolume / 10f);
 					break;
 				case NumericSettingItem.NovelEffectVolume:
 					_settings.NovelEffectVolume += (int)_step;
@@ -128,10 +131,12 @@ namespace Settings
 				case NumericSettingItem.BgmVolume:
 					_settings.BgmVolume -= (int)_step;
 					_settings.Save();
+					BGMManager.Instance.ChangeBaseVolume(_settings.BgmVolume / 10f);
 					break;
 				case NumericSettingItem.SoundEffectVolume:
 					_settings.SoundEffectVolume -= (int)_step;
 					_settings.Save();
+					SEManager.Instance.ChangeBaseVolume(_settings.SoundEffectVolume / 10f);
 					break;
 				case NumericSettingItem.NovelEffectVolume:
 					_settings.NovelEffectVolume -= (int)_step;
