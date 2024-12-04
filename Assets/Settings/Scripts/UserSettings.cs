@@ -40,7 +40,11 @@ namespace Settings
 
 		[Range(-1f, 1f)]
 		[SerializeField] private float _judgeOffset = 0f;
-		public float JudgeOffset { get => _judgeOffset; set => _judgeOffset = Math.Clamp(value, -1f, 1f); }
+		public float JudgeOffset
+		{
+			get => _judgeOffset;
+			set => _judgeOffset = Math.Clamp((float)Math.Round(value * 10) / 10, -1f, 1f);
+		}
 
 		[Range(0.5f, 3.0f)]
 		[SerializeField] private float _highSpeed = 1f;
@@ -66,7 +70,7 @@ namespace Settings
 			BGMManager.Instance.ChangeBaseVolume(BgmVolume / 10f);
 
 			SEManager.Instance.ChangeBaseVolume(SoundEffectVolume / 10f);
-			
+
 			switch (ScreenMode)
 			{
 				case ScreenMode.Windowed:
@@ -76,7 +80,7 @@ namespace Settings
 					Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
 					break;
 			}
-			
+
 			switch (FrameRate)
 			{
 				case FrameRate.VSync:
