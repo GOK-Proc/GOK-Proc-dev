@@ -341,14 +341,6 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u30EA\u30BA\u30E0\u30B2\u30FC\u30E0"
       objectReference: {fileID: 0}
-    - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
-      propertyPath: m_fontSize
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 7533812092162877655, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2407,14 +2399,6 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u30B9\u30C8\u30FC\u30EA\u30FC"
       objectReference: {fileID: 0}
-    - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
-      propertyPath: m_fontSize
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 7533812092162877655, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3336,14 +3320,6 @@ PrefabInstance:
     - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
       propertyPath: m_text
       value: "\u4E00\u822C"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
-      propertyPath: m_fontSize
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 4726132638075961325, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7533812092162877655, guid: 47b34a857f2c2b0489e53b0fbf5f8518, type: 3}
       propertyPath: m_Pivot.x
