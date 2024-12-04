@@ -43,7 +43,11 @@ namespace Settings
 
 		[Range(0.5f, 3.0f)]
 		[SerializeField] private float _highSpeed = 1f;
-		public float HighSpeed { get => _highSpeed; set => _highSpeed = Math.Clamp(value, 0.5f, 3.0f); }
+		public float HighSpeed
+		{
+			get => _highSpeed;
+			set => _highSpeed = Math.Clamp((float)Math.Round(value * 10) / 10, 0.5f, 3.0f);
+		}
 
 		[Header("General Settings")]
 
