@@ -91,11 +91,11 @@ namespace Settings
 					return;
 				case NumericSettingItem.BgmVolume:
 					_settings.BgmVolume += (int)_step;
-					BGMManager.Instance.ChangeBaseVolume(_settings.BgmVolume / 10f);
+					_settings.ApplySettings();
 					break;
 				case NumericSettingItem.SoundEffectVolume:
 					_settings.SoundEffectVolume += (int)_step;
-					SEManager.Instance.ChangeBaseVolume(_settings.SoundEffectVolume / 10f);
+					_settings.ApplySettings();
 					break;
 				case NumericSettingItem.NovelEffectVolume:
 					_settings.NovelEffectVolume += (int)_step;
@@ -124,11 +124,11 @@ namespace Settings
 					return;
 				case NumericSettingItem.BgmVolume:
 					_settings.BgmVolume -= (int)_step;
-					BGMManager.Instance.ChangeBaseVolume(_settings.BgmVolume / 10f);
+					_settings.ApplySettings();
 					break;
 				case NumericSettingItem.SoundEffectVolume:
 					_settings.SoundEffectVolume -= (int)_step;
-					SEManager.Instance.ChangeBaseVolume(_settings.SoundEffectVolume / 10f);
+					_settings.ApplySettings();
 					break;
 				case NumericSettingItem.NovelEffectVolume:
 					_settings.NovelEffectVolume -= (int)_step;

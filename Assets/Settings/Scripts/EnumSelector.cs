@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -96,9 +95,11 @@ namespace Settings
 					break;
 				case EnumSettingItem.ScreenMode:
 					_settings.ScreenMode = IncrementEnum(_settings.ScreenMode);
+					_settings.ApplySettings();
 					break;
 				case EnumSettingItem.FrameRate:
 					_settings.FrameRate = IncrementEnum(_settings.FrameRate);
+					_settings.ApplySettings();
 					break;
 				case EnumSettingItem.ScenarioDifficulty:
 					_settings.ScenarioDifficulty = IncrementEnum(_settings.ScenarioDifficulty);
@@ -116,9 +117,11 @@ namespace Settings
 					break;
 				case EnumSettingItem.ScreenMode:
 					_settings.ScreenMode = DecrementEnum(_settings.ScreenMode);
+					_settings.ApplySettings();
 					break;
 				case EnumSettingItem.FrameRate:
 					_settings.FrameRate = DecrementEnum(_settings.FrameRate);
+					_settings.ApplySettings();
 					break;
 				case EnumSettingItem.ScenarioDifficulty:
 					_settings.ScenarioDifficulty = DecrementEnum(_settings.ScenarioDifficulty);

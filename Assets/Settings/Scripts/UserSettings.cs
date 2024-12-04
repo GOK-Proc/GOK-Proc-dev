@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using KanKikuchi.AudioManager;
 
 namespace Settings
 {
@@ -39,7 +40,11 @@ namespace Settings
 
 		[Range(-1f, 1f)]
 		[SerializeField] private float _judgeOffset = 0f;
-		public float JudgeOffset { get => _judgeOffset; set => _judgeOffset = Math.Clamp(value, -1f, 1f); }
+		public float JudgeOffset
+		{
+			get => _judgeOffset;
+			set => _judgeOffset = Math.Clamp((float)Math.Round(value * 10) / 10, -1f, 1f);
+		}
 
 		[Range(0.5f, 3.0f)]
 		[SerializeField] private float _highSpeed = 1f;
@@ -59,5 +64,54 @@ namespace Settings
 
 		[SerializeField] private ScenarioDifficulty _scenarioDifficulty;
 		public ScenarioDifficulty ScenarioDifficulty { get => _scenarioDifficulty; set => _scenarioDifficulty = value; }
+
+		public void ApplySettings()
+		{
+			BGMManager.Instance.ChangeBaseVolume(BgmVolume / 10f);
+
+			SEManager.Instance.ChangeBaseVolume(SoundEffectVolume / 10f);
+
+			switch (ScreenMode)
+			{
+				case ScreenMode.Windowed:
+					Screen.SetResolution(Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, FullScreenMode.Windowed);
+					break;
+				case ScreenMode.FullScreen:
+					Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
+					break;
+			}
+
+			switch (FrameRate)
+			{
+				case FrameRate.VSync:
+					QualitySettings.vSyncCount = 1;
+					Application.targetFrameRate = -1;
+					break;
+				case FrameRate.Fps30:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 30;
+					break;
+				case FrameRate.Fps60:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 60;
+					break;
+				case FrameRate.Fps120:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 120;
+					break;
+				case FrameRate.Fps144:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 144;
+					break;
+				case FrameRate.Fps240:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = 240;
+					break;
+				case FrameRate.Unlimited:
+					QualitySettings.vSyncCount = 0;
+					Application.targetFrameRate = -1;
+					break;
+			}
+		}
 	}
 }
