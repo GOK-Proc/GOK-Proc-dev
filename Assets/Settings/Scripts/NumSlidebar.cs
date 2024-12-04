@@ -18,8 +18,8 @@ namespace Settings
 		[SerializeField] private NumericSettingItem _settingItem;
 		[SerializeField] private float _step;
 
-		private Color32 _nomalColor = new Color32(r: 57, g: 57, b: 57, a: 255);
-		private Color32 _selectedColor = new Color32(r: 214, g: 77, b: 42, a: 255);
+		private static readonly Color32 _nomalColor = new Color32(r: 57, g: 57, b: 57, a: 255);
+		private static readonly Color32 _selectedColor = new Color32(r: 214, g: 77, b: 42, a: 255);
 
 		private void OnEnable()
 		{
@@ -91,35 +91,29 @@ namespace Settings
 					return;
 				case NumericSettingItem.BgmVolume:
 					_settings.BgmVolume += (int)_step;
-					_settings.Save();
 					BGMManager.Instance.ChangeBaseVolume(_settings.BgmVolume / 10f);
 					break;
 				case NumericSettingItem.SoundEffectVolume:
 					_settings.SoundEffectVolume += (int)_step;
-					_settings.Save();
 					SEManager.Instance.ChangeBaseVolume(_settings.SoundEffectVolume / 10f);
 					break;
 				case NumericSettingItem.NovelEffectVolume:
 					_settings.NovelEffectVolume += (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.MusicVolume:
 					_settings.MusicVolume += (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.BattleEffectVolume:
 					_settings.BattleEffectVolume += (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.RhythmEffectVolume:
 					_settings.RhythmEffectVolume += (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.HighSpeed:
 					_settings.HighSpeed += _step;
-					_settings.Save();
 					break;
 			}
+			_settings.Save();
 		}
 
 		private void Sub()
@@ -130,35 +124,29 @@ namespace Settings
 					return;
 				case NumericSettingItem.BgmVolume:
 					_settings.BgmVolume -= (int)_step;
-					_settings.Save();
 					BGMManager.Instance.ChangeBaseVolume(_settings.BgmVolume / 10f);
 					break;
 				case NumericSettingItem.SoundEffectVolume:
 					_settings.SoundEffectVolume -= (int)_step;
-					_settings.Save();
 					SEManager.Instance.ChangeBaseVolume(_settings.SoundEffectVolume / 10f);
 					break;
 				case NumericSettingItem.NovelEffectVolume:
 					_settings.NovelEffectVolume -= (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.MusicVolume:
 					_settings.MusicVolume -= (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.BattleEffectVolume:
 					_settings.BattleEffectVolume -= (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.RhythmEffectVolume:
 					_settings.RhythmEffectVolume -= (int)_step;
-					_settings.Save();
 					break;
 				case NumericSettingItem.HighSpeed:
 					_settings.HighSpeed -= _step;
-					_settings.Save();
 					break;
 			}
+			_settings.Save();
 		}
 	}
 }
