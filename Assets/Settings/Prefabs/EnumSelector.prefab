@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 206141429538863028}
   - component: {fileID: 1420077107359264095}
   - component: {fileID: 7407069327743149895}
+  - component: {fileID: 8834168870056379451}
   m_Layer: 5
   m_Name: EnumSelector
   m_TagString: Untagged
@@ -406,6 +407,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &8834168870056379451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3905271510829919457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb28c71f8f7ac744a9388824a38e66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 0
+  _cancel: 0
+  _deselect: 1
 --- !u!1 &4199621943651212635
 GameObject:
   m_ObjectHideFlags: 0
