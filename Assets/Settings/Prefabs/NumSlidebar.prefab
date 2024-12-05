@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 2462492194476856000}
   - component: {fileID: 3617579615663211185}
   - component: {fileID: 6541268673204104076}
+  - component: {fileID: 3633351788541385717}
   m_Layer: 5
   m_Name: NumSlidebar
   m_TagString: Untagged
@@ -496,6 +497,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &3633351788541385717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786039642199795909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb28c71f8f7ac744a9388824a38e66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 0
+  _cancel: 0
+  _deselect: 1
 --- !u!1 &4940703238079845255
 GameObject:
   m_ObjectHideFlags: 0

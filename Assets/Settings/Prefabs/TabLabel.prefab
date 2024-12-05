@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 8804718178170209090}
   - component: {fileID: -6646509410098867424}
   - component: {fileID: 5914673707323730280}
+  - component: {fileID: 3165288360138849404}
   m_Layer: 5
   m_Name: TabLabel
   m_TagString: Untagged
@@ -266,3 +267,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tabArea: {fileID: 0}
+  _otherTabLabels: []
+  _otherTabAreas: []
+--- !u!114 &3165288360138849404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8441513549383747424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb28c71f8f7ac744a9388824a38e66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _submit: 0
+  _cancel: 1
+  _deselect: 1

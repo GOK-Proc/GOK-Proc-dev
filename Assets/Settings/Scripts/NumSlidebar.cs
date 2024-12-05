@@ -42,8 +42,16 @@ namespace Settings
 		{
 			AxisEventData axisEventData = eventData as AxisEventData;
 
-			if (axisEventData.moveDir == MoveDirection.Left) Sub();
-			else if (axisEventData.moveDir == MoveDirection.Right) Add();
+			if (axisEventData.moveDir == MoveDirection.Left)
+			{
+				Sub();
+				SEManager.Instance.Play(SEPath.SYSTEM_SELECT, _settings.SoundEffectVolume / 10f);
+			}
+			else if (axisEventData.moveDir == MoveDirection.Right)
+			{
+				Add();
+				SEManager.Instance.Play(SEPath.SYSTEM_SELECT, _settings.SoundEffectVolume / 10f);
+			}
 
 			UpdateView();
 		}
