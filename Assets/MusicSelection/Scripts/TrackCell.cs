@@ -55,7 +55,6 @@ namespace MusicSelection
         {
             Context.OnCellSelected?.Invoke(Index);
             UpdateContent(_trackInfo);
-            // TODO: ここでスクロールバー制御?
             _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
         }
 

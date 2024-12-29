@@ -4,7 +4,6 @@ using UnityEngine;
 using FancyScrollView;
 using EasingCore;
 using Gallery;
-using UnityEngine.Serialization;
 
 namespace MusicSelection
 {
@@ -21,51 +20,39 @@ namespace MusicSelection
 
         private void Start()
         {
-            _scroller.OnValueChanged(UpdatePosition);
             Context.OnCellSelected += ScrollTo;
-        }
-
-        public void UpdateData(IList<TrackInformation> items)
-        {
-            UpdateContents(items);
-            Scroller.SetTotalCount(items.Count);
-        }
-
-        public void ScrollToNext()
-        {
-            if (Context.SelectedIndex == ItemsSource.Count - 1) return;
-            ScrollTo(Context.SelectedIndex + 1);
-        }
-
-        public void ScrollToPrevious()
-        {
-            if (Context.SelectedIndex == 0) return;
-            ScrollTo(Context.SelectedIndex - 1);
-        }
-
-        private void ScrollTo(int index)
-        {
-            UpdateSelection(index);
-            ScrollTo(index, 0.5f, Ease.InOutQuint, .5f);
-        }
-
-        public void JumpTo(int index)
-        {
-            UpdateSelection(index);
-            JumpTo(index, .5f);
+            _onSelectionChanged?.Invoke(Context.SelectedIndex);
         }
 
         public void OnSelectionChanged(Action<int> callback)
         {
             _onSelectionChanged = callback;
         }
+        
+        public void UpdateData(IList<TrackInformation> items)
+        {
+            UpdateContents(items);
+            Scroller.SetTotalCount(items.Count);
+        }
+
+        public void JumpTo(int index)
+        {
+            UpdateSelection(index);
+            JumpTo(index, 1.0f);
+        }
+
+        private void ScrollTo(int index)
+        {
+            UpdateSelection(index);
+            // ScrollToのdurationは，InputSystemUiInputModuleのMoveRepeatRateに合わせた
+            ScrollTo(index, 0.1f, Ease.InOutQuint, 1.0f);
+        }
 
         private void UpdateSelection(int index)
         {
             if (Context.SelectedIndex == index) return;
-
+            
             Context.SelectedIndex = index;
-
             _onSelectionChanged?.Invoke(index);
 
             Refresh();
