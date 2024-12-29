@@ -4,22 +4,21 @@ using KanKikuchi.AudioManager;
 
 public class SystemSoundEffect : MonoBehaviour, ISubmitHandler, ICancelHandler, IDeselectHandler
 {
-    private const float VolumeRate = 0.2f;
     [SerializeField] private bool _submit = true, _cancel = true, _deselect = true;
 
     public static void PlaySubmit()
     {
-        SEManager.Instance.Play(SEPath.SYSTEM_SUBMIT, VolumeRate);
+        SEManager.Instance.Play(SEPath.SYSTEM_SUBMIT);
     }
 
     public static void PlayCancel()
     {
-        SEManager.Instance.Play(SEPath.SYSTEM_CANCEL, VolumeRate);
+        SEManager.Instance.Play(SEPath.SYSTEM_CANCEL);
     }
 
     public static void PlaySelect()
     {
-        SEManager.Instance.Play(SEPath.SYSTEM_SELECT, VolumeRate);
+        SEManager.Instance.Play(SEPath.SYSTEM_SELECT);
     }
 
     public void OnSubmit(BaseEventData _)
