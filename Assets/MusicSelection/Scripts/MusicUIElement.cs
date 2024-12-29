@@ -68,16 +68,15 @@ namespace MusicSelection
 
         public virtual void OnSelect(BaseEventData _)
         {
-            _text.fontSize = FontSizeWhenSelected;
+            // _text.fontSize = FontSizeWhenSelected;
             // TODO: ここでスクロールバー制御
-            _thumbnailBase.Set(_trackInfo);
-
+            // _thumbnailBase.Set(_trackInfo);
             _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
         }
 
         public virtual void OnDeselect(BaseEventData _)
         {
-            _text.fontSize = NormalFontSize;
+            // _text.fontSize = NormalFontSize;
 
             StopCoroutine(_bgmSwitchCor);
         }
