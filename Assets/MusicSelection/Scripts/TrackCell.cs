@@ -56,6 +56,11 @@ namespace MusicSelection
             Context.OnCellSelected?.Invoke(Index);
             UpdateContent(_trackInfo);
             _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
+
+            if (_trackInfo.Id == "Tutorial")
+            {
+                DifficultySelection.SetActive(false);
+            }
         }
 
         public void OnDeselect(BaseEventData _)
@@ -64,6 +69,11 @@ namespace MusicSelection
 
             if (_bgmSwitchCor == null) return;
             StopCoroutine(_bgmSwitchCor);
+
+            if (_trackInfo.Id == "Tutorial")
+            {
+                DifficultySelection.SetActive(true);
+            }
         }
 
         private IEnumerator SwitchBGMIfNeeded()
