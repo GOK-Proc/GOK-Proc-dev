@@ -35,7 +35,7 @@ namespace MusicSelection
             const float margin = 60f;
             _clearText.rectTransform.localPosition = _titleText.rectTransform.localPosition +
                                                      _titleText.preferredWidth * Vector3.right +
-                                                     margin * Vector3.right ;
+                                                     margin * Vector3.right;
 
             if (track.HasBeatmap)
             {
