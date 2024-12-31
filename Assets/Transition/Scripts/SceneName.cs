@@ -9,6 +9,7 @@
         MusicSelection,
         Novel,
         Rhythm,
-        Title
+        Title,
+        Settings
     }
 }
