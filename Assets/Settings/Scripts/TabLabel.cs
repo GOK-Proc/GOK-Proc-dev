@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Transition;
 
 namespace Settings
 {
-	public class TabLabel : MonoBehaviour, ISelectHandler, IDeselectHandler
+	public class TabLabel : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler, ICancelHandler
 	{
+		[SerializeField] private UserSettings _settings;
 		[SerializeField] private GameObject _tabArea;
+		[SerializeField] private GameObject _selectOnSubmit;
 		[SerializeField] private TabLabel[] _otherTabLabels;
 		[SerializeField] private GameObject[] _otherTabAreas;
 
@@ -33,6 +36,17 @@ namespace Settings
 		public void OnDeselect(BaseEventData eventData)
 		{
 			transform.position = new Vector3(transform.position.x, transform.position.y - 10, transform.position.z);
+		}
+
+		public void OnSubmit(BaseEventData eventData)
+		{
+			EventSystem.current.SetSelectedGameObject(_selectOnSubmit);
+		}
+
+		public void OnCancel(BaseEventData eventData)
+		{
+			_settings.ApplySettings();
+			SceneTransitionManager.TransitionToModeSelection();
 		}
 	}
 }

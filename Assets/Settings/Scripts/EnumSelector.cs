@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace Settings
 {
 	[RequireComponent(typeof(Selectable))]
-	public class EnumSelector : MonoBehaviour, ISelectHandler, IDeselectHandler
+	public class EnumSelector : MonoBehaviour, ISelectHandler, IDeselectHandler, ICancelHandler
 	{
 		[SerializeField] private UserSettings _settings;
 		[SerializeField] private TextMeshProUGUI _label;
@@ -17,6 +17,7 @@ namespace Settings
 		[SerializeField] private Image _leftArrow;
 		[SerializeField] private Image _rightArrow;
 		[SerializeField] private Image _valueFrame;
+		[SerializeField] private TabLabel _tabLabel;
 
 		[Space(10)]
 		[SerializeField] private EnumSettingItem _settingItem;
@@ -47,6 +48,11 @@ namespace Settings
 		{
 			_label.color = _nomalColor;
 			_label.text = _label.text.TrimStart(' ');
+		}
+
+		public void OnCancel(BaseEventData eventData)
+		{
+			EventSystem.current.SetSelectedGameObject(_tabLabel.gameObject);
 		}
 
 		public void OnMove(BaseEventData eventData)

@@ -46,6 +46,11 @@ namespace Transition
 			TransitionToScene(SceneName.Title);
 		}
 
+		public static void TransitionToSettings()
+		{
+			TransitionToScene(SceneName.Settings);
+		}
+
 		public static void TransitionToGallery()
 		{
 			TransitionToScene(SceneName.Gallery);
