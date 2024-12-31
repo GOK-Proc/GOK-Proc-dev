@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3946e033d4819b4ab471ec7c5f1924c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: e54a2569bc14bcd4fa1af24866c7dd98, type: 2}
   _tabArea: {fileID: 0}
   _otherTabLabels: []
   _otherTabAreas: []

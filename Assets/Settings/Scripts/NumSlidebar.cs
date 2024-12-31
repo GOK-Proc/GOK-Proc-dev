@@ -1,4 +1,5 @@
 ﻿using KanKikuchi.AudioManager;
+using Novel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,12 +8,13 @@ using UnityEngine.UI;
 namespace Settings
 {
 	[RequireComponent(typeof(Selectable))]
-	public class NumSlidebar : MonoBehaviour, ISelectHandler, IDeselectHandler
+	public class NumSlidebar : MonoBehaviour, ISelectHandler, IDeselectHandler, ICancelHandler
 	{
 		[SerializeField] private UserSettings _settings;
 		[SerializeField] private TextMeshProUGUI _label;
 		[SerializeField] private TextMeshProUGUI _valueText;
 		[SerializeField] private Slider _slider;
+		[SerializeField] private TabLabel _tabLabel;
 
 		[Space(10)]
 		[SerializeField] private NumericSettingItem _settingItem;
@@ -36,6 +38,11 @@ namespace Settings
 		{
 			_label.color = _nomalColor;
 			_label.text = _label.text.TrimStart(' ');
+		}
+
+		public void OnCancel(BaseEventData eventData)
+		{
+			EventSystem.current.SetSelectedGameObject(_tabLabel.gameObject);
 		}
 
 		public void OnMove(BaseEventData eventData)
