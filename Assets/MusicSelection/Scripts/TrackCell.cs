@@ -20,7 +20,11 @@ namespace MusicSelection
         private RhythmId RhythmId => _trackInfo.HasBeatmap switch
         {
             true => (RhythmId)Enum.Parse(typeof(RhythmId), _trackInfo.Id),
-            false => RhythmId.None
+            false => _trackInfo.Id switch
+            {
+                "Tutorial" => RhythmId.Chapter1_2,
+                _ => RhythmId.None
+            }
         };
 
         [SerializeField] private TextMeshProUGUI _title;
@@ -43,7 +47,15 @@ namespace MusicSelection
             if (RhythmId == RhythmId.None) return;
 
             StopCoroutine(_bgmSwitchCor);
-            SceneTransitionManager.TransitionToRhythm(RhythmId, DifficultySelection.Current);
+
+            if (_trackInfo.Id == "Tutorial")
+            {
+                SceneTransitionManager.TransitionToRhythmTutorial();
+            }
+            else
+            {
+                SceneTransitionManager.TransitionToRhythm(RhythmId, DifficultySelection.Current);
+            }
         }
 
         public void OnCancel(BaseEventData _)
@@ -56,6 +68,11 @@ namespace MusicSelection
             Context.OnCellSelected?.Invoke(Index);
             UpdateContent(_trackInfo);
             _bgmSwitchCor = StartCoroutine(SwitchBGMIfNeeded());
+
+            if (_trackInfo.Id == "Tutorial")
+            {
+                DifficultySelection.SetActive(false);
+            }
         }
 
         public void OnDeselect(BaseEventData _)
@@ -64,6 +81,11 @@ namespace MusicSelection
 
             if (_bgmSwitchCor == null) return;
             StopCoroutine(_bgmSwitchCor);
+
+            if (_trackInfo.Id == "Tutorial")
+            {
+                DifficultySelection.SetActive(true);
+            }
         }
 
         private IEnumerator SwitchBGMIfNeeded()

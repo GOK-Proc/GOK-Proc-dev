@@ -28,7 +28,7 @@ namespace MusicSelection
         {
             _onSelectionChanged = callback;
         }
-        
+
         public void UpdateData(IList<TrackInformation> items)
         {
             UpdateContents(items);
@@ -51,7 +51,7 @@ namespace MusicSelection
         private void UpdateSelection(int index)
         {
             if (Context.SelectedIndex == index) return;
-            
+
             Context.SelectedIndex = index;
             _onSelectionChanged?.Invoke(index);
 

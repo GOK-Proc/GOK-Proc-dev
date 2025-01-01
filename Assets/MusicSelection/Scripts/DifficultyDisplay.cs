@@ -1,8 +1,5 @@
-using System.ComponentModel;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Rhythm;
 
 namespace MusicSelection
 {
@@ -24,12 +21,12 @@ namespace MusicSelection
 
         public static void Hide()
         {
-            _instanceGameObj.gameObject.SetActive(false);
+            _instanceGameObj.SetActive(false);
         }
 
         public static void Show()
         {
-            _instanceGameObj.gameObject.SetActive(true);
+            _instanceGameObj.SetActive(true);
         }
 
         public void Set()

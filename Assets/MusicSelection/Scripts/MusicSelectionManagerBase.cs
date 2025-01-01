@@ -42,15 +42,15 @@ namespace MusicSelection
             _trackScrollRect.UpdateData(tracks);
 
             var currentTrackIndex = 0;
-            if (SceneTransitionManager.CurrentRhythmId != RhythmId.None)
+            if (SceneTransitionManager.CurrentTutorialId == TutorialId.Rhythm)
+            {
+                currentTrackIndex = _trackDict.Keys.ToList().IndexOf("Tutorial");
+            }
+            else if (SceneTransitionManager.CurrentRhythmId != RhythmId.None)
             {
                 // 直前に遊んだ曲番号を取得
                 currentTrackIndex = _trackDict.Keys.ToList()
                     .IndexOf(SceneTransitionManager.CurrentRhythmId.ToString());
-            }
-            else if (SceneTransitionManager.CurrentTutorialId == TutorialId.Rhythm)
-            {
-                currentTrackIndex = _trackDict.Keys.ToList().IndexOf("Tutorial");
             }
 
             _trackScrollRect.JumpTo(currentTrackIndex);
