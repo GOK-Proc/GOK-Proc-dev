@@ -90,7 +90,7 @@ public class AdjustmentManager : MonoBehaviour
             var judgeOffset = differences.Any() ? differences.Average() : 0;
 
             // 0.01秒のズレにつき，スライダーの値1とする
-            _slider.value = Mathf.RoundToInt((float)judgeOffset * 100);
+            _slider.value = Mathf.Clamp(Mathf.RoundToInt((float)judgeOffset * 100), -20, 20);
 
             SelectManual();
         }
