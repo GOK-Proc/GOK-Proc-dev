@@ -133,7 +133,7 @@ namespace Rhythm
             var tutorialId = SceneTransitionManager.CurrentTutorialId;
 
             _setting.ScrollSpeed *= _userSettings.HighSpeed;
-            _setting.JudgeOffset = _userSettings.JudgeOffset;
+            _setting.JudgeOffset = _userSettings.JudgeOffset / 5;
             _setting.KeyConfig = _userSettings.KeyConfigId;
             _setting.VolumeSetting.Track = _userSettings.MusicVolume / 10f;
             _setting.VolumeSetting.Se = _userSettings.BattleEffectVolume / 10f;
