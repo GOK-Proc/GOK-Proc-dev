@@ -19,7 +19,7 @@ MonoBehaviour:
     _offset: -0.98
     _composer: "\u5965\u91CE\u7950\u751F"
     _backgroundSprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
-    _enemySprite: {fileID: 0}
+    _enemySprite: {fileID: 21300000, guid: 16cea2282af033f409ea743d43743452, type: 3}
     _notes:
     - _level: 4
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
@@ -87,7 +87,7 @@ MonoBehaviour:
     _offset: 0
     _composer: "\u5965\u91CE\u7950\u751F"
     _backgroundSprite: {fileID: 21300000, guid: 9b0c774f15ffcfb4990709a1491234ad, type: 3}
-    _enemySprite: {fileID: 0}
+    _enemySprite: {fileID: 21300000, guid: 16cea2282af033f409ea743d43743452, type: 3}
     _notes:
     - _level: 1
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
@@ -104,7 +104,7 @@ MonoBehaviour:
     _offset: 0
     _composer: "\u7AF9\u4E0B\u5B9F\u7A42"
     _backgroundSprite: {fileID: 21300000, guid: 63da16cfc1474ae45bc7b9ff97838d1d, type: 3}
-    _enemySprite: {fileID: 0}
+    _enemySprite: {fileID: 21300000, guid: 16cea2282af033f409ea743d43743452, type: 3}
     _notes:
     - _level: 2
       _notesDesigner: "\u30AB\u30E1\u5409"
