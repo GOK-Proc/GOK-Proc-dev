@@ -518,7 +518,7 @@ namespace Rhythm
                     t.DOScaleX(scaleX, _laneFlashDuration).OnComplete(() =>
                     {
                         d?.Invoke();
-                    });
+                    }).SetUpdate(true);
                 },
                 (t, s, d) =>
                 {
@@ -528,7 +528,7 @@ namespace Rhythm
                     {
                         s.color = color;
                         d?.Invoke();
-                    }).SetLink(gameObject);
+                    }).SetLink(gameObject).SetUpdate(true);
 
                 },
                 disposable);

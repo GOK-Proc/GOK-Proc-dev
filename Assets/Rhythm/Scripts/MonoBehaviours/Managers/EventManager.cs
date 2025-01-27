@@ -21,7 +21,6 @@ namespace Rhythm
         private IColorInputProvider _colorInputProvider;
         private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
-        private ITutorialDrawable _tutorialDrawable;
         private ISkipScreenDrawable _skipScreenDrawable;
 
         [SerializeField] private PlayerInput _playerInput;
@@ -40,7 +39,7 @@ namespace Rhythm
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfigId keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ITutorialDrawable tutorialDrawable, ISkipScreenDrawable skipScreenDrawable)
+        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfigId keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ISkipScreenDrawable skipScreenDrawable)
         {
             _isVs = isVs;
             _tutorialId = tutorialId;
@@ -51,7 +50,6 @@ namespace Rhythm
             _colorInputProvider = colorInputProvider;
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
-            _tutorialDrawable = tutorialDrawable;
             _skipScreenDrawable = skipScreenDrawable;
 
             _isPause = false;
@@ -225,19 +223,6 @@ namespace Rhythm
             if (context.performed)
             {
                 OnPauseResumeButtonClick();
-            }
-        }
-
-        public void OnTutorialResume(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _tutorialDrawable.EraseTutorial().onComplete += () =>
-                {
-                    _playerInput.SwitchCurrentActionMap(_keyConfig.ToString());
-                    _soundPlayable.UnPauseMusic();
-                    Time.timeScale = 1;
-                };
             }
         }
 
