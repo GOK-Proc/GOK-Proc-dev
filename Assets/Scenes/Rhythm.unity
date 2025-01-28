@@ -38861,8 +38861,8 @@ MonoBehaviour:
     _beatmap:
       _id: tutorial
       _title: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
-      _sound: {fileID: 8300000, guid: 6ce53a97984d80949b429a9943d551da, type: 3}
-      _offset: 0.05
+      _sound: {fileID: 8300000, guid: e79dc87cbef12ce489f8db9bf8e96a1d, type: 3}
+      _offset: 1
       _composer: 
       _backgroundSprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
       _enemySprite: {fileID: 21300000, guid: 7af8cc4661d62cf4ba532915b829d782, type: 3}
@@ -38877,13 +38877,13 @@ MonoBehaviour:
         _notesDesigner: 
         _file: {fileID: 4900000, guid: eb18445dce0a4d04a94112bdb2377648, type: 3}
     _times:
-    - 8
-    - 18.6666
-    - 29.3333
-    - 40
-    - 50.6666
-    - 61.3333
-    _delay: 0
+    - 0
+    - 12
+    - 24
+    - 36
+    - 48
+    - 60
+    _delay: 2.4
   _skipDelay: 2
 --- !u!4 &1770842084
 Transform:

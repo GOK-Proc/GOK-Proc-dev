@@ -39,6 +39,7 @@ namespace Rhythm
 
         private readonly AudioSource _audioSource;
         private readonly AudioClip _audioClip;
+        private readonly AudioSource _subAudioSource;
         private readonly IDictionary<string, AudioClipData> _soundData;
         private readonly IDictionary<string, IntroAudioData> _introData;
 
@@ -57,6 +58,7 @@ namespace Rhythm
             {
                 _rhythmVolumeSetting.Track = value;
                 _audioSource.volume = _rhythmVolumeSetting.Track;
+                _subAudioSource.volume = _rhythmVolumeSetting.Track;
             }
         }
 
@@ -109,10 +111,11 @@ namespace Rhythm
 
         public bool IsPlayingMusic => _audioSource.isPlaying;
 
-        public SoundPlayer(AudioSource source, AudioSource seSource, IntroSoundPlayer introSoundPlayer, AudioClip clip, IDictionary<string, AudioClipData> soundData, IDictionary<string, IntroAudioData> introData, RhythmVolumeSetting rhythmVolumeSetting)
+        public SoundPlayer(AudioSource source, AudioSource seSource, AudioSource subAudioSource, IntroSoundPlayer introSoundPlayer, AudioClip clip, IDictionary<string, AudioClipData> soundData, IDictionary<string, IntroAudioData> introData, RhythmVolumeSetting rhythmVolumeSetting)
         {
             _audioSource = source;
             _audioClip = clip;
+            _subAudioSource = subAudioSource;
             _soundData = soundData;
             _introData = introData;
             
