@@ -97,38 +97,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: XboxButtons_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 126, y: -34}
-        - {x: 135, y: 41}
-        - {x: 227, y: 135}
-        - {x: 297, y: 138}
-        - {x: 297, y: -34}
-      - - {x: -130, y: -111}
-        - {x: -114, y: -49}
-        - {x: -79, y: -49}
-        - {x: -79, y: -14}
-        - {x: -32, y: 3}
-        - {x: -30, y: -111}
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c9080822c885da145afff4148dea7502
-      internalID: 738387929
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: XboxButtons_1
       rect:
         serializedVersion: 2
@@ -205,14 +173,18 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -117, y: -86}
-        - {x: -117, y: -50}
-        - {x: -75, y: -50}
-        - {x: -75, y: -86}
-      - - {x: 135, y: -22}
-        - {x: 135, y: 52}
-        - {x: 217, y: 52}
-        - {x: 217, y: -22}
+      - - {x: -116, y: -14}
+        - {x: -117, y: 26}
+        - {x: -74, y: 25}
+        - {x: -75, y: -14}
+      - - {x: 110, y: 148}
+        - {x: 157, y: 216}
+        - {x: 304, y: 91}
+        - {x: 247, y: 11}
+      - - {x: -77, y: -53}
+        - {x: -77, y: -12}
+        - {x: -38, y: -12}
+        - {x: -38, y: -53}
       physicsShape: []
       tessellationDetail: 0
       bones: []
@@ -234,14 +206,18 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -124, y: -13}
-        - {x: -124, y: 33}
-        - {x: -69, y: 34}
-        - {x: -69, y: -12}
-      - - {x: 138, y: 106}
-        - {x: 138, y: 186}
-        - {x: 214, y: 186}
-        - {x: 214, y: 106}
+      - - {x: -151, y: -52}
+        - {x: -151, y: -12}
+        - {x: -114, y: -12}
+        - {x: -114, y: -52}
+      - - {x: 181, y: -48}
+        - {x: 41, y: 76}
+        - {x: 117, y: 138}
+        - {x: 236, y: 18}
+      - - {x: -116, y: -86}
+        - {x: -116, y: -51}
+        - {x: -74, y: -51}
+        - {x: -74, y: -86}
       physicsShape: []
       tessellationDetail: 0
       bones: []
@@ -263,39 +239,89 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -295, y: 198}
-        - {x: -295, y: 300}
-        - {x: 305, y: 300}
-        - {x: 305, y: 198}
-      - - {x: -254, y: 35}
-        - {x: -254, y: 174}
-        - {x: -108, y: 174}
-        - {x: -108, y: 35}
-      - - {x: 4, y: -89}
-        - {x: 4, y: 26}
-        - {x: 127, y: 26}
-        - {x: 127, y: -89}
-      - - {x: 73, y: 43}
-        - {x: 73, y: 119}
-        - {x: 150, y: 119}
-        - {x: 150, y: 43}
-      - - {x: 203, y: 43}
-        - {x: 203, y: 118}
-        - {x: 280, y: 118}
-        - {x: 280, y: 43}
       - - {x: -78, y: -59}
         - {x: -78, y: -6}
         - {x: -37, y: -6}
         - {x: -37, y: -59}
-      - - {x: -155, y: -58}
-        - {x: -155, y: -5}
-        - {x: -114, y: -5}
-        - {x: -114, y: -58}
+      - - {x: -116, y: -89}
+        - {x: -116, y: -51}
+        - {x: -75, y: -51}
+        - {x: -75, y: -89}
+      - - {x: 43, y: 79}
+        - {x: 106, y: 145}
+        - {x: 244, y: 19}
+        - {x: 182, y: -41}
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: b3e0a92894581e1449ff5205cd57c94b
       internalID: 567352433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -120, y: -14}
+        - {x: -120, y: 27}
+        - {x: -73, y: 27}
+        - {x: -73, y: -14}
+      - - {x: -161, y: -57}
+        - {x: -161, y: -10}
+        - {x: -116, y: -10}
+        - {x: -116, y: -57}
+      - - {x: 105, y: 144}
+        - {x: 169, y: 212}
+        - {x: 321, y: 87}
+        - {x: 257, y: 8}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8f564830a5be764a9ca73789e9ca637
+      internalID: -291098929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: XboxButtons_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -122, y: -87}
+        - {x: -122, y: -51}
+        - {x: -70, y: -51}
+        - {x: -70, y: -87}
+      - - {x: -77, y: -66}
+        - {x: -77, y: -1}
+        - {x: -39, y: -1}
+        - {x: -39, y: -66}
+      - - {x: 174, y: -50}
+        - {x: 117, y: 20}
+        - {x: 245, y: 147}
+        - {x: 306, y: 80}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f10b8966ec207d7469873d6f0de92d64
+      internalID: -335938756
       vertices: []
       indices: 
       edges: []
@@ -311,7 +337,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      XboxButtons_0: 738387929
+      XboxButtons_0: -335938756
       XboxButtons_1: 825599542
       XboxButtons_10: -202957389
       XboxButtons_11: -755548368
@@ -321,7 +347,6 @@ TextureImporter:
       XboxButtons_4: 1196424675
       XboxButtons_5: 567352433
       XboxButtons_6: -291098929
-      XboxButtons_7: -335938756
       XboxButtons_8: 1359949415
       XboxButtons_9: -1231995088
   mipmapLimitGroupName: 

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using Settings;
+using UnityEngine.Serialization;
 
 namespace Rhythm
 {
@@ -206,7 +207,8 @@ namespace Rhythm
         private struct TutorialKeyConfig
         {
             public KeyConfigId KeyConfig;
-            public RectTransform[] RectTransforms;
+            public RectTransform[] Controllers;
+            public RectTransform[] Keyboards;
         }
 
         [SerializeField] private TutorialKeyConfig[] _tutorialKeyConfigs;
@@ -214,7 +216,7 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private CanvasGroup _skipBox;
 
-        private Dictionary<KeyConfigId, RectTransform[]> _tutorialKeyConfigDictionary;
+        private Dictionary<KeyConfigId, (RectTransform[] Controllers, RectTransform[] Keyboards)> _tutorialKeyConfigDictionary;
 
         private CanvasGroup _battleResultBoxCanvasGroup;
         private CanvasGroup _battleResultContentsCanvasGroup;
@@ -300,7 +302,7 @@ namespace Rhythm
             _tutorialBoxCanvasGroup = _tutorialBox.GetComponent<CanvasGroup>();
             _skipBoxCanvasGroup = _skipBox.GetComponent<CanvasGroup>();
 
-            _tutorialKeyConfigDictionary = _tutorialKeyConfigs.ToDictionary(x => x.KeyConfig, x => x.RectTransforms);
+            _tutorialKeyConfigDictionary = _tutorialKeyConfigs.ToDictionary(x => x.KeyConfig, x => (x.Controllers, x.Keyboards));
         }
 
         private void DrawGauge(Transform gauge, Vector3 position, Vector3 scale, float value)
@@ -1026,7 +1028,11 @@ namespace Rhythm
 
                 foreach (var i in _tutorialKeyConfigDictionary)
                 {
-                    i.Value[index].gameObject.SetActive(i.Key == keyConfig);
+                    if (i.Key == keyConfig)
+                    {
+                        i.Value.Controllers[index].gameObject.SetActive(true);
+                        i.Value.Keyboards[index].gameObject.SetActive(true);
+                    }
                 }
                 
                 _tutorialBoxCanvasGroup.alpha = 0f;

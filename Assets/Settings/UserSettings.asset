@@ -20,7 +20,7 @@ MonoBehaviour:
   _musicVolume: 5
   _battleEffectVolume: 5
   _rhythmEffectVolume: 5
-  _keyConfigId: 0
+  _keyConfigId: 2
   _judgeOffset: 0
   _highSpeed: 1
   _screenMode: 0
