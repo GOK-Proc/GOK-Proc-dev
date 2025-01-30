@@ -203,7 +203,7 @@ namespace Rhythm
 
             _tutorialManager = new TutorialManager(tutorialId != TutorialId.None, _setting.KeyConfig, _tutorialData, _playerInput, _subAudioSource, _soundPlayer, _timeManager, _uiManager);
 
-            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager);
+            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager, _tutorialManager);
             _eventManager.SetSoundVolumeSlider(_setting.VolumeSetting);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);

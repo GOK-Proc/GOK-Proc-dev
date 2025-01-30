@@ -22,6 +22,7 @@ namespace Rhythm
         private IMoveInputProvider _moveInputProvider;
         private IPauseScreenDrawable _pauseScreenDrawable;
         private ISkipScreenDrawable _skipScreenDrawable;
+        private TutorialManager _tutorialManager;
 
         [SerializeField] private PlayerInput _playerInput;
 
@@ -39,7 +40,7 @@ namespace Rhythm
 
         private readonly float _victoryFadeOut = 0.3f;
 
-        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfigId keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ISkipScreenDrawable skipScreenDrawable)
+        public void Initialize(bool isVs, TutorialId tutorialId, KeyConfigId keyConfig, IBattleMode battleMode, ISoundPlayable soundPlayable, ISoundVolumeAdjustable soundVolumeAdjustable, IColorInputProvider colorInputProvider, IMoveInputProvider moveInputProvider, IPauseScreenDrawable pauseScreenDrawable, ISkipScreenDrawable skipScreenDrawable, TutorialManager tutorialManager)
         {
             _isVs = isVs;
             _tutorialId = tutorialId;
@@ -51,6 +52,7 @@ namespace Rhythm
             _moveInputProvider = moveInputProvider;
             _pauseScreenDrawable = pauseScreenDrawable;
             _skipScreenDrawable = skipScreenDrawable;
+            _tutorialManager = tutorialManager;
 
             _isPause = false;
         }
@@ -199,7 +201,7 @@ namespace Rhythm
 
         public void OnPause(InputAction.CallbackContext context)
         {
-            if (context.performed && !_isPause)
+            if (context.performed && !_isPause && _tutorialManager.CanPause)
             {
                 _playerInput.SwitchCurrentActionMap("Pause");
                 _soundPlayable.PauseMusic();

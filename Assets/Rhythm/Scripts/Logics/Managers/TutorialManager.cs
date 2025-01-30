@@ -31,6 +31,8 @@ namespace Rhythm
         private bool _loopFlag;
         private bool _resumeFlag;
 
+        public bool CanPause => _currentMode == Mode.Play;
+
         public TutorialManager(bool isTutorial, KeyConfigId keyConfig, TutorialData data, PlayerInput playerInput, AudioSource subAudioSource, ISoundPlayable soundPlayable, ITimeProvider timeProvider, ITutorialDrawable tutorialDrawable)
         {
             _isTutorial = isTutorial;
