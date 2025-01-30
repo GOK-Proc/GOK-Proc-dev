@@ -209,6 +209,7 @@ namespace Rhythm
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);
             _uiManager.SetEnemySprite(beatmapInfo.EnemySprite);
+            _uiManager.SetPauseKeyConfig(_setting.KeyConfig);
             _uiManager.SwitchUI(isVs);
         }
 

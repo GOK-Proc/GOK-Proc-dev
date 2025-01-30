@@ -8,7 +8,6 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using Settings;
-using UnityEngine.Serialization;
 
 namespace Rhythm
 {
@@ -199,6 +198,16 @@ namespace Rhythm
         [SerializeField] private RectTransform _pauseBox;
         [SerializeField] private TextMeshProUGUI _countDownNumber;
 
+        [System.Serializable]
+        private struct PauseKeyConfig
+        {
+            public KeyConfigId KeyConfig;
+            public RectTransform Controller;
+            public RectTransform Keyboard;
+        }
+
+        [SerializeField] private PauseKeyConfig[] _pauseKeyConfigs;
+
         [Space(20)]
         [SerializeField] private RectTransform _tutorialBox;
         [SerializeField] private RectTransform[] _tutorialContents;
@@ -216,6 +225,7 @@ namespace Rhythm
         [Space(20)]
         [SerializeField] private CanvasGroup _skipBox;
 
+        private Dictionary<KeyConfigId, (RectTransform Controller, RectTransform Keyboard)> _pauseKeyConfigDictionary;
         private Dictionary<KeyConfigId, (RectTransform[] Controllers, RectTransform[] Keyboards)> _tutorialKeyConfigDictionary;
 
         private CanvasGroup _battleResultBoxCanvasGroup;
@@ -302,6 +312,7 @@ namespace Rhythm
             _tutorialBoxCanvasGroup = _tutorialBox.GetComponent<CanvasGroup>();
             _skipBoxCanvasGroup = _skipBox.GetComponent<CanvasGroup>();
 
+            _pauseKeyConfigDictionary = _pauseKeyConfigs.ToDictionary(x => x.KeyConfig, x => (x.Controller, x.Keyboard));
             _tutorialKeyConfigDictionary = _tutorialKeyConfigs.ToDictionary(x => x.KeyConfig, x => (x.Controllers, x.Keyboards));
         }
 
@@ -1028,11 +1039,14 @@ namespace Rhythm
 
                 foreach (var i in _tutorialKeyConfigDictionary)
                 {
-                    if (i.Key == keyConfig)
-                    {
-                        i.Value.Controllers[index].gameObject.SetActive(true);
-                        i.Value.Keyboards[index].gameObject.SetActive(true);
-                    }
+                    i.Value.Controllers[index].gameObject.SetActive(false);
+                    i.Value.Keyboards[index].gameObject.SetActive(false);
+                }
+
+                if (_tutorialKeyConfigDictionary.TryGetValue(keyConfig, out var rectTransforms))
+                {
+                    rectTransforms.Controllers[index].gameObject.SetActive(true);
+                    rectTransforms.Keyboards[index].gameObject.SetActive(true);
                 }
                 
                 _tutorialBoxCanvasGroup.alpha = 0f;
@@ -1126,6 +1140,21 @@ namespace Rhythm
 
             _enemyColor = new Color(0.5f, 0.5f, 0.5f);
             _enemyRenderer.color = _enemyColor;
+        }
+
+        public void SetPauseKeyConfig(KeyConfigId keyConfigId)
+        {
+            foreach (var i in _pauseKeyConfigDictionary)
+            {
+                i.Value.Controller.gameObject.SetActive(false);
+                i.Value.Keyboard.gameObject.SetActive(false);
+            }
+
+            if (_pauseKeyConfigDictionary.TryGetValue(keyConfigId, out var rectTransforms))
+            {
+                rectTransforms.Controller.gameObject.SetActive(true);
+                rectTransforms.Keyboard.gameObject.SetActive(true);
+            }
         }
 
     }
