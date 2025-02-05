@@ -147,7 +147,7 @@ namespace Transition
 
 		public static void TransitionToAdjustment()
 		{
-			//TODO
+			TransitionToScene(SceneName.Adjustment);
 		}
 
 		public static void TransitionToCredit()
