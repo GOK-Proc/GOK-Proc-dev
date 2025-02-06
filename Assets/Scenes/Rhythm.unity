@@ -58187,8 +58187,8 @@ MonoBehaviour:
   _beatmapData: {fileID: 11400000, guid: 18962a94c1f47984292377afa62aae5b, type: 2}
   _defaultId: Chapter1_2
   _defaultDifficulty: 0
-  _defaultIsVs: 1
-  _tutorialId: 1
+  _defaultIsVs: 0
+  _tutorialId: 0
   _setting:
     _scrollSpeed: 10
     _offset: 0
