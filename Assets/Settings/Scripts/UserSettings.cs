@@ -43,7 +43,9 @@ namespace Settings
 		public float JudgeOffset
 		{
 			get => _judgeOffset;
-			set => _judgeOffset = Math.Clamp((float)Math.Round(value * 10) / 10, -1f, 1f);
+			// 小数第2位までの値に丸める
+			// NOTE: _judgeOffsetの範囲は-1.0f～1.0fで、0.05f刻みの値
+			set => _judgeOffset = Math.Clamp((float)Math.Round(value, 2, MidpointRounding.AwayFromZero), -1f, 1f);
 		}
 
 		[Range(0.5f, 3.0f)]
