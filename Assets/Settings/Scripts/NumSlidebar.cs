@@ -1,5 +1,4 @@
 ﻿using KanKikuchi.AudioManager;
-using Novel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -145,6 +145,11 @@ namespace Transition
             TransitionToScene(SceneName.Rhythm);
         }
 
+		public static void TransitionToAdjustment()
+		{
+			TransitionToScene(SceneName.Adjustment);
+		}
+
 		public static void TransitionToCredit()
 		{
 			TransitionToScene(SceneName.Credit);
