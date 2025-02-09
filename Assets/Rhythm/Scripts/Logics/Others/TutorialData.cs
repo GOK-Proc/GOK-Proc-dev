@@ -12,5 +12,8 @@ namespace Rhythm
 
         [SerializeField] private float[] _times;
         public readonly float[] Times => _times;
+
+        [SerializeField] private float _delay;
+        public readonly float Delay => _delay;
     }
 }

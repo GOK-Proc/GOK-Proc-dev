@@ -97,7 +97,7 @@ namespace Rhythm
                         t.DOLocalMoveX(_layout.FirstLaneX + _currentLane * _layout.LaneDistanceX, _duration).OnComplete(() =>
                         {
                             d?.Invoke();
-                        });
+                        }).SetUpdate(true);
                     });
                 }
                 Create();
