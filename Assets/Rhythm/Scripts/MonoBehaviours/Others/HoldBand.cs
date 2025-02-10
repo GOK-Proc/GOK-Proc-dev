@@ -49,7 +49,7 @@ namespace Rhythm
             _releasedColor.a = 0.5f;
         }
 
-        public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, float length, double beginTime, double endTime, IDisposable disposable)
+        public void Create(Vector3 position, Vector3 velocity, (Vector2 UpperLeft, Vector2 LowerRight) survivalRect, int lane, float length, double beginTime, double endTime, int order, IDisposable disposable)
         {
             _defaultScale = new Vector3 (transform.localScale.x, length, transform.localScale.z);
             _currentScale = _defaultScale;
@@ -58,6 +58,7 @@ namespace Rhythm
             _endTime = endTime;
             _holdPosition = new Vector3(position.x, _judgeLineY, position.z);
             _renderer.color = _defaultColor;
+            _renderer.sortingOrder = order;
 
             Create(position, velocity, survivalRect, lane, x => 
             {

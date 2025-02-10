@@ -36,6 +36,7 @@ namespace Rhythm
 
         private readonly List<Note> _notes;
         private readonly List<RhythmGameObject> _rhythmGameObjects;
+        private readonly Stack<double> _bandEndTimes;
         private int _noteCount;
 
 
@@ -58,6 +59,8 @@ namespace Rhythm
 
             _notes = new List<Note>();
             _rhythmGameObjects = new List<RhythmGameObject>();
+            _bandEndTimes = new Stack<double>();
+            _bandEndTimes.Push(double.PositiveInfinity);
             _noteCount = 0;
         }
 
@@ -128,6 +131,21 @@ namespace Rhythm
                                 var deltaTime = 30 / note.Bpm;
                                 var time = note.JustTime + deltaTime;
                                 var endTime = note.JustTime + note.Length;
+                                int order;
+
+                                while (true)
+                                {
+                                    if (time < _bandEndTimes.Peek())
+                                    {
+                                        order = _bandEndTimes.Count - 1;
+                                        _bandEndTimes.Push(endTime);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        _bandEndTimes.Pop();
+                                    }
+                                }
 
                                 while (time < endTime && !Mathf.Approximately((float)time, (float)endTime))
                                 {
@@ -143,7 +161,7 @@ namespace Rhythm
 
                                 var bandLength = lastPosition.y - firstPosition.y;
                                 var rect = (_survivalRect.UpperLeft, _survivalRect.LowerRight - new Vector2(0f, bandLength));
-                                obj.Create(firstPosition, new Vector3(0f, -note.Speed), rect, note.Lane, bandLength, note.JustTime, endTime, disposable);
+                                obj.Create(firstPosition, new Vector3(0f, -note.Speed), rect, note.Lane, bandLength, note.JustTime, endTime, order, disposable);
                                 if (isNew) _rhythmGameObjects.Add(obj);
                             }
                         }
