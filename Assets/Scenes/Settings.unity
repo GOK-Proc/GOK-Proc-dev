@@ -698,7 +698,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 850, y: -230}
+  m_AnchoredPosition: {x: 850, y: -50}
   m_SizeDelta: {x: 1700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &715816508
@@ -760,8 +760,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1220213586}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1902458125}
+    m_SelectOnDown: {fileID: 1220213586}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 0
@@ -1749,13 +1749,13 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 456695357590845572, guid: 21e6a0b3bba8daa4ebbd8f386d7a0ec3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1146291727}
+      addedObject: {fileID: 715816507}
     - targetCorrespondingSourceObject: {fileID: 456695357590845572, guid: 21e6a0b3bba8daa4ebbd8f386d7a0ec3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1220213585}
     - targetCorrespondingSourceObject: {fileID: 456695357590845572, guid: 21e6a0b3bba8daa4ebbd8f386d7a0ec3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 715816507}
+      addedObject: {fileID: 1146291727}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21e6a0b3bba8daa4ebbd8f386d7a0ec3, type: 3}
 --- !u!224 &1111750839 stripped
@@ -1779,11 +1779,11 @@ PrefabInstance:
     - target: {fileID: 206141429538863028, guid: bb7231999666e1d49a9da769c13ef11e, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 1902458125}
+      objectReference: {fileID: 1220213586}
     - target: {fileID: 206141429538863028, guid: bb7231999666e1d49a9da769c13ef11e, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 1220213586}
+      objectReference: {fileID: 0}
     - target: {fileID: 404990571045757421, guid: bb7231999666e1d49a9da769c13ef11e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1958,7 +1958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7051815351815710000, guid: bb7231999666e1d49a9da769c13ef11e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: -230
       objectReference: {fileID: 0}
     - target: {fileID: 7051815351815710000, guid: bb7231999666e1d49a9da769c13ef11e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2271,11 +2271,11 @@ PrefabInstance:
     - target: {fileID: 2462492194476856000, guid: d881d0cf5b3979e44bc79153ac91a424, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 1146291728}
+      objectReference: {fileID: 715816510}
     - target: {fileID: 2462492194476856000, guid: d881d0cf5b3979e44bc79153ac91a424, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 715816510}
+      objectReference: {fileID: 1146291728}
     - target: {fileID: 3141312496606941935, guid: d881d0cf5b3979e44bc79153ac91a424, type: 3}
       propertyPath: m_text
       value: HS
@@ -3823,7 +3823,7 @@ PrefabInstance:
     - target: {fileID: -6646509410098867424, guid: cb89135aaa3a910408b6edc789881d8f, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 1146291728}
+      objectReference: {fileID: 715816510}
     - target: {fileID: -6646509410098867424, guid: cb89135aaa3a910408b6edc789881d8f, type: 3}
       propertyPath: m_Navigation.m_SelectOnLeft
       value: 
