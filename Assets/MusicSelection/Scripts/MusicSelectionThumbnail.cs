@@ -69,7 +69,8 @@ namespace MusicSelection
             var notes = _notes[(int)difficulty];
             _notesDesignerText.text = $"譜面：{notes.NotesDesigner}";
             var upperDifficulty = DifficultySelection.Current.ToString().ToUpper();
-            _levelText.text = $"{upperDifficulty} Lv. {notes.Level}";
+            if(DifficultySelection.CurrentIsVs) _levelText.text = $"{upperDifficulty} - Battle Lv. {notes.Level}";
+			else _levelText.text = $"{upperDifficulty} Lv. {notes.Level}";
         }
     }
 }
