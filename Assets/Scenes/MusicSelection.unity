@@ -1466,7 +1466,7 @@ MonoBehaviour:
     _id: Tutorial
     _title: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
     _intro: {fileID: 0}
-    _sound: {fileID: 8300000, guid: 6ce53a97984d80949b429a9943d551da, type: 3}
+    _sound: {fileID: 8300000, guid: 18047f96f844d704492460ba2c244c03, type: 3}
     _hasBeatmap: 0
     _composer: 
     _description: "\u30EA\u30BA\u30E0\u30B2\u30FC\u30E0\u306E\u904A\u3073\u65B9\u3092\u5B9F\u6226\u306E\u306A\u304B\u3067\u5B66\u3076"
@@ -3170,8 +3170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73a0f546bef480dadd02f6e4cc65a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInterval: 0.07368421
-  scrollOffset: 0.07368421
+  cellInterval: 0.19553073
+  scrollOffset: 0.19553073
   loop: 0
   cellContainer: {fileID: 1003164949}
   reuseCellMarginCount: 0
