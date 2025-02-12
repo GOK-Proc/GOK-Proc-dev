@@ -54,7 +54,7 @@ namespace MusicSelection
             }
             else
             {
-                SceneTransitionManager.TransitionToRhythm(RhythmId, DifficultySelection.Current);
+                SceneTransitionManager.TransitionToRhythm(RhythmId, DifficultySelection.Current, DifficultySelection.CurrentIsVs);
             }
         }
 
