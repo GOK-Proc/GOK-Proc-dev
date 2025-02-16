@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Linq;
 using Settings;
 using Transition;
+using TMPro;
 
 public class AdjustmentManager : MonoBehaviour
 {
@@ -17,13 +18,14 @@ public class AdjustmentManager : MonoBehaviour
     [SerializeField] private Slider _slider;
     [SerializeField] private Transform _auto;
     [SerializeField] private Transform _manual;
+    [SerializeField] private TextMeshProUGUI _countDownText;
 
     [SerializeField] private float _bpm;
     [SerializeField] private float _offset;
     [SerializeField] private float _delay;
 
     private AudioSource _audioSource;
-    private InputAction _pressAnyKeyAction = new InputAction(type: InputActionType.PassThrough, binding: "*/<Button>", interactions: "Press");
+    private InputAction _pressAnyKeyAction = new InputAction(type: InputActionType.Button, binding: "*/<Button>");
 
     private void OnEnable() => _pressAnyKeyAction.Enable();
     private void OnDisable() => _pressAnyKeyAction.Disable();
@@ -60,8 +62,18 @@ public class AdjustmentManager : MonoBehaviour
 
             yield return new WaitForSeconds(_delay);
 
+            _countDownText.SetText("3");
+            _countDownText.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(1f);
+
+            _countDownText.SetText("2");
+
+            yield return new WaitForSeconds(1f);
+
             var startTime = Time.timeAsDouble;
             _audioSource.Play();
+            _countDownText.SetText("1");
 
             yield return new WaitUntil(() => _audioSource.isPlaying);
 
@@ -69,7 +81,9 @@ public class AdjustmentManager : MonoBehaviour
 
             while (_audioSource.isPlaying)
             {
-                if (_pressAnyKeyAction.triggered)
+                if (Time.timeAsDouble - startTime - _offset >= 0) _countDownText.gameObject.SetActive(false);
+
+                if (_pressAnyKeyAction.WasPressedThisFrame())
                 {
                     var time = Time.timeAsDouble - startTime - _offset;
                     var difference = (time - interval / 2) % interval - interval / 2;
