@@ -21,6 +21,7 @@ public static class BGMPath{
 	public const string TOWN_FADEOUT        = "BGM/Town_Fadeout";
 	public const string VICTORY_INTRO       = "BGM/Victory_Intro";
 	public const string VICTORY_LOOP        = "BGM/Victory_Loop";
+	public const string XFC_MAIN_THEME      = "BGM/XFC_MainTheme";
 
 }
 
