@@ -132,3 +132,20 @@ MonoBehaviour:
     - _level: 0
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: 70bc83ffbc97b9048a1de9add69c4236, type: 3}
+  - _id: Borderline
+    _title: Borderline
+    _sound: {fileID: 8300000, guid: 04b54dfbce67fe24f8d328869d3f0e9e, type: 3}
+    _offset: 1.65
+    _composer: "\u3068\u308A\u3068\u308A"
+    _backgroundSprite: {fileID: 21300000, guid: b07e5458d4302094398b55f6b693d73d, type: 3}
+    _enemySprite: {fileID: 21300000, guid: 5b4e61cda6b763d49accb367552f5324, type: 3}
+    _notes:
+    - _level: 0
+      _notesDesigner: "\u30AB\u30E1\u5409"
+      _file: {fileID: 4900000, guid: 240b2d67e08e7da46b37b5ebfe32ed39, type: 3}
+    - _level: 0
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: 9e110f149eeb2d24097b9fe4e78ea472, type: 3}
+    - _level: 0
+      _notesDesigner: "\u3075\u3043\u30FC\u306D"
+      _file: {fileID: 4900000, guid: 1c9d2f4ff31aca54da1d1ee43b63c7ce, type: 3}
