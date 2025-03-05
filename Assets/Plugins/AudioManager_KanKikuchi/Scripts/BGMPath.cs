@@ -8,6 +8,7 @@ public static class BGMPath{
 	public const string BATTLE_GOBLIN       = "BGM/Battle_Goblin";
 	public const string BATTLE_GOBLIN_BOSS  = "BGM/Battle_Goblin_boss";
 	public const string BATTLE_GOBLIN_GROUP = "BGM/Battle_Goblin_group";
+	public const string BORDERLINE          = "BGM/Borderline";
 	public const string FOREST              = "BGM/Forest";
 	public const string FOREST_FADEOUT      = "BGM/Forest_Fadeout";
 	public const string MAIN_THEME          = "BGM/MainTheme";
