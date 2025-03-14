@@ -1470,7 +1470,7 @@ MonoBehaviour:
     _hasBeatmap: 0
     _composer: 
     _description: "\u30EA\u30BA\u30E0\u30B2\u30FC\u30E0\u306E\u904A\u3073\u65B9\u3092\u5B9F\u6226\u306E\u306A\u304B\u3067\u5B66\u3076"
-    _thumbnail: {fileID: 21300000, guid: fe5eae025459c4449a03cb4080571688, type: 3}
+    _thumbnail: {fileID: 21300000, guid: 7fa0345dddce4a548a8e9ae1fa7b0a36, type: 3}
   _firstSelectedDifficulty: 0
   _difficultyDisplay: {fileID: 983387257}
 --- !u!1 &1123369938
@@ -3170,8 +3170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73a0f546bef480dadd02f6e4cc65a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInterval: 0.19553073
-  scrollOffset: 0.19553073
+  cellInterval: 0.18134715
+  scrollOffset: 0.18134715
   loop: 0
   cellContainer: {fileID: 1003164949}
   reuseCellMarginCount: 0
