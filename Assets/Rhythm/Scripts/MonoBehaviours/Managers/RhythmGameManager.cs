@@ -115,7 +115,7 @@ namespace Rhythm
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
         private TimeManager _timeManager;
-        private ScoreManger _scoreManager;
+        private ScoreManager _scoreManager;
         private InputManager _inputManager;
         private CursorController _cursorController;
         private SoundPlayer _soundPlayer;
@@ -194,7 +194,7 @@ namespace Rhythm
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
-            _scoreManager = new ScoreManger(isVs, id, difficulty, tutorialId != TutorialId.None, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _uiManager, _recordList);
+            _scoreManager = new ScoreManager(isVs, id, difficulty, tutorialId != TutorialId.None, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _uiManager, _recordList);
 
             _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _setting.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _scoreManager, _soundPlayer, _uiManager);
