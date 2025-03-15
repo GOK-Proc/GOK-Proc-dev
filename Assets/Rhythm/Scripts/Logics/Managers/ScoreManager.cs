@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace Rhythm
 {
-    public class ScoreManger : IJudgeCountable, IComboCountable, IResultProvider, IBattleMode, IRhythmMode
+    public class ScoreManager : IJudgeCountable, IComboCountable, IResultProvider, IBattleMode, IRhythmMode
     {
         private readonly bool _isVs;
         private readonly Difficulty _difficulty;
@@ -102,7 +102,7 @@ namespace Rhythm
             }
         }
 
-        public ScoreManger(bool isVs, string id, Difficulty difficulty, bool isTutorial, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDamageDrawable damageDrawable, IDataHandler<RecordData[]> recordDataHandler)
+        public ScoreManager(bool isVs, string id, Difficulty difficulty, bool isTutorial, IList<JudgeRate> judgeRates, IList<LostRate> lostRates, IList<ComboBonus> comboBonus, IList<float> scoreRates, IList<int> scoreRankBorders, IList<GaugeRate> gaugeRates, int noteCount, (int attack, int defense) notePointCount, float playerHitPoint, int largeRate, ISoundPlayable soundPlayable, IGaugeDrawable gaugeDrawable, IUIDrawable uiDrawable, IDamageDrawable damageDrawable, IDataHandler<RecordData[]> recordDataHandler)
         {
             _isVs = isVs;
             _difficulty = difficulty;
