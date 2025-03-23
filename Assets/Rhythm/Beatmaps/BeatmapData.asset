@@ -123,13 +123,13 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: b07e5458d4302094398b55f6b693d73d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 16cea2282af033f409ea743d43743452, type: 3}
     _notes:
-    - _level: 0
+    - _level: 3
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: 9e06ad4adba707e47b34b5cc6ad5c9c7, type: 3}
-    - _level: 0
+    - _level: 8
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: 57994827f92ee9946a57493c45bb84f1, type: 3}
-    - _level: 0
+    - _level: 12
       _notesDesigner: "\u3042\u3063\u304D\uFF5E"
       _file: {fileID: 4900000, guid: 70bc83ffbc97b9048a1de9add69c4236, type: 3}
   - _id: Borderline
@@ -140,12 +140,12 @@ MonoBehaviour:
     _backgroundSprite: {fileID: 21300000, guid: b07e5458d4302094398b55f6b693d73d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 5b4e61cda6b763d49accb367552f5324, type: 3}
     _notes:
-    - _level: 0
+    - _level: 2
       _notesDesigner: "\u30AB\u30E1\u5409"
       _file: {fileID: 4900000, guid: 240b2d67e08e7da46b37b5ebfe32ed39, type: 3}
-    - _level: 0
+    - _level: 7
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: 9e110f149eeb2d24097b9fe4e78ea472, type: 3}
-    - _level: 0
+    - _level: 12
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: 1c9d2f4ff31aca54da1d1ee43b63c7ce, type: 3}
