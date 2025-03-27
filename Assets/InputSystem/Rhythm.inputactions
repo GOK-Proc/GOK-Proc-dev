@@ -525,6 +525,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "608d4336-eff2-4d62-b5f8-791eac361214",
+                    "path": "<XInputController>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "GamePad",
                     "id": "f010a91b-0208-4924-8795-0ae0fbf2ca83",
                     "path": "2DVector",
