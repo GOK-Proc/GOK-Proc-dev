@@ -135,7 +135,7 @@ MonoBehaviour:
   - _id: Borderline
     _title: Borderline
     _sound: {fileID: 8300000, guid: 04b54dfbce67fe24f8d328869d3f0e9e, type: 3}
-    _offset: 1.65
+    _offset: 1.6
     _composer: "\u3068\u308A\u3068\u308A"
     _backgroundSprite: {fileID: 21300000, guid: b07e5458d4302094398b55f6b693d73d, type: 3}
     _enemySprite: {fileID: 21300000, guid: 5b4e61cda6b763d49accb367552f5324, type: 3}
