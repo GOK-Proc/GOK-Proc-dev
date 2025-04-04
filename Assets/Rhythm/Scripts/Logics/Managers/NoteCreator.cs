@@ -155,7 +155,8 @@ namespace Rhythm
                                 }
 
                                 var lastPosition = new Vector3(firstPosition.x, _layout.JudgeLineY - note.Speed * (float)(_timeProvider.Time - endTime));
-                                Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], lastPosition, time));
+                                // NOTE: 終点近くは判定しないようにするためコメントアウト
+                                // Add(CreateNote(note, _holdPools[(note.Color, note.IsLarge)], lastPosition, time));
 
                                 IDisposable disposable = _bandPools[(note.Color, note.IsLarge)].Create(out var obj, out var isNew);
 
