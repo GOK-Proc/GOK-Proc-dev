@@ -1116,6 +1116,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "e7813a7e-d58e-4f01-bf03-378760eb0457",
+                    "path": "<XInputController>/{Menu}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "GamePad",
                     "id": "00c676e9-cd08-49ec-91a6-f86e34e218a2",
                     "path": "2DVector",
@@ -1688,6 +1699,17 @@
                     "name": "",
                     "id": "482a06ab-463e-4b6a-92ec-e055d9dc4fb0",
                     "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44fe4f7f-cc75-495b-af2b-6ccd0add2ec7",
+                    "path": "<XInputController>/{Menu}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -2276,6 +2298,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "3ff534d7-d658-4307-8043-10829bef6229",
+                    "path": "<XInputController>/{Menu}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "GamePad",
                     "id": "6e886f0e-211e-4c57-9077-5e8d3e2e75ce",
                     "path": "2DVector",
@@ -2822,6 +2855,17 @@
                     "name": "",
                     "id": "59f2958e-32f4-4835-a937-b244e4c256d3",
                     "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e41e4c26-3768-4d7a-8007-773678badce1",
+                    "path": "<XInputController>/{Menu}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
