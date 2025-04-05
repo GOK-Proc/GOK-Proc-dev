@@ -152,6 +152,8 @@ namespace Transition
 
 		public static void TransitionToCredit()
 		{
+			_settingsManager.SetDefaultSeVolume();
+
 			TransitionToScene(SceneName.Credit);
 		}
 
