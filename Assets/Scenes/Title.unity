@@ -964,7 +964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xA92024 \u6D17\u8DB3\u30B2\u30FC\u30E0\u97F3\u697D\u7814\u7A76\u4F1A(GOK),
+  m_text: "\xA92024-2025 \u6D17\u8DB3\u30B2\u30FC\u30E0\u97F3\u697D\u7814\u7A76\u4F1A(GOK),
     \u6771\u5317\u5927\u5B66\u30DE\u30A4\u30B3\u30F3\u30D7\u30ED\u30B7\u30FC\u30B8\u30E3(\u30D7\u30ED\u30BB)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24f5290adcd4088449581d2e50e0d9a9, type: 2}
