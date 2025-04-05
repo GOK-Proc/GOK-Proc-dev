@@ -22690,7 +22690,19 @@ MonoBehaviour:
     m_ActionId: 2b962646-6405-4ae3-b915-f04d832cf55e
     m_ActionName: Type2/Move3[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: aa8a5bdf-9623-4c12-834b-7c469cd6bf89
     m_ActionName: Type2/Pause[/XInputControllerWindows/select,/Keyboard/escape]
   - m_PersistentCalls:
@@ -22738,7 +22750,19 @@ MonoBehaviour:
     m_ActionId: 869cb739-03b7-4b6b-a99c-41896cc308a6
     m_ActionName: Pattern2/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: adb8b0ed-a8e2-4f4a-a123-9b3a3747cf76
     m_ActionName: Pattern2/Pause[/XInputControllerWindows/select,/Keyboard/escape]
   - m_PersistentCalls:
@@ -22782,7 +22806,19 @@ MonoBehaviour:
     m_ActionId: 2474cfd0-4524-472f-b7ba-b404cc49748c
     m_ActionName: Pattern3/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: bbdd7495-fe63-4176-a302-8887ed6f3c5b
     m_ActionName: Pattern3/Pause[/XInputControllerWindows/select,/Keyboard/escape]
   - m_PersistentCalls:
@@ -22826,7 +22862,19 @@ MonoBehaviour:
     m_ActionId: 81ff89cf-0678-48eb-9dd3-b92fcae83fd0
     m_ActionName: Pattern4/Move4[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1532657122}
+        m_TargetAssemblyTypeName: Rhythm.EventManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 87a25bff-f3f6-4a0b-bd6d-c9cdb43f2603
     m_ActionName: Pattern4/Pause[/XInputControllerWindows/select,/Keyboard/escape]
   - m_PersistentCalls:
