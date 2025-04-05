@@ -4,17 +4,22 @@ using KanKikuchi.AudioManager;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using Settings;
 
 namespace Title
 {
 	public class TitleManager : MonoBehaviour
 	{
+		[SerializeField] private UserSettings _settings;
+
 		[SerializeField] private CanvasGroup _terminateCanvasGroup;
 		[SerializeField] private Selectable _yesButton;
 		[SerializeField] private EventTrigger _eventTrigger;
 
 		private void Start()
 		{
+			_settings.ApplySettings();
+
 			BGMManager.Instance.Play(BGMPath.MAIN_THEME);
 		}
 

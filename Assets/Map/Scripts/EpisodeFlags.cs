@@ -1,28 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using UnityEngine;
 
 namespace Map
 {
 	[CreateAssetMenu]
-	public class EpisodeFlags : ScriptableObject
+	public class EpisodeFlags : EncryptedScriptableObject
 	{
-#if UNITY_EDITOR
-		private readonly string PATH = Path.Combine(Application.dataPath, "Map/EpisodeFlags.json");
-#else
-		private readonly string PATH = Path.Combine(Application.persistentDataPath, "EpisodeFlags.json");
-#endif
-
 		[SerializeField] private List<EpisodeFlagPair> _flagList;
 		public List<EpisodeFlagPair> FlagList { get { return _flagList; } private set { _flagList = value; } }
 
 		public Dictionary<(int, int), bool> FlagDict => FlagList.ToDictionary(x => x.Key, x => x.Value);
-
-		private void OnEnable()
-		{
-			LoadJson();
-		}
 
 		public void SetNextFlag((int, int) episodeId)
 		{
@@ -32,31 +20,7 @@ namespace Map
 				FlagList[index + 1].Value = true;
 			}
 
-			SaveJson();
-		}
-
-		private void SaveJson()
-		{
-			string json = JsonUtility.ToJson(this);
-			using (var writer = new StreamWriter(PATH))
-			{
-				writer.Write(json);
-			}
-		}
-
-		private void LoadJson()
-		{
-			if (!File.Exists(PATH))
-			{
-				SaveJson();
-				return;
-			}
-
-			using (var reader = new StreamReader(PATH))
-			{
-				string json = reader.ReadToEnd();
-				JsonUtility.FromJsonOverwrite(json, this);
-			}
+			Save();
 		}
 
 #if UNITY_EDITOR
@@ -75,7 +39,7 @@ namespace Map
 				FlagList[0].Value = true;
 			}
 
-			SaveJson();
+			Save();
 		}
 #endif
 	}

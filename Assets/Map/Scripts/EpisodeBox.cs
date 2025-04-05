@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Rhythm;
+using Settings;
 using TMPro;
 using Transition;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Map
 	[RequireComponent(typeof(Selectable))]
 	public class EpisodeBox : MonoBehaviour, ISubmitHandler, ICancelHandler
 	{
+		[SerializeField] private UserSettings _settings;
+
 		[SerializeField] private TextMeshProUGUI _episodeNumberText;
 		[SerializeField] private TextMeshProUGUI _titleText;
 
@@ -41,13 +44,30 @@ namespace Map
 					SceneTransitionManager.TransitionToNovel(_info.NovelId);
 					break;
 				case EpisodeType.Rhythm:
+					Difficulty difficulty;
+					switch (_settings.ScenarioDifficulty)
+					{
+						case ScenarioDifficulty.Easy:
+							difficulty = Difficulty.Easy;
+							break;
+						case ScenarioDifficulty.Hard:
+							difficulty = Difficulty.Hard;
+							break;
+						case ScenarioDifficulty.Expert:
+							difficulty = Difficulty.Expert;
+							break;
+						default:
+							difficulty = Difficulty.Easy;
+							break;
+					}
+
 					if (_info.IsTutorialNeeded && _isTutorialEnabled)
 					{
-						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, DifficultySelector.MapDifficulty);
+						SceneTransitionManager.TransitionToBattleTutorial(_info.RhythmId, difficulty);
 					}
 					else
 					{
-						SceneTransitionManager.TransitionToRhythm(_info.RhythmId, DifficultySelector.MapDifficulty, true);
+						SceneTransitionManager.TransitionToRhythm(_info.RhythmId, difficulty, true);
 					}
 					break;
 			}

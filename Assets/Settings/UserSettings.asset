@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893393eb8ed385b4fb5c216a0046cefe, type: 3}
+  m_Name: UserSettings
+  m_EditorClassIdentifier: 
+  _saveDir: Settings
+  _fileName: UserSettings
+  _bgmVolume: 5
+  _soundEffectVolume: 5
+  _novelEffectVolume: 5
+  _musicVolume: 5
+  _battleEffectVolume: 5
+  _rhythmEffectVolume: 5
+  _keyConfigId: 0
+  _judgeOffset: 0
+  _highSpeed: 1
+  _screenMode: 0
+  _frameRate: 0
+  _scenarioDifficulty: 0

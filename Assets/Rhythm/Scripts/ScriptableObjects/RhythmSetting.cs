@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Settings;
 
 namespace Rhythm
 {
-    [CreateAssetMenu]
-    public class RhythmSetting : ScriptableObject
+    [System.Serializable]
+    public class RhythmSetting
     {
         [SerializeField] private float _scrollSpeed;
         public float ScrollSpeed { get => _scrollSpeed; set => _scrollSpeed = value; }
@@ -14,8 +15,8 @@ namespace Rhythm
         [SerializeField] private double _judgeOffset;
         public double JudgeOffset { get => _judgeOffset; set => _judgeOffset = value; }
 
-        [SerializeField] private KeyConfig _keyConfig;
-        public KeyConfig KeyConfig { get => _keyConfig; set => _keyConfig = value; }
+        [SerializeField] private KeyConfigId _keyConfig;
+        public KeyConfigId KeyConfig { get => _keyConfig; set => _keyConfig = value; }
 
         [SerializeField] private RhythmVolumeSetting _volumeSetting;
         public RhythmVolumeSetting VolumeSetting { get => _volumeSetting; set => _volumeSetting = value; }

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Transition;
+using Settings;
 
 namespace Rhythm
 {
@@ -86,6 +87,7 @@ namespace Rhythm
         [SerializeField] private IntroSoundPlayer _introSoundPlayer;
         [SerializeField] private Sound[] _sounds;
         [SerializeField] private IntroSound[] _introSounds;
+        [SerializeField] private AudioSource _subAudioSource;
 
         [Space(20)]
         [Header("Beatmap")]
@@ -98,6 +100,7 @@ namespace Rhythm
         [Space(20)]
         [Header("Rhythm Game Settings")]
         [SerializeField] private RhythmSetting _setting;
+        [SerializeField] private UserSettings _userSettings;
 
         [Space(20)]
         [Header("Record")]
@@ -112,13 +115,13 @@ namespace Rhythm
         private NoteCreator _noteCreator;
         private NoteJudge _noteJudge;
         private TimeManager _timeManager;
-        private ScoreManger _scoreManager;
+        private ScoreManager _scoreManager;
         private InputManager _inputManager;
         private CursorController _cursorController;
         private SoundPlayer _soundPlayer;
         private LaneEffectManager _laneEffectManager;
         private TutorialManager _tutorialManager;
-
+ 
         private HeaderInformation _headerInformation;
         private double _endTime;
         private bool _canSkipTutorial;
@@ -129,6 +132,13 @@ namespace Rhythm
             var difficulty = SceneTransitionManager.CurrentDifficulty;
             var isVs = SceneTransitionManager.CurrentIsVs;
             var tutorialId = SceneTransitionManager.CurrentTutorialId;
+
+            _setting.ScrollSpeed *= _userSettings.HighSpeed;
+            _setting.JudgeOffset = _userSettings.JudgeOffset / 5;
+            _setting.KeyConfig = _userSettings.KeyConfigId;
+            _setting.VolumeSetting.Track = _userSettings.MusicVolume / 10f;
+            _setting.VolumeSetting.Se = _userSettings.BattleEffectVolume / 10f;
+            _setting.VolumeSetting.NoteSe = _userSettings.RhythmEffectVolume / 10f;
 
             var dictionary = _beatmapData.BeatmapDictionary;
 
@@ -170,7 +180,7 @@ namespace Rhythm
 
             _timeManager = new TimeManager();
 
-            _playerInput.SwitchCurrentActionMap(_setting.KeyConfig.ToStringQuickly());
+            _playerInput.SwitchCurrentActionMap(_setting.KeyConfig.ToString());
             var attackActions = _playerInput.currentActionMap.actions.Where(x => x.name.StartsWith("Attack")).ToArray();
             var defenseActions = _playerInput.currentActionMap.actions.Where(x => x.name.StartsWith("Defense")).ToArray();
             var moveActions = _playerInput.currentActionMap.actions.Where(x => x.name.StartsWith("Move")).ToArray(); ;
@@ -180,25 +190,26 @@ namespace Rhythm
             var sounds = _sounds.ToDictionary(x => x.Id, x => new SoundPlayer.AudioClipData(x.Clip, x.IsNoteSe, x.SourceCount, x.IsLoop));
             var introSounds = _introSounds.ToDictionary(x => x.Id, x => new SoundPlayer.IntroAudioData(x.IntroClip, x.MainClip, x.IsLoop));
 
-            _soundPlayer = new SoundPlayer(_audioSource, _seSource, _introSoundPlayer, beatmapInfo.Sound, sounds, introSounds, _setting.VolumeSetting);
+            _soundPlayer = new SoundPlayer(_audioSource, _seSource, _subAudioSource, _introSoundPlayer, beatmapInfo.Sound, sounds, introSounds, _setting.VolumeSetting);
 
             _cursorController = new CursorController(_laneCount, _cursorExtension, _noteLayout, _cursorDuration, _cursorPrefab, _cursorParent, _inputManager, _soundPlayer);
 
-            _scoreManager = new ScoreManger(isVs, id, difficulty, tutorialId != TutorialId.None, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _uiManager, _recordList);
+            _scoreManager = new ScoreManager(isVs, id, difficulty, tutorialId != TutorialId.None, _judgeRates, _lostRates, _comboBonus, _scoreRates, _scoreRankBorders, _gaugeRates, BeatmapLoader.GetNoteCount(notes), BeatmapLoader.GetNotePointCount(notes, _largeRate), _playerHitPoint, _largeRate, _soundPlayer, _uiManager, _uiManager, _uiManager, _recordList);
 
             _noteCreator = new NoteCreator(isVs, notes, lines, _noteLayout, _judgeRange, _setting.JudgeOffset, notePrefabs, holdPrefabs, bandPrefabs, _linePrefab, _noteParent, _timeManager, _inputManager, _cursorController, _soundPlayer, _uiManager);
             _noteJudge = new NoteJudge(isVs, _noteLayout, _noteCreator, _scoreManager, _scoreManager, _scoreManager, _scoreManager, _soundPlayer, _uiManager);
 
             _laneEffectManager = new LaneEffectManager(_noteLayout, _inputManager, _cursorController, _soundPlayer, _uiManager);
 
-            _tutorialManager = new TutorialManager(tutorialId != TutorialId.None, _setting.KeyConfig, _tutorialData, _playerInput, _soundPlayer, _timeManager, _uiManager);
+            _tutorialManager = new TutorialManager(tutorialId != TutorialId.None, _setting.KeyConfig, _tutorialData, _playerInput, _subAudioSource, _soundPlayer, _timeManager, _uiManager);
 
-            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager, _uiManager);
+            _eventManager.Initialize(isVs, tutorialId, _setting.KeyConfig, _scoreManager, _soundPlayer, _soundPlayer, _inputManager, _inputManager, _uiManager, _uiManager, _tutorialManager);
             _eventManager.SetSoundVolumeSlider(_setting.VolumeSetting);
 
             _uiManager.SetClearGaugeBorder(_gaugeRates[(int)difficulty].Border);
             _uiManager.SetBackgroundSprite(beatmapInfo.BackgroundSprite);
             _uiManager.SetEnemySprite(beatmapInfo.EnemySprite);
+            _uiManager.SetPauseKeyConfig(_setting.KeyConfig);
             _uiManager.SwitchUI(isVs);
         }
 
@@ -296,6 +307,14 @@ namespace Rhythm
             }
 
             StartCoroutine(RhythmGameUpdate());
+        }
+
+        private void OnDestroy()
+        {
+            _userSettings.MusicVolume = (int)(_setting.VolumeSetting.Track * 10);
+            _userSettings.BattleEffectVolume = (int)(_setting.VolumeSetting.Se * 10);
+            _userSettings.RhythmEffectVolume = (int)(_setting.VolumeSetting.NoteSe * 10);
+            _userSettings.Save();
         }
     }
 }

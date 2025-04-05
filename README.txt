@@ -40,6 +40,11 @@ Copyright (c) 2019 Kan Kikuchi
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
+・FancyScrollView
+Copyright (c) 2020 setchi
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+
 ≪注意事項≫
 本作品で使用されているオリジナル画像、音楽、文章の二次使用を禁止します。
 また、本作品の再配布を禁止します。

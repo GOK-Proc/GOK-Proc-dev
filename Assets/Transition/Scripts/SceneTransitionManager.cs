@@ -23,8 +23,14 @@ namespace Transition
 
 		private static Scene _prevScene;
 
+		private static EpisodeFlagManager _episodeFlagManager;
+		private static SettingsManager _settingsManager;
+
 		private void OnEnable()
 		{
+			_episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
+			_settingsManager = GameObject.FindWithTag("SettingsManager").GetComponent<SettingsManager>();
+
 			_overlay = GameObject.FindWithTag("TransitionOverlay").GetComponent<CanvasGroup>();
 
 			SceneManager.LoadScene(SceneName.Title.ToString(), LoadSceneMode.Additive);
@@ -40,6 +46,11 @@ namespace Transition
 			TransitionToScene(SceneName.Title);
 		}
 
+		public static void TransitionToSettings()
+		{
+			TransitionToScene(SceneName.Settings);
+		}
+
 		public static void TransitionToGallery()
 		{
 			TransitionToScene(SceneName.Gallery);
@@ -47,6 +58,8 @@ namespace Transition
 
 		public static void TransitionToMap()
 		{
+			_settingsManager.SetDefaultSeVolume();
+		
 			TransitionToScene(SceneName.Map);
 		}
 
@@ -54,15 +67,13 @@ namespace Transition
 		{
 			if (result)
 			{
-				EpisodeFlagManager episodeFlagManager = GameObject.FindWithTag("EpisodeFlagManager").GetComponent<EpisodeFlagManager>();
-
 				switch (CurrentEpisodeType)
 				{
 					case EpisodeType.Novel:
-						episodeFlagManager.SetNextFlag(CurrentNovelId);
+						_episodeFlagManager.SetNextFlag(CurrentNovelId);
 						break;
 					case EpisodeType.Rhythm:
-						episodeFlagManager.SetNextFlag(CurrentRhythmId);
+						_episodeFlagManager.SetNextFlag(CurrentRhythmId);
 						break;
 					default:
 						return;
@@ -89,6 +100,8 @@ namespace Transition
 		public static void TransitionToNovel(NovelId novelId)
 		{
 			if (novelId == NovelId.None) return;
+
+			_settingsManager.SetNovelSeVolume();
 
 			CurrentEpisodeType = EpisodeType.Novel;
 			CurrentNovelId = novelId;
@@ -132,8 +145,15 @@ namespace Transition
             TransitionToScene(SceneName.Rhythm);
         }
 
+		public static void TransitionToAdjustment()
+		{
+			TransitionToScene(SceneName.Adjustment);
+		}
+
 		public static void TransitionToCredit()
 		{
+			_settingsManager.SetDefaultSeVolume();
+
 			TransitionToScene(SceneName.Credit);
 		}
 

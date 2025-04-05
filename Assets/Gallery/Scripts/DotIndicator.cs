@@ -20,9 +20,9 @@ namespace Gallery
         {
             _pool = new ObjectPool<Dot>(
                 CreateDot,
-                (Dot dot) => { dot.gameObject.SetActive(true); },
-                (Dot dot) => { dot.gameObject.SetActive(false); },
-                (Dot dot) => { Destroy(dot.gameObject); },
+                dot => { dot.gameObject.SetActive(true); },
+                dot => { dot.gameObject.SetActive(false); },
+                dot => { Destroy(dot.gameObject); },
                 true, 5, 10
             );
         }
@@ -71,7 +71,7 @@ namespace Gallery
             dot.rectTransform.SetParent(gameObject.transform);
             dot.rectTransform.localScale = Vector3.one;
             dot.rectTransform.sizeDelta = _size * Vector2.one;
-            
+
             return dot;
         }
     }

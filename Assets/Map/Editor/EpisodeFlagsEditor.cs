@@ -7,26 +7,37 @@ namespace Map
 	[CustomEditor(typeof(EpisodeFlags))]
 	public class EpisodeFlagsEditor : Editor
 	{
-		private EpisodeFlags _episodeFlags;
-		private MethodInfo _saveJsonInfo;
-		private MethodInfo _loadJsonInfo;
+		private EpisodeFlags _target;
+		private SerializedProperty _saveDirProperty;
+		private SerializedProperty _fileNameProperty;
 
 		private void OnEnable()
 		{
-			_episodeFlags = (EpisodeFlags)target;
-			_saveJsonInfo = typeof(EpisodeFlags).GetMethod("SaveJson", BindingFlags.NonPublic | BindingFlags.Instance);
-			_loadJsonInfo = typeof(EpisodeFlags).GetMethod("LoadJson", BindingFlags.NonPublic | BindingFlags.Instance);
+			_target = (EpisodeFlags)target;
+			_saveDirProperty = serializedObject.FindProperty("_saveDir");
+			_fileNameProperty = serializedObject.FindProperty("_fileName");
 		}
 
 		public override void OnInspectorGUI()
 		{
-			if (_episodeFlags != null)
+			if (_target != null)
 			{
+				serializedObject.Update();
+
+				EditorGUILayout.LabelField("Save Settings", EditorStyles.boldLabel);
+
+				EditorGUILayout.PropertyField(_saveDirProperty);
+				EditorGUILayout.PropertyField(_fileNameProperty);
+
+				serializedObject.ApplyModifiedProperties();
+
+				GUILayout.Space(EditorGUIUtility.singleLineHeight);
+
 				EditorGUILayout.LabelField("Flags", EditorStyles.boldLabel);
 
-				if (_episodeFlags.FlagList != null)
+				if (_target.FlagList != null)
 				{
-					foreach (var kvp in _episodeFlags.FlagList)
+					foreach (var kvp in _target.FlagList)
 					{
 						EditorGUILayout.BeginHorizontal();
 						EditorGUILayout.LabelField($"{kvp.Key.Item1}-{kvp.Key.Item2}", GUILayout.Width(100));
@@ -35,21 +46,19 @@ namespace Map
 					}
 				}
 
-				if (GUILayout.Button("SaveJson"))
+				GUILayout.Space(EditorGUIUtility.singleLineHeight);
+
+				if (GUILayout.Button("Save"))
 				{
-					_saveJsonInfo.Invoke(_episodeFlags, null);
+					_target.Save();
+					AssetDatabase.Refresh();
 				}
 
-				if (GUILayout.Button("LoadJson"))
+				if (GUILayout.Button("Load"))
 				{
-					_loadJsonInfo.Invoke(_episodeFlags, null);
+					_target.Load();
 				}
 
-				if (GUI.changed)
-				{
-					EditorUtility.SetDirty(target);
-					AssetDatabase.SaveAssets();
-				}
 			}
 		}
 	}

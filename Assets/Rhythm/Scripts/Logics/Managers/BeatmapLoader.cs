@@ -56,6 +56,7 @@ namespace Rhythm
             var isComment = false;
             var endTime = double.PositiveInfinity;
             var isEnd = false;
+            var isLineVisible = true;
 
             var just = offset;
             var bpm = 0d;
@@ -121,7 +122,14 @@ namespace Rhythm
                                     beat++;
                                 }
 
-                                lines.Add(new LineData(data.First().Scroll * scrollSpeed, just));
+                                if (isLineVisible)
+                                {
+                                    lines.Add(new LineData(data.First().Scroll * scrollSpeed, just));
+                                }
+                                else
+                                {
+                                    isLineVisible = true;
+                                }
 
                                 foreach (var d in data)
                                 {
@@ -240,6 +248,12 @@ namespace Rhythm
                                 numstr = string.Empty;
                                 mode = ParseMode.Lane;
                             }
+
+                            break;
+
+                        case '\'':
+
+                            isLineVisible = false;
 
                             break;
 

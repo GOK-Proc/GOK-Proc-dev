@@ -2,6 +2,7 @@
 {
     public enum SceneName
     {
+        Adjustment,
         Credit,
         Gallery,
         Map,
@@ -9,6 +10,7 @@
         MusicSelection,
         Novel,
         Rhythm,
-        Title
+        Settings,
+        Title,
     }
 }
