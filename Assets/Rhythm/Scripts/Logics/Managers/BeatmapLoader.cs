@@ -306,7 +306,7 @@ namespace Rhythm
                             time += deltaTime;
                         }
 
-                        count++;
+                        //count++;
                     }
                 }
             }
@@ -350,7 +350,7 @@ namespace Rhythm
                             time += deltaTime;
                         }
 
-                        Add(note.Color, 1);
+                        //Add(note.Color, 1);
                     }
                 }
             }
