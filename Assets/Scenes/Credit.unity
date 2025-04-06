@@ -1194,6 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9be5136b7d8eb45bc1e9144f6f3d35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: e54a2569bc14bcd4fa1af24866c7dd98, type: 2}
   _player: {fileID: 1820417131}
   _trigger: {fileID: 126137784}
   _canvasGroup: {fileID: 162468962}
