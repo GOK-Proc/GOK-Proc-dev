@@ -67,7 +67,7 @@ namespace Rhythm
 				switch (_tutorialId)
 				{
 					case TutorialId.None:
-						if (SceneTransitionManager.RecentSceneName == SceneName.Map)
+						if (SceneTransitionManager.RecentSceneName == SceneName.Map || SceneTransitionManager.RecentSceneName == SceneName.Rhythm)
 						{
 							SceneTransitionManager.TransitionToMap(_battleMode.IsWin);
 
@@ -147,7 +147,7 @@ namespace Rhythm
 
 				Time.timeScale = 1;
 
-				if (SceneTransitionManager.RecentSceneName == SceneName.Map)
+				if (SceneTransitionManager.RecentSceneName == SceneName.Map || SceneTransitionManager.RecentSceneName == SceneName.Rhythm)
 				{
 					SceneTransitionManager.TransitionToMap();
 				}

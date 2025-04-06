@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Settings;
 using Transition;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,11 +9,16 @@ namespace Credit
 {
 	public class CreditManager : MonoBehaviour
 	{
+		[SerializeField] private UserSettings _settings;
 		[SerializeField] private VideoPlayer _player;
 		[SerializeField] private EventTrigger _trigger;
 		[SerializeField] private CanvasGroup _canvasGroup;
 		[SerializeField] private CustomButton _cancelButton;
 
+		private void Awake()
+		{
+			_player.SetDirectAudioVolume(0, _settings.BgmVolume / 10f);
+		}
 
 		private void Start()
 		{
