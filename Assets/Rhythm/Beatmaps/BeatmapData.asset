@@ -149,3 +149,20 @@ MonoBehaviour:
     - _level: 12
       _notesDesigner: "\u3075\u3043\u30FC\u306D"
       _file: {fileID: 4900000, guid: 1c9d2f4ff31aca54da1d1ee43b63c7ce, type: 3}
+  - _id: Susume
+    _title: "\u9032\u3081\uFF01\uFF5E\u305D\u306E\u5148\u3078\uFF5E"
+    _sound: {fileID: 8300000, guid: 623aaf890ecdd6f45aef37d4c2644337, type: 3}
+    _offset: 0
+    _composer: Tetsuyarou
+    _backgroundSprite: {fileID: 21300000, guid: 60bf5d32ac253f94fb7f0208069d151d, type: 3}
+    _enemySprite: {fileID: 21300000, guid: 16cea2282af033f409ea743d43743452, type: 3}
+    _notes:
+    - _level: 2
+      _notesDesigner: "\u707C\u591A\u30DE\u30EB"
+      _file: {fileID: 4900000, guid: a0675bdee6a50aa45a65d4b2193b5cb2, type: 3}
+    - _level: 7
+      _notesDesigner: "\u707C\u591A\u30DE\u30EB"
+      _file: {fileID: 4900000, guid: 14eb410ad26879647895fd05ec8c60f5, type: 3}
+    - _level: 12
+      _notesDesigner: "\u707C\u591A\u30DE\u30EB"
+      _file: {fileID: 4900000, guid: 41d1e77f83e1016418b2ee38876352a0, type: 3}

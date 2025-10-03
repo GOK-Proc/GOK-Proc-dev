@@ -10,4 +10,5 @@ public enum RhythmId{
 		Chapter2      = 6,
 		XFC_MainTheme = 7,
 		Borderline    = 8,
+		Susume        = 9,
 }
