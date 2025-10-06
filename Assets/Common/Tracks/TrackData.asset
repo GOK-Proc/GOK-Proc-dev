@@ -138,5 +138,6 @@ MonoBehaviour:
     _sound: {fileID: 8300000, guid: 623aaf890ecdd6f45aef37d4c2644337, type: 3}
     _hasBeatmap: 1
     _composer: Tetsuyarou
-    _description: None
+    _description: "\u300C\u521D\u6F14\uFF5E\u6C7A\u610F\u306E\u697D\u7AE0\uFF5E\u300D\u306E\u96F0\u56F2\u6C17\u3092\u53D7\u3051\u7D99\u304E\u3064\u3064\u3001\u7570\u306A\u308B\u30C6\u30A4\u30B9\u30C8\u306B\u4ED5\u4E0A\u3052\u307E\u3057\u305F\u3002
+      \u65B0\u305F\u306A\u5192\u967A\u306E\u4E88\u611F\u3092\u611F\u3058\u3066\u307F\u3066\u304F\u3060\u3055\u3044\u3002"
     _thumbnail: {fileID: 21300000, guid: 7fa0345dddce4a548a8e9ae1fa7b0a36, type: 3}
