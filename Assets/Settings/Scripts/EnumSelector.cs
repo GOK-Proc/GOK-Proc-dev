@@ -70,7 +70,7 @@ namespace Settings
 				SEManager.Instance.Play(SEPath.SYSTEM_SELECT, _settings.SoundEffectVolume / 10f);
 			}
 
-				UpdateView();
+			UpdateView();
 		}
 
 		private void UpdateView()
@@ -93,7 +93,7 @@ namespace Settings
 					ToggleRightArrowVisibility(!IsMaxValue(_settings.FrameRate));
 					break;
 				case EnumSettingItem.ScenarioDifficulty:
-					_valueText.text = _settings.ScenarioDifficulty.ToString();
+					_valueText.text = _settings.ScenarioDifficulty.ToString().ToUpper();
 					_valueFrame.color = DifficultyColors[_settings.ScenarioDifficulty];
 					ToggleLeftArrowVisibility(!IsMinValue(_settings.ScenarioDifficulty));
 					ToggleRightArrowVisibility(!IsMaxValue(_settings.ScenarioDifficulty));
