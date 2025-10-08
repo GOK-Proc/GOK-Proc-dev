@@ -17,6 +17,7 @@ public static class BGMPath{
 	public const string MODE_INTRO          = "BGM/Mode_Intro";
 	public const string MODE_LOOP           = "BGM/Mode_Loop";
 	public const string SETTING             = "BGM/Setting";
+	public const string SUSUME_SONOSAKIE    = "BGM/Susume_Sonosakie";
 	public const string TENSION             = "BGM/Tension";
 	public const string TOWN                = "BGM/Town";
 	public const string TOWN_FADEOUT        = "BGM/Town_Fadeout";
