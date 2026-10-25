@@ -43,20 +43,20 @@ namespace Novel
 
         private IEnumerator DialogueOrder(string dialogue)
         {
-            _dialogueText.text = "";
+            _dialogueText.text = dialogue;
 
-            foreach (char c in dialogue)
+            for (int visibleChars = 0; visibleChars <= dialogue.Length; visibleChars++)
             {
                 if (_breakFlag)
                 {
                     break;
                 }
 
-                _dialogueText.text += c;
+                _dialogueText.maxVisibleCharacters = visibleChars;
                 yield return new WaitForSeconds(_interval);
             }
 
-            _dialogueText.text = dialogue;
+            _dialogueText.maxVisibleCharacters = dialogue.Length;
 
             NovelManager.Instance.IsProcessingDialogue = false;
         }
