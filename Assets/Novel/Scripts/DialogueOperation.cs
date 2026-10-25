@@ -43,7 +43,7 @@ namespace Novel
 
         private IEnumerator DialogueOrder(string dialogue)
         {
-            _dialogueText.text = diaglogue;
+            _dialogueText.text = dialogue;
 
             for (int visibleChars = 0; visibleChars <= dialogue.Length; visibleChars++)
             {
